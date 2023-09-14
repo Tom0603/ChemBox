@@ -1,0 +1,6 @@
+
+
+QTabBar::tab:selected {
+    background-color: darkgray; /* Background color when the tab is selected */
+}
+
