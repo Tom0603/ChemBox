@@ -1,7 +1,7 @@
 import sys
 
-from PyQt5.QtWidgets import QApplication, QMainWindow, QTabWidget, QVBoxLayout, QGridLayout, QWidget, QPushButton, \
-    QLineEdit, QLabel, QComboBox, QHBoxLayout
+from PyQt5.QtWidgets import QApplication, QMainWindow, QTabWidget, QGridLayout, QWidget, QPushButton, \
+    QLineEdit, QLabel, QComboBox, QHBoxLayout, QVBoxLayout
 
 
 class ChemBox(QMainWindow):
@@ -35,15 +35,29 @@ class ChemBox(QMainWindow):
         self.calculateButtonIGL = QPushButton('Calculate')
         self.resultLabelIGL = QLabel('Result will appear here')
 
+        self.pressureConversions = {
+            "Pa": 1.0,
+            "kPa": 1000.0,
+        }
+
+        self.temperatureConversions = {
+            "°C": 273.15,
+            "°K": 0.0,
+        }
+
+        self.volumeConversions = {
+            "cm³": 0.000001,
+            "dm³": 0.001,
+            "m³": 1.0,
+
+        }
+
         self.pressureDropDownIGL = QComboBox()
         self.volumeDropDownIGL = QComboBox()
         self.temperatureDropDownIGL = QComboBox()
 
         self.idealGasLayout = QGridLayout()
         self.showIdealGasLaw()
-
-    def activated(self, index):
-        print(f"Activated index: {index}")
 
     def showIdealGasLaw(self):
         self.tabBar.tab1.setLayout(self.idealGasLayout)
@@ -65,41 +79,53 @@ class ChemBox(QMainWindow):
         self.idealGasLayout.addWidget(self.calculateButtonIGL, 4, 0)
         self.idealGasLayout.addWidget(self.resultLabelIGL, 4, 1)
 
+        self.pressureDropDownIGL.addItem("Pa")
+        self.pressureDropDownIGL.setCurrentText("Pa")
+        self.pressureDropDownIGL.addItem("kPa")
+
+        self.volumeDropDownIGL.addItem("cm³")
+        self.volumeDropDownIGL.addItem("dm³")
+        self.volumeDropDownIGL.addItem("m³")
+
+        self.temperatureDropDownIGL.addItem("°C")
+        self.temperatureDropDownIGL.addItem("°K")
+
+        # self.pressureDropDownIGL.activated.connect(self.pressureUnit)
+        # self.volumeDropDownIGL.activated.connect(self.pressureUnit)
+
         self.calculateButtonIGL.clicked.connect(self.calculateIdealGasLaw)
 
-        self.pressureDropDownIGL.addItem("One")
-        self.pressureDropDownIGL.addItem("Two")
-        self.pressureDropDownIGL.addItem("Three")
-        self.pressureDropDownIGL.addItem("Four")
-
-        self.volumeDropDownIGL.addItem("One")
-        self.volumeDropDownIGL.addItem("Two")
-        self.volumeDropDownIGL.addItem("Three")
-        self.volumeDropDownIGL.addItem("Four")
-
-        self.temperatureDropDownIGL.addItem("One")
-        self.temperatureDropDownIGL.addItem("Two")
-        self.temperatureDropDownIGL.addItem("Three")
-        self.temperatureDropDownIGL.addItem("Four")
-
-        self.pressureDropDownIGL.activated.connect(self.activated)
-        self.volumeDropDownIGL.activated.connect(self.activated)
-
     def calculateIdealGasLaw(self):
+        pressureUnit = self.pressureDropDownIGL.currentText()
+        temperatureUnit = self.temperatureDropDownIGL.currentText()
+        volumeUnit = self.volumeDropDownIGL.currentText()
+
         def calculatePressure():
-            pressure = (float(self.molesInputIGL.text()) * self.idealGasConstant * float(
-                self.temperatureInputIGL.text())) // float(self.volumeInputIGL.text())
-            return pressure
+            try:
+                pressure = (float(self.molesInputIGL.text()) * self.idealGasConstant * (float(
+                    self.temperatureInputIGL.text()) + self.temperatureConversions[temperatureUnit])) / (float(
+                    self.volumeInputIGL.text()) * self.volumeConversions[volumeUnit])
+                return pressure
+            except ValueError:
+                return "Value Error"
 
         def calculateVolume():
-            volume = (float(self.molesInputIGL.text()) * self.idealGasConstant * float(
-                self.temperatureInputIGL.text())) / float(self.pressureInputIGL.text())
-            return volume
+            try:
+                volume = (float(self.molesInputIGL.text()) * self.idealGasConstant * (float(
+                    self.temperatureInputIGL.text()) + self.temperatureConversions[temperatureUnit])) / (
+                                 float(self.pressureInputIGL.text()) * self.pressureConversions[pressureUnit])
+                return volume
+            except ValueError:
+                return "Value Error"
 
         def calculateTemperature():
-            temperature = (float(self.pressureInputIGL.text()) * float(self.volumeInputIGL.text())) / (
-                    float(self.molesInputIGL.text()) * self.idealGasConstant)
-            return temperature
+            try:
+                temperature = ((float(self.pressureInputIGL.text()) * self.pressureConversions[pressureUnit]) * (float(
+                    self.volumeInputIGL.text()) * self.volumeConversions[volumeUnit])) / (
+                                      float(self.molesInputIGL.text()) * self.idealGasConstant)
+                return temperature
+            except ValueError:
+                return "Value Error"
 
         if self.pressureInputIGL.text() == "":
             self.resultLabelIGL.setText(f"Pressure: {calculatePressure()}")
@@ -108,7 +134,7 @@ class ChemBox(QMainWindow):
         elif self.temperatureInputIGL.text() == "":
             self.resultLabelIGL.setText(f"Temperature: {calculateTemperature()}")
         else:
-            self.resultLabelIGL.setText("wtf")
+            self.resultLabelIGL.setText("wtf are you doing mate")
 
 
 class TabBar(QWidget):
