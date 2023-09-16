@@ -80,7 +80,6 @@ class ChemBox(QMainWindow):
         self.idealGasLayout.addWidget(self.resultLabelIGL, 4, 1)
 
         self.pressureDropDownIGL.addItem("Pa")
-        self.pressureDropDownIGL.setCurrentText("Pa")
         self.pressureDropDownIGL.addItem("kPa")
 
         self.volumeDropDownIGL.addItem("cm³")
@@ -127,12 +126,24 @@ class ChemBox(QMainWindow):
             except ValueError:
                 return "Value Error"
 
+        def calculateMoles():
+            try:
+                moles = ((float(self.pressureInputIGL.text()) * self.pressureConversions[pressureUnit]) * (
+                        float(self.volumeInputIGL.text()) * self.volumeConversions[volumeUnit])) / (
+                                self.idealGasConstant * (float(self.temperatureInputIGL.text()) +
+                                self.temperatureConversions[temperatureUnit]))
+                return moles
+            except ValueError:
+                return "Value Error"
+
         if self.pressureInputIGL.text() == "":
             self.resultLabelIGL.setText(f"Pressure: {calculatePressure()}")
         elif self.volumeInputIGL.text() == "":
             self.resultLabelIGL.setText(f"Volume: {calculateVolume()}")
         elif self.temperatureInputIGL.text() == "":
             self.resultLabelIGL.setText(f"Temperature: {calculateTemperature()}")
+        elif self.molesInputIGL.text() == "":
+            self.resultLabelIGL.setText(f"Number of moles: {calculateMoles()}")
         else:
             self.resultLabelIGL.setText("wtf are you doing mate")
 
