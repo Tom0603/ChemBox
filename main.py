@@ -89,9 +89,6 @@ class ChemBox(QMainWindow):
         self.temperatureDropDownIGL.addItem("°C")
         self.temperatureDropDownIGL.addItem("°K")
 
-        # self.pressureDropDownIGL.activated.connect(self.pressureUnit)
-        # self.volumeDropDownIGL.activated.connect(self.pressureUnit)
-
         self.calculateButtonIGL.clicked.connect(self.calculateIdealGasLaw)
 
     def calculateIdealGasLaw(self):
@@ -99,7 +96,7 @@ class ChemBox(QMainWindow):
         temperatureUnit = self.temperatureDropDownIGL.currentText()
         volumeUnit = self.volumeDropDownIGL.currentText()
 
-        def calculatePressure():
+        def _calculatePressure():
             try:
                 pressure = (float(self.molesInputIGL.text()) * self.idealGasConstant * (float(
                     self.temperatureInputIGL.text()) + self.temperatureConversions[temperatureUnit])) / (float(
@@ -108,7 +105,7 @@ class ChemBox(QMainWindow):
             except ValueError:
                 return "Value Error"
 
-        def calculateVolume():
+        def _calculateVolume():
             try:
                 volume = (float(self.molesInputIGL.text()) * self.idealGasConstant * (float(
                     self.temperatureInputIGL.text()) + self.temperatureConversions[temperatureUnit])) / (
@@ -117,7 +114,7 @@ class ChemBox(QMainWindow):
             except ValueError:
                 return "Value Error"
 
-        def calculateTemperature():
+        def _calculateTemperature():
             try:
                 temperature = ((float(self.pressureInputIGL.text()) * self.pressureConversions[pressureUnit]) * (float(
                     self.volumeInputIGL.text()) * self.volumeConversions[volumeUnit])) / (
@@ -126,24 +123,24 @@ class ChemBox(QMainWindow):
             except ValueError:
                 return "Value Error"
 
-        def calculateMoles():
+        def _calculateMoles():
             try:
                 moles = ((float(self.pressureInputIGL.text()) * self.pressureConversions[pressureUnit]) * (
                         float(self.volumeInputIGL.text()) * self.volumeConversions[volumeUnit])) / (
                                 self.idealGasConstant * (float(self.temperatureInputIGL.text()) +
-                                self.temperatureConversions[temperatureUnit]))
+                                                         self.temperatureConversions[temperatureUnit]))
                 return moles
             except ValueError:
                 return "Value Error"
 
         if self.pressureInputIGL.text() == "":
-            self.resultLabelIGL.setText(f"Pressure: {calculatePressure()}")
+            self.resultLabelIGL.setText(f"Pressure: {_calculatePressure()}")
         elif self.volumeInputIGL.text() == "":
-            self.resultLabelIGL.setText(f"Volume: {calculateVolume()}")
+            self.resultLabelIGL.setText(f"Volume: {_calculateVolume()}")
         elif self.temperatureInputIGL.text() == "":
-            self.resultLabelIGL.setText(f"Temperature: {calculateTemperature()}")
+            self.resultLabelIGL.setText(f"Temperature: {_calculateTemperature()}")
         elif self.molesInputIGL.text() == "":
-            self.resultLabelIGL.setText(f"Number of moles: {calculateMoles()}")
+            self.resultLabelIGL.setText(f"Number of moles: {_calculateMoles()}")
         else:
             self.resultLabelIGL.setText("wtf are you doing mate")
 
@@ -171,7 +168,7 @@ class TabBar(QWidget):
 
 def main():
     app = QApplication(sys.argv)
-    app.setStyleSheet(open('style.css').read())  # Load your CSS file
+    app.setStyleSheet(open('style.css').read())  # Load CSS file
     mainWin = ChemBox()
     mainWin.show()
     sys.exit(app.exec_())
