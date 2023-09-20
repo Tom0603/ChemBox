@@ -20,6 +20,18 @@ class ChemBox(QMainWindow):
         self.tabBar = TabBar()
         self.setCentralWidget(self.tabBar)
 
+        self.idealGasLaw = IdealGasLaw()
+        self.tabBar.tab1.setLayout(self.idealGasLaw.idealGasLayout)
+
+        # self.interactiveTable = InteractiveTable()
+        # self.tabBar.tab2.setLayout(self.interactiveTable.tableLayout)
+
+
+class IdealGasLaw(QWidget):
+    def __init__(self):
+        super(QWidget, self).__init__()
+        self.idealGasLayout = QGridLayout()
+
         # Initialise Ideal Gas Law (IGL) properties
         self.idealGasConstant = 8.314
 
@@ -34,9 +46,6 @@ class ChemBox(QMainWindow):
         self.molesLabelIGL = QLabel("Amount of substance - moles:")
         self.calculateButtonIGL = QPushButton('Calculate')
         self.resultLabelIGL = QLabel('Result will appear here')
-
-        # self.interactiveTable = InteractiveTable()
-        # self.tabBar.tab2.setLayout(self.interactiveTable.tableLayout)
 
         self.pressureConversions = {
             "Pa": 1.0,
@@ -58,12 +67,6 @@ class ChemBox(QMainWindow):
         self.pressureDropDownIGL = QComboBox()
         self.volumeDropDownIGL = QComboBox()
         self.temperatureDropDownIGL = QComboBox()
-
-        self.idealGasLayout = QGridLayout()
-        self.showIdealGasLaw()
-
-    def showIdealGasLaw(self):
-        self.tabBar.tab1.setLayout(self.idealGasLayout)
 
         self.idealGasLayout.addWidget(self.pressureLabelIGL, 0, 0)
         self.idealGasLayout.addWidget(self.pressureInputIGL, 0, 1)
