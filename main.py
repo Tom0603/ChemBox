@@ -1,7 +1,7 @@
 import sys
 
 from PyQt5.QtWidgets import QApplication, QMainWindow, QTabWidget, QGridLayout, QWidget, QPushButton, \
-    QLineEdit, QLabel, QComboBox, QHBoxLayout, QVBoxLayout
+    QLineEdit, QLabel, QComboBox, QHBoxLayout, QVBoxLayout, QTableWidget, QTableWidgetItem
 
 
 class ChemBox(QMainWindow):
@@ -34,6 +34,9 @@ class ChemBox(QMainWindow):
         self.molesLabelIGL = QLabel("Amount of substance - moles:")
         self.calculateButtonIGL = QPushButton('Calculate')
         self.resultLabelIGL = QLabel('Result will appear here')
+
+        # self.interactiveTable = InteractiveTable()
+        # self.tabBar.tab2.setLayout(self.interactiveTable.tableLayout)
 
         self.pressureConversions = {
             "Pa": 1.0,
@@ -166,9 +169,63 @@ class TabBar(QWidget):
         self.setLayout(self.layout)
 
 
+class InteractiveTable(QWidget):
+    def __init__(self):
+        super(QWidget, self).__init__()
+        self.tableLayout = QVBoxLayout(self)
+
+        self.table = QTableWidget()
+        self.tableLayout.addWidget(self.table)
+
+        self.addRowButton = QPushButton("Add Row")
+        self.deleteRowButton = QPushButton("Delete Row")
+        self.addColButton = QPushButton("Add Column")
+        self.deleteColButton = QPushButton("Delete Column")
+
+        self.tableLayout.addWidget(self.addRowButton)
+        self.tableLayout.addWidget(self.deleteRowButton)
+        self.tableLayout.addWidget(self.addColButton)
+        self.tableLayout.addWidget(self.deleteColButton)
+
+        self.addRowButton.clicked.connect(self.addRow)
+        self.deleteRowButton.clicked.connect(self.delRow)
+        self.addColButton.clicked.connect(self.addCol)
+        self.deleteColButton.clicked.connect(self.delCol)
+
+        self.table.setRowCount(3)
+        self.table.setColumnCount(3)
+        self.createTable()
+
+    def createTable(self):
+        for row in range(self.table.rowCount()):
+            for col in range(self.table.columnCount()):
+                item = QTableWidgetItem(f"Row {row}, Col {col}")
+                self.table.setItem(row, col, item)
+
+    def addRow(self):
+        currentRows = self.table.rowCount()
+        self.table.setRowCount(currentRows + 1)
+
+    def addCol(self):
+        currentCols = self.table.columnCount()
+        self.table.setColumnCount(currentCols + 1)
+
+    def delRow(self):
+        selectedRow = self.table.currentRow()
+        if selectedRow >= 0:
+            self.table.removeRow(selectedRow)
+
+    def delCol(self):
+        selectedCol = self.table.currentColumn()
+        if selectedCol >= 0:
+            self.table.removeColumn(selectedCol)
+
+
 def main():
     app = QApplication(sys.argv)
-    app.setStyleSheet(open('style.css').read())  # Load CSS file
+
+    # Load CSS file
+    app.setStyleSheet(open('style.css').read())
     mainWin = ChemBox()
     mainWin.show()
     sys.exit(app.exec_())
