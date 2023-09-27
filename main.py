@@ -213,6 +213,25 @@ class ChemBalancer(QWidget):
     def parseComponent(self, component, countsDict, totalDict):
         for i in range(len(component)):
             print("#DEBUG# ", component)
+            print("#DEBUG# i = ", component[i])
+            if component[0] in self.integers:
+                print("#DEBUG# GOT INTEGER")
+                try:
+                    if component[0 + 1] in self.integers:
+                        try:
+                            if component[0 + 2] in self.integers:
+                                coefficient = int(component[0: 0 + 3])
+                            else:
+                                coefficient = int(component[0: 0 + 2])
+                        except IndexError:
+                            coefficient = int(component[0: 0 + 2])
+                    else:
+                        coefficient = int(component[0])
+                except IndexError:
+                    coefficient = int(component[0])
+            else:
+                print("#DEBUG# NO INT")
+                coefficient = 1
             if component[i].isupper():
                 if component[i + 1].islower():
                     try:
@@ -265,15 +284,16 @@ class ChemBalancer(QWidget):
                         continue
                 try:
                     if element in countsDict:
-                        countsDict[element] += number
+                        countsDict[element] += number * coefficient
                     else:
-                        countsDict[element] = number
+                        countsDict[element] = number * coefficient
                     if element in totalDict:
-                        totalDict[element] += number
+                        totalDict[element] += number * coefficient
                     else:
-                        totalDict[element] = number
+                        totalDict[element] = number * coefficient
                 except UnboundLocalError:
                     continue
+
             else:
                 print("#DEBUG# ###################", )
             print("#DEBUG# counts ", countsDict)
