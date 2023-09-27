@@ -23,6 +23,9 @@ class ChemBox(QMainWindow):
         self.idealGasLaw = IdealGasLaw()
         self.tabBar.tab1.setLayout(self.idealGasLaw.idealGasLayout)
 
+        self.chemBalancer = ChemBalancer()
+        self.tabBar.tab3.setLayout(self.chemBalancer.balancerLayout)
+
         # self.interactiveTable = InteractiveTable()
         # self.tabBar.tab2.setLayout(self.interactiveTable.tableLayout)
 
@@ -149,6 +152,144 @@ class IdealGasLaw(QWidget):
             self.resultLabelIGL.setText(f"Number of moles: {_calculateMoles()}")
         else:
             self.resultLabelIGL.setText("wtf are you doing mate")
+
+
+class ChemBalancer(QWidget):
+    def __init__(self):
+        super(QWidget, self).__init__()
+        self.balancerLayout = QHBoxLayout()
+
+        self.equationInput = QLineEdit()
+        self.balanceButton = QPushButton()
+
+        self.left = list()
+        self.right = list()
+        self.totalLeft = dict()
+        self.totalRight = dict()
+
+        self.integers = "0123456789"
+        self.equationSplit = list()
+        self.reactants = str()
+        self.products = str()
+
+        self.reactantComponents = list()
+        self.productComponents = list()
+
+        self.balancerLayout.addWidget(self.equationInput)
+        self.balancerLayout.addWidget(self.balanceButton)
+
+        self.balanceButton.clicked.connect(self.runBalancer)
+
+    def runBalancer(self):
+        print("#DEBUG# SPLIT")
+        self.splitEquation()
+        print("#DEBUG# GET REACTANTS")
+        self.getReactants()
+        print("#DEBUG# GET PRODUCTS")
+        self.getProducts()
+
+    def splitEquation(self):
+        self.equationSplit = self.equationInput.text().split(" = ")
+
+        print("#DEBUG# ", self.equationSplit)
+
+        self.reactants = self.equationSplit[0]
+
+        print("#DEBUG# ", self.reactants)
+
+        try:
+            self.products = self.equationSplit[1]
+        except IndexError:
+            print("User isn't the brightest")
+
+        print("#DEBUG# ", self.products)
+
+        self.reactantComponents = self.reactants.split(" + ")
+        self.productComponents = self.products.split(" + ")
+
+        print("#DEBUG# ", self.reactantComponents)
+        print("#DEBUG# ", self.productComponents)
+
+    def parseComponent(self, component, countsDict, totalDict):
+        for i in range(len(component)):
+            print("#DEBUG# ", component)
+            if component[i].isupper():
+                if component[i + 1].islower():
+                    try:
+                        if component[i + 2].islower():
+                            element = component[i:(i + 3)]
+                            print("#DEBUG# 1", element)
+                        else:
+                            element = component[i:(i + 2)]
+                            print("#DEBUG# 2", element)
+                            try:
+                                if component[i + 2] in self.integers:
+                                    try:
+                                        if component[i + 3] in self.integers:
+                                            try:
+                                                if component[i + 4] in self.integers:
+                                                    number = int(component[i + 2: i + 5])
+                                            except IndexError:
+                                                number = int(component[i + 2: i + 4])
+                                    except IndexError:
+                                        number = int(component[i + 2])
+                                else:
+                                    number = 1
+                            except IndexError:
+                                number = 1
+                    except IndexError:
+                        element = component[i:(i + 2)]
+                        print("#DEBUG# INDEX ERROR ", element)
+                else:
+                    element = component[i]
+                    print("#DEBUG# 3", element)
+                    try:
+                        print("#DEBUG# IN TRY")
+                        if component[i + 1] in self.integers:
+                            print("#DEBUG# IN TRY IF")
+                            try:
+                                if component[i + 2] in self.integers:
+                                    print("#DEBUG# IN TRY IF2")
+                                    try:
+                                        if component[i + 3] in self.integers:
+                                            number = int(component[i + 1: i + 4])
+                                    except IndexError:
+                                        number = int(component[i + 1: i + 3])
+                                else:
+                                    number = int(component[i + 1])
+                            except IndexError:
+                                number = int(component[i + 1])
+                        else:
+                            number = 1
+                    except IndexError:
+                        continue
+                try:
+                    if element in countsDict:
+                        countsDict[element] += number
+                    else:
+                        countsDict[element] = number
+                    if element in totalDict:
+                        totalDict[element] += number
+                    else:
+                        totalDict[element] = number
+                except UnboundLocalError:
+                    continue
+            else:
+                print("#DEBUG# ###################", )
+            print("#DEBUG# counts ", countsDict)
+            print("#DEBUG# total ", totalDict)
+
+    def getReactants(self):
+        for component in self.reactantComponents:
+            leftCounts = dict()
+            self.parseComponent(component, leftCounts, self.totalLeft)
+            self.left.append(leftCounts)
+
+    def getProducts(self):
+        for component in self.productComponents:
+            rightCounts = dict()
+            self.parseComponent(component, rightCounts, self.totalRight)
+            self.right.append(rightCounts)
 
 
 class TabBar(QWidget):
