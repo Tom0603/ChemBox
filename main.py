@@ -3,6 +3,10 @@ import sys
 from PyQt5.QtWidgets import QApplication, QMainWindow, QTabWidget, QGridLayout, QWidget, QPushButton, \
     QLineEdit, QLabel, QComboBox, QHBoxLayout, QVBoxLayout, QTableWidget, QTableWidgetItem
 
+from random import randint
+from math import gcd
+from functools import reduce
+
 
 class ChemBox(QMainWindow):
     def __init__(self):
@@ -157,10 +161,11 @@ class IdealGasLaw(QWidget):
 class ChemBalancer(QWidget):
     def __init__(self):
         super(QWidget, self).__init__()
-        self.balancerLayout = QHBoxLayout()
+        self.balancerLayout = QVBoxLayout()
 
         self.equationInput = QLineEdit()
         self.balanceButton = QPushButton()
+        self.balancedLabel = QLabel()
 
         self.left = list()
         self.right = list()
@@ -168,6 +173,7 @@ class ChemBalancer(QWidget):
         self.totalRight = dict()
 
         self.integers = "0123456789"
+        self.balanced = True
         self.equationSplit = list()
         self.reactants = str()
         self.products = str()
@@ -177,6 +183,7 @@ class ChemBalancer(QWidget):
 
         self.balancerLayout.addWidget(self.equationInput)
         self.balancerLayout.addWidget(self.balanceButton)
+        self.balancerLayout.addWidget(self.balancedLabel)
 
         self.balanceButton.clicked.connect(self.runBalancer)
 
@@ -188,7 +195,20 @@ class ChemBalancer(QWidget):
         print("#DEBUG# GET PRODUCTS")
         self.getProducts()
 
+        for key in self.totalLeft:
+            print(key)
+            if self.totalLeft[key] != self.totalRight[key]:
+                self.balanced = False
+                print(self.balanced)
+            else:
+                print(self.balanced)
+                continue
+
+        print(self.balance())
+
     def splitEquation(self):
+        self.clearVariables()
+
         self.equationSplit = self.equationInput.text().split(" = ")
 
         print("#DEBUG# ", self.equationSplit)
@@ -233,55 +253,58 @@ class ChemBalancer(QWidget):
                 print("#DEBUG# NO INT")
                 coefficient = 1
             if component[i].isupper():
-                if component[i + 1].islower():
-                    try:
-                        if component[i + 2].islower():
-                            element = component[i:(i + 3)]
-                            print("#DEBUG# 1", element)
-                        else:
-                            element = component[i:(i + 2)]
-                            print("#DEBUG# 2", element)
-                            try:
-                                if component[i + 2] in self.integers:
-                                    try:
-                                        if component[i + 3] in self.integers:
-                                            try:
-                                                if component[i + 4] in self.integers:
-                                                    number = int(component[i + 2: i + 5])
-                                            except IndexError:
-                                                number = int(component[i + 2: i + 4])
-                                    except IndexError:
-                                        number = int(component[i + 2])
-                                else:
+                try:
+                    if component[i + 1].islower():
+                        try:
+                            if component[i + 2].islower():
+                                element = component[i:(i + 3)]
+                                print("#DEBUG# 1", element)
+                            else:
+                                element = component[i:(i + 2)]
+                                print("#DEBUG# 2", element)
+                                try:
+                                    if component[i + 2] in self.integers:
+                                        try:
+                                            if component[i + 3] in self.integers:
+                                                try:
+                                                    if component[i + 4] in self.integers:
+                                                        number = int(component[i + 2: i + 5])
+                                                except IndexError:
+                                                    number = int(component[i + 2: i + 4])
+                                        except IndexError:
+                                            number = int(component[i + 2])
+                                    else:
+                                        number = 1
+                                except IndexError:
                                     number = 1
-                            except IndexError:
-                                number = 1
-                    except IndexError:
-                        element = component[i:(i + 2)]
-                        print("#DEBUG# INDEX ERROR ", element)
-                else:
-                    element = component[i]
-                    print("#DEBUG# 3", element)
-                    try:
-                        print("#DEBUG# IN TRY")
-                        if component[i + 1] in self.integers:
-                            print("#DEBUG# IN TRY IF")
-                            try:
-                                if component[i + 2] in self.integers:
-                                    print("#DEBUG# IN TRY IF2")
-                                    try:
-                                        if component[i + 3] in self.integers:
-                                            number = int(component[i + 1: i + 4])
-                                    except IndexError:
-                                        number = int(component[i + 1: i + 3])
-                                else:
+                        except IndexError:
+                            element = component[i:(i + 2)]
+                            print("#DEBUG# INDEX ERROR ", element)
+                    else:
+                        element = component[i]
+                        print("#DEBUG# 3", element)
+                        try:
+                            print("#DEBUG# IN TRY")
+                            if component[i + 1] in self.integers:
+                                print("#DEBUG# IN TRY IF")
+                                try:
+                                    if component[i + 2] in self.integers:
+                                        print("#DEBUG# IN TRY IF2")
+                                        try:
+                                            if component[i + 3] in self.integers:
+                                                number = int(component[i + 1: i + 4])
+                                        except IndexError:
+                                            number = int(component[i + 1: i + 3])
+                                    else:
+                                        number = int(component[i + 1])
+                                except IndexError:
                                     number = int(component[i + 1])
-                            except IndexError:
-                                number = int(component[i + 1])
-                        else:
-                            number = 1
-                    except IndexError:
-                        continue
+                            else:
+                                number = 1
+                        except IndexError:
+                            continue
+                except IndexError:
+                    element = component[i]
                 try:
                     if element in countsDict:
                         countsDict[element] += number * coefficient
@@ -299,6 +322,128 @@ class ChemBalancer(QWidget):
             print("#DEBUG# counts ", countsDict)
             print("#DEBUG# total ", totalDict)
 
+    def balance(self):
+        if self.balanced:
+            equation = str()
+            for dictionary in self.left:
+                compound = str()
+                print("#DEBUG# dictionary: ", dictionary)
+                for element in dictionary:
+                    print("#DEBUG# element: ", element)
+                    compound += element
+                    print("#DEBUG# compound1: ", compound)
+                    if dictionary[element] > 1:
+                        compound += str(dictionary[element])
+                    else:
+                        pass
+                    print("#DEBUG# compound2: ", compound)
+                equation += compound
+                equation += " + "
+                print("#DEBUG# equation: ", equation)
+            equation = equation[:len(equation) - 3] + " = "
+            print("#DEBUG# equation final ", equation)
+
+            for dictionary in self.right:
+                compound = str()
+                print("#DEBUG# dictionary: ", dictionary)
+                for element in dictionary:
+                    print("#DEBUG# element: ", element)
+                    compound += element
+                    print("#DEBUG# compound1: ", compound)
+                    if dictionary[element] > 1:
+                        compound += str(dictionary[element])
+                    else:
+                        pass
+                    print("#DEBUG# compound2: ", compound)
+                equation += compound
+                equation += " + "
+                print("#DEBUG# equation: ", equation)
+            equation = equation[:len(equation) - 2]
+            print("#DEBUG# equation final ", equation)
+        else:
+            while not self.balanced:
+                tempLeft = list()
+                tempRight = list()
+                totalLeft = dict()
+                totalRight = dict()
+
+                for item in self.left:
+                    newDict = dict()
+                    for key in item:
+                        newDict[key] = item[key]
+                    tempLeft.append(newDict)
+
+                for item in self.right:
+                    newDict = dict()
+                    for key in item:
+                        newDict[key] = item[key]
+                    tempRight.append(newDict)
+
+                leftCoefficients = [randint(1, 10) for _ in range(len(tempLeft))]
+                rightCoefficients = [randint(1, 10) for _ in range(len(tempRight))]
+
+                for index in range(0, len(leftCoefficients)):
+                    for key in tempLeft[index]:
+                        tempLeft[index][key] *= leftCoefficients[index]
+                        if key not in totalLeft:
+                            totalLeft[key] = tempLeft[index][key]
+                        else:
+                            totalLeft[key] += tempLeft[index][key]
+
+                for index in range(0, len(rightCoefficients)):
+                    for key in tempRight[index]:
+                        tempRight[index][key] *= rightCoefficients[index]
+                        if key not in totalRight:
+                            totalRight[key] = tempRight[index][key]
+                        else:
+                            totalRight[key] += tempRight[index][key]
+
+                self.balanced = True
+                for key in totalLeft:
+                    if totalLeft[key] != totalRight[key]:
+                        self.balanced = False
+                    else:
+                        continue
+
+            bigTup = tuple(leftCoefficients + rightCoefficients)
+            print("## Big tup:", bigTup)
+            leftCoefficients = list(map(lambda x: int(x / reduce(gcd, bigTup)), leftCoefficients))
+            rightCoefficients = list(map(lambda x: int(x / reduce(gcd, bigTup)), rightCoefficients))
+            print("## left co:", leftCoefficients)
+            print("## right co:", rightCoefficients)
+
+            balancedEquation = str()
+            for index in range(0, len(self.left)):
+                if leftCoefficients[index] != 1:
+                    compound = str(leftCoefficients[index])
+                else:
+                    compound = str()
+                for key in self.left[index]:
+                    compound += key
+                    if self.left[index][key] != 1:
+                        compound += str(self.left[index][key])
+                    else:
+                        continue
+                balancedEquation += compound
+                balancedEquation += ' + '
+            balancedEquation = balancedEquation[:len(balancedEquation) - 3] + ' = '
+            for index in range(0, len(self.right)):
+                if rightCoefficients[index] != 1:
+                    compound = str(rightCoefficients[index])
+                else:
+                    compound = str()
+                for key in self.right[index]:
+                    compound += key
+                    if self.right[index][key] != 1:
+                        compound += str(self.right[index][key])
+                    else:
+                        continue
+                balancedEquation += compound
+                balancedEquation += ' + '
+            balancedEquation = balancedEquation[:len(balancedEquation) - 2]
+            print(balancedEquation)
+            return self.balancedLabel.setText(f"{balancedEquation}")
+
     def getReactants(self):
         for component in self.reactantComponents:
             leftCounts = dict()
@@ -310,6 +455,27 @@ class ChemBalancer(QWidget):
             rightCounts = dict()
             self.parseComponent(component, rightCounts, self.totalRight)
             self.right.append(rightCounts)
+
+    def clearVariables(self):
+        if len(self.left) != 0:
+            self.left.clear()
+        if len(self.right) != 0:
+            self.right.clear()
+        if len(self.totalLeft) != 0:
+            self.totalLeft.clear()
+        if len(self.totalRight) != 0:
+            self.totalRight.clear()
+
+        self.integers = "0123456789"
+        self.balanced = True
+        if len(self.equationSplit) != 0:
+            self.equationSplit.clear()
+        self.reactants = ""
+        self.products = ""
+        if len(self.reactantComponents) != 0:
+            self.reactantComponents.clear()
+        if len(self.productComponents) != 0:
+            self.productComponents.clear()
 
 
 class TabBar(QWidget):
@@ -325,7 +491,7 @@ class TabBar(QWidget):
         self.tab5 = QWidget()
         self.tabs.addTab(self.tab1, "Ideal Gas Law")
         self.tabs.addTab(self.tab2, "Tab2")
-        self.tabs.addTab(self.tab3, "Tab3")
+        self.tabs.addTab(self.tab3, "Balancer")
         self.tabs.addTab(self.tab4, "Tab4")
         self.tabs.addTab(self.tab5, "Tab5")
 
