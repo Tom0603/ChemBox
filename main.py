@@ -230,12 +230,36 @@ class ChemBalancer(QWidget):
         print("#DEBUG# ", self.reactantComponents)
         print("#DEBUG# ", self.productComponents)
 
+    def getSubCoefficient(self, component):
+        # Find subscript coefficient of complex ion
+        for j in range(len(component)):
+            if component[j] == ")":
+                try:
+                    if component[j + 1] in self.integers:
+                        try:
+                            if component[j + 2] in self.integers:
+                                try:
+                                    if component[j + 3] in self.integers:
+                                        subCoefficient = component[(j + 1): (j + 4)]
+                                    else:
+                                        subCoefficient = component[(j + 1): (j + 3)]
+                                except IndexError:
+                                    subCoefficient = component[(j + 1): (j + 3)]
+                            else:
+                                subCoefficient = component[j + 1]
+                        except IndexError:
+                            subCoefficient = component[j + 1]
+                    else:
+                        subCoefficient = 1
+                except IndexError:
+                    subCoefficient = 1
+        return subCoefficient
+
     def parseComponent(self, component, countsDict, totalDict):
-        for i in range(len(component)):
-            print("#DEBUG# ", component)
-            print("#DEBUG# i = ", component[i])
+        # Check for coefficient
+        try:
             if component[0] in self.integers:
-                print("#DEBUG# GOT INTEGER")
+                print("#DEBUG# GOT COEFFICIENT")
                 try:
                     if component[0 + 1] in self.integers:
                         try:
@@ -250,77 +274,313 @@ class ChemBalancer(QWidget):
                 except IndexError:
                     coefficient = int(component[0])
             else:
-                print("#DEBUG# NO INT")
+                print("#DEBUG# NO COEFFICIENT")
                 coefficient = 1
-            if component[i].isupper():
+
+            openBracket = component.find("(")
+            closedBracket = component.find(")")
+            print("#DEBUG# OPENBRACKET ", openBracket)
+            print("#DEBUG# CLOSEDBRACKET ", closedBracket)
+
+            for i in range(len(component)):
+                print("#DEBUG# ", component)
+                print("#DEBUG# i = ", component[i])
+                print("#DEBUG# INDEX ", i)
                 try:
-                    if component[i + 1].islower():
+                    openBracket = component.find("(")
+                    closedBracket = component.find(")")
+                except IndexError:
+                    continue
+                try:
+                    if component[i].isupper() and component[i - 1] != "(":
                         try:
-                            if component[i + 2].islower():
-                                element = component[i:(i + 3)]
-                                print("#DEBUG# 1", element)
-                            else:
-                                element = component[i:(i + 2)]
-                                print("#DEBUG# 2", element)
+                            if component[i + 1].islower():
                                 try:
-                                    if component[i + 2] in self.integers:
+                                    if component[i + 2].islower():
+                                        element = component[i:(i + 3)]
+                                        print("#DEBUG# 1", element)
+                                        if openBracket < i < closedBracket:
+                                            subCoefficient = self.getSubCoefficient(component)
+                                        else:
+                                            subCoefficient = 1
+
+                                        # Check for subscript
                                         try:
                                             if component[i + 3] in self.integers:
                                                 try:
                                                     if component[i + 4] in self.integers:
-                                                        number = int(component[i + 2: i + 5])
+                                                        try:
+                                                            if component[i + 5] in self.integers:
+                                                                subscript = int(component[(i + 3): (i + 6)])
+                                                            else:
+                                                                subscript = int(component[(i + 3): (i + 5)])
+                                                        except IndexError:
+                                                            subscript = int(component[(i + 3): (i + 5)])
+                                                    else:
+                                                        subscript = int(component[i + 3])
                                                 except IndexError:
-                                                    number = int(component[i + 2: i + 4])
+                                                    subscript = int(component[i + 3])
+                                            else:
+                                                subscript = 1
                                         except IndexError:
-                                            number = int(component[i + 2])
+                                            subscript = 1
                                     else:
-                                        number = 1
+                                        element = component[i:(i + 2)]
+                                        print("#DEBUG# 2", element)
+
+                                        if openBracket < i < closedBracket:
+                                            subCoefficient = self.getSubCoefficient(component)
+                                        else:
+                                            subCoefficient = 1
+
+                                        # Check for subscript
+                                        try:
+                                            if component[i + 2] in self.integers:
+                                                try:
+                                                    if component[i + 3] in self.integers:
+                                                        try:
+                                                            if component[i + 4] in self.integers:
+                                                                subscript = int(component[(i + 2): (i + 5)])
+                                                        except IndexError:
+                                                            subscript = int(component[(i + 2): (i + 4)])
+                                                except IndexError:
+                                                    subscript = int(component[i + 2])
+                                            else:
+                                                subscript = 1
+                                        except IndexError:
+                                            subscript = 1
                                 except IndexError:
-                                    number = 1
-                        except IndexError:
-                            element = component[i:(i + 2)]
-                            print("#DEBUG# INDEX ERROR ", element)
-                    else:
-                        element = component[i]
-                        print("#DEBUG# 3", element)
-                        try:
-                            print("#DEBUG# IN TRY")
-                            if component[i + 1] in self.integers:
-                                print("#DEBUG# IN TRY IF")
+                                    element = component[i:(i + 2)]
+                                    print("#DEBUG# INDEX ERROR ", element)
+
+                                    if openBracket < i < closedBracket:
+                                        subCoefficient = self.getSubCoefficient(component)
+                                    else:
+                                        subCoefficient = 1
+                            else:
+                                element = component[i]
+                                print("#DEBUG# 3", element)
+
+                                if openBracket < i < closedBracket:
+                                    subCoefficient = self.getSubCoefficient(component)
+                                else:
+                                    subCoefficient = 1
+                                print("#DEBUG# subCo ", subCoefficient)
                                 try:
-                                    if component[i + 2] in self.integers:
-                                        print("#DEBUG# IN TRY IF2")
+                                    print("#DEBUG# IN TRY")
+
+                                    # Check for subscript
+                                    if component[i + 1] in self.integers:
+                                        print("#DEBUG# IN TRY IF")
+                                        try:
+                                            if component[i + 2] in self.integers:
+                                                print("#DEBUG# IN TRY IF2")
+                                                try:
+                                                    if component[i + 3] in self.integers:
+                                                        subscript = int(component[i + 1: i + 4])
+                                                except IndexError:
+                                                    subscript = int(component[i + 1: i + 3])
+                                            else:
+                                                subscript = int(component[i + 1])
+                                        except IndexError:
+                                            subscript = int(component[i + 1])
+                                    else:
+                                        subscript = 1
+                                except IndexError:
+                                    subscript = 1
+                        except IndexError:
+                            element = component[i]
+                            print("#DEBUG# FUCKING I ", i)
+
+                            if openBracket < i < closedBracket:
+                                subCoefficient = self.getSubCoefficient(component)
+                            else:
+                                subCoefficient = 1
+
+                            try:
+                                print("#DEBUG# IN TRY")
+
+                                # Check for subscript
+                                if component[i + 1] in self.integers:
+                                    print("#DEBUG# IN TRY IF")
+                                    try:
+                                        if component[i + 2] in self.integers:
+                                            print("#DEBUG# IN TRY IF2")
+                                            try:
+                                                if component[i + 3] in self.integers:
+                                                    subscript = int(component[i + 1: i + 4])
+                                            except IndexError:
+                                                subscript = int(component[i + 1: i + 3])
+                                        else:
+                                            subscript = int(component[i + 1])
+                                    except IndexError:
+                                        subscript = int(component[i + 1])
+                                else:
+                                    subscript = 1
+                            except IndexError:
+                                subscript = 1
+                            print("#DEBUG# SUBCOEEFEFEFEF ", subCoefficient)
+                            print("#DEBUG# SUBSCIRITPT ", subscript)
+                        try:
+                            if element in countsDict:
+                                countsDict[element] = int(countsDict[element]) + subscript * coefficient * subCoefficient
+                            else:
+                                countsDict[element] = subscript * coefficient * subCoefficient
+
+                            if element in totalDict:
+                                totalDict[element] = int(totalDict[element]) + subscript * coefficient * subCoefficient
+                            else:
+                                totalDict[element] = subscript * coefficient * subCoefficient
+                        except UnboundLocalError:
+                            continue
+
+                    # Check for brackets / complex ion in equation
+                    elif component[i] == "(":
+                        try:
+                            if component[i + 2] == ")":
+                                element = component[i + 1]
+                                try:
+                                    if component[i + 3] in self.integers:
+                                        try:
+                                            if component[i + 4] in self.integers:
+                                                try:
+                                                    if component[i + 5] in self.integers:
+                                                        subscript = int(component[(i + 3): (i + 6)])
+                                                    else:
+                                                        subscript = int(component[(i + 3): (i + 5)])
+                                                except IndexError:
+                                                    subscript = int(component[(i + 3): (i + 5)])
+                                            else:
+                                                subscript = int(component[(i + 3): (i + 4)])
+                                        except IndexError:
+                                            subscript = int(component[i + 3])
+                                    else:
+                                        subscript = 1
+                                except IndexError:
+                                    subscript = 1
+                            elif component[i + 1].isupper():
+                                if component[i + 2].islower():
+                                    try:
+                                        if component[i + 3].islower():
+                                            element = component[(i + 1): (i + 4)]
+
+                                            # Check for subscript within brackets
+                                            try:
+                                                if component[i + 4] in self.integers:
+                                                    try:
+                                                        if component[i + 5] in self.integers:
+                                                            try:
+                                                                if component[i + 6] in self.integers:
+                                                                    subscript = int(component[(i + 4): (i + 7)])
+                                                                else:
+                                                                    subscript = int(component[(i + 4): (i + 6)])
+                                                            except IndexError:
+                                                                subscript = int(component[(i + 4): (i + 6)])
+                                                        else:
+                                                            subscript = int(component[i + 4])
+                                                    except IndexError:
+                                                        subscript = int(component[i + 4])
+                                                else:
+                                                    subscript = 1
+                                            except IndexError:
+                                                subscript = 1
+
+                                            # Find subscript coefficient of complex ion
+                                            subCoefficient = self.getSubCoefficient(component)
+                                        else:
+                                            element = component[(i + 1): (i + 3)]
+                                            print("#DEBUG# 2", element)
+
+                                            # Check for subscript within brackets
+                                            try:
+                                                if component[i + 3] in self.integers:
+                                                    try:
+                                                        if component[i + 4] in self.integers:
+                                                            try:
+                                                                if component[i + 5] in self.integers:
+                                                                    subscript = int(component[(i + 3): (i + 6)])
+                                                                else:
+                                                                    subscript = int(component[(i + 3): (i + 5)])
+                                                            except IndexError:
+                                                                subscript = int(component[(i + 3): (i + 5)])
+                                                    except IndexError:
+                                                        subscript = int(component[i + 3])
+                                                else:
+                                                    subscript = 1
+                                            except IndexError:
+                                                subscript = 1
+
+                                            # Find subscript coefficient of complex ion
+                                            subCoefficient = self.getSubCoefficient(component)
+                                    except IndexError:
+                                        element = component[(i + 1): (i + 3)]
+
+                                        # Check for subscript within brackets
                                         try:
                                             if component[i + 3] in self.integers:
-                                                number = int(component[i + 1: i + 4])
+                                                try:
+                                                    if component[i + 4] in self.integers:
+                                                        try:
+                                                            if component[i + 5] in self.integers:
+                                                                subscript = int(component[(i + 3): (i + 6)])
+                                                            else:
+                                                                subscript = int(component[(i + 3): (i + 5)])
+                                                        except IndexError:
+                                                            subscript = int(component[(i + 3): (i + 5)])
+                                                except IndexError:
+                                                    subscript = int(component[i + 3])
+                                            else:
+                                                subscript = 1
                                         except IndexError:
-                                            number = int(component[i + 1: i + 3])
-                                    else:
-                                        number = int(component[i + 1])
-                                except IndexError:
-                                    number = int(component[i + 1])
-                            else:
-                                number = 1
-                        except IndexError:
-                            continue
-                except IndexError:
-                    element = component[i]
-                try:
-                    if element in countsDict:
-                        countsDict[element] += number * coefficient
-                    else:
-                        countsDict[element] = number * coefficient
-                    if element in totalDict:
-                        totalDict[element] += number * coefficient
-                    else:
-                        totalDict[element] = number * coefficient
-                except UnboundLocalError:
-                    continue
+                                            subscript = 1
 
-            else:
-                print("#DEBUG# ###################", )
-            print("#DEBUG# counts ", countsDict)
-            print("#DEBUG# total ", totalDict)
+                                        # Find subscript coefficient of complex ion
+                                        subCoefficient = self.getSubCoefficient(component)
+                                else:
+                                    element = component[i + 1]
+
+                                    # Check for subscript within brackets
+                                    try:
+                                        if component[i + 2] in self.integers:
+                                            try:
+                                                if component[i + 3] in self.integers:
+                                                    try:
+                                                        if component[i + 4] in self.integers:
+                                                            subscript = int(component[(i + 2): (i + 5)])
+                                                        else:
+                                                            subscript = int(component[(i + 2): (i + 4)])
+                                                    except IndexError:
+                                                        subscript = int(component[(i + 2): (i + 4)])
+                                            except IndexError:
+                                                subscript = int(component[i + 2])
+                                        else:
+                                            subscript = 1
+                                    except IndexError:
+                                        subscript = 1
+
+                                    # Find subscript coefficient of complex ion
+                                    subCoefficient = self.getSubCoefficient(component)
+                        except IndexError:
+                            print("User is stupid")
+                        try:
+                            if element in countsDict:
+                                countsDict[element] += subscript * subCoefficient * coefficient
+                            else:
+                                countsDict[element] = subscript * subCoefficient * coefficient
+                            if element in totalDict:
+                                totalDict[element] += subscript * subCoefficient * coefficient
+                            else:
+                                totalDict[element] = subscript * subCoefficient * coefficient
+                        except UnboundLocalError:
+                            continue
+                    else:
+                        print("#DEBUG# ###################", )
+                except IndexError:
+                    print("#DEBUG# underflow error")
+                print("#DEBUG# counts ", countsDict)
+                print("#DEBUG# total ", totalDict)
+        except IndexError:
+            None
 
     def balance(self):
         if self.balanced:
@@ -334,8 +594,7 @@ class ChemBalancer(QWidget):
                     print("#DEBUG# compound1: ", compound)
                     if dictionary[element] > 1:
                         compound += str(dictionary[element])
-                    else:
-                        pass
+
                     print("#DEBUG# compound2: ", compound)
                 equation += compound
                 equation += " + "
@@ -422,11 +681,9 @@ class ChemBalancer(QWidget):
                     compound += key
                     if self.left[index][key] != 1:
                         compound += str(self.left[index][key])
-                    else:
-                        continue
                 balancedEquation += compound
-                balancedEquation += ' + '
-            balancedEquation = balancedEquation[:len(balancedEquation) - 3] + ' = '
+                balancedEquation += " + "
+            balancedEquation = balancedEquation[:len(balancedEquation) - 3] + " = "
             for index in range(0, len(self.right)):
                 if rightCoefficients[index] != 1:
                     compound = str(rightCoefficients[index])
@@ -436,10 +693,8 @@ class ChemBalancer(QWidget):
                     compound += key
                     if self.right[index][key] != 1:
                         compound += str(self.right[index][key])
-                    else:
-                        continue
                 balancedEquation += compound
-                balancedEquation += ' + '
+                balancedEquation += " + "
             balancedEquation = balancedEquation[:len(balancedEquation) - 2]
             print(balancedEquation)
             return self.balancedLabel.setText(f"{balancedEquation}")
@@ -466,7 +721,6 @@ class ChemBalancer(QWidget):
         if len(self.totalRight) != 0:
             self.totalRight.clear()
 
-        self.integers = "0123456789"
         self.balanced = True
         if len(self.equationSplit) != 0:
             self.equationSplit.clear()
