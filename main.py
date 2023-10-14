@@ -7,6 +7,9 @@ from random import randint
 from math import gcd
 from functools import reduce
 
+import re
+from sympy import Matrix, lcm
+
 
 class ChemBox(QMainWindow):
     def __init__(self):
@@ -157,6 +160,161 @@ class IdealGasLaw(QWidget):
         else:
             self.resultLabelIGL.setText("wtf are you doing mate")
 
+
+class ChemBalancer(QWidget):
+    def __init__(self):
+        super(QWidget, self).__init__()
+        self.balancerLayout = QVBoxLayout()
+
+        self.equationInput = QLineEdit()
+        self.balanceButton = QPushButton()
+        self.balancedLabel = QLabel()
+
+        self.balancerLayout.addWidget(self.equationInput)
+        self.balancerLayout.addWidget(self.balanceButton)
+        self.balancerLayout.addWidget(self.balancedLabel)
+
+        self.balanceButton.clicked.connect(self.runBalancer)
+
+        self.strippedEquation = str()
+        self.equationSplit = list()
+
+        self.reactants = list()
+        self.products = list()
+
+        self.elementList = list()
+        self.elementMatrix = list()
+
+        self.balancedEquation = str()
+
+    def clearVariables(self):
+        if len(self.equationSplit) != 0:
+            self.equationSplit.clear()
+        if len(self.reactants) != 0:
+            self.reactants.clear()
+        if len(self.products) != 0:
+            self.products.clear()
+        if len(self.elementList) != 0:
+            self.elementList.clear()
+        if len(self.elementMatrix) != 0:
+            self.elementMatrix = []
+
+        self.reactants = ""
+        self.products = ""
+        self.balancedEquation = ""
+
+    def splitEquation(self):
+        # Strip equation from any whitespaces
+        self.strippedEquation = "".join(self.equationInput.text().split())
+        print(self.strippedEquation)
+
+        # Split equation into reactants (self.equationSplit[0]) and products (self.equationSplit[1])
+        self.equationSplit = self.strippedEquation.split("=")
+        print(self.equationSplit)
+
+        self.reactants = self.equationSplit[0].split("+")
+        print(self.reactants)
+        self.products = self.equationSplit[1].split("+")
+        print(self.products)
+
+    def findReagents(self, compound, index, side):
+        """
+        This Function removes brackets from the compounds and then calls self.findElements().
+
+        :param compound:
+        :param index:
+        :param side:
+        """
+        reagents = re.split("(\([A-Za-z0-9]*\)[0-9]*)", compound)
+        print(reagents)
+        for reagent in reagents:
+            print(reagent)
+            if reagent.startswith("("):
+                reagent = re.split("\)([0-9]*)", reagent)
+                bracketSubscript = int(reagent[1])
+                reagent = reagent[0][1:]
+                print(reagent, bracketSubscript)
+            else:
+                # Set bracketSubscript = 1 for reagents without brackets
+                bracketSubscript = 1
+            self.findElements(reagent, index, bracketSubscript, side)
+
+    def findElements(self, reagent, index, bracketSubscript, side):
+        # Separate Elements and Numbers
+        elementCounts = re.split("([A-Z][a-z]?)", reagent)
+        print(elementCounts)
+        i = 0
+        while i < len(elementCounts) - 1:
+            print(elementCounts)
+            i += 1
+            if len(elementCounts[i]) > 0:
+                if elementCounts[i + 1].isdigit():
+                    count = int(elementCounts[i + 1] * bracketSubscript)
+                    print(count)
+                    self.addToMatrix(elementCounts[i], index, count, side)
+                    i += 1
+                else:
+                    self.addToMatrix(elementCounts[i], index, bracketSubscript, side)
+
+    def addToMatrix(self, element, index, count, side):
+        print(element, index, count, side)
+        if index == len(self.elementMatrix):
+            print(self.elementMatrix)
+            self.elementMatrix.append([])
+            print(self.elementMatrix)
+            for x in self.elementList:
+                print(self.elementList)
+                self.elementMatrix[index].append(0)
+                print(self.elementMatrix)
+        if element not in self.elementList:
+            self.elementList.append(element)
+            for i in range(len(self.elementMatrix)):
+                self.elementMatrix[i].append(0)
+                print(self.elementMatrix)
+        column = self.elementList.index(element)
+        self.elementMatrix[index][column] += count * side
+        print(self.elementList)
+        print(self.elementMatrix)
+
+    def runBalancer(self):
+        # Clear variables, in case the program was run before
+        self.clearVariables()
+
+        self.splitEquation()
+        for i in range(len(self.reactants)):
+            self.findReagents(self.reactants[i], i, 1)
+        for i in range(len(self.products)):
+            self.findReagents(self.products[i], i + len(self.reactants), -1)
+        self.elementMatrix = Matrix(self.elementMatrix)
+        self.elementMatrix = self.elementMatrix.transpose()
+        num = self.elementMatrix.nullspace()[0]
+        print(num)
+        multiple = lcm([val.q for val in num])
+        num = multiple * num
+        print(num)
+
+        coefficient = num.tolist()
+
+        for i in range(len(self.reactants)):
+            if coefficient[i][0] != 1:
+                self.balancedEquation += str(coefficient[i][0]) + self.reactants[i]
+            else:
+                self.balancedEquation += self.reactants[i]
+            if i < len(self.reactants) - 1:
+                self.balancedEquation += " + "
+        self.balancedEquation += " --> "
+
+        for i in range(len(self.products)):
+            if coefficient[i + len(self.reactants)][0] != 1:
+                self.balancedEquation += str(coefficient[i + len(self.reactants)][0]) + self.products[i]
+            else:
+                self.balancedEquation += self.products[i]
+            if i < len(self.products) - 1:
+                self.balancedEquation += " + "
+        self.balancedLabel.setText(f"{self.balancedEquation}")
+
+
+"""
 
 class ChemBalancer(QWidget):
     def __init__(self):
@@ -730,6 +888,8 @@ class ChemBalancer(QWidget):
             self.reactantComponents.clear()
         if len(self.productComponents) != 0:
             self.productComponents.clear()
+
+"""
 
 
 class TabBar(QWidget):
