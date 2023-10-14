@@ -162,6 +162,14 @@ class IdealGasLaw(QWidget):
 
 
 class ChemBalancer(QWidget):
+    f"""
+    This module of the {ChemBox} is responsible for balancing chemical equations.
+    It parses user-provided chemical equations, identifies reactants and products, 
+    and calculates the coefficients to achieve a balanced equation.
+    The class utilizes SymPy for symbolic mathematics to find the null space and perform matrix operations, 
+    ensuring accurate and balanced chemical equations.
+    """
+
     def __init__(self):
         super(QWidget, self).__init__()
         self.balancerLayout = QVBoxLayout()
@@ -170,6 +178,7 @@ class ChemBalancer(QWidget):
         self.balanceButton = QPushButton()
         self.balancedLabel = QLabel()
 
+        # Add the widgets to the balancerLayout
         self.balancerLayout.addWidget(self.equationInput)
         self.balancerLayout.addWidget(self.balanceButton)
         self.balancerLayout.addWidget(self.balancedLabel)
@@ -188,6 +197,10 @@ class ChemBalancer(QWidget):
         self.balancedEquation = str()
 
     def clearVariables(self):
+        """
+        Clears all the used variables to avoid using data or values from previous calculations.
+        """
+
         if len(self.equationSplit) != 0:
             self.equationSplit.clear()
         if len(self.reactants) != 0:
@@ -204,6 +217,11 @@ class ChemBalancer(QWidget):
         self.balancedEquation = ""
 
     def splitEquation(self):
+        """
+        Takes {self.equationInput}, strips it from all the whitespaces
+        and splits it up into separate reactants and products.
+        """
+
         # Strip equation from any whitespaces
         self.strippedEquation = "".join(self.equationInput.text().split())
         print(self.strippedEquation)
@@ -219,12 +237,14 @@ class ChemBalancer(QWidget):
 
     def findReagents(self, compound, index, side):
         """
-        This Function removes brackets from the compounds and then calls self.findElements().
+        This Function finds separate reagents by removing brackets from the compounds
+        and then calls self.findElements().
 
-        :param compound:
-        :param index:
-        :param side:
+        :param compound: String of elements as compound (e.g. Ag3(Fe3O)4).
+        :param index: Index position of row in matrix.
+        :param side: "1" for reactants, "-1" for products.
         """
+        
         reagents = re.split("(\([A-Za-z0-9]*\)[0-9]*)", compound)
         print(reagents)
         for reagent in reagents:
@@ -237,14 +257,26 @@ class ChemBalancer(QWidget):
             else:
                 # Set bracketSubscript = 1 for reagents without brackets
                 bracketSubscript = 1
+
             self.findElements(reagent, index, bracketSubscript, side)
 
     def findElements(self, reagent, index, bracketSubscript, side):
+        """
+        Separates out elements and subscripts using a regex,
+        then loops through the elements and calls the function addToMatrix().
+
+        :param reagent: String of reagent (e.g. H2O).
+        :param index: Index position of row in matrix.
+        :param bracketSubscript: The subscript value outside the brackets. Equal to 1 if there are no brackets.
+        :param side: "1" for reactants, "-1" for products.
+        """
+
         # Separate Elements and Numbers
         elementCounts = re.split("([A-Z][a-z]?)", reagent)
         print(elementCounts)
         i = 0
-        while i < len(elementCounts) - 1:
+
+        while i < len(elementCounts) - 1:  # The last element is always blank
             print(elementCounts)
             i += 1
             if len(elementCounts[i]) > 0:
@@ -257,6 +289,16 @@ class ChemBalancer(QWidget):
                     self.addToMatrix(elementCounts[i], index, bracketSubscript, side)
 
     def addToMatrix(self, element, index, count, side):
+        """
+        It adds the provided element with a specified count to the matrix at the given index.
+        The 'side' parameter determines whether the element is part of the reactants (positive side)
+        or products (negative side) in the chemical equation.
+
+        :param element: The element symbol as in the periodic table (e.g. Na).
+        :param index: Index position of row in matrix.
+        :param count: Number of specific element to add to the matrix.
+        :param side: "1" for reactants, "-1" for products.
+        """
         print(element, index, count, side)
         if index == len(self.elementMatrix):
             print(self.elementMatrix)
@@ -266,25 +308,38 @@ class ChemBalancer(QWidget):
                 print(self.elementList)
                 self.elementMatrix[index].append(0)
                 print(self.elementMatrix)
+
         if element not in self.elementList:
             self.elementList.append(element)
             for i in range(len(self.elementMatrix)):
                 self.elementMatrix[i].append(0)
                 print(self.elementMatrix)
+
         column = self.elementList.index(element)
         self.elementMatrix[index][column] += count * side
         print(self.elementList)
         print(self.elementMatrix)
 
     def runBalancer(self):
+        """
+        This the core function of the ChemBalancer class,
+        responsible for balancing chemical equations.
+        It parses the user-provided equation, deciphers compounds,
+        constructs a matrix, finds the null space for balancing coefficients,
+        and computes the balanced equation.
+        This function leverages SymPy for mathematical operations, ensuring accurate chemical equation balancing.
+        """
+
         # Clear variables, in case the program was run before
         self.clearVariables()
 
         self.splitEquation()
+
         for i in range(len(self.reactants)):
             self.findReagents(self.reactants[i], i, 1)
         for i in range(len(self.products)):
             self.findReagents(self.products[i], i + len(self.reactants), -1)
+
         self.elementMatrix = Matrix(self.elementMatrix)
         self.elementMatrix = self.elementMatrix.transpose()
         num = self.elementMatrix.nullspace()[0]
