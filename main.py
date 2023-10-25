@@ -348,7 +348,10 @@ class ChemBalancer(QWidget):
 
         self.elementMatrix = Matrix(self.elementMatrix)
         self.elementMatrix = self.elementMatrix.transpose()
-        num = self.elementMatrix.nullspace()[0]
+        try:
+            num = self.elementMatrix.nullspace()[0]
+        except IndexError:
+            return None
         print(num)
         multiple = lcm([val.q for val in num])
         num = multiple * num
