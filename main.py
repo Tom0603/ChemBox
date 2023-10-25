@@ -16,10 +16,10 @@ class ChemBox(QMainWindow):
         super().__init__()
 
         # set window properties
-        self.left = 100
-        self.top = 0
-        self.width = 1920
-        self.height = 1080
+        self.left = 300
+        self.top = 300
+        self.width = 800
+        self.height = 480
         self.title = "ChemBox"
         self.setWindowTitle(self.title)
         self.setGeometry(self.left, self.top, self.width, self.height)
