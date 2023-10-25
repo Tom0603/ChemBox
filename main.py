@@ -223,16 +223,25 @@ class ChemBalancer(QWidget):
         """
 
         # Strip equation from any whitespaces
-        self.strippedEquation = "".join(self.equationInput.text().split())
+        try:
+            self.strippedEquation = "".join(self.equationInput.text().split())
+        except IndexError:
+            return None
         print(self.strippedEquation)
 
         # Split equation into reactants (self.equationSplit[0]) and products (self.equationSplit[1])
         self.equationSplit = self.strippedEquation.split("=")
         print(self.equationSplit)
 
-        self.reactants = self.equationSplit[0].split("+")
+        try:
+            self.reactants = self.equationSplit[0].split("+")
+        except IndexError:
+            return None
         print(self.reactants)
-        self.products = self.equationSplit[1].split("+")
+        try:
+            self.products = self.equationSplit[1].split("+")
+        except IndexError:
+            return None
         print(self.products)
 
     def findReagents(self, compound, index, side):
@@ -244,21 +253,25 @@ class ChemBalancer(QWidget):
         :param index: Index position of row in matrix.
         :param side: "1" for reactants, "-1" for products.
         """
-        
-        reagents = re.split("(\([A-Za-z0-9]*\)[0-9]*)", compound)
-        print(reagents)
-        for reagent in reagents:
-            print(reagent)
-            if reagent.startswith("("):
-                reagent = re.split("\)([0-9]*)", reagent)
-                bracketSubscript = int(reagent[1])
-                reagent = reagent[0][1:]
-                print(reagent, bracketSubscript)
-            else:
-                # Set bracketSubscript = 1 for reagents without brackets
-                bracketSubscript = 1
 
-            self.findElements(reagent, index, bracketSubscript, side)
+        # Split the compound by parentheses
+        reagents = re.split("(\([A-Za-z0-9]*\)[0-9]*)", compound)
+        for reagent in reagents:
+            if reagent.startswith("("):
+                # Extract the element within parentheses
+                inner_compound = reagent[1:-1]
+                # Get the subscript outside the brackets
+                bracketSubscript = reagent.split(")", 1)[-1]
+                if bracketSubscript:
+                    bracketSubscript = int(bracketSubscript)
+                else:
+                    bracketSubscript = 1
+                # Recursively find elements within the inner compound
+                self.findElements(inner_compound, index, bracketSubscript, side)
+            else:
+                # No brackets, directly find elements
+                bracketSubscript = 1
+                self.findElements(reagent, index, bracketSubscript, side)
 
     def findElements(self, reagent, index, bracketSubscript, side):
         """
@@ -271,22 +284,15 @@ class ChemBalancer(QWidget):
         :param side: "1" for reactants, "-1" for products.
         """
 
-        # Separate Elements and Numbers
-        elementCounts = re.split("([A-Z][a-z]?)", reagent)
-        print(elementCounts)
-        i = 0
-
-        while i < len(elementCounts) - 1:  # The last element is always blank
-            print(elementCounts)
-            i += 1
-            if len(elementCounts[i]) > 0:
-                if elementCounts[i + 1].isdigit():
-                    count = int(elementCounts[i + 1] * bracketSubscript)
-                    print(count)
-                    self.addToMatrix(elementCounts[i], index, count, side)
-                    i += 1
-                else:
-                    self.addToMatrix(elementCounts[i], index, bracketSubscript, side)
+        # Use regex to separate elements and subscripts
+        elementCounts = re.findall("([A-Z][a-z]*)([0-9]*)", reagent)
+        for element, subscript in elementCounts:
+            if not subscript:
+                subscript = 1
+            else:
+                subscript = int(subscript)
+            # Call addToMatrix for each element
+            self.addToMatrix(element, index, bracketSubscript * subscript, side)
 
     def addToMatrix(self, element, index, count, side):
         """
