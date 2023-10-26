@@ -33,8 +33,95 @@ class ChemBox(QMainWindow):
         self.chemBalancer = ChemBalancer()
         self.tabBar.tab3.setLayout(self.chemBalancer.balancerLayout)
 
+        self.amountOfSubstance = AmountOfSubstance()
+        self.tabBar.tab4.setLayout(self.amountOfSubstance.aosLayout)
+
         # self.interactiveTable = InteractiveTable()
         # self.tabBar.tab2.setLayout(self.interactiveTable.tableLayout)
+
+
+class AmountOfSubstance(QWidget):
+    def __init__(self):
+        super(QWidget, self).__init__()
+        self.aosLayout = QGridLayout()
+
+        # Unit conversions
+        self.massConversions = {
+            "mg": 0.001,
+            "g": 1,
+            "kg": 1000,
+            "t": 1000000
+        }
+
+        self.moleConversions = {
+            "μmol": 0.000001,
+            "mmol": 0.001,
+            "mol": 1,
+        }
+
+        # Initialise moles calculation Layout
+        self.molesLabel = QLabel("Moles:")
+        self.massLabel = QLabel("Mass:")
+        self.mrLabel = QLabel("Molecular weight:")
+
+        self.molesInput = QLineEdit()
+        self.massInput = QLineEdit()
+        self.mrInput = QLineEdit()
+
+        self.calculateButton = QPushButton("Calculate")
+        self.calculateButton.clicked.connect(self.molesCalculation)
+
+        self.massUnitDropdown = QComboBox()
+        self.massUnitDropdown.addItem("mg")
+        self.massUnitDropdown.addItem("g")
+        self.massUnitDropdown.addItem("kg")
+        self.massUnitDropdown.addItem("t")
+
+        self.molesUnitDropdown = QComboBox()
+        self.molesUnitDropdown.addItem("μmol")
+        self.molesUnitDropdown.addItem("mmol")
+        self.molesUnitDropdown.addItem("mol")
+
+        self.aosLayout.addWidget(self.molesLabel, 0, 0)
+        self.aosLayout.addWidget(self.massLabel, 1, 0)
+        self.aosLayout.addWidget(self.mrLabel, 2, 0)
+
+        self.aosLayout.addWidget(self.molesInput, 0, 1)
+        self.aosLayout.addWidget(self.massInput, 1, 1)
+        self.aosLayout.addWidget(self.mrInput, 2, 1)
+
+        self.aosLayout.addWidget(self.molesUnitDropdown, 0, 2)
+        self.aosLayout.addWidget(self.massUnitDropdown, 1, 2)
+
+        self.aosLayout.addWidget(self.calculateButton, 3, 1)
+
+    def getMolesLayout(self):
+        pass
+
+    def molesCalculation(self):
+        massUnit = self.massUnitDropdown.currentText()
+        molesUnit = self.molesUnitDropdown.currentText()
+
+        if self.molesInput.text() == "":
+            try:
+                moles = (float(self.massInput.text()) * self.massConversions[massUnit]) / float(self.mrInput.text())
+                self.molesInput.setText(str(moles))
+                self.molesUnitDropdown.setCurrentText("mol")
+            except ValueError:
+                print("Value Error")
+        if self.massInput.text() == "":
+            try:
+                mass = (float(self.molesInput.text()) * self.moleConversions[molesUnit]) * float(self.mrInput.text())
+                self.massInput.setText(str(mass))
+            except ValueError:
+                print("Value Error")
+        if self.mrInput.text() == "":
+            try:
+                mr = (float(self.massInput.text()) * self.massConversions[massUnit]) / (
+                        float(self.molesInput.text()) * self.moleConversions[molesUnit])
+                self.mrInput.setText(str(mr))
+            except ValueError:
+                print("Value Error")
 
 
 class IdealGasLaw(QWidget):
@@ -175,7 +262,7 @@ class ChemBalancer(QWidget):
         self.balancerLayout = QVBoxLayout()
 
         self.equationInput = QLineEdit()
-        self.balanceButton = QPushButton()
+        self.balanceButton = QPushButton("Balance")
         self.balancedLabel = QLabel()
 
         # Add the widgets to the balancerLayout
@@ -366,7 +453,7 @@ class ChemBalancer(QWidget):
                 self.balancedEquation += self.reactants[i]
             if i < len(self.reactants) - 1:
                 self.balancedEquation += " + "
-        self.balancedEquation += " --> "
+        self.balancedEquation += " = "
 
         for i in range(len(self.products)):
             if coefficient[i + len(self.reactants)][0] != 1:
@@ -375,585 +462,7 @@ class ChemBalancer(QWidget):
                 self.balancedEquation += self.products[i]
             if i < len(self.products) - 1:
                 self.balancedEquation += " + "
-        self.balancedLabel.setText(f"{self.balancedEquation}")
-
-
-"""
-
-class ChemBalancer(QWidget):
-    def __init__(self):
-        super(QWidget, self).__init__()
-        self.balancerLayout = QVBoxLayout()
-
-        self.equationInput = QLineEdit()
-        self.balanceButton = QPushButton()
-        self.balancedLabel = QLabel()
-
-        self.left = list()
-        self.right = list()
-        self.totalLeft = dict()
-        self.totalRight = dict()
-
-        self.integers = "0123456789"
-        self.balanced = True
-        self.equationSplit = list()
-        self.reactants = str()
-        self.products = str()
-
-        self.reactantComponents = list()
-        self.productComponents = list()
-
-        self.balancerLayout.addWidget(self.equationInput)
-        self.balancerLayout.addWidget(self.balanceButton)
-        self.balancerLayout.addWidget(self.balancedLabel)
-
-        self.balanceButton.clicked.connect(self.runBalancer)
-
-    def runBalancer(self):
-        print("#DEBUG# SPLIT")
-        self.splitEquation()
-        print("#DEBUG# GET REACTANTS")
-        self.getReactants()
-        print("#DEBUG# GET PRODUCTS")
-        self.getProducts()
-
-        for key in self.totalLeft:
-            print(key)
-            if self.totalLeft[key] != self.totalRight[key]:
-                self.balanced = False
-                print(self.balanced)
-            else:
-                print(self.balanced)
-                continue
-
-        print(self.balance())
-
-    def splitEquation(self):
-        self.clearVariables()
-
-        self.equationSplit = self.equationInput.text().split(" = ")
-
-        print("#DEBUG# ", self.equationSplit)
-
-        self.reactants = self.equationSplit[0]
-
-        print("#DEBUG# ", self.reactants)
-
-        try:
-            self.products = self.equationSplit[1]
-        except IndexError:
-            print("User isn't the brightest")
-
-        print("#DEBUG# ", self.products)
-
-        self.reactantComponents = self.reactants.split(" + ")
-        self.productComponents = self.products.split(" + ")
-
-        print("#DEBUG# ", self.reactantComponents)
-        print("#DEBUG# ", self.productComponents)
-
-    def getSubCoefficient(self, component):
-        # Find subscript coefficient of complex ion
-        for j in range(len(component)):
-            if component[j] == ")":
-                try:
-                    if component[j + 1] in self.integers:
-                        try:
-                            if component[j + 2] in self.integers:
-                                try:
-                                    if component[j + 3] in self.integers:
-                                        subCoefficient = component[(j + 1): (j + 4)]
-                                    else:
-                                        subCoefficient = component[(j + 1): (j + 3)]
-                                except IndexError:
-                                    subCoefficient = component[(j + 1): (j + 3)]
-                            else:
-                                subCoefficient = component[j + 1]
-                        except IndexError:
-                            subCoefficient = component[j + 1]
-                    else:
-                        subCoefficient = 1
-                except IndexError:
-                    subCoefficient = 1
-        return subCoefficient
-
-    def parseComponent(self, component, countsDict, totalDict):
-        # Check for coefficient
-        try:
-            if component[0] in self.integers:
-                print("#DEBUG# GOT COEFFICIENT")
-                try:
-                    if component[0 + 1] in self.integers:
-                        try:
-                            if component[0 + 2] in self.integers:
-                                coefficient = int(component[0: 0 + 3])
-                            else:
-                                coefficient = int(component[0: 0 + 2])
-                        except IndexError:
-                            coefficient = int(component[0: 0 + 2])
-                    else:
-                        coefficient = int(component[0])
-                except IndexError:
-                    coefficient = int(component[0])
-            else:
-                print("#DEBUG# NO COEFFICIENT")
-                coefficient = 1
-
-            openBracket = component.find("(")
-            closedBracket = component.find(")")
-            print("#DEBUG# OPENBRACKET ", openBracket)
-            print("#DEBUG# CLOSEDBRACKET ", closedBracket)
-
-            for i in range(len(component)):
-                print("#DEBUG# ", component)
-                print("#DEBUG# i = ", component[i])
-                print("#DEBUG# INDEX ", i)
-                try:
-                    openBracket = component.find("(")
-                    closedBracket = component.find(")")
-                except IndexError:
-                    continue
-                try:
-                    if component[i].isupper() and component[i - 1] != "(":
-                        try:
-                            if component[i + 1].islower():
-                                try:
-                                    if component[i + 2].islower():
-                                        element = component[i:(i + 3)]
-                                        print("#DEBUG# 1", element)
-                                        if openBracket < i < closedBracket:
-                                            subCoefficient = self.getSubCoefficient(component)
-                                        else:
-                                            subCoefficient = 1
-
-                                        # Check for subscript
-                                        try:
-                                            if component[i + 3] in self.integers:
-                                                try:
-                                                    if component[i + 4] in self.integers:
-                                                        try:
-                                                            if component[i + 5] in self.integers:
-                                                                subscript = int(component[(i + 3): (i + 6)])
-                                                            else:
-                                                                subscript = int(component[(i + 3): (i + 5)])
-                                                        except IndexError:
-                                                            subscript = int(component[(i + 3): (i + 5)])
-                                                    else:
-                                                        subscript = int(component[i + 3])
-                                                except IndexError:
-                                                    subscript = int(component[i + 3])
-                                            else:
-                                                subscript = 1
-                                        except IndexError:
-                                            subscript = 1
-                                    else:
-                                        element = component[i:(i + 2)]
-                                        print("#DEBUG# 2", element)
-
-                                        if openBracket < i < closedBracket:
-                                            subCoefficient = self.getSubCoefficient(component)
-                                        else:
-                                            subCoefficient = 1
-
-                                        # Check for subscript
-                                        try:
-                                            if component[i + 2] in self.integers:
-                                                try:
-                                                    if component[i + 3] in self.integers:
-                                                        try:
-                                                            if component[i + 4] in self.integers:
-                                                                subscript = int(component[(i + 2): (i + 5)])
-                                                        except IndexError:
-                                                            subscript = int(component[(i + 2): (i + 4)])
-                                                except IndexError:
-                                                    subscript = int(component[i + 2])
-                                            else:
-                                                subscript = 1
-                                        except IndexError:
-                                            subscript = 1
-                                except IndexError:
-                                    element = component[i:(i + 2)]
-                                    print("#DEBUG# INDEX ERROR ", element)
-
-                                    if openBracket < i < closedBracket:
-                                        subCoefficient = self.getSubCoefficient(component)
-                                    else:
-                                        subCoefficient = 1
-                            else:
-                                element = component[i]
-                                print("#DEBUG# 3", element)
-
-                                if openBracket < i < closedBracket:
-                                    subCoefficient = self.getSubCoefficient(component)
-                                else:
-                                    subCoefficient = 1
-                                print("#DEBUG# subCo ", subCoefficient)
-                                try:
-                                    print("#DEBUG# IN TRY")
-
-                                    # Check for subscript
-                                    if component[i + 1] in self.integers:
-                                        print("#DEBUG# IN TRY IF")
-                                        try:
-                                            if component[i + 2] in self.integers:
-                                                print("#DEBUG# IN TRY IF2")
-                                                try:
-                                                    if component[i + 3] in self.integers:
-                                                        subscript = int(component[i + 1: i + 4])
-                                                except IndexError:
-                                                    subscript = int(component[i + 1: i + 3])
-                                            else:
-                                                subscript = int(component[i + 1])
-                                        except IndexError:
-                                            subscript = int(component[i + 1])
-                                    else:
-                                        subscript = 1
-                                except IndexError:
-                                    subscript = 1
-                        except IndexError:
-                            element = component[i]
-                            print("#DEBUG# FUCKING I ", i)
-
-                            if openBracket < i < closedBracket:
-                                subCoefficient = self.getSubCoefficient(component)
-                            else:
-                                subCoefficient = 1
-
-                            try:
-                                print("#DEBUG# IN TRY")
-
-                                # Check for subscript
-                                if component[i + 1] in self.integers:
-                                    print("#DEBUG# IN TRY IF")
-                                    try:
-                                        if component[i + 2] in self.integers:
-                                            print("#DEBUG# IN TRY IF2")
-                                            try:
-                                                if component[i + 3] in self.integers:
-                                                    subscript = int(component[i + 1: i + 4])
-                                            except IndexError:
-                                                subscript = int(component[i + 1: i + 3])
-                                        else:
-                                            subscript = int(component[i + 1])
-                                    except IndexError:
-                                        subscript = int(component[i + 1])
-                                else:
-                                    subscript = 1
-                            except IndexError:
-                                subscript = 1
-                            print("#DEBUG# SUBCOEEFEFEFEF ", subCoefficient)
-                            print("#DEBUG# SUBSCIRITPT ", subscript)
-                        try:
-                            if element in countsDict:
-                                countsDict[element] = int(countsDict[element]) + subscript * coefficient * subCoefficient
-                            else:
-                                countsDict[element] = subscript * coefficient * subCoefficient
-
-                            if element in totalDict:
-                                totalDict[element] = int(totalDict[element]) + subscript * coefficient * subCoefficient
-                            else:
-                                totalDict[element] = subscript * coefficient * subCoefficient
-                        except UnboundLocalError:
-                            continue
-
-                    # Check for brackets / complex ion in equation
-                    elif component[i] == "(":
-                        try:
-                            if component[i + 2] == ")":
-                                element = component[i + 1]
-                                try:
-                                    if component[i + 3] in self.integers:
-                                        try:
-                                            if component[i + 4] in self.integers:
-                                                try:
-                                                    if component[i + 5] in self.integers:
-                                                        subscript = int(component[(i + 3): (i + 6)])
-                                                    else:
-                                                        subscript = int(component[(i + 3): (i + 5)])
-                                                except IndexError:
-                                                    subscript = int(component[(i + 3): (i + 5)])
-                                            else:
-                                                subscript = int(component[(i + 3): (i + 4)])
-                                        except IndexError:
-                                            subscript = int(component[i + 3])
-                                    else:
-                                        subscript = 1
-                                except IndexError:
-                                    subscript = 1
-                            elif component[i + 1].isupper():
-                                if component[i + 2].islower():
-                                    try:
-                                        if component[i + 3].islower():
-                                            element = component[(i + 1): (i + 4)]
-
-                                            # Check for subscript within brackets
-                                            try:
-                                                if component[i + 4] in self.integers:
-                                                    try:
-                                                        if component[i + 5] in self.integers:
-                                                            try:
-                                                                if component[i + 6] in self.integers:
-                                                                    subscript = int(component[(i + 4): (i + 7)])
-                                                                else:
-                                                                    subscript = int(component[(i + 4): (i + 6)])
-                                                            except IndexError:
-                                                                subscript = int(component[(i + 4): (i + 6)])
-                                                        else:
-                                                            subscript = int(component[i + 4])
-                                                    except IndexError:
-                                                        subscript = int(component[i + 4])
-                                                else:
-                                                    subscript = 1
-                                            except IndexError:
-                                                subscript = 1
-
-                                            # Find subscript coefficient of complex ion
-                                            subCoefficient = self.getSubCoefficient(component)
-                                        else:
-                                            element = component[(i + 1): (i + 3)]
-                                            print("#DEBUG# 2", element)
-
-                                            # Check for subscript within brackets
-                                            try:
-                                                if component[i + 3] in self.integers:
-                                                    try:
-                                                        if component[i + 4] in self.integers:
-                                                            try:
-                                                                if component[i + 5] in self.integers:
-                                                                    subscript = int(component[(i + 3): (i + 6)])
-                                                                else:
-                                                                    subscript = int(component[(i + 3): (i + 5)])
-                                                            except IndexError:
-                                                                subscript = int(component[(i + 3): (i + 5)])
-                                                    except IndexError:
-                                                        subscript = int(component[i + 3])
-                                                else:
-                                                    subscript = 1
-                                            except IndexError:
-                                                subscript = 1
-
-                                            # Find subscript coefficient of complex ion
-                                            subCoefficient = self.getSubCoefficient(component)
-                                    except IndexError:
-                                        element = component[(i + 1): (i + 3)]
-
-                                        # Check for subscript within brackets
-                                        try:
-                                            if component[i + 3] in self.integers:
-                                                try:
-                                                    if component[i + 4] in self.integers:
-                                                        try:
-                                                            if component[i + 5] in self.integers:
-                                                                subscript = int(component[(i + 3): (i + 6)])
-                                                            else:
-                                                                subscript = int(component[(i + 3): (i + 5)])
-                                                        except IndexError:
-                                                            subscript = int(component[(i + 3): (i + 5)])
-                                                except IndexError:
-                                                    subscript = int(component[i + 3])
-                                            else:
-                                                subscript = 1
-                                        except IndexError:
-                                            subscript = 1
-
-                                        # Find subscript coefficient of complex ion
-                                        subCoefficient = self.getSubCoefficient(component)
-                                else:
-                                    element = component[i + 1]
-
-                                    # Check for subscript within brackets
-                                    try:
-                                        if component[i + 2] in self.integers:
-                                            try:
-                                                if component[i + 3] in self.integers:
-                                                    try:
-                                                        if component[i + 4] in self.integers:
-                                                            subscript = int(component[(i + 2): (i + 5)])
-                                                        else:
-                                                            subscript = int(component[(i + 2): (i + 4)])
-                                                    except IndexError:
-                                                        subscript = int(component[(i + 2): (i + 4)])
-                                            except IndexError:
-                                                subscript = int(component[i + 2])
-                                        else:
-                                            subscript = 1
-                                    except IndexError:
-                                        subscript = 1
-
-                                    # Find subscript coefficient of complex ion
-                                    subCoefficient = self.getSubCoefficient(component)
-                        except IndexError:
-                            print("User is stupid")
-                        try:
-                            if element in countsDict:
-                                countsDict[element] += subscript * subCoefficient * coefficient
-                            else:
-                                countsDict[element] = subscript * subCoefficient * coefficient
-                            if element in totalDict:
-                                totalDict[element] += subscript * subCoefficient * coefficient
-                            else:
-                                totalDict[element] = subscript * subCoefficient * coefficient
-                        except UnboundLocalError:
-                            continue
-                    else:
-                        print("#DEBUG# ###################", )
-                except IndexError:
-                    print("#DEBUG# underflow error")
-                print("#DEBUG# counts ", countsDict)
-                print("#DEBUG# total ", totalDict)
-        except IndexError:
-            None
-
-    def balance(self):
-        if self.balanced:
-            equation = str()
-            for dictionary in self.left:
-                compound = str()
-                print("#DEBUG# dictionary: ", dictionary)
-                for element in dictionary:
-                    print("#DEBUG# element: ", element)
-                    compound += element
-                    print("#DEBUG# compound1: ", compound)
-                    if dictionary[element] > 1:
-                        compound += str(dictionary[element])
-
-                    print("#DEBUG# compound2: ", compound)
-                equation += compound
-                equation += " + "
-                print("#DEBUG# equation: ", equation)
-            equation = equation[:len(equation) - 3] + " = "
-            print("#DEBUG# equation final ", equation)
-
-            for dictionary in self.right:
-                compound = str()
-                print("#DEBUG# dictionary: ", dictionary)
-                for element in dictionary:
-                    print("#DEBUG# element: ", element)
-                    compound += element
-                    print("#DEBUG# compound1: ", compound)
-                    if dictionary[element] > 1:
-                        compound += str(dictionary[element])
-                    else:
-                        pass
-                    print("#DEBUG# compound2: ", compound)
-                equation += compound
-                equation += " + "
-                print("#DEBUG# equation: ", equation)
-            equation = equation[:len(equation) - 2]
-            print("#DEBUG# equation final ", equation)
-        else:
-            while not self.balanced:
-                tempLeft = list()
-                tempRight = list()
-                totalLeft = dict()
-                totalRight = dict()
-
-                for item in self.left:
-                    newDict = dict()
-                    for key in item:
-                        newDict[key] = item[key]
-                    tempLeft.append(newDict)
-
-                for item in self.right:
-                    newDict = dict()
-                    for key in item:
-                        newDict[key] = item[key]
-                    tempRight.append(newDict)
-
-                leftCoefficients = [randint(1, 10) for _ in range(len(tempLeft))]
-                rightCoefficients = [randint(1, 10) for _ in range(len(tempRight))]
-
-                for index in range(0, len(leftCoefficients)):
-                    for key in tempLeft[index]:
-                        tempLeft[index][key] *= leftCoefficients[index]
-                        if key not in totalLeft:
-                            totalLeft[key] = tempLeft[index][key]
-                        else:
-                            totalLeft[key] += tempLeft[index][key]
-
-                for index in range(0, len(rightCoefficients)):
-                    for key in tempRight[index]:
-                        tempRight[index][key] *= rightCoefficients[index]
-                        if key not in totalRight:
-                            totalRight[key] = tempRight[index][key]
-                        else:
-                            totalRight[key] += tempRight[index][key]
-
-                self.balanced = True
-                for key in totalLeft:
-                    if totalLeft[key] != totalRight[key]:
-                        self.balanced = False
-                    else:
-                        continue
-
-            bigTup = tuple(leftCoefficients + rightCoefficients)
-            print("## Big tup:", bigTup)
-            leftCoefficients = list(map(lambda x: int(x / reduce(gcd, bigTup)), leftCoefficients))
-            rightCoefficients = list(map(lambda x: int(x / reduce(gcd, bigTup)), rightCoefficients))
-            print("## left co:", leftCoefficients)
-            print("## right co:", rightCoefficients)
-
-            balancedEquation = str()
-            for index in range(0, len(self.left)):
-                if leftCoefficients[index] != 1:
-                    compound = str(leftCoefficients[index])
-                else:
-                    compound = str()
-                for key in self.left[index]:
-                    compound += key
-                    if self.left[index][key] != 1:
-                        compound += str(self.left[index][key])
-                balancedEquation += compound
-                balancedEquation += " + "
-            balancedEquation = balancedEquation[:len(balancedEquation) - 3] + " = "
-            for index in range(0, len(self.right)):
-                if rightCoefficients[index] != 1:
-                    compound = str(rightCoefficients[index])
-                else:
-                    compound = str()
-                for key in self.right[index]:
-                    compound += key
-                    if self.right[index][key] != 1:
-                        compound += str(self.right[index][key])
-                balancedEquation += compound
-                balancedEquation += " + "
-            balancedEquation = balancedEquation[:len(balancedEquation) - 2]
-            print(balancedEquation)
-            return self.balancedLabel.setText(f"{balancedEquation}")
-
-    def getReactants(self):
-        for component in self.reactantComponents:
-            leftCounts = dict()
-            self.parseComponent(component, leftCounts, self.totalLeft)
-            self.left.append(leftCounts)
-
-    def getProducts(self):
-        for component in self.productComponents:
-            rightCounts = dict()
-            self.parseComponent(component, rightCounts, self.totalRight)
-            self.right.append(rightCounts)
-
-    def clearVariables(self):
-        if len(self.left) != 0:
-            self.left.clear()
-        if len(self.right) != 0:
-            self.right.clear()
-        if len(self.totalLeft) != 0:
-            self.totalLeft.clear()
-        if len(self.totalRight) != 0:
-            self.totalRight.clear()
-
-        self.balanced = True
-        if len(self.equationSplit) != 0:
-            self.equationSplit.clear()
-        self.reactants = ""
-        self.products = ""
-        if len(self.reactantComponents) != 0:
-            self.reactantComponents.clear()
-        if len(self.productComponents) != 0:
-            self.productComponents.clear()
-
-"""
+        self.equationInput.setText(f"{self.balancedEquation}")
 
 
 class TabBar(QWidget):

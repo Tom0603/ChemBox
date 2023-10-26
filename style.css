@@ -1,4 +1,8 @@
 
+QTabWidget::tab-bar {
+    alignment: center;
+}
+
 QTabBar::tab:selected {
     background-color: darkgray; /* Background color when the tab is selected */
 }
