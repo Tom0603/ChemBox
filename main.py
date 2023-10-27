@@ -3,10 +3,6 @@ import sys
 from PyQt5.QtWidgets import QApplication, QMainWindow, QTabWidget, QGridLayout, QWidget, QPushButton, \
     QLineEdit, QLabel, QComboBox, QHBoxLayout, QVBoxLayout, QTableWidget, QTableWidgetItem
 
-from random import randint
-from math import gcd
-from functools import reduce
-
 import re
 from sympy import Matrix, lcm
 
@@ -27,14 +23,20 @@ class ChemBox(QMainWindow):
         self.tabBar = TabBar()
         self.setCentralWidget(self.tabBar)
 
+        self.sideBar = SideBar()
+
+        self.tabBar.tab1.setLayout(self.sideBar.mainLayout)
+
+        # Initialise moles tab in sidebar
+        self.amountOfSubstance = AmountOfSubstance()
+        self.sideBar.molesTab.setLayout(self.amountOfSubstance.aosLayout)
+
+        # Initialise igl tab in sidebar
         self.idealGasLaw = IdealGasLaw()
-        self.tabBar.tab1.setLayout(self.idealGasLaw.idealGasLayout)
+        self.sideBar.idealGasTab.setLayout(self.idealGasLaw.idealGasLayout)
 
         self.chemBalancer = ChemBalancer()
         self.tabBar.tab3.setLayout(self.chemBalancer.balancerLayout)
-
-        self.amountOfSubstance = AmountOfSubstance()
-        self.tabBar.tab4.setLayout(self.amountOfSubstance.aosLayout)
 
         # self.interactiveTable = InteractiveTable()
         # self.tabBar.tab2.setLayout(self.interactiveTable.tableLayout)
@@ -468,6 +470,7 @@ class ChemBalancer(QWidget):
 class TabBar(QWidget):
     def __init__(self):
         super(QWidget, self).__init__()
+
         self.layout = QHBoxLayout(self)
 
         self.tabs = QTabWidget()
@@ -476,7 +479,7 @@ class TabBar(QWidget):
         self.tab3 = QWidget()
         self.tab4 = QWidget()
         self.tab5 = QWidget()
-        self.tabs.addTab(self.tab1, "Ideal Gas Law")
+        self.tabs.addTab(self.tab1, "Amount of Substance")
         self.tabs.addTab(self.tab2, "Tab2")
         self.tabs.addTab(self.tab3, "Balancer")
         self.tabs.addTab(self.tab4, "Tab4")
@@ -484,6 +487,100 @@ class TabBar(QWidget):
 
         self.layout.addWidget(self.tabs)
         self.setLayout(self.layout)
+
+
+class SideBar(QWidget):
+    def __init__(self):
+        super(QWidget, self).__init__()
+
+        self.sideBarLayout = QVBoxLayout()
+
+        # Create buttons
+        self.molesTabButton = QPushButton("Moles")
+        self.concTabButton = QPushButton("Concentration")
+        self.gasVolTabButton = QPushButton("Molar gas volume")
+        self.numParticlesTabButton = QPushButton("Number of particles")
+        self.idealGasTabButton = QPushButton("Ideal gas equation")
+        self.atomEconTabButton = QPushButton("Atom economy")
+        self.percYieldTabButton = QPushButton("% Yield")
+
+        self.molesTabButton.clicked.connect(self.molesButton)
+        self.concTabButton.clicked.connect(self.concButton)
+        self.gasVolTabButton.clicked.connect(self.gasVolButton)
+        self.numParticlesTabButton.clicked.connect(self.numParticlesButton)
+        self.idealGasTabButton.clicked.connect(self.idealGasButton)
+        self.atomEconTabButton.clicked.connect(self.atomEconButton)
+        self.percYieldTabButton.clicked.connect(self.percYieldButton)
+
+        # Create tabs
+        self.molesTab = QWidget()
+        self.concTab = QWidget()
+        self.gasVolTab = QWidget()
+        self.numParticlesTab = QWidget()
+        self.idealGasTab = QWidget()
+        self.atomEconTab = QWidget()
+        self.percYieldTab = QWidget()
+
+        # Add buttons to sidebar layout
+        self.sideBarLayout.addWidget(self.molesTabButton)
+        self.sideBarLayout.addWidget(self.concTabButton)
+        self.sideBarLayout.addWidget(self.gasVolTabButton)
+        self.sideBarLayout.addWidget(self.numParticlesTabButton)
+        self.sideBarLayout.addWidget(self.idealGasTabButton)
+        self.sideBarLayout.addWidget(self.atomEconTabButton)
+        self.sideBarLayout.addWidget(self.percYieldTabButton)
+
+        self.sideBarWidget = QWidget()
+        self.sideBarWidget.setLayout(self.sideBarLayout)
+
+        self.pageWidget = QTabWidget()
+
+        self.pageWidget.addTab(self.molesTab, "")
+        self.pageWidget.addTab(self.concTab, "")
+        self.pageWidget.addTab(self.gasVolTab, "")
+        self.pageWidget.addTab(self.numParticlesTab, "")
+        self.pageWidget.addTab(self.idealGasTab, "")
+        self.pageWidget.addTab(self.atomEconTab, "")
+        self.pageWidget.addTab(self.percYieldTab, "")
+
+        self.pageWidget.setCurrentIndex(0)
+        self.pageWidget.setStyleSheet('''QTabBar::tab{
+        width: 0; 
+        height: 0; 
+        margin: 0; 
+        padding: 0; 
+        border: none;
+        }''')
+
+        self.mainLayout = QHBoxLayout()
+        self.mainLayout.addWidget(self.sideBarWidget)
+        self.mainLayout.addWidget(self.pageWidget)
+
+        self.mainWidget = QWidget()
+        self.mainWidget.setLayout(self.mainLayout)
+
+    # Define actions for each button
+
+    def molesButton(self):
+        self.pageWidget.setCurrentIndex(0)
+
+    def concButton(self):
+        self.pageWidget.setCurrentIndex(1)
+
+    def gasVolButton(self):
+        self.pageWidget.setCurrentIndex(2)
+
+    def numParticlesButton(self):
+        self.pageWidget.setCurrentIndex(3)
+
+    def idealGasButton(self):
+        self.pageWidget.setCurrentIndex(4)
+
+    def atomEconButton(self):
+        self.pageWidget.setCurrentIndex(5)
+
+    def percYieldButton(self):
+        self.pageWidget.setCurrentIndex(6)
 
 
 class InteractiveTable(QWidget):
