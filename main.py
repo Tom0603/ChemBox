@@ -27,9 +27,13 @@ class ChemBox(QMainWindow):
 
         self.tabBar.tab1.setLayout(self.sideBar.mainLayout)
 
-        # Initialise moles tab in sidebar
         self.amountOfSubstance = AmountOfSubstance()
-        self.sideBar.molesTab.setLayout(self.amountOfSubstance.aosLayout)
+
+        # Initialise moles tab in sidebar
+        self.sideBar.molesTab.setLayout(self.amountOfSubstance.molesLayout)
+
+        # Initialise concentration tab in sidebar
+        self.sideBar.concTab.setLayout(self.amountOfSubstance.concLayout)
 
         # Initialise igl tab in sidebar
         self.idealGasLaw = IdealGasLaw()
@@ -45,7 +49,8 @@ class ChemBox(QMainWindow):
 class AmountOfSubstance(QWidget):
     def __init__(self):
         super(QWidget, self).__init__()
-        self.aosLayout = QGridLayout()
+        self.molesLayout = QGridLayout()
+        self.concLayout = QGridLayout()
 
         # Unit conversions
         self.massConversions = {
@@ -59,6 +64,13 @@ class AmountOfSubstance(QWidget):
             "μmol": 0.000001,
             "mmol": 0.001,
             "mol": 1,
+        }
+
+        self.volumeConversions = {
+            "cm³": 0.000001,
+            "dm³": 0.001,
+            "m³": 1.0,
+
         }
 
         # Initialise moles calculation Layout
@@ -84,21 +96,44 @@ class AmountOfSubstance(QWidget):
         self.molesUnitDropdown.addItem("mmol")
         self.molesUnitDropdown.addItem("mol")
 
-        self.aosLayout.addWidget(self.molesLabel, 0, 0)
-        self.aosLayout.addWidget(self.massLabel, 1, 0)
-        self.aosLayout.addWidget(self.mrLabel, 2, 0)
+        # Initialise concentration calculation Layout
+        self.concLabelConc = QLabel("Concentration:")
+        self.molesLabelConc = QLabel("Moles:")
+        self.volLabelConc = QLabel("Volume:")
 
-        self.aosLayout.addWidget(self.molesInput, 0, 1)
-        self.aosLayout.addWidget(self.massInput, 1, 1)
-        self.aosLayout.addWidget(self.mrInput, 2, 1)
+        self.concInputConc = QLineEdit()
+        self.molesInputConc = QLineEdit()
+        self.volInputConc = QLineEdit()
 
-        self.aosLayout.addWidget(self.molesUnitDropdown, 0, 2)
-        self.aosLayout.addWidget(self.massUnitDropdown, 1, 2)
+        self.calculateButtonConc = QPushButton("Calculate")
+        self.calculateButtonConc.clicked.connect(self.concCalculation)
 
-        self.aosLayout.addWidget(self.calculateButton, 3, 1)
+        self.molesUnitDropdownConc = QComboBox()
+        self.molesUnitDropdownConc.addItem("μmol")
+        self.molesUnitDropdownConc.addItem("mmol")
+        self.molesUnitDropdownConc.addItem("mol")
+
+        self.volUnitDropDownConc = QComboBox()
+        self.volUnitDropDownConc.addItem("cm³")
+        self.volUnitDropDownConc.addItem("dm³")
+        self.volUnitDropDownConc.addItem("m³")
+
+        self.getConcLayout()
+        self.getMolesLayout()
 
     def getMolesLayout(self):
-        pass
+        self.molesLayout.addWidget(self.molesLabel, 0, 0)
+        self.molesLayout.addWidget(self.massLabel, 1, 0)
+        self.molesLayout.addWidget(self.mrLabel, 2, 0)
+
+        self.molesLayout.addWidget(self.molesInput, 0, 1)
+        self.molesLayout.addWidget(self.massInput, 1, 1)
+        self.molesLayout.addWidget(self.mrInput, 2, 1)
+
+        self.molesLayout.addWidget(self.molesUnitDropdown, 0, 2)
+        self.molesLayout.addWidget(self.massUnitDropdown, 1, 2)
+
+        self.molesLayout.addWidget(self.calculateButton, 3, 1)
 
     def molesCalculation(self):
         massUnit = self.massUnitDropdown.currentText()
@@ -122,6 +157,46 @@ class AmountOfSubstance(QWidget):
                 mr = (float(self.massInput.text()) * self.massConversions[massUnit]) / (
                         float(self.molesInput.text()) * self.moleConversions[molesUnit])
                 self.mrInput.setText(str(mr))
+            except ValueError:
+                print("Value Error")
+
+    def getConcLayout(self):
+        self.concLayout.addWidget(self.concLabelConc, 0, 0)
+        self.concLayout.addWidget(self.molesLabelConc, 1, 0)
+        self.concLayout.addWidget(self.volLabelConc, 2, 0)
+
+        self.concLayout.addWidget(self.concInputConc, 0, 1)
+        self.concLayout.addWidget(self.molesInputConc, 1, 1)
+        self.concLayout.addWidget(self.volInputConc, 2, 1)
+
+        self.concLayout.addWidget(self.molesUnitDropdownConc, 1, 2)
+        self.concLayout.addWidget(self.volUnitDropDownConc, 2, 2)
+
+        self.concLayout.addWidget(self.calculateButtonConc, 3, 1)
+
+    def concCalculation(self):
+        molesUnit = self.molesUnitDropdown.currentText()
+        volUnit = self.volUnitDropDownConc.currentText()
+
+        if self.concInputConc.text() == "":
+            try:
+                conc = (float(self.molesInput.text()) * self.moleConversions[molesUnit]) / (
+                        float(self.volInputConc.text()) * self.volumeConversions[volUnit])
+                self.concInputConc.setText(str(conc))
+            except ValueError:
+                print("Value Error")
+        if self.molesInput.text() == "":
+            try:
+                moles = float(self.concInputConc.text()) * (
+                            float(self.volInputConc.text()) * self.volumeConversions[volUnit])
+                self.massInput.setText(str(moles))
+            except ValueError:
+                print("Value Error")
+        if self.volInputConc.text() == "":
+            try:
+                vol = (float(self.molesInput.text()) * self.moleConversions[molesUnit]) / float(
+                    self.concInputConc.text())
+                self.volInputConc.setText(str(vol))
             except ValueError:
                 print("Value Error")
 
