@@ -47,6 +47,11 @@ class ChemBox(QMainWindow):
 
 
 class AmountOfSubstance(QWidget):
+    """
+    This class holds all the calculations concerning the amount of a substance.
+    Examples of this are the standard calculation n=m/mr or the c=n/v equation.
+    """
+
     def __init__(self):
         super(QWidget, self).__init__()
         self.molesLayout = QGridLayout()
@@ -122,6 +127,10 @@ class AmountOfSubstance(QWidget):
         self.getMolesLayout()
 
     def getMolesLayout(self):
+        f"""
+        This function adds all the essential widgets to the {self.molesLayout} 
+        """
+
         self.molesLayout.addWidget(self.molesLabel, 0, 0)
         self.molesLayout.addWidget(self.massLabel, 1, 0)
         self.molesLayout.addWidget(self.mrLabel, 2, 0)
@@ -136,6 +145,11 @@ class AmountOfSubstance(QWidget):
         self.molesLayout.addWidget(self.calculateButton, 3, 1)
 
     def molesCalculation(self):
+        """
+        This function performs all the calculation needed for the molesCalculation,
+        and returns the value in the GUI.
+        """
+
         massUnit = self.massUnitDropdown.currentText()
         molesUnit = self.molesUnitDropdown.currentText()
 
@@ -161,6 +175,10 @@ class AmountOfSubstance(QWidget):
                 print("Value Error")
 
     def getConcLayout(self):
+        f"""
+        This function adds all the essential widgets to the {self.concLayout} 
+        """
+
         self.concLayout.addWidget(self.concLabelConc, 0, 0)
         self.concLayout.addWidget(self.molesLabelConc, 1, 0)
         self.concLayout.addWidget(self.volLabelConc, 2, 0)
@@ -175,6 +193,11 @@ class AmountOfSubstance(QWidget):
         self.concLayout.addWidget(self.calculateButtonConc, 3, 1)
 
     def concCalculation(self):
+        """
+        This function performs all the calculation needed for the concentration calculation,
+        and returns the value in the GUI.
+        """
+
         molesUnit = self.molesUnitDropdown.currentText()
         volUnit = self.volUnitDropDownConc.currentText()
 
@@ -188,7 +211,7 @@ class AmountOfSubstance(QWidget):
         if self.molesInput.text() == "":
             try:
                 moles = float(self.concInputConc.text()) * (
-                            float(self.volInputConc.text()) * self.volumeConversions[volUnit])
+                        float(self.volInputConc.text()) * self.volumeConversions[volUnit])
                 self.massInput.setText(str(moles))
             except ValueError:
                 print("Value Error")
@@ -381,7 +404,7 @@ class ChemBalancer(QWidget):
         self.balancedEquation = ""
 
     def splitEquation(self):
-        """
+        f"""
         Takes {self.equationInput}, strips it from all the whitespaces
         and splits it up into separate reactants and products.
         """
@@ -409,9 +432,9 @@ class ChemBalancer(QWidget):
         print(self.products)
 
     def findReagents(self, compound, index, side):
-        """
+        f"""
         This Function finds separate reagents by removing brackets from the compounds
-        and then calls self.findElements().
+        and then calls {self.findElements}.
 
         :param compound: String of elements as compound (e.g. Ag3(Fe3O)4).
         :param index: Index position of row in matrix.
@@ -438,9 +461,9 @@ class ChemBalancer(QWidget):
                 self.findElements(reagent, index, bracketSubscript, side)
 
     def findElements(self, reagent, index, bracketSubscript, side):
-        """
+        f"""
         Separates out elements and subscripts using a regex,
-        then loops through the elements and calls the function addToMatrix().
+        then loops through the elements and calls {self.addToMatrix}.
 
         :param reagent: String of reagent (e.g. H2O).
         :param index: Index position of row in matrix.
@@ -460,7 +483,7 @@ class ChemBalancer(QWidget):
 
     def addToMatrix(self, element, index, count, side):
         """
-        It adds the provided element with a specified count to the matrix at the given index.
+        This function adds the provided element with a specified count to the matrix at the given index.
         The 'side' parameter determines whether the element is part of the reactants (positive side)
         or products (negative side) in the chemical equation.
 
@@ -491,8 +514,8 @@ class ChemBalancer(QWidget):
         print(self.elementMatrix)
 
     def runBalancer(self):
-        """
-        This the core function of the ChemBalancer class,
+        f"""
+        This the core function of the {ChemBalancer} class,
         responsible for balancing chemical equations.
         It parses the user-provided equation, deciphers compounds,
         constructs a matrix, finds the null space for balancing coefficients,
