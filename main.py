@@ -20,27 +20,27 @@ class ChemBox(QMainWindow):
         self.setWindowTitle(self.title)
         self.setGeometry(self.left, self.top, self.width, self.height)
 
-        self.tabBar = TabBar()
-        self.setCentralWidget(self.tabBar)
+        self.tab_bar = TabBar()
+        self.setCentralWidget(self.tab_bar)
 
-        self.sideBar = SideBar()
+        self.side_bar = SideBar()
 
-        self.tabBar.tab1.setLayout(self.sideBar.mainLayout)
+        self.tab_bar.tab1.setLayout(self.side_bar.main_layout)
 
-        self.amountOfSubstance = AmountOfSubstance()
+        self.amount_of_substance = AmountOfSubstance()
 
         # Initialise moles tab in sidebar
-        self.sideBar.molesTab.setLayout(self.amountOfSubstance.molesLayout)
+        self.side_bar.moles_tab.setLayout(self.amount_of_substance.moles_layout)
 
         # Initialise concentration tab in sidebar
-        self.sideBar.concTab.setLayout(self.amountOfSubstance.concLayout)
+        self.side_bar.conc_tab.setLayout(self.amount_of_substance.conc_layout)
 
         # Initialise igl tab in sidebar
-        self.idealGasLaw = IdealGasLaw()
-        self.sideBar.idealGasTab.setLayout(self.idealGasLaw.idealGasLayout)
+        self.ideal_gas_law = IdealGasLaw()
+        self.side_bar.ideal_gas_tab.setLayout(self.ideal_gas_law.ideal_gas_layout)
 
-        self.chemBalancer = ChemBalancer()
-        self.tabBar.tab3.setLayout(self.chemBalancer.balancerLayout)
+        self.chem_balancer = ChemBalancer()
+        self.tab_bar.tab3.setLayout(self.chem_balancer.balancer_layout)
 
         # self.interactiveTable = InteractiveTable()
         # self.tabBar.tab2.setLayout(self.interactiveTable.tableLayout)
@@ -54,24 +54,24 @@ class AmountOfSubstance(QWidget):
 
     def __init__(self):
         super(QWidget, self).__init__()
-        self.molesLayout = QGridLayout()
-        self.concLayout = QGridLayout()
+        self.moles_layout = QGridLayout()
+        self.conc_layout = QGridLayout()
 
         # Unit conversions
-        self.massConversions = {
+        self.mass_conversions = {
             "mg": 0.001,
             "g": 1,
             "kg": 1000,
             "t": 1000000
         }
 
-        self.moleConversions = {
+        self.mole_conversions = {
             "μmol": 0.000001,
             "mmol": 0.001,
             "mol": 1,
         }
 
-        self.volumeConversions = {
+        self.volume_conversions = {
             "cm³": 0.000001,
             "dm³": 0.001,
             "m³": 1.0,
@@ -79,147 +79,147 @@ class AmountOfSubstance(QWidget):
         }
 
         # Initialise moles calculation Layout
-        self.molesLabel = QLabel("Moles:")
-        self.massLabel = QLabel("Mass:")
-        self.mrLabel = QLabel("Molecular weight:")
+        self.moles_label = QLabel("Moles:")
+        self.mass_label = QLabel("Mass:")
+        self.mr_label = QLabel("Molecular weight:")
 
-        self.molesInput = QLineEdit()
-        self.massInput = QLineEdit()
-        self.mrInput = QLineEdit()
+        self.moles_input = QLineEdit()
+        self.mass_input = QLineEdit()
+        self.mr_input = QLineEdit()
 
-        self.calculateButton = QPushButton("Calculate")
-        self.calculateButton.clicked.connect(self.molesCalculation)
+        self.calculate_button = QPushButton("Calculate")
+        self.calculate_button.clicked.connect(self.moles_calculation)
 
-        self.massUnitDropdown = QComboBox()
-        self.massUnitDropdown.addItem("mg")
-        self.massUnitDropdown.addItem("g")
-        self.massUnitDropdown.addItem("kg")
-        self.massUnitDropdown.addItem("t")
+        self.mass_unit_dropdown = QComboBox()
+        self.mass_unit_dropdown.addItem("mg")
+        self.mass_unit_dropdown.addItem("g")
+        self.mass_unit_dropdown.addItem("kg")
+        self.mass_unit_dropdown.addItem("t")
 
-        self.molesUnitDropdown = QComboBox()
-        self.molesUnitDropdown.addItem("μmol")
-        self.molesUnitDropdown.addItem("mmol")
-        self.molesUnitDropdown.addItem("mol")
+        self.moles_unit_dropdown = QComboBox()
+        self.moles_unit_dropdown.addItem("μmol")
+        self.moles_unit_dropdown.addItem("mmol")
+        self.moles_unit_dropdown.addItem("mol")
 
         # Initialise concentration calculation Layout
-        self.concLabelConc = QLabel("Concentration:")
-        self.molesLabelConc = QLabel("Moles:")
-        self.volLabelConc = QLabel("Volume:")
+        self.conc_label_conc = QLabel("Concentration:")
+        self.moles_label_conc = QLabel("Moles:")
+        self.vol_label_conc = QLabel("Volume:")
 
-        self.concInputConc = QLineEdit()
-        self.molesInputConc = QLineEdit()
-        self.volInputConc = QLineEdit()
+        self.conc_input_conc = QLineEdit()
+        self.moles_input_conc = QLineEdit()
+        self.vol_input_conc = QLineEdit()
 
-        self.calculateButtonConc = QPushButton("Calculate")
-        self.calculateButtonConc.clicked.connect(self.concCalculation)
+        self.calculate_button_conc = QPushButton("Calculate")
+        self.calculate_button_conc.clicked.connect(self.conc_calculation)
 
-        self.molesUnitDropdownConc = QComboBox()
-        self.molesUnitDropdownConc.addItem("μmol")
-        self.molesUnitDropdownConc.addItem("mmol")
-        self.molesUnitDropdownConc.addItem("mol")
+        self.moles_unit_dropdown_conc = QComboBox()
+        self.moles_unit_dropdown_conc.addItem("μmol")
+        self.moles_unit_dropdown_conc.addItem("mmol")
+        self.moles_unit_dropdown_conc.addItem("mol")
 
-        self.volUnitDropDownConc = QComboBox()
-        self.volUnitDropDownConc.addItem("cm³")
-        self.volUnitDropDownConc.addItem("dm³")
-        self.volUnitDropDownConc.addItem("m³")
+        self.vol_unit_drop_down_conc = QComboBox()
+        self.vol_unit_drop_down_conc.addItem("cm³")
+        self.vol_unit_drop_down_conc.addItem("dm³")
+        self.vol_unit_drop_down_conc.addItem("m³")
 
-        self.getConcLayout()
-        self.getMolesLayout()
+        self.get_conc_layout()
+        self.get_moles_layout()
 
-    def getMolesLayout(self):
+    def get_moles_layout(self):
         f"""
-        This function adds all the essential widgets to the {self.molesLayout} 
+        This function adds all the essential widgets to the {self.moles_layout} 
         """
 
-        self.molesLayout.addWidget(self.molesLabel, 0, 0)
-        self.molesLayout.addWidget(self.massLabel, 1, 0)
-        self.molesLayout.addWidget(self.mrLabel, 2, 0)
+        self.moles_layout.addWidget(self.moles_label, 0, 0)
+        self.moles_layout.addWidget(self.mass_label, 1, 0)
+        self.moles_layout.addWidget(self.mr_label, 2, 0)
 
-        self.molesLayout.addWidget(self.molesInput, 0, 1)
-        self.molesLayout.addWidget(self.massInput, 1, 1)
-        self.molesLayout.addWidget(self.mrInput, 2, 1)
+        self.moles_layout.addWidget(self.moles_input, 0, 1)
+        self.moles_layout.addWidget(self.mass_input, 1, 1)
+        self.moles_layout.addWidget(self.mr_input, 2, 1)
 
-        self.molesLayout.addWidget(self.molesUnitDropdown, 0, 2)
-        self.molesLayout.addWidget(self.massUnitDropdown, 1, 2)
+        self.moles_layout.addWidget(self.moles_unit_dropdown, 0, 2)
+        self.moles_layout.addWidget(self.mass_unit_dropdown, 1, 2)
 
-        self.molesLayout.addWidget(self.calculateButton, 3, 1)
+        self.moles_layout.addWidget(self.calculate_button, 3, 1)
 
-    def molesCalculation(self):
+    def moles_calculation(self):
         """
         This function performs all the calculation needed for the molesCalculation,
         and returns the value in the GUI.
         """
 
-        massUnit = self.massUnitDropdown.currentText()
-        molesUnit = self.molesUnitDropdown.currentText()
+        mass_unit = self.mass_unit_dropdown.currentText()
+        moles_unit = self.moles_unit_dropdown.currentText()
 
-        if self.molesInput.text() == "":
+        if self.moles_input.text() == "":
             try:
-                moles = (float(self.massInput.text()) * self.massConversions[massUnit]) / float(self.mrInput.text())
-                self.molesInput.setText(str(moles))
-                self.molesUnitDropdown.setCurrentText("mol")
+                moles = (float(self.mass_input.text()) * self.mass_conversions[mass_unit]) / float(self.mr_input.text())
+                self.moles_input.setText(str(moles))
+                self.moles_unit_dropdown.setCurrentText("mol")
             except ValueError:
                 print("Value Error")
-        if self.massInput.text() == "":
+        if self.mass_input.text() == "":
             try:
-                mass = (float(self.molesInput.text()) * self.moleConversions[molesUnit]) * float(self.mrInput.text())
-                self.massInput.setText(str(mass))
+                mass = (float(self.moles_input.text()) * self.mole_conversions[moles_unit]) * float(self.mr_input.text())
+                self.mass_input.setText(str(mass))
             except ValueError:
                 print("Value Error")
-        if self.mrInput.text() == "":
+        if self.mr_input.text() == "":
             try:
-                mr = (float(self.massInput.text()) * self.massConversions[massUnit]) / (
-                        float(self.molesInput.text()) * self.moleConversions[molesUnit])
-                self.mrInput.setText(str(mr))
+                mr = (float(self.mass_input.text()) * self.mass_conversions[mass_unit]) / (
+                        float(self.moles_input.text()) * self.mole_conversions[moles_unit])
+                self.mr_input.setText(str(mr))
             except ValueError:
                 print("Value Error")
 
-    def getConcLayout(self):
+    def get_conc_layout(self):
         f"""
-        This function adds all the essential widgets to the {self.concLayout} 
+        This function adds all the essential widgets to the {self.conc_layout} 
         """
 
-        self.concLayout.addWidget(self.concLabelConc, 0, 0)
-        self.concLayout.addWidget(self.molesLabelConc, 1, 0)
-        self.concLayout.addWidget(self.volLabelConc, 2, 0)
+        self.conc_layout.addWidget(self.conc_label_conc, 0, 0)
+        self.conc_layout.addWidget(self.moles_label_conc, 1, 0)
+        self.conc_layout.addWidget(self.vol_label_conc, 2, 0)
 
-        self.concLayout.addWidget(self.concInputConc, 0, 1)
-        self.concLayout.addWidget(self.molesInputConc, 1, 1)
-        self.concLayout.addWidget(self.volInputConc, 2, 1)
+        self.conc_layout.addWidget(self.conc_input_conc, 0, 1)
+        self.conc_layout.addWidget(self.moles_input_conc, 1, 1)
+        self.conc_layout.addWidget(self.vol_input_conc, 2, 1)
 
-        self.concLayout.addWidget(self.molesUnitDropdownConc, 1, 2)
-        self.concLayout.addWidget(self.volUnitDropDownConc, 2, 2)
+        self.conc_layout.addWidget(self.moles_unit_dropdown_conc, 1, 2)
+        self.conc_layout.addWidget(self.vol_unit_drop_down_conc, 2, 2)
 
-        self.concLayout.addWidget(self.calculateButtonConc, 3, 1)
+        self.conc_layout.addWidget(self.calculate_button_conc, 3, 1)
 
-    def concCalculation(self):
+    def conc_calculation(self):
         """
         This function performs all the calculation needed for the concentration calculation,
         and returns the value in the GUI.
         """
 
-        molesUnit = self.molesUnitDropdown.currentText()
-        volUnit = self.volUnitDropDownConc.currentText()
+        moles_unit = self.moles_unit_dropdown.currentText()
+        vol_unit = self.vol_unit_drop_down_conc.currentText()
 
-        if self.concInputConc.text() == "":
+        if self.conc_input_conc.text() == "":
             try:
-                conc = (float(self.molesInput.text()) * self.moleConversions[molesUnit]) / (
-                        float(self.volInputConc.text()) * self.volumeConversions[volUnit])
-                self.concInputConc.setText(str(conc))
+                conc = (float(self.moles_input.text()) * self.mole_conversions[moles_unit]) / (
+                        float(self.vol_input_conc.text()) * self.volume_conversions[vol_unit])
+                self.conc_input_conc.setText(str(conc))
             except ValueError:
                 print("Value Error")
-        if self.molesInput.text() == "":
+        if self.moles_input.text() == "":
             try:
-                moles = float(self.concInputConc.text()) * (
-                        float(self.volInputConc.text()) * self.volumeConversions[volUnit])
-                self.massInput.setText(str(moles))
+                moles = float(self.conc_input_conc.text()) * (
+                        float(self.vol_input_conc.text()) * self.volume_conversions[vol_unit])
+                self.mass_input.setText(str(moles))
             except ValueError:
                 print("Value Error")
-        if self.volInputConc.text() == "":
+        if self.vol_input_conc.text() == "":
             try:
-                vol = (float(self.molesInput.text()) * self.moleConversions[molesUnit]) / float(
-                    self.concInputConc.text())
-                self.volInputConc.setText(str(vol))
+                vol = (float(self.moles_input.text()) * self.mole_conversions[moles_unit]) / float(
+                    self.conc_input_conc.text())
+                self.vol_input_conc.setText(str(vol))
             except ValueError:
                 print("Value Error")
 
@@ -227,125 +227,125 @@ class AmountOfSubstance(QWidget):
 class IdealGasLaw(QWidget):
     def __init__(self):
         super(QWidget, self).__init__()
-        self.idealGasLayout = QGridLayout()
+        self.ideal_gas_layout = QGridLayout()
 
         # Initialise Ideal Gas Law (IGL) properties
-        self.idealGasConstant = 8.314
+        self.ideal_gas_constant = 8.314
 
-        self.pressureInputIGL = QLineEdit()
-        self.volumeInputIGL = QLineEdit()
-        self.temperatureInputIGL = QLineEdit()
-        self.molesInputIGL = QLineEdit()
+        self.pressure_input_igl = QLineEdit()
+        self.volume_input_igl = QLineEdit()
+        self.temperature_input_igl = QLineEdit()
+        self.moles_input_igl = QLineEdit()
 
-        self.pressureLabelIGL = QLabel("Pressure:")
-        self.volumeLabelIGL = QLabel("Volume:")
-        self.temperatureLabelIGL = QLabel("Temperature:")
-        self.molesLabelIGL = QLabel("Amount of substance - moles:")
-        self.calculateButtonIGL = QPushButton('Calculate')
-        self.resultLabelIGL = QLabel('Result will appear here')
+        self.pressure_label_igl = QLabel("Pressure:")
+        self.volume_label_igl = QLabel("Volume:")
+        self.temperature_label_igl = QLabel("Temperature:")
+        self.moles_label_igl = QLabel("Amount of substance - moles:")
+        self.calculate_button_igl = QPushButton('Calculate')
+        self.result_label_igl = QLabel('Result will appear here')
 
-        self.pressureConversions = {
+        self.pressure_conversions = {
             "Pa": 1.0,
             "kPa": 1000.0,
         }
 
-        self.temperatureConversions = {
+        self.temperature_conversions = {
             "°C": 273.15,
             "°K": 0.0,
         }
 
-        self.volumeConversions = {
+        self.volume_conversions = {
             "cm³": 0.000001,
             "dm³": 0.001,
             "m³": 1.0,
 
         }
 
-        self.pressureDropDownIGL = QComboBox()
-        self.volumeDropDownIGL = QComboBox()
-        self.temperatureDropDownIGL = QComboBox()
+        self.pressure_drop_down_igl = QComboBox()
+        self.volume_drop_down_igl = QComboBox()
+        self.temperature_drop_down_igl = QComboBox()
 
-        self.idealGasLayout.addWidget(self.pressureLabelIGL, 0, 0)
-        self.idealGasLayout.addWidget(self.pressureInputIGL, 0, 1)
-        self.idealGasLayout.addWidget(self.pressureDropDownIGL, 0, 2)
+        self.ideal_gas_layout.addWidget(self.pressure_label_igl, 0, 0)
+        self.ideal_gas_layout.addWidget(self.pressure_input_igl, 0, 1)
+        self.ideal_gas_layout.addWidget(self.pressure_drop_down_igl, 0, 2)
 
-        self.idealGasLayout.addWidget(self.volumeLabelIGL, 1, 0)
-        self.idealGasLayout.addWidget(self.volumeInputIGL, 1, 1)
-        self.idealGasLayout.addWidget(self.volumeDropDownIGL, 1, 2)
+        self.ideal_gas_layout.addWidget(self.volume_label_igl, 1, 0)
+        self.ideal_gas_layout.addWidget(self.volume_input_igl, 1, 1)
+        self.ideal_gas_layout.addWidget(self.volume_drop_down_igl, 1, 2)
 
-        self.idealGasLayout.addWidget(self.temperatureLabelIGL, 2, 0)
-        self.idealGasLayout.addWidget(self.temperatureInputIGL, 2, 1)
-        self.idealGasLayout.addWidget(self.temperatureDropDownIGL, 2, 2)
+        self.ideal_gas_layout.addWidget(self.temperature_label_igl, 2, 0)
+        self.ideal_gas_layout.addWidget(self.temperature_input_igl, 2, 1)
+        self.ideal_gas_layout.addWidget(self.temperature_drop_down_igl, 2, 2)
 
-        self.idealGasLayout.addWidget(self.molesLabelIGL, 3, 0)
-        self.idealGasLayout.addWidget(self.molesInputIGL, 3, 1)
-        self.idealGasLayout.addWidget(self.calculateButtonIGL, 4, 0)
-        self.idealGasLayout.addWidget(self.resultLabelIGL, 4, 1)
+        self.ideal_gas_layout.addWidget(self.moles_label_igl, 3, 0)
+        self.ideal_gas_layout.addWidget(self.moles_input_igl, 3, 1)
+        self.ideal_gas_layout.addWidget(self.calculate_button_igl, 4, 0)
+        self.ideal_gas_layout.addWidget(self.result_label_igl, 4, 1)
 
-        self.pressureDropDownIGL.addItem("Pa")
-        self.pressureDropDownIGL.addItem("kPa")
+        self.pressure_drop_down_igl.addItem("Pa")
+        self.pressure_drop_down_igl.addItem("kPa")
 
-        self.volumeDropDownIGL.addItem("cm³")
-        self.volumeDropDownIGL.addItem("dm³")
-        self.volumeDropDownIGL.addItem("m³")
+        self.volume_drop_down_igl.addItem("cm³")
+        self.volume_drop_down_igl.addItem("dm³")
+        self.volume_drop_down_igl.addItem("m³")
 
-        self.temperatureDropDownIGL.addItem("°C")
-        self.temperatureDropDownIGL.addItem("°K")
+        self.temperature_drop_down_igl.addItem("°C")
+        self.temperature_drop_down_igl.addItem("°K")
 
-        self.calculateButtonIGL.clicked.connect(self.calculateIdealGasLaw)
+        self.calculate_button_igl.clicked.connect(self.calculate_ideal_gas_law)
 
-    def calculateIdealGasLaw(self):
-        pressureUnit = self.pressureDropDownIGL.currentText()
-        temperatureUnit = self.temperatureDropDownIGL.currentText()
-        volumeUnit = self.volumeDropDownIGL.currentText()
+    def calculate_ideal_gas_law(self):
+        pressure_unit = self.pressure_drop_down_igl.currentText()
+        temperature_unit = self.temperature_drop_down_igl.currentText()
+        volume_unit = self.volume_drop_down_igl.currentText()
 
-        def _calculatePressure():
+        def _calculate_pressure():
             try:
-                pressure = (float(self.molesInputIGL.text()) * self.idealGasConstant * (float(
-                    self.temperatureInputIGL.text()) + self.temperatureConversions[temperatureUnit])) / (float(
-                    self.volumeInputIGL.text()) * self.volumeConversions[volumeUnit])
+                pressure = (float(self.moles_input_igl.text()) * self.ideal_gas_constant * (float(
+                    self.temperature_input_igl.text()) + self.temperature_conversions[temperature_unit])) / (float(
+                    self.volume_input_igl.text()) * self.volume_conversions[volume_unit])
                 return pressure
             except ValueError:
                 return "Value Error"
 
-        def _calculateVolume():
+        def _calculate_volume():
             try:
-                volume = (float(self.molesInputIGL.text()) * self.idealGasConstant * (float(
-                    self.temperatureInputIGL.text()) + self.temperatureConversions[temperatureUnit])) / (
-                                 float(self.pressureInputIGL.text()) * self.pressureConversions[pressureUnit])
+                volume = (float(self.moles_input_igl.text()) * self.ideal_gas_constant * (float(
+                    self.temperature_input_igl.text()) + self.temperature_conversions[temperature_unit])) / (
+                        float(self.pressure_input_igl.text()) * self.pressure_conversions[pressure_unit])
                 return volume
             except ValueError:
                 return "Value Error"
 
-        def _calculateTemperature():
+        def _calculate_temperature():
             try:
-                temperature = ((float(self.pressureInputIGL.text()) * self.pressureConversions[pressureUnit]) * (float(
-                    self.volumeInputIGL.text()) * self.volumeConversions[volumeUnit])) / (
-                                      float(self.molesInputIGL.text()) * self.idealGasConstant)
+                temperature = ((float(self.pressure_input_igl.text()) * self.pressure_conversions[pressure_unit]) * (float(
+                    self.volume_input_igl.text()) * self.volume_conversions[volume_unit])) / (
+                        float(self.moles_input_igl.text()) * self.ideal_gas_constant)
                 return temperature
             except ValueError:
                 return "Value Error"
 
-        def _calculateMoles():
+        def _calculate_moles():
             try:
-                moles = ((float(self.pressureInputIGL.text()) * self.pressureConversions[pressureUnit]) * (
-                        float(self.volumeInputIGL.text()) * self.volumeConversions[volumeUnit])) / (
-                                self.idealGasConstant * (float(self.temperatureInputIGL.text()) +
-                                                         self.temperatureConversions[temperatureUnit]))
+                moles = ((float(self.pressure_input_igl.text()) * self.pressure_conversions[pressure_unit]) * (
+                        float(self.volume_input_igl.text()) * self.volume_conversions[volume_unit])) / (
+                        self.ideal_gas_constant * (float(self.temperature_input_igl.text()) +
+                                                   self.temperature_conversions[temperature_unit]))
                 return moles
             except ValueError:
                 return "Value Error"
 
-        if self.pressureInputIGL.text() == "":
-            self.resultLabelIGL.setText(f"Pressure: {_calculatePressure()}")
-        elif self.volumeInputIGL.text() == "":
-            self.resultLabelIGL.setText(f"Volume: {_calculateVolume()}")
-        elif self.temperatureInputIGL.text() == "":
-            self.resultLabelIGL.setText(f"Temperature: {_calculateTemperature()}")
-        elif self.molesInputIGL.text() == "":
-            self.resultLabelIGL.setText(f"Number of moles: {_calculateMoles()}")
+        if self.pressure_input_igl.text() == "":
+            self.result_label_igl.setText(f"Pressure: {_calculate_pressure()}")
+        elif self.volume_input_igl.text() == "":
+            self.result_label_igl.setText(f"Volume: {_calculate_volume()}")
+        elif self.temperature_input_igl.text() == "":
+            self.result_label_igl.setText(f"Temperature: {_calculate_temperature()}")
+        elif self.moles_input_igl.text() == "":
+            self.result_label_igl.setText(f"Number of moles: {_calculate_moles()}")
         else:
-            self.resultLabelIGL.setText("wtf are you doing mate")
+            self.result_label_igl.setText("wtf are you doing mate")
 
 
 class ChemBalancer(QWidget):
@@ -359,82 +359,82 @@ class ChemBalancer(QWidget):
 
     def __init__(self):
         super(QWidget, self).__init__()
-        self.balancerLayout = QVBoxLayout()
+        self.balancer_layout = QVBoxLayout()
 
-        self.equationInput = QLineEdit()
-        self.balanceButton = QPushButton("Balance")
-        self.balancedLabel = QLabel()
+        self.equation_input = QLineEdit()
+        self.balance_button = QPushButton("Balance")
+        self.balanced_label = QLabel()
 
         # Add the widgets to the balancerLayout
-        self.balancerLayout.addWidget(self.equationInput)
-        self.balancerLayout.addWidget(self.balanceButton)
-        self.balancerLayout.addWidget(self.balancedLabel)
+        self.balancer_layout.addWidget(self.equation_input)
+        self.balancer_layout.addWidget(self.balance_button)
+        self.balancer_layout.addWidget(self.balanced_label)
 
-        self.balanceButton.clicked.connect(self.runBalancer)
+        self.balance_button.clicked.connect(self.run_balancer)
 
-        self.strippedEquation = str()
-        self.equationSplit = list()
+        self.stripped_equation = str()
+        self.equation_split = list()
 
         self.reactants = list()
         self.products = list()
 
-        self.elementList = list()
-        self.elementMatrix = list()
+        self.element_list = list()
+        self.element_matrix = list()
 
-        self.balancedEquation = str()
+        self.balanced_equation = str()
 
-    def clearVariables(self):
+    def clear_variables(self):
         """
         Clears all the used variables to avoid using data or values from previous calculations.
         """
 
-        if len(self.equationSplit) != 0:
-            self.equationSplit.clear()
+        if len(self.equation_split) != 0:
+            self.equation_split.clear()
         if len(self.reactants) != 0:
             self.reactants.clear()
         if len(self.products) != 0:
             self.products.clear()
-        if len(self.elementList) != 0:
-            self.elementList.clear()
-        if len(self.elementMatrix) != 0:
-            self.elementMatrix = []
+        if len(self.element_list) != 0:
+            self.element_list.clear()
+        if len(self.element_matrix) != 0:
+            self.element_matrix = []
 
         self.reactants = ""
         self.products = ""
-        self.balancedEquation = ""
+        self.balanced_equation = ""
 
-    def splitEquation(self):
+    def split_equation(self):
         f"""
-        Takes {self.equationInput}, strips it from all the whitespaces
+        Takes {self.equation_input}, strips it from all the whitespaces
         and splits it up into separate reactants and products.
         """
 
         # Strip equation from any whitespaces
         try:
-            self.strippedEquation = "".join(self.equationInput.text().split())
+            self.stripped_equation = "".join(self.equation_input.text().split())
         except IndexError:
             return None
-        print(self.strippedEquation)
+        print(self.stripped_equation)
 
         # Split equation into reactants (self.equationSplit[0]) and products (self.equationSplit[1])
-        self.equationSplit = self.strippedEquation.split("=")
-        print(self.equationSplit)
+        self.equation_split = self.stripped_equation.split("=")
+        print(self.equation_split)
 
         try:
-            self.reactants = self.equationSplit[0].split("+")
+            self.reactants = self.equation_split[0].split("+")
         except IndexError:
             return None
         print(self.reactants)
         try:
-            self.products = self.equationSplit[1].split("+")
+            self.products = self.equation_split[1].split("+")
         except IndexError:
             return None
         print(self.products)
 
-    def findReagents(self, compound, index, side):
+    def find_reagents(self, compound, index, side):
         f"""
         This Function finds separate reagents by removing brackets from the compounds
-        and then calls {self.findElements}.
+        and then calls {self.find_elements}.
 
         :param compound: String of elements as compound (e.g. Ag3(Fe3O)4).
         :param index: Index position of row in matrix.
@@ -448,40 +448,40 @@ class ChemBalancer(QWidget):
                 # Extract the element within parentheses
                 inner_compound = reagent[1:-1]
                 # Get the subscript outside the brackets
-                bracketSubscript = reagent.split(")", 1)[-1]
-                if bracketSubscript:
-                    bracketSubscript = int(bracketSubscript)
+                bracket_subscript = reagent.split(")", 1)[-1]
+                if bracket_subscript:
+                    bracket_subscript = int(bracket_subscript)
                 else:
-                    bracketSubscript = 1
+                    bracket_subscript = 1
                 # Recursively find elements within the inner compound
-                self.findElements(inner_compound, index, bracketSubscript, side)
+                self.find_elements(inner_compound, index, bracket_subscript, side)
             else:
                 # No brackets, directly find elements
-                bracketSubscript = 1
-                self.findElements(reagent, index, bracketSubscript, side)
+                bracket_subscript = 1
+                self.find_elements(reagent, index, bracket_subscript, side)
 
-    def findElements(self, reagent, index, bracketSubscript, side):
+    def find_elements(self, reagent, index, bracket_subscript, side):
         f"""
         Separates out elements and subscripts using a regex,
-        then loops through the elements and calls {self.addToMatrix}.
+        then loops through the elements and calls {self.add_to_matrix}.
 
         :param reagent: String of reagent (e.g. H2O).
         :param index: Index position of row in matrix.
-        :param bracketSubscript: The subscript value outside the brackets. Equal to 1 if there are no brackets.
+        :param bracket_subscript: The subscript value outside the brackets. Equal to 1 if there are no brackets.
         :param side: "1" for reactants, "-1" for products.
         """
 
         # Use regex to separate elements and subscripts
-        elementCounts = re.findall("([A-Z][a-z]*)([0-9]*)", reagent)
-        for element, subscript in elementCounts:
+        element_counts = re.findall("([A-Z][a-z]*)([0-9]*)", reagent)
+        for element, subscript in element_counts:
             if not subscript:
                 subscript = 1
             else:
                 subscript = int(subscript)
             # Call addToMatrix for each element
-            self.addToMatrix(element, index, bracketSubscript * subscript, side)
+            self.add_to_matrix(element, index, bracket_subscript * subscript, side)
 
-    def addToMatrix(self, element, index, count, side):
+    def add_to_matrix(self, element, index, count, side):
         """
         This function adds the provided element with a specified count to the matrix at the given index.
         The 'side' parameter determines whether the element is part of the reactants (positive side)
@@ -493,27 +493,27 @@ class ChemBalancer(QWidget):
         :param side: "1" for reactants, "-1" for products.
         """
         print(element, index, count, side)
-        if index == len(self.elementMatrix):
-            print(self.elementMatrix)
-            self.elementMatrix.append([])
-            print(self.elementMatrix)
-            for x in self.elementList:
-                print(self.elementList)
-                self.elementMatrix[index].append(0)
-                print(self.elementMatrix)
+        if index == len(self.element_matrix):
+            print(self.element_matrix)
+            self.element_matrix.append([])
+            print(self.element_matrix)
+            for x in self.element_list:
+                print(self.element_list)
+                self.element_matrix[index].append(0)
+                print(self.element_matrix)
 
-        if element not in self.elementList:
-            self.elementList.append(element)
-            for i in range(len(self.elementMatrix)):
-                self.elementMatrix[i].append(0)
-                print(self.elementMatrix)
+        if element not in self.element_list:
+            self.element_list.append(element)
+            for i in range(len(self.element_matrix)):
+                self.element_matrix[i].append(0)
+                print(self.element_matrix)
 
-        column = self.elementList.index(element)
-        self.elementMatrix[index][column] += count * side
-        print(self.elementList)
-        print(self.elementMatrix)
+        column = self.element_list.index(element)
+        self.element_matrix[index][column] += count * side
+        print(self.element_list)
+        print(self.element_matrix)
 
-    def runBalancer(self):
+    def run_balancer(self):
         f"""
         This the core function of the {ChemBalancer} class,
         responsible for balancing chemical equations.
@@ -524,19 +524,19 @@ class ChemBalancer(QWidget):
         """
 
         # Clear variables, in case the program was run before
-        self.clearVariables()
+        self.clear_variables()
 
-        self.splitEquation()
+        self.split_equation()
 
         for i in range(len(self.reactants)):
-            self.findReagents(self.reactants[i], i, 1)
+            self.find_reagents(self.reactants[i], i, 1)
         for i in range(len(self.products)):
-            self.findReagents(self.products[i], i + len(self.reactants), -1)
+            self.find_reagents(self.products[i], i + len(self.reactants), -1)
 
-        self.elementMatrix = Matrix(self.elementMatrix)
-        self.elementMatrix = self.elementMatrix.transpose()
+        self.element_matrix = Matrix(self.element_matrix)
+        self.element_matrix = self.element_matrix.transpose()
         try:
-            num = self.elementMatrix.nullspace()[0]
+            num = self.element_matrix.nullspace()[0]
         except IndexError:
             return None
         print(num)
@@ -548,21 +548,21 @@ class ChemBalancer(QWidget):
 
         for i in range(len(self.reactants)):
             if coefficient[i][0] != 1:
-                self.balancedEquation += str(coefficient[i][0]) + self.reactants[i]
+                self.balanced_equation += str(coefficient[i][0]) + self.reactants[i]
             else:
-                self.balancedEquation += self.reactants[i]
+                self.balanced_equation += self.reactants[i]
             if i < len(self.reactants) - 1:
-                self.balancedEquation += " + "
-        self.balancedEquation += " = "
+                self.balanced_equation += " + "
+        self.balanced_equation += " = "
 
         for i in range(len(self.products)):
             if coefficient[i + len(self.reactants)][0] != 1:
-                self.balancedEquation += str(coefficient[i + len(self.reactants)][0]) + self.products[i]
+                self.balanced_equation += str(coefficient[i + len(self.reactants)][0]) + self.products[i]
             else:
-                self.balancedEquation += self.products[i]
+                self.balanced_equation += self.products[i]
             if i < len(self.products) - 1:
-                self.balancedEquation += " + "
-        self.equationInput.setText(f"{self.balancedEquation}")
+                self.balanced_equation += " + "
+        self.equation_input.setText(f"{self.balanced_equation}")
 
 
 class TabBar(QWidget):
@@ -591,58 +591,58 @@ class SideBar(QWidget):
     def __init__(self):
         super(QWidget, self).__init__()
 
-        self.sideBarLayout = QVBoxLayout()
+        self.side_bar_layout = QVBoxLayout()
 
         # Create buttons
-        self.molesTabButton = QPushButton("Moles")
-        self.concTabButton = QPushButton("Concentration")
-        self.gasVolTabButton = QPushButton("Molar gas volume")
-        self.numParticlesTabButton = QPushButton("Number of particles")
-        self.idealGasTabButton = QPushButton("Ideal gas equation")
-        self.atomEconTabButton = QPushButton("Atom economy")
-        self.percYieldTabButton = QPushButton("% Yield")
+        self.moles_tab_button = QPushButton("Moles")
+        self.conc_tab_button = QPushButton("Concentration")
+        self.gas_vol_tab_button = QPushButton("Molar gas volume")
+        self.num_particles_tab_button = QPushButton("Number of particles")
+        self.ideal_gas_tab_button = QPushButton("Ideal gas equation")
+        self.atom_econ_tab_button = QPushButton("Atom economy")
+        self.perc_yield_tab_button = QPushButton("% Yield")
 
-        self.molesTabButton.clicked.connect(self.molesButton)
-        self.concTabButton.clicked.connect(self.concButton)
-        self.gasVolTabButton.clicked.connect(self.gasVolButton)
-        self.numParticlesTabButton.clicked.connect(self.numParticlesButton)
-        self.idealGasTabButton.clicked.connect(self.idealGasButton)
-        self.atomEconTabButton.clicked.connect(self.atomEconButton)
-        self.percYieldTabButton.clicked.connect(self.percYieldButton)
+        self.moles_tab_button.clicked.connect(self.moles_button)
+        self.conc_tab_button.clicked.connect(self.conc_button)
+        self.gas_vol_tab_button.clicked.connect(self.gas_vol_button)
+        self.num_particles_tab_button.clicked.connect(self.num_particles_button)
+        self.ideal_gas_tab_button.clicked.connect(self.ideal_gas_button)
+        self.atom_econ_tab_button.clicked.connect(self.atom_econ_button)
+        self.perc_yield_tab_button.clicked.connect(self.perc_yield_button)
 
         # Create tabs
-        self.molesTab = QWidget()
-        self.concTab = QWidget()
-        self.gasVolTab = QWidget()
-        self.numParticlesTab = QWidget()
-        self.idealGasTab = QWidget()
-        self.atomEconTab = QWidget()
-        self.percYieldTab = QWidget()
+        self.moles_tab = QWidget()
+        self.conc_tab = QWidget()
+        self.gas_vol_tab = QWidget()
+        self.num_particles_tab = QWidget()
+        self.ideal_gas_tab = QWidget()
+        self.atom_econ_tab = QWidget()
+        self.perc_yield_tab = QWidget()
 
         # Add buttons to sidebar layout
-        self.sideBarLayout.addWidget(self.molesTabButton)
-        self.sideBarLayout.addWidget(self.concTabButton)
-        self.sideBarLayout.addWidget(self.gasVolTabButton)
-        self.sideBarLayout.addWidget(self.numParticlesTabButton)
-        self.sideBarLayout.addWidget(self.idealGasTabButton)
-        self.sideBarLayout.addWidget(self.atomEconTabButton)
-        self.sideBarLayout.addWidget(self.percYieldTabButton)
+        self.side_bar_layout.addWidget(self.moles_tab_button)
+        self.side_bar_layout.addWidget(self.conc_tab_button)
+        self.side_bar_layout.addWidget(self.gas_vol_tab_button)
+        self.side_bar_layout.addWidget(self.num_particles_tab_button)
+        self.side_bar_layout.addWidget(self.ideal_gas_tab_button)
+        self.side_bar_layout.addWidget(self.atom_econ_tab_button)
+        self.side_bar_layout.addWidget(self.perc_yield_tab_button)
 
-        self.sideBarWidget = QWidget()
-        self.sideBarWidget.setLayout(self.sideBarLayout)
+        self.side_bar_widget = QWidget()
+        self.side_bar_widget.setLayout(self.side_bar_layout)
 
-        self.pageWidget = QTabWidget()
+        self.page_widget = QTabWidget()
 
-        self.pageWidget.addTab(self.molesTab, "")
-        self.pageWidget.addTab(self.concTab, "")
-        self.pageWidget.addTab(self.gasVolTab, "")
-        self.pageWidget.addTab(self.numParticlesTab, "")
-        self.pageWidget.addTab(self.idealGasTab, "")
-        self.pageWidget.addTab(self.atomEconTab, "")
-        self.pageWidget.addTab(self.percYieldTab, "")
+        self.page_widget.addTab(self.moles_tab, "")
+        self.page_widget.addTab(self.conc_tab, "")
+        self.page_widget.addTab(self.gas_vol_tab, "")
+        self.page_widget.addTab(self.num_particles_tab, "")
+        self.page_widget.addTab(self.ideal_gas_tab, "")
+        self.page_widget.addTab(self.atom_econ_tab, "")
+        self.page_widget.addTab(self.perc_yield_tab, "")
 
-        self.pageWidget.setCurrentIndex(0)
-        self.pageWidget.setStyleSheet('''QTabBar::tab{
+        self.page_widget.setCurrentIndex(0)
+        self.page_widget.setStyleSheet('''QTabBar::tab{
         width: 0; 
         height: 0; 
         margin: 0; 
@@ -650,87 +650,87 @@ class SideBar(QWidget):
         border: none;
         }''')
 
-        self.mainLayout = QHBoxLayout()
-        self.mainLayout.addWidget(self.sideBarWidget)
-        self.mainLayout.addWidget(self.pageWidget)
+        self.main_layout = QHBoxLayout()
+        self.main_layout.addWidget(self.side_bar_widget)
+        self.main_layout.addWidget(self.page_widget)
 
-        self.mainWidget = QWidget()
-        self.mainWidget.setLayout(self.mainLayout)
+        self.main_widget = QWidget()
+        self.main_widget.setLayout(self.main_layout)
 
     # Define actions for each button
 
-    def molesButton(self):
-        self.pageWidget.setCurrentIndex(0)
+    def moles_button(self):
+        self.page_widget.setCurrentIndex(0)
 
-    def concButton(self):
-        self.pageWidget.setCurrentIndex(1)
+    def conc_button(self):
+        self.page_widget.setCurrentIndex(1)
 
-    def gasVolButton(self):
-        self.pageWidget.setCurrentIndex(2)
+    def gas_vol_button(self):
+        self.page_widget.setCurrentIndex(2)
 
-    def numParticlesButton(self):
-        self.pageWidget.setCurrentIndex(3)
+    def num_particles_button(self):
+        self.page_widget.setCurrentIndex(3)
 
-    def idealGasButton(self):
-        self.pageWidget.setCurrentIndex(4)
+    def ideal_gas_button(self):
+        self.page_widget.setCurrentIndex(4)
 
-    def atomEconButton(self):
-        self.pageWidget.setCurrentIndex(5)
+    def atom_econ_button(self):
+        self.page_widget.setCurrentIndex(5)
 
-    def percYieldButton(self):
-        self.pageWidget.setCurrentIndex(6)
+    def perc_yield_button(self):
+        self.page_widget.setCurrentIndex(6)
 
 
 class InteractiveTable(QWidget):
     def __init__(self):
         super(QWidget, self).__init__()
-        self.tableLayout = QVBoxLayout(self)
+        self.table_layout = QVBoxLayout(self)
 
         self.table = QTableWidget()
-        self.tableLayout.addWidget(self.table)
+        self.table_layout.addWidget(self.table)
 
-        self.addRowButton = QPushButton("Add Row")
-        self.deleteRowButton = QPushButton("Delete Row")
-        self.addColButton = QPushButton("Add Column")
-        self.deleteColButton = QPushButton("Delete Column")
+        self.add_row_button = QPushButton("Add Row")
+        self.delete_row_button = QPushButton("Delete Row")
+        self.add_col_button = QPushButton("Add Column")
+        self.delete_col_button = QPushButton("Delete Column")
 
-        self.tableLayout.addWidget(self.addRowButton)
-        self.tableLayout.addWidget(self.deleteRowButton)
-        self.tableLayout.addWidget(self.addColButton)
-        self.tableLayout.addWidget(self.deleteColButton)
+        self.table_layout.addWidget(self.add_row_button)
+        self.table_layout.addWidget(self.delete_row_button)
+        self.table_layout.addWidget(self.add_col_button)
+        self.table_layout.addWidget(self.delete_col_button)
 
-        self.addRowButton.clicked.connect(self.addRow)
-        self.deleteRowButton.clicked.connect(self.delRow)
-        self.addColButton.clicked.connect(self.addCol)
-        self.deleteColButton.clicked.connect(self.delCol)
+        self.add_row_button.clicked.connect(self.add_row)
+        self.delete_row_button.clicked.connect(self.del_row)
+        self.add_col_button.clicked.connect(self.add_col)
+        self.delete_col_button.clicked.connect(self.del_col)
 
         self.table.setRowCount(3)
         self.table.setColumnCount(3)
-        self.createTable()
+        self.create_table()
 
-    def createTable(self):
+    def create_table(self):
         for row in range(self.table.rowCount()):
             for col in range(self.table.columnCount()):
                 item = QTableWidgetItem(f"Row {row}, Col {col}")
                 self.table.setItem(row, col, item)
 
-    def addRow(self):
-        currentRows = self.table.rowCount()
-        self.table.setRowCount(currentRows + 1)
+    def add_row(self):
+        current_rows = self.table.rowCount()
+        self.table.setRowCount(current_rows + 1)
 
-    def addCol(self):
-        currentCols = self.table.columnCount()
-        self.table.setColumnCount(currentCols + 1)
+    def add_col(self):
+        current_cols = self.table.columnCount()
+        self.table.setColumnCount(current_cols + 1)
 
-    def delRow(self):
-        selectedRow = self.table.currentRow()
-        if selectedRow >= 0:
-            self.table.removeRow(selectedRow)
+    def del_row(self):
+        selected_row = self.table.currentRow()
+        if selected_row >= 0:
+            self.table.removeRow(selected_row)
 
-    def delCol(self):
-        selectedCol = self.table.currentColumn()
-        if selectedCol >= 0:
-            self.table.removeColumn(selectedCol)
+    def del_col(self):
+        selected_col = self.table.currentColumn()
+        if selected_col >= 0:
+            self.table.removeColumn(selected_col)
 
 
 def main():
@@ -738,8 +738,8 @@ def main():
 
     # Load CSS file
     app.setStyleSheet(open('style.css').read())
-    mainWin = ChemBox()
-    mainWin.show()
+    main_win = ChemBox()
+    main_win.show()
     sys.exit(app.exec_())
 
 
