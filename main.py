@@ -78,9 +78,9 @@ class AmountOfSubstance(QWidget):
         }
 
         self.volume_conversions = {
-            "cm³": 0.000001,
-            "dm³": 0.001,
-            "m³": 1.0,
+            "cm³": 0.001,
+            "dm³": 1.0,
+            "m³": 1000.0,
 
         }
 
@@ -102,10 +102,14 @@ class AmountOfSubstance(QWidget):
         self.mass_unit_dropdown.addItem("kg")
         self.mass_unit_dropdown.addItem("t")
 
+        self.mass_unit_dropdown.setCurrentIndex(1)
+
         self.moles_unit_dropdown = QComboBox()
         self.moles_unit_dropdown.addItem("μmol")
         self.moles_unit_dropdown.addItem("mmol")
         self.moles_unit_dropdown.addItem("mol")
+
+        self.moles_unit_dropdown.setCurrentIndex(2)
 
         # Initialise concentration calculation Layout
         self.conc_label_conc = QLabel("Concentration:")
@@ -124,10 +128,14 @@ class AmountOfSubstance(QWidget):
         self.moles_unit_dropdown_conc.addItem("mmol")
         self.moles_unit_dropdown_conc.addItem("mol")
 
+        self.moles_unit_dropdown_conc.setCurrentIndex(2)
+
         self.vol_unit_drop_down_conc = QComboBox()
         self.vol_unit_drop_down_conc.addItem("cm³")
         self.vol_unit_drop_down_conc.addItem("dm³")
         self.vol_unit_drop_down_conc.addItem("m³")
+
+        self.vol_unit_drop_down_conc.setCurrentIndex(1)
 
         # Initialise Avogadro's calculator
         self.mass_label_avogadro = QLabel("Mass:")
@@ -148,6 +156,8 @@ class AmountOfSubstance(QWidget):
         self.mass_unit_dropdown_avo.addItem("g")
         self.mass_unit_dropdown_avo.addItem("kg")
         self.mass_unit_dropdown_avo.addItem("t")
+
+        self.mass_unit_dropdown_avo.setCurrentIndex(1)
 
         self.get_moles_layout()
         self.get_conc_layout()
@@ -385,12 +395,18 @@ class IdealGasLaw(QWidget):
         self.pressure_drop_down_igl.addItem("Pa")
         self.pressure_drop_down_igl.addItem("kPa")
 
+        self.pressure_drop_down_igl.setCurrentIndex(0)
+
         self.volume_drop_down_igl.addItem("cm³")
         self.volume_drop_down_igl.addItem("dm³")
         self.volume_drop_down_igl.addItem("m³")
 
+        self.volume_drop_down_igl.setCurrentIndex(2)
+
         self.temperature_drop_down_igl.addItem("°C")
         self.temperature_drop_down_igl.addItem("°K")
+
+        self.temperature_drop_down_igl.setCurrentIndex(1)
 
         self.calculate_button_igl.clicked.connect(self.calculate_ideal_gas_law)
 
