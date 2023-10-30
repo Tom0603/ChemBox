@@ -35,6 +35,9 @@ class ChemBox(QMainWindow):
         # Initialise concentration tab in sidebar
         self.side_bar.conc_tab.setLayout(self.amount_of_substance.conc_layout)
 
+        # Initialise avogadro's calculator tab in sidebar
+        self.side_bar.avogadro_tab.setLayout(self.amount_of_substance.avogadro_layout)
+
         # Initialise igl tab in sidebar
         self.ideal_gas_law = IdealGasLaw()
         self.side_bar.ideal_gas_tab.setLayout(self.ideal_gas_law.ideal_gas_layout)
@@ -56,6 +59,9 @@ class AmountOfSubstance(QWidget):
         super(QWidget, self).__init__()
         self.moles_layout = QGridLayout()
         self.conc_layout = QGridLayout()
+        self.avogadro_layout = QGridLayout()
+
+        self.avogadros_constant = 6.02214076
 
         # Unit conversions
         self.mass_conversions = {
@@ -123,8 +129,29 @@ class AmountOfSubstance(QWidget):
         self.vol_unit_drop_down_conc.addItem("dm³")
         self.vol_unit_drop_down_conc.addItem("m³")
 
-        self.get_conc_layout()
+        # Initialise Avogadro's calculator
+        self.mass_label_avogadro = QLabel("Mass:")
+        self.moles_label_avogadro = QLabel("Moles:")
+        self.molecular_weight_label_avogadro = QLabel("Molecular weight:")
+        self.num_atoms_label_avogadro = QLabel("Number of atoms:")
+
+        self.mass_input_avogadro = QLineEdit()
+        self.moles_input_avogadro = QLineEdit()
+        self.molecular_weight_input_avogadro = QLineEdit()
+        self.num_atoms_input_avogadro = QLineEdit()
+
+        self.calculate_button_avogadro = QPushButton("Calculate")
+        self.calculate_button_avogadro.clicked.connect(self.calculate_avogadro)
+
+        self.mass_unit_dropdown_avo = QComboBox()
+        self.mass_unit_dropdown_avo.addItem("mg")
+        self.mass_unit_dropdown_avo.addItem("g")
+        self.mass_unit_dropdown_avo.addItem("kg")
+        self.mass_unit_dropdown_avo.addItem("t")
+
         self.get_moles_layout()
+        self.get_conc_layout()
+        self.get_avogadro_layout()
 
     def get_moles_layout(self):
         f"""
@@ -162,7 +189,8 @@ class AmountOfSubstance(QWidget):
                 print("Value Error")
         if self.mass_input.text() == "":
             try:
-                mass = (float(self.moles_input.text()) * self.mole_conversions[moles_unit]) * float(self.mr_input.text())
+                mass = (float(self.moles_input.text()) * self.mole_conversions[moles_unit]) * float(
+                    self.mr_input.text())
                 self.mass_input.setText(str(mass))
             except ValueError:
                 print("Value Error")
@@ -222,6 +250,78 @@ class AmountOfSubstance(QWidget):
                 self.vol_input_conc.setText(str(vol))
             except ValueError:
                 print("Value Error")
+
+    def get_avogadro_layout(self):
+        f"""
+        This function adds all the essential widgets to the {self.avogadro_layout} 
+        """
+
+        self.avogadro_layout.addWidget(self.mass_label_avogadro, 0, 0)
+        self.avogadro_layout.addWidget(self.moles_label_avogadro, 1, 0)
+        self.avogadro_layout.addWidget(self.molecular_weight_label_avogadro, 2, 0)
+        self.avogadro_layout.addWidget(self.num_atoms_label_avogadro, 3, 0)
+
+        self.avogadro_layout.addWidget(self.mass_input_avogadro, 0, 1)
+        self.avogadro_layout.addWidget(self.moles_input_avogadro, 1, 1)
+        self.avogadro_layout.addWidget(self.molecular_weight_input_avogadro, 2, 1)
+        self.avogadro_layout.addWidget(self.num_atoms_input_avogadro, 3, 1)
+
+        self.avogadro_layout.addWidget(self.mass_unit_dropdown_avo, 0, 2)
+
+        self.avogadro_layout.addWidget(self.calculate_button_avogadro, 4, 1)
+
+    def calculate_avogadro(self):
+        mass_unit = self.mass_unit_dropdown_avo.currentText()
+
+        def _calculate_mass():
+            mass = float(self.moles_input_avogadro.text()) * float(self.molecular_weight_input_avogadro.text())
+            return mass
+
+        def _calculate_moles():
+            try:
+                moles = float(self.num_atoms_input_avogadro.text()) / self.avogadros_constant
+            except ValueError:
+                try:
+                    moles = (float(self.mass_input_avogadro.text()) * self.mass_conversions[mass_unit]) / float(
+                        self.molecular_weight_input_avogadro.text())
+                    return moles
+                except ValueError:
+                    return ""
+            return moles
+
+        def _calculate_mol_weight():
+            mol_weight = (float(self.mass_input_avogadro.text()) * self.mass_conversions[mass_unit]) / float(
+                self.moles_input_avogadro.text())
+            return mol_weight
+
+        def _calculate_num_atoms():
+            num_atoms = float(self.moles_input_avogadro.text()) * self.avogadros_constant
+            print(num_atoms)
+            return num_atoms
+
+        def _run_calculations():
+            try:
+                if self.mass_input_avogadro.text() == "":
+                    self.mass_input_avogadro.setText(str(_calculate_mass()))
+            except ValueError:
+                pass
+            try:
+                if self.moles_input_avogadro.text() == "":
+                    self.moles_input_avogadro.setText(str(_calculate_moles()))
+            except ValueError:
+                pass
+            try:
+                if self.molecular_weight_input_avogadro.text() == "":
+                    self.molecular_weight_input_avogadro.setText(str(_calculate_mol_weight()))
+            except ValueError:
+                pass
+            try:
+                if self.num_atoms_input_avogadro.text() == "":
+                    self.num_atoms_input_avogadro.setText(str(_calculate_num_atoms()))
+            except ValueError:
+                pass
+
+        _run_calculations()
 
 
 class IdealGasLaw(QWidget):
@@ -312,16 +412,17 @@ class IdealGasLaw(QWidget):
             try:
                 volume = (float(self.moles_input_igl.text()) * self.ideal_gas_constant * (float(
                     self.temperature_input_igl.text()) + self.temperature_conversions[temperature_unit])) / (
-                        float(self.pressure_input_igl.text()) * self.pressure_conversions[pressure_unit])
+                                 float(self.pressure_input_igl.text()) * self.pressure_conversions[pressure_unit])
                 return volume
             except ValueError:
                 return "Value Error"
 
         def _calculate_temperature():
             try:
-                temperature = ((float(self.pressure_input_igl.text()) * self.pressure_conversions[pressure_unit]) * (float(
-                    self.volume_input_igl.text()) * self.volume_conversions[volume_unit])) / (
-                        float(self.moles_input_igl.text()) * self.ideal_gas_constant)
+                temperature = ((float(self.pressure_input_igl.text()) * self.pressure_conversions[pressure_unit]) * (
+                        float(
+                            self.volume_input_igl.text()) * self.volume_conversions[volume_unit])) / (
+                                      float(self.moles_input_igl.text()) * self.ideal_gas_constant)
                 return temperature
             except ValueError:
                 return "Value Error"
@@ -330,8 +431,8 @@ class IdealGasLaw(QWidget):
             try:
                 moles = ((float(self.pressure_input_igl.text()) * self.pressure_conversions[pressure_unit]) * (
                         float(self.volume_input_igl.text()) * self.volume_conversions[volume_unit])) / (
-                        self.ideal_gas_constant * (float(self.temperature_input_igl.text()) +
-                                                   self.temperature_conversions[temperature_unit]))
+                                self.ideal_gas_constant * (float(self.temperature_input_igl.text()) +
+                                                           self.temperature_conversions[temperature_unit]))
                 return moles
             except ValueError:
                 return "Value Error"
@@ -596,16 +697,16 @@ class SideBar(QWidget):
         # Create buttons
         self.moles_tab_button = QPushButton("Moles")
         self.conc_tab_button = QPushButton("Concentration")
-        self.gas_vol_tab_button = QPushButton("Molar gas volume")
-        self.num_particles_tab_button = QPushButton("Number of particles")
-        self.ideal_gas_tab_button = QPushButton("Ideal gas equation")
-        self.atom_econ_tab_button = QPushButton("Atom economy")
+        self.gas_vol_tab_button = QPushButton("Molar Gas Volume")
+        self.avogadro_tab_button = QPushButton("Avogadro's Calculator")
+        self.ideal_gas_tab_button = QPushButton("Ideal Gas Equation")
+        self.atom_econ_tab_button = QPushButton("Atom Economy")
         self.perc_yield_tab_button = QPushButton("% Yield")
 
         self.moles_tab_button.clicked.connect(self.moles_button)
         self.conc_tab_button.clicked.connect(self.conc_button)
         self.gas_vol_tab_button.clicked.connect(self.gas_vol_button)
-        self.num_particles_tab_button.clicked.connect(self.num_particles_button)
+        self.avogadro_tab_button.clicked.connect(self.avogadro_button)
         self.ideal_gas_tab_button.clicked.connect(self.ideal_gas_button)
         self.atom_econ_tab_button.clicked.connect(self.atom_econ_button)
         self.perc_yield_tab_button.clicked.connect(self.perc_yield_button)
@@ -614,7 +715,7 @@ class SideBar(QWidget):
         self.moles_tab = QWidget()
         self.conc_tab = QWidget()
         self.gas_vol_tab = QWidget()
-        self.num_particles_tab = QWidget()
+        self.avogadro_tab = QWidget()
         self.ideal_gas_tab = QWidget()
         self.atom_econ_tab = QWidget()
         self.perc_yield_tab = QWidget()
@@ -623,7 +724,7 @@ class SideBar(QWidget):
         self.side_bar_layout.addWidget(self.moles_tab_button)
         self.side_bar_layout.addWidget(self.conc_tab_button)
         self.side_bar_layout.addWidget(self.gas_vol_tab_button)
-        self.side_bar_layout.addWidget(self.num_particles_tab_button)
+        self.side_bar_layout.addWidget(self.avogadro_tab_button)
         self.side_bar_layout.addWidget(self.ideal_gas_tab_button)
         self.side_bar_layout.addWidget(self.atom_econ_tab_button)
         self.side_bar_layout.addWidget(self.perc_yield_tab_button)
@@ -636,7 +737,7 @@ class SideBar(QWidget):
         self.page_widget.addTab(self.moles_tab, "")
         self.page_widget.addTab(self.conc_tab, "")
         self.page_widget.addTab(self.gas_vol_tab, "")
-        self.page_widget.addTab(self.num_particles_tab, "")
+        self.page_widget.addTab(self.avogadro_tab, "")
         self.page_widget.addTab(self.ideal_gas_tab, "")
         self.page_widget.addTab(self.atom_econ_tab, "")
         self.page_widget.addTab(self.perc_yield_tab, "")
@@ -668,7 +769,7 @@ class SideBar(QWidget):
     def gas_vol_button(self):
         self.page_widget.setCurrentIndex(2)
 
-    def num_particles_button(self):
+    def avogadro_button(self):
         self.page_widget.setCurrentIndex(3)
 
     def ideal_gas_button(self):
