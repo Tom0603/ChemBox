@@ -6,6 +6,8 @@ from PyQt6.QtWidgets import QApplication, QMainWindow, QTabWidget, QGridLayout, 
 import re
 from sympy import Matrix, lcm
 
+from chem_editor_gui import ChemEditor
+
 
 class ChemBox(QMainWindow):
     def __init__(self):
@@ -44,6 +46,9 @@ class ChemBox(QMainWindow):
 
         self.chem_balancer = ChemBalancer()
         self.tab_bar.tab3.setLayout(self.chem_balancer.balancer_layout)
+
+        self.chem_editor = ChemEditor()
+        self.tab_bar.tab5.setLayout(self.chem_editor.editor_layout)
 
         # self.interactiveTable = InteractiveTable()
         # self.tabBar.tab2.setLayout(self.interactiveTable.tableLayout)
