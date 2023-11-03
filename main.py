@@ -195,27 +195,35 @@ class AmountOfSubstance(QWidget):
         mass_unit = self.mass_unit_dropdown.currentText()
         moles_unit = self.moles_unit_dropdown.currentText()
 
-        if self.moles_input.text() == "":
+        if not self.moles_input.text():
             try:
                 moles = (float(self.mass_input.text()) * self.mass_conversions[mass_unit]) / float(self.mr_input.text())
-                self.moles_input.setText(str(moles))
+                self.update_moles_calculation(moles)
                 self.moles_unit_dropdown.setCurrentText("mol")
             except ValueError:
                 print("Value Error")
-        if self.mass_input.text() == "":
+        elif not self.mass_input.text():
             try:
                 mass = (float(self.moles_input.text()) * self.mole_conversions[moles_unit]) * float(
                     self.mr_input.text())
-                self.mass_input.setText(str(mass))
+                self.update_moles_calculation(mass)
             except ValueError:
                 print("Value Error")
-        if self.mr_input.text() == "":
+        else:
             try:
                 mr = (float(self.mass_input.text()) * self.mass_conversions[mass_unit]) / (
                         float(self.moles_input.text()) * self.mole_conversions[moles_unit])
-                self.mr_input.setText(str(mr))
+                self.update_moles_calculation(mr)
             except ValueError:
                 print("Value Error")
+
+    def update_moles_calculation(self, result):
+        if not self.moles_input.text():
+            self.moles_input.setText(str(result))
+        elif not self.mass_input.text():
+            self.mass_input.setText(str(result))
+        else:
+            self.mr_input.setText(str(result))
 
     def get_conc_layout(self):
         f"""
@@ -244,27 +252,35 @@ class AmountOfSubstance(QWidget):
         moles_unit = self.moles_unit_dropdown.currentText()
         vol_unit = self.vol_unit_drop_down_conc.currentText()
 
-        if self.conc_input_conc.text() == "":
+        if not self.conc_input_conc.text():
             try:
                 conc = (float(self.moles_input.text()) * self.mole_conversions[moles_unit]) / (
                         float(self.vol_input_conc.text()) * self.volume_conversions[vol_unit])
                 self.conc_input_conc.setText(str(conc))
             except ValueError:
                 print("Value Error")
-        if self.moles_input.text() == "":
+        elif not self.moles_input.text():
             try:
                 moles = float(self.conc_input_conc.text()) * (
                         float(self.vol_input_conc.text()) * self.volume_conversions[vol_unit])
                 self.mass_input.setText(str(moles))
             except ValueError:
                 print("Value Error")
-        if self.vol_input_conc.text() == "":
+        else:
             try:
                 vol = (float(self.moles_input.text()) * self.mole_conversions[moles_unit]) / float(
                     self.conc_input_conc.text())
                 self.vol_input_conc.setText(str(vol))
             except ValueError:
                 print("Value Error")
+
+    def update_conc_calculation(self, result):
+        if not self.conc_input_conc:
+            self.conc_input_conc.setText(str(result))
+        elif not self.moles_input_conc:
+            self.moles_input_conc.setText(str(result))
+        else:
+            self.vol_input_conc.setText(str(result))
 
     def get_avogadro_layout(self):
         f"""
@@ -311,32 +327,43 @@ class AmountOfSubstance(QWidget):
 
         def _calculate_num_atoms():
             num_atoms = float(self.moles_input_avogadro.text()) * self.avogadros_constant
-            print(num_atoms)
             return num_atoms
 
         def _run_calculations():
             try:
-                if self.mass_input_avogadro.text() == "":
-                    self.mass_input_avogadro.setText(str(_calculate_mass()))
+                if not self.mass_input_avogadro.text():
+                    self.update_mass_avogadro(str(_calculate_mass()))
             except ValueError:
                 pass
             try:
-                if self.moles_input_avogadro.text() == "":
+                if not self.moles_input_avogadro.text():
                     self.moles_input_avogadro.setText(str(_calculate_moles()))
             except ValueError:
                 pass
             try:
-                if self.molecular_weight_input_avogadro.text() == "":
-                    self.molecular_weight_input_avogadro.setText(str(_calculate_mol_weight()))
+                if not self.molecular_weight_input_avogadro.text():
+                    self.update_mol_weight_avogadro(str(_calculate_mol_weight()))
             except ValueError:
                 pass
             try:
-                if self.num_atoms_input_avogadro.text() == "":
-                    self.num_atoms_input_avogadro.setText(str(_calculate_num_atoms()))
+                if not self.num_atoms_input_avogadro.text():
+                    self.update_num_atoms_avogadro(str(_calculate_num_atoms()))
             except ValueError:
                 pass
 
         _run_calculations()
+
+    def update_mass_avogadro(self, mass):
+        self.mass_input_avogadro.setText(mass)
+
+    def update_moles_avogadro(self, moles):
+        self.moles_input_avogadro.setText(moles)
+
+    def update_mol_weight_avogadro(self, mol_weight):
+        self.molecular_weight_input_avogadro.setText(mol_weight)
+
+    def update_num_atoms_avogadro(self, num_atoms):
+        self.num_atoms_input_avogadro.setText(num_atoms)
 
 
 class IdealGasLaw(QWidget):
@@ -718,7 +745,6 @@ class SideBar(QWidget):
         # Create buttons
         self.moles_tab_button = QPushButton("Moles")
         self.conc_tab_button = QPushButton("Concentration")
-        self.gas_vol_tab_button = QPushButton("Molar Gas Volume")
         self.avogadro_tab_button = QPushButton("Avogadro's Calculator")
         self.ideal_gas_tab_button = QPushButton("Ideal Gas Equation")
         self.atom_econ_tab_button = QPushButton("Atom Economy")
@@ -726,7 +752,6 @@ class SideBar(QWidget):
 
         self.moles_tab_button.clicked.connect(self.moles_button)
         self.conc_tab_button.clicked.connect(self.conc_button)
-        self.gas_vol_tab_button.clicked.connect(self.gas_vol_button)
         self.avogadro_tab_button.clicked.connect(self.avogadro_button)
         self.ideal_gas_tab_button.clicked.connect(self.ideal_gas_button)
         self.atom_econ_tab_button.clicked.connect(self.atom_econ_button)
@@ -735,7 +760,6 @@ class SideBar(QWidget):
         # Create tabs
         self.moles_tab = QWidget()
         self.conc_tab = QWidget()
-        self.gas_vol_tab = QWidget()
         self.avogadro_tab = QWidget()
         self.ideal_gas_tab = QWidget()
         self.atom_econ_tab = QWidget()
@@ -744,7 +768,6 @@ class SideBar(QWidget):
         # Add buttons to sidebar layout
         self.side_bar_layout.addWidget(self.moles_tab_button)
         self.side_bar_layout.addWidget(self.conc_tab_button)
-        self.side_bar_layout.addWidget(self.gas_vol_tab_button)
         self.side_bar_layout.addWidget(self.avogadro_tab_button)
         self.side_bar_layout.addWidget(self.ideal_gas_tab_button)
         self.side_bar_layout.addWidget(self.atom_econ_tab_button)
@@ -757,7 +780,6 @@ class SideBar(QWidget):
 
         self.page_widget.addTab(self.moles_tab, "")
         self.page_widget.addTab(self.conc_tab, "")
-        self.page_widget.addTab(self.gas_vol_tab, "")
         self.page_widget.addTab(self.avogadro_tab, "")
         self.page_widget.addTab(self.ideal_gas_tab, "")
         self.page_widget.addTab(self.atom_econ_tab, "")
@@ -787,20 +809,17 @@ class SideBar(QWidget):
     def conc_button(self):
         self.page_widget.setCurrentIndex(1)
 
-    def gas_vol_button(self):
+    def avogadro_button(self):
         self.page_widget.setCurrentIndex(2)
 
-    def avogadro_button(self):
+    def ideal_gas_button(self):
         self.page_widget.setCurrentIndex(3)
 
-    def ideal_gas_button(self):
+    def atom_econ_button(self):
         self.page_widget.setCurrentIndex(4)
 
-    def atom_econ_button(self):
-        self.page_widget.setCurrentIndex(5)
-
     def perc_yield_button(self):
-        self.page_widget.setCurrentIndex(6)
+        self.page_widget.setCurrentIndex(5)
 
 
 class InteractiveTable(QWidget):
