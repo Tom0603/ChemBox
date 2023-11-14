@@ -164,6 +164,9 @@ class AmountOfSubstance(QWidget):
 
         self.mass_unit_dropdown_avo.setCurrentIndex(1)
 
+        # Initialise Atom Economy calculator
+
+
         self.get_moles_layout()
         self.get_conc_layout()
         self.get_avogadro_layout()
@@ -730,7 +733,7 @@ class TabBar(QWidget):
         self.tabs.addTab(self.tab2, "Tab2")
         self.tabs.addTab(self.tab3, "Balancer")
         self.tabs.addTab(self.tab4, "Tab4")
-        self.tabs.addTab(self.tab5, "Tab5")
+        self.tabs.addTab(self.tab5, "ChemEditor")
 
         self.layout.addWidget(self.tabs)
         self.setLayout(self.layout)

@@ -39,7 +39,10 @@ class Bond:
 
         x = self.atoms[1].x_coords - self.atoms[0].x_coords
         y = self.atoms[1].y_coords - self.atoms[0].y_coords
-        length = sqrt(x ** 2 + y ** 2)
+        try:
+            length = sqrt(x ** 2 + y ** 2)
+        except RecursionError:
+            return
         return length
 
 
