@@ -15,11 +15,19 @@ class ChemEditor(QWidget):
 
         self.carbon_button = QPushButton("C")
         self.hydrogen_button = QPushButton("H")
+
+        self.bond_action_button = QPushButton("Bond")
+        self.draw_action_button = QPushButton("Draw")
+
         self.editor_layout.addWidget(self.carbon_button, 0, 0)
         self.editor_layout.addWidget(self.hydrogen_button, 0, 1)
+        self.editor_layout.addWidget(self.bond_action_button, 0, 9)
+        self.editor_layout.addWidget(self.draw_action_button, 0, 10)
 
         self.carbon_button.clicked.connect(self.choose_carbon)
         self.hydrogen_button.clicked.connect(self.choose_hydrogen)
+        self.bond_action_button.clicked.connect(self.choose_bond_action)
+        self.draw_action_button.clicked.connect(self.choose_draw_action)
 
         self.c = Canvas()
         self.editor_layout.addWidget(self.c, 1, 0, 20, 20)
@@ -29,6 +37,12 @@ class ChemEditor(QWidget):
 
     def choose_hydrogen(self):
         self.c.set_letter("H")
+
+    def choose_draw_action(self):
+        self.c.set_action_type("draw")
+
+    def choose_bond_action(self):
+        self.c.set_action_type("bond")
 
 
 class Canvas(QWidget):
@@ -54,21 +68,26 @@ class Canvas(QWidget):
 
         self.letter = "C"
         self.atoms = []
-        self.on_canvas = []
+
+        self.temp_bond_list = []
+
+        self.action_type = "draw"
 
     def set_letter(self, new_letter):
         self.letter = new_letter
 
-    def paintEvent(self, event):
-        for bond in self.a.bonds:
-            self.draw_bonds(bond)
-            self.draw_atom_circle(bond)
-            self.draw_atoms(bond)
-            self.draw_center_atom(bond)
+    def set_action_type(self, action):
+        self.action_type = action
 
+    def paintEvent(self, event):
         for atom in self.atoms:
             self.draw_atom_circle_from_atom(atom)
             self.draw_atom(atom)
+            for bond in atom.bonds:
+                self.draw_bonds(bond)
+                self.draw_atom_circle(bond)
+                self.draw_atoms(bond)
+                self.draw_center_atom(bond)
 
     def draw_bonds(self, bond):
         painter = QPainter(self)
@@ -79,7 +98,7 @@ class Canvas(QWidget):
         pen.setColor(QColor(0, 0, 0))
         pen.setWidth(2)
         painter.setPen(pen)
-        painter.drawLine(QPoint(self.a.x_coords, self.a.y_coords),
+        painter.drawLine(QPoint(bond.atoms[0].x_coords, bond.atoms[0].y_coords),
                          QPoint(bond.atoms[1].x_coords, bond.atoms[1].y_coords))
 
     def draw_atom_circle(self, bond):
@@ -170,19 +189,39 @@ class Canvas(QWidget):
             click_position = event.pos()
             symbol = self.letter
 
-            # Check if the letter is already in the list
-            for atom in self.atoms:
-                atom_x = atom.x_coords
-                atom_y = atom.y_coords
-                atom_radius = 12  # Adjust the radius as needed
+            if self.action_type == "bond":
+                for atom in self.atoms:
+                    atom_x = atom.x_coords
+                    atom_y = atom.y_coords
+                    atom_radius = 12  # Adjust the radius as needed
 
-                if (
-                        atom_x - atom_radius <= click_position.x() <= atom_x + atom_radius and
-                        atom_y - atom_radius <= click_position.y() <= atom_y + atom_radius
-                ):
-                    print(f"Clicked on atom: {atom.symbol}")
-                    return
+                    if (
+                            atom_x - atom_radius <= click_position.x() <= atom_x + atom_radius and
+                            atom_y - atom_radius <= click_position.y() <= atom_y + atom_radius
+                    ):
+                        print(f"Clicked on atom for bond: {atom}")
+                        self.temp_bond_list.append(atom)
+                        if len(self.temp_bond_list) == 2:
+                            self.temp_bond_list[0].bond(self.temp_bond_list[1])
+                            self.temp_bond_list = []
+                            self.update()
+                        return
+            else:
+                # Check if the letter is already in the list
+                for atom in self.atoms:
+                    atom_x = atom.x_coords
+                    atom_y = atom.y_coords
+                    atom_radius = 12  # Adjust the radius as needed
 
-            new_atom = chem_editor_logic.Atom(symbol, 4, [click_position.x(), click_position.y()])
-            self.atoms.append(new_atom)
-            self.update()
+                    if (
+                            atom_x - atom_radius <= click_position.x() <= atom_x + atom_radius and
+                            atom_y - atom_radius <= click_position.y() <= atom_y + atom_radius
+                    ):
+                        print(f"Clicked on atom: {atom.symbol}")
+                        return
+
+                print(self.action_type)
+
+                new_atom = chem_editor_logic.Atom(symbol, 4, [click_position.x(), click_position.y()], 8)
+                self.atoms.append(new_atom)
+                self.update()

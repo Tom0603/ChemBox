@@ -13,16 +13,21 @@ class Atom:
         self.full_shell = full_shell
         self.bonds = []
         self.extra_electrons = 0
-        self.overall_electrons = self.outer_electrons + self.extra_electrons
+        self.overall_electrons = (self.outer_electrons + self.extra_electrons)
 
     def bond(self, bonding_atom, order=1):
         if (self.overall_electrons + order) > self.full_shell:
+            print("Bonding unavailable, shell is full.")
+            return
+        elif (bonding_atom.overall_electrons + order) > bonding_atom.full_shell:
+            print("Bonding unavailable, bonding atoms shell is full.")
             return
         new_bond = Bond(self, bonding_atom, order)
         self.bonds.append(new_bond)
         bonding_atom.bonds.append(new_bond)
         self.extra_electrons += order
         bonding_atom.extra_electrons += order
+        self.overall_electrons = (self.outer_electrons + self.extra_electrons)
 
 
 @dataclass
@@ -44,29 +49,3 @@ class Bond:
         except RecursionError:
             return
         return length
-
-
-def test1():
-    a = Atom("C", 4, [20, 20])
-    b = Atom("H", 1, [20, 30], 2)
-    c = Atom("H", 1, [20, 10], 2)
-    d = Atom("H", 1, [10, 20], 2)
-    e = Atom("H", 1, [30, 20], 2)
-    a.bond(b, 3)
-    a.bond(c)
-    # a.bond(d)
-    # a.bond(e)
-    print(a)
-    print(b)
-
-    print(a.bonds)
-    print(a.bonds[0]._length)
-
-    for bond in a.bonds:
-        print(f"Bond Order: {bond.order}")
-        for atom in bond.atoms:
-            print(f"Atom Symbol: {atom.symbol}")
-
-
-if __name__ == "__main__":
-    test1()
