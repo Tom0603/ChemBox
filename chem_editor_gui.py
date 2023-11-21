@@ -1,7 +1,7 @@
 from PyQt6.QtCore import Qt, QPointF
 from PyQt6.QtCore import QPoint
 from PyQt6.QtWidgets import QWidget, QGridLayout, QPushButton
-from PyQt6.QtGui import QPainter, QPen, QColor, QFont, QFontMetrics, QPalette, QBrush
+from PyQt6.QtGui import QPainter, QPen, QColor, QFont, QPalette, QBrush
 
 import chem_editor_logic
 
@@ -32,11 +32,13 @@ class ChemEditor(QWidget):
         self.c = Canvas()
         self.editor_layout.addWidget(self.c, 1, 0, 20, 20)
 
+        self.chem_logic = chem_editor_logic
+
     def choose_carbon(self):
-        self.c.set_letter("C")
+        self.c.set_element(self.chem_logic.Carbon)
 
     def choose_hydrogen(self):
-        self.c.set_letter("H")
+        self.c.set_element(self.chem_logic.Hydrogen)
 
     def choose_draw_action(self):
         self.c.set_action_type("draw")
@@ -56,25 +58,18 @@ class Canvas(QWidget):
         self.setPalette(palette)
 
         self.chem_logic = chem_editor_logic
-        self.a = self.chem_logic.Atom("C", 4, [100, 100])
-        self.b = self.chem_logic.Atom("H", 1, [100, 50], 2)
-        self.c = self.chem_logic.Atom("H", 1, [50, 100], 2)
-        self.d = self.chem_logic.Atom("H", 1, [100, 150], 2)
-        self.e = self.chem_logic.Atom("H", 1, [150, 100], 2)
-        self.a.bond(self.b)
-        self.a.bond(self.c)
-        self.a.bond(self.d)
-        self.a.bond(self.e)
 
-        self.letter = "C"
+        # Set default element to carbon
+        self.element = self.chem_logic.Carbon
+
         self.atoms = []
 
         self.temp_bond_list = []
 
         self.action_type = "draw"
 
-    def set_letter(self, new_letter):
-        self.letter = new_letter
+    def set_element(self, new_element):
+        self.element = new_element
 
     def set_action_type(self, action):
         self.action_type = action
@@ -187,7 +182,7 @@ class Canvas(QWidget):
     def mousePressEvent(self, event):
         if event.button() == Qt.MouseButton.LeftButton:
             click_position = event.pos()
-            symbol = self.letter
+            symbol = self.element.SYMBOL
 
             if self.action_type == "bond":
                 for atom in self.atoms:
@@ -199,13 +194,31 @@ class Canvas(QWidget):
                             atom_x - atom_radius <= click_position.x() <= atom_x + atom_radius and
                             atom_y - atom_radius <= click_position.y() <= atom_y + atom_radius
                     ):
-                        print(f"Clicked on atom for bond: {atom}")
-                        self.temp_bond_list.append(atom)
-                        if len(self.temp_bond_list) == 2:
-                            self.temp_bond_list[0].bond(self.temp_bond_list[1])
-                            self.temp_bond_list = []
-                            self.update()
-                        return
+                        print(f"Clicked on atom for bond: {atom.symbol}")
+                        # Check if the atom has the maximum allowed bonds
+                        if len(atom.bonds) < atom.outer_electrons:
+                            print("Can form bond with atom", atom.symbol)
+                            self.temp_bond_list.append(atom)
+                            if len(self.temp_bond_list) == 2:
+                                # Check if either atom already has the maximum allowed bonds
+                                if len(self.temp_bond_list[0].bonds) < self.temp_bond_list[0].outer_electrons and \
+                                        len(self.temp_bond_list[1].bonds) < self.temp_bond_list[1].outer_electrons:
+                                    print("Can form bond between", self.temp_bond_list[0].symbol, "and",
+                                          self.temp_bond_list[1].symbol)
+                                    if self.temp_bond_list[0] is self.temp_bond_list[1]:
+                                        print("Trying to bond to itself")
+                                        self.temp_bond_list.clear()
+                                        return
+                                    self.temp_bond_list[0].bond(self.temp_bond_list[1])
+                                    self.temp_bond_list.clear()
+                                    self.update()
+                                else:
+                                    print("Bonding unavailable, one or both atoms have the maximum number of bonds.")
+                            return
+                        else:
+                            print("Bonding unavailable, atom has the maximum number of bonds.")
+                            print(atom.bonds)
+                            return
             else:
                 # Check if the letter is already in the list
                 for atom in self.atoms:
@@ -222,6 +235,6 @@ class Canvas(QWidget):
 
                 print(self.action_type)
 
-                new_atom = chem_editor_logic.Atom(symbol, 4, [click_position.x(), click_position.y()], 8)
+                new_atom = chem_editor_logic.Atom(self.element, [click_position.x(), click_position.y()])
                 self.atoms.append(new_atom)
                 self.update()

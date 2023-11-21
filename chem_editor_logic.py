@@ -5,17 +5,21 @@ from math import sqrt
 
 @dataclass
 class Atom:
-    def __init__(self, symbol, outer_electrons, coordinates, full_shell=8):
-        self.symbol = symbol
-        self.outer_electrons = outer_electrons
+    def __init__(self, element, coordinates):
+        self.symbol = element.SYMBOL
+        self.outer_electrons = element.OUTER_ELECTRONS
         self.x_coords = coordinates[0]
         self.y_coords = coordinates[1]
-        self.full_shell = full_shell
+        self.full_shell = element.FULL_SHELL
         self.bonds = []
         self.extra_electrons = 0
         self.overall_electrons = (self.outer_electrons + self.extra_electrons)
 
     def bond(self, bonding_atom, order=1):
+        print(self.overall_electrons)
+        print(bonding_atom.overall_electrons)
+        print(self.overall_electrons + order)
+        print(bonding_atom.overall_electrons + order)
         if (self.overall_electrons + order) > self.full_shell:
             print("Bonding unavailable, shell is full.")
             return
@@ -49,3 +53,17 @@ class Bond:
         except RecursionError:
             return
         return length
+
+
+@dataclass
+class Carbon:
+    SYMBOL = "C"
+    OUTER_ELECTRONS = 4
+    FULL_SHELL = 8
+
+
+@dataclass
+class Hydrogen:
+    SYMBOL = "H"
+    OUTER_ELECTRONS = 1
+    FULL_SHELL = 2
