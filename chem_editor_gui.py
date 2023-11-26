@@ -99,22 +99,74 @@ class Canvas(QWidget):
 
         # Check for selected atom and draw potential positions
         if self.selected:
-            potential_positions = self.calculate_potential_positions(self.selected_atom)
-            for pos in potential_positions:
-                # Draw grayed-out atoms at potential positions
-                self.draw_potential_position(pos)
+            if self.action_type == "bond":
+                try:
+                    for possible_atom in self.atoms:
+                        print(self.atoms)
+                        self.draw_possible_bonds(possible_atom)
+                        self.draw_potential_atom_circle(possible_atom.x_coords, possible_atom.y_coords)
+                        self.draw_center_atom_from_atom(self.selected_atom)
+                        self.draw_atom(possible_atom)
+                except AttributeError:
+                    return 
+                return
+            print("selected")
+            try:
+                potential_positions = self.calculate_potential_positions(self.selected_atom)
+                for pos in potential_positions:
+                    # Draw potential atoms and bonds
+                    self.draw_potential_bonds(pos)
+                    self.draw_potential_atom_circle(pos[0], pos[1])
+                    self.draw_potential_atoms(pos)
+                    self.draw_center_atom_from_atom(self.selected_atom)
+            except AttributeError:
+                return
 
     # Function to draw potential positions for atoms
-    def draw_potential_position(self, position):
+    def draw_potential_atoms(self, position):
+        painter = QPainter(self)
+        font = QFont("Arial", 16)
+        painter.setFont(font)
+        pen = QPen()
+        painter.setPen(pen)
+        pen.setColor(QColor(0, 150, 150))
+
+        # Draw the letter
+        letter_width = painter.fontMetrics().horizontalAdvance(self.element.SYMBOL)
+        letter_height = painter.fontMetrics().height()
+        letter_x = position[0] - letter_width / 2
+        letter_y = position[1] + letter_height / 4
+        painter.drawText(int(letter_x), int(letter_y), self.element.SYMBOL)
+
+    def draw_potential_bonds(self, position):
+        painter = QPainter(self)
+        pen = QPen()
+        painter.setPen(pen)
+
+        # Draw the bond line from one atom to another
+        pen.setColor(QColor(255, 0, 0))
+        pen.setWidth(2)
+        painter.setPen(pen)
+        painter.drawLine(QPoint(self.selected_atom.x_coords, self.selected_atom.y_coords),
+                         QPoint(position[0], position[1]))
+
+    def draw_potential_atom_circle(self, x, y):
         painter = QPainter(self)
 
-        # Set the brush color to gray
-        brush = QBrush(QColor(150, 150, 150))
+        # Set the brush color to match the background color
+        background_color = self.palette().color(self.backgroundRole())
+        brush = QBrush(background_color)
         painter.setBrush(brush)
+        pen = QPen()
+        pen.setStyle(Qt.PenStyle.NoPen)
+        painter.setPen(pen)
 
         # Draw a filled circle
-        circle_center = QPointF(position[0], position[1])
         circle_radius = 12
+        circle_center = QPointF(x, y)
+        painter.drawEllipse(circle_center, circle_radius, circle_radius)
+
+        circle_center = QPointF(self.selected_atom.x_coords, self.selected_atom.y_coords)
         painter.drawEllipse(circle_center, circle_radius, circle_radius)
 
     def draw_bonds(self, bond):
@@ -212,11 +264,39 @@ class Canvas(QWidget):
         letter_y = bond.atoms[0].y_coords + letter_height / 4
         painter.drawText(int(letter_x), int(letter_y), bond.atoms[0].symbol)
 
+    def draw_center_atom_from_atom(self, atom):
+        painter = QPainter(self)
+        font = QFont("Arial", 16)
+        painter.setFont(font)
+        pen = QPen()
+        painter.setPen(pen)
+        pen.setColor(QColor(0, 0, 0))
+
+        letter_width = painter.fontMetrics().horizontalAdvance(atom.symbol)
+        letter_height = painter.fontMetrics().height()
+
+        letter_x = atom.x_coords - letter_width / 2
+        letter_y = atom.y_coords + letter_height / 4
+        painter.drawText(int(letter_x), int(letter_y), atom.symbol)
+
+    def draw_possible_bonds(self, atom):
+        painter = QPainter(self)
+        pen = QPen()
+        painter.setPen(pen)
+
+        # Draw the bond line from one atom to another
+        pen.setColor(QColor(255, 0, 0))
+        pen.setWidth(2)
+        painter.setPen(pen)
+        painter.drawLine(QPoint(self.selected_atom.x_coords, self.selected_atom.y_coords),
+                         QPoint(atom.x_coords, atom.y_coords))
+
     def mousePressEvent(self, event):
         if event.button() == Qt.MouseButton.LeftButton:
             click_position = event.pos()
 
             if self.action_type == "bond":
+                self.selected_atom = None
                 for atom in self.atoms:
                     atom_x = atom.x_coords
                     atom_y = atom.y_coords
@@ -233,6 +313,7 @@ class Canvas(QWidget):
                         # Check if the atom has the maximum allowed bonds
                         if len(atom.bonds) < atom.outer_electrons:
                             print("Can form bond with atom", atom.symbol)
+                            self.selected_atom = atom
                             self.temp_bond_list.append(atom)
                             if len(self.temp_bond_list) == 2:
 
@@ -247,6 +328,7 @@ class Canvas(QWidget):
                                         return
                                     self.temp_bond_list[0].bond(self.temp_bond_list[1])
                                     self.temp_bond_list.clear()
+                                    self.selected_atom = None
                                     self.update()
                                 else:
                                     print("Bonding unavailable, one or both atoms have the maximum number of bonds.")
