@@ -68,21 +68,54 @@ class Canvas(QWidget):
 
         self.action_type = "draw"
 
+        self.selected = False
+
+        # Set default value of selected_atom to None
+        self.selected_atom = None
+
     def set_element(self, new_element):
         self.element = new_element
 
     def set_action_type(self, action):
         self.action_type = action
 
+    def calculate_potential_positions(self, atom):
+        x = atom.x_coords
+        y = atom.y_coords
+        distance = 40
+        positions = [(x + distance, y), (x - distance, y), (x, y + distance), (x, y - distance)]
+        return positions
+
     def paintEvent(self, event):
         for atom in self.atoms:
             self.draw_atom_circle_from_atom(atom)
             self.draw_atom(atom)
+
             for bond in atom.bonds:
                 self.draw_bonds(bond)
                 self.draw_atom_circle(bond)
                 self.draw_atoms(bond)
                 self.draw_center_atom(bond)
+
+        # Check for selected atom and draw potential positions
+        if self.selected:
+            potential_positions = self.calculate_potential_positions(self.selected_atom)
+            for pos in potential_positions:
+                # Draw grayed-out atoms at potential positions
+                self.draw_potential_position(pos)
+
+    # Function to draw potential positions for atoms
+    def draw_potential_position(self, position):
+        painter = QPainter(self)
+
+        # Set the brush color to gray
+        brush = QBrush(QColor(150, 150, 150))
+        painter.setBrush(brush)
+
+        # Draw a filled circle
+        circle_center = QPointF(position[0], position[1])
+        circle_radius = 12
+        painter.drawEllipse(circle_center, circle_radius, circle_radius)
 
     def draw_bonds(self, bond):
         painter = QPainter(self)
@@ -104,12 +137,12 @@ class Canvas(QWidget):
         brush = QBrush(background_color)
         painter.setBrush(brush)
         pen = QPen()
-        pen.setStyle(Qt.PenStyle.NoPen)  # Set the pen style to NoPen
+        pen.setStyle(Qt.PenStyle.NoPen)
         painter.setPen(pen)
 
         # Draw a filled circle
         circle_center = QPointF(bond.atoms[1].x_coords, bond.atoms[1].y_coords)
-        circle_radius = 12  # Adjust the radius as needed
+        circle_radius = 12
         painter.drawEllipse(circle_center, circle_radius, circle_radius)
 
         circle_center = QPointF(bond.atoms[0].x_coords, bond.atoms[0].y_coords)
@@ -123,12 +156,12 @@ class Canvas(QWidget):
         brush = QBrush(background_color)
         painter.setBrush(brush)
         pen = QPen()
-        pen.setStyle(Qt.PenStyle.NoPen)  # Set the pen style to NoPen
+        pen.setStyle(Qt.PenStyle.NoPen)
         painter.setPen(pen)
 
         # Draw a filled circle
         circle_center = QPointF(atom.x_coords, atom.y_coords)
-        circle_radius = 12  # Adjust the radius as needed
+        circle_radius = 12
         painter.drawEllipse(circle_center, circle_radius, circle_radius)
 
         circle_center = QPointF(atom.x_coords, atom.y_coords)
@@ -136,7 +169,7 @@ class Canvas(QWidget):
 
     def draw_atoms(self, bond):
         painter = QPainter(self)
-        font = QFont("Arial", 16)  # Set the font and size
+        font = QFont("Arial", 16)
         painter.setFont(font)
         pen = QPen()
         painter.setPen(pen)
@@ -151,7 +184,7 @@ class Canvas(QWidget):
 
     def draw_atom(self, atom):
         painter = QPainter(self)
-        font = QFont("Arial", 16)  # Set the font and size
+        font = QFont("Arial", 16)
         painter.setFont(font)
         pen = QPen()
         painter.setPen(pen)
@@ -166,7 +199,7 @@ class Canvas(QWidget):
 
     def draw_center_atom(self, bond):
         painter = QPainter(self)
-        font = QFont("Arial", 16)  # Set the font and size
+        font = QFont("Arial", 16)
         painter.setFont(font)
         pen = QPen()
         painter.setPen(pen)
@@ -182,24 +215,27 @@ class Canvas(QWidget):
     def mousePressEvent(self, event):
         if event.button() == Qt.MouseButton.LeftButton:
             click_position = event.pos()
-            symbol = self.element.SYMBOL
 
             if self.action_type == "bond":
                 for atom in self.atoms:
                     atom_x = atom.x_coords
                     atom_y = atom.y_coords
-                    atom_radius = 12  # Adjust the radius as needed
+                    atom_radius = 12
 
                     if (
                             atom_x - atom_radius <= click_position.x() <= atom_x + atom_radius and
                             atom_y - atom_radius <= click_position.y() <= atom_y + atom_radius
                     ):
+                        self.selected = True
+                        self.update()
                         print(f"Clicked on atom for bond: {atom.symbol}")
+
                         # Check if the atom has the maximum allowed bonds
                         if len(atom.bonds) < atom.outer_electrons:
                             print("Can form bond with atom", atom.symbol)
                             self.temp_bond_list.append(atom)
                             if len(self.temp_bond_list) == 2:
+
                                 # Check if either atom already has the maximum allowed bonds
                                 if len(self.temp_bond_list[0].bonds) < self.temp_bond_list[0].outer_electrons and \
                                         len(self.temp_bond_list[1].bonds) < self.temp_bond_list[1].outer_electrons:
@@ -219,17 +255,40 @@ class Canvas(QWidget):
                             print("Bonding unavailable, atom has the maximum number of bonds.")
                             print(atom.bonds)
                             return
+                    self.selected = False
             else:
-                # Check if the letter is already in the list
+                if self.selected:
+                    potential_radius = 12
+                    if len(self.selected_atom.bonds) >= self.selected_atom.outer_electrons:
+                        self.selected = False
+                        self.update()
+                        return
+                    potential_positions = self.calculate_potential_positions(self.selected_atom)
+                    for pos in potential_positions:
+                        if (
+                                pos[0] - potential_radius <= click_position.x() <= pos[0] + potential_radius and
+                                pos[1] - potential_radius <= click_position.y() <= pos[1] + potential_radius
+                        ):
+                            new_atom = chem_editor_logic.Atom(self.element, [pos[0], pos[1]])
+                            self.atoms.append(new_atom)
+                            new_atom.bond(self.selected_atom)
+                    self.selected = False
+                    self.update()
+                    return
+
+                # Check if there is an atom at clicked position
                 for atom in self.atoms:
                     atom_x = atom.x_coords
                     atom_y = atom.y_coords
-                    atom_radius = 12  # Adjust the radius as needed
+                    atom_radius = 12
 
                     if (
                             atom_x - atom_radius <= click_position.x() <= atom_x + atom_radius and
                             atom_y - atom_radius <= click_position.y() <= atom_y + atom_radius
                     ):
+                        self.selected = True
+                        self.selected_atom = atom
+                        self.update()
                         print(f"Clicked on atom: {atom.symbol}")
                         return
 

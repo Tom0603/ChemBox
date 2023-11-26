@@ -6,14 +6,14 @@ from math import sqrt
 @dataclass
 class Atom:
     def __init__(self, element, coordinates):
-        self.symbol = element.SYMBOL
-        self.outer_electrons = element.OUTER_ELECTRONS
-        self.x_coords = coordinates[0]
-        self.y_coords = coordinates[1]
-        self.full_shell = element.FULL_SHELL
+        self.symbol: str = element.SYMBOL
+        self.outer_electrons: int = element.OUTER_ELECTRONS
+        self.x_coords: int = coordinates[0]
+        self.y_coords: int = coordinates[1]
+        self.full_shell: int = element.FULL_SHELL
         self.bonds = []
-        self.extra_electrons = 0
-        self.overall_electrons = (self.outer_electrons + self.extra_electrons)
+        self.extra_electrons: int = 0
+        self.overall_electrons: int = (self.outer_electrons + self.extra_electrons)
 
     def bond(self, bonding_atom, order=1):
         print(self.overall_electrons)
@@ -38,8 +38,8 @@ class Atom:
 class Bond:
     def __init__(self, atom1, atom2, order):
         self.atoms = [atom1, atom2]
-        self.order = order
-        self._length = self.get_bond_length()
+        self.order: int = order
+        self._length: float = self.get_bond_length()
 
     def get_bond_length(self):
         """
@@ -57,13 +57,13 @@ class Bond:
 
 @dataclass
 class Carbon:
-    SYMBOL = "C"
-    OUTER_ELECTRONS = 4
-    FULL_SHELL = 8
+    SYMBOL: str = "C"
+    OUTER_ELECTRONS: int = 4
+    FULL_SHELL: int = 8
 
 
 @dataclass
 class Hydrogen:
-    SYMBOL = "H"
-    OUTER_ELECTRONS = 1
-    FULL_SHELL = 2
+    SYMBOL: str = "H"
+    OUTER_ELECTRONS: int = 1
+    FULL_SHELL: int = 2
