@@ -1,0 +1,142 @@
+\documentclass[a4paper,12pt]{article}
+\usepackage[utf8]{inputenc}
+\usepackage{listings}
+\usepackage{xcolor}
+
+\definecolor{codegreen}{rgb}{0,0.6,0}
+\definecolor{codegray}{rgb}{0.5,0.5,0.5}
+\definecolor{codepurple}{rgb}{0.58,0,0.82}
+\definecolor{backcolour}{rgb}{0.95,0.95,0.92}
+
+\lstdefinestyle{mystyle}{
+    backgroundcolor=\color{backcolour},   
+    commentstyle=\color{codegreen},
+    keywordstyle=\color{magenta},
+    numberstyle=\tiny\color{codegray},
+    stringstyle=\color{codepurple},
+    basicstyle=\ttfamily\footnotesize,
+    breakatwhitespace=false,         
+    breaklines=true,                 
+    captionpos=b,                    
+    keepspaces=true,                 
+    numbers=left,                    
+    numbersep=5pt,                  
+    showspaces=false,                
+    showstringspaces=false,
+    showtabs=false,                  
+    tabsize=2
+}
+
+\lstset{style=mystyle}
+
+\title{ChemBox Project Documentation}
+\author{Tom Schneider}
+
+\begin{document}
+
+\maketitle
+
+\pagebreak
+
+\tableofcontents
+
+\pagebreak
+
+\section{Analysis}
+
+\subsection{Problem Definition}
+
+ChemBox is a software project with the aim of creating an interactive, user-friendly and intuitive toolbox for automating and simplifying complex and repetitive tasks that come up on a daily basis for students, educators and professionals in the field of chemistry. ChemBox features a wide range of chemistry-related tools, including equation balancing, molecular weight calculation and a chemical molecule editor.
+
+\subsection{Background to the Problem}
+
+In today's digital age, the integration of technology into the field of chemistry has become increasingly important.\\
+\linebreak
+Chemists frequently need to carry out complex calculations such as enthalpy changes, thermodynamics or rate constants. These calculations can be time-consuming and error-prone when performed manually.
+Although balancing small chemical equations seems like a rather straight forward task, it can get very complicated very quickly when equations get longer or complex ions come into play.
+Visualising molecular structures can play a vital role in understanding a substances chemical properties or understanding interactions with other substances.\\
+\linebreak
+The use of software and technology in chemistry does not only help increase accuracy and decrease human error, but also reduces the time spent doing repetitive tasks by hand which is especially important in the industry. But also in academia, technology plays a crucial role in helping chemists perform complex calculations, balancing difficult equations or understanding the chemical properties of a substance.
+
+\newpage
+
+\subsection{Prospective Users}
+
+Chembox will provide valuable tools to a diverse user base, spanning from students to professional chemists. The intuitive and straight forward design will allow users with varying backgrounds and degrees to use ChemBox for their own specific needs.\\
+In the early stage, the main users of this system will be pupils and staff attending Ellesmere College, but it could be a goal to get A-Level students all over the country and even students at university level and professionals in the industry to use the program.
+
+\subsection{Specific Objectives}
+
+Through being an A-Level Chemistry student myself, I have learned a lot about using chemical equations and performing calculations as well as balancing chemical equations and visualising chemical substances and molecules. I was able to identify a number calculations that processes that come up on a regular basis.
+
+\subsubsection{Chemical Equations and Calculations}
+
+One essential part of the program is to complete calculations which are based on chemical formulae.
+Where appropriate the program should allow the user to choose from a wide range of different units for each calculation, so the user doesn't have to calculate the conversion from $cm^{3}$ to $dm^{3}$ for example.\\
+\linebreak
+A list containing all of the proposed calculations below:\\
+\linebreak
+
+\begin{enumerate}
+
+\item Standard moles calculation:
+\[moles=\frac{mass}{molar\: mass}\]
+\item Calculation to find the concentration:
+\[concentration=\frac{moles}{volume}\]
+\newpage
+\item Avogadro's number calculations. The user should be able to give a number of different inputs, including mass, moles, molecular weight and the number of atoms. After giving two independent inputs, the program should be able to calculate the rest of the values using Avogadro's number.\\
+The equation the calculator will be based on is:
+\[number\: of\: atoms = Avogadro's\: number \times moles\]
+\item Atom Economy calculation:
+\[Atom\: Economy = \frac{Mr\: of\: desired\: product}{Sum\: of\: Mr\: of\: all\: reactants}\times 100\]
+\item Percentage Yield calculation:
+\[\%Yield = \frac{Actual\: yield}{Theoretical\: yield} \times 100\]
+\item Calculation for the Specific Heat Capacity and Enthalpy changes:
+\[q = mc {\Delta} T\]
+\begin{quote}
+(q = energy change) (m = mass) (c = specific heat capacity) (${\Delta}$T = temperature change)
+\end{quote}
+\item Gibbs Free Energy calculation:
+\[{\Delta}G = {\Delta}H - T{\Delta}S\]
+\begin{quote}
+(${\Delta}$G = Gibbs Free Energy) (${\Delta}$H = enthalpy)\\
+(t = temperature) (${\Delta}$S = entropy)
+\end{quote}
+\item Equilibrium Constant calculation for a reversible reaction:
+\[a[A] + b[B] \rightleftharpoons c[C] + d[D]\]
+\[K_{C} = \frac{[C]^{c}[D]^{d}}{[A]^{a}[B]^{b}}\]
+\begin{quote}
+($K_{C}$ = Equilibrium Constant) (Upper case letter = Concentration) (Lower case letter = Moles in Equation)
+\end{quote}
+\item Rate Equation and Rate constant calculation:
+\[Rate = k[A]^{m}[B]^{n}\]
+
+\end{enumerate}
+
+\newpage
+
+\subsubsection{Chemical Equation Balancer - ChemBalancer}
+
+A substantial part of the project will be the ChemBalancer which will be the module that balances chemical equations. This system must be able to take complex unbalanced equations and convert them into a balanced version.\\
+It must be able to handle subscript numbers, brackets and complex ions.
+
+\subsubsection{Visualisation of Chemical Molecules - ChemEditor}
+
+Another substantial part of the program will be the ChemEditor module, which can be used for visualising the structures of chemical molecules. This module will require a user-friendly and easy to use interface, with the main focus on the canvas. The user should have the option to choose from a range of different elements what he wants to add to the canvas. In a tool bar, the user should also be able to choose the bond order (single, double, triple) and the charge on each atom. When clicking on an atom, there should be an option to add a bond to another atom or delete the atom.\\
+When the user constructs their molecules, ChemEditor will have to conduct real-time checks to ensure that atoms do not exceed their valence electrons and that it is chemically possible to have a molecule with the given structure. \\
+The required objectives for this module are:\\
+
+\begin{enumerate}
+
+\item Tool bar:\\
+In the tool bar on the top end of the application, there has to be a list of buttons for choosing the element, which must include the most common elements (Carbon, Hydrogen, Sulphur, Chlorine, etc.). There also has to be the option to choose the bond order (single, double or triple bond) as well as choosing the option to form a dative bond. Another essential option in form of buttons should be removing atoms and bonds as well as being able to safe the drawn structures as a document.\\
+Possible non-essential enhancements are extra information about atoms upon highlighting as well as getting information like the molar mass and the empirical formula of a molecule after highlighting.
+\item Canvas:\\
+The canvas is the area in which the user can draw their molecules. There are a number of essential features that must be included here. The user must be able to draw atoms by clicking on the canvas. Upon selecting an existing atom on the canvas, depending on the chosen action type, the user should either have the option to draw and bond a new atom from the shown potential atoms or bond the atom to one of the other atoms that it could possibly bond to, which will be highlighted. 
+
+\end{enumerate}
+
+\newpage
+
+
+\end{document}
