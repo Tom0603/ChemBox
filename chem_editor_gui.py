@@ -5,6 +5,8 @@ from PyQt6.QtGui import QPainter, QPen, QColor, QFont, QPalette, QBrush
 
 import chem_editor_logic
 
+import math
+
 
 class ChemEditor(QWidget):
     def __init__(self):
@@ -54,7 +56,7 @@ class Canvas(QWidget):
         # Set the background color
         self.setAutoFillBackground(True)
         palette = self.palette()
-        palette.setColor(QPalette.ColorRole.Window, QColor(200, 200, 200))  # Set the desired background color
+        palette.setColor(QPalette.ColorRole.Window, QColor(200, 200, 200))
         self.setPalette(palette)
 
         self.chem_logic = chem_editor_logic
@@ -62,6 +64,7 @@ class Canvas(QWidget):
         # Set default element to carbon
         self.element = self.chem_logic.Carbon
 
+        # List containing all atoms on the Canvas
         self.atoms = []
 
         self.temp_bond_list = []
@@ -78,13 +81,6 @@ class Canvas(QWidget):
 
     def set_action_type(self, action):
         self.action_type = action
-
-    def calculate_potential_positions(self, atom):
-        x = atom.x_coords
-        y = atom.y_coords
-        distance = 40
-        positions = [(x + distance, y), (x - distance, y), (x, y + distance), (x, y - distance)]
-        return positions
 
     def paintEvent(self, event):
         for atom in self.atoms:
@@ -108,7 +104,7 @@ class Canvas(QWidget):
                         self.draw_center_atom_from_atom(self.selected_atom)
                         self.draw_atom(possible_atom)
                 except AttributeError:
-                    return 
+                    return
                 return
             print("selected")
             try:
@@ -123,6 +119,21 @@ class Canvas(QWidget):
                 return
 
     # Function to draw potential positions for atoms
+    def calculate_potential_positions(self, atom) -> list[tuple[int, int]]:
+        x = atom.x_coords
+        y = atom.y_coords
+        distance = 40
+
+        # Calculate coordinates for angles in steps of 45 degrees from 0 to 360
+        coordinates_list = []
+        for angle_degrees in range(0, 360, 45):
+            angle_radians = math.radians(angle_degrees)
+            new_x = x + distance * math.cos(angle_radians)
+            new_y = y + distance * math.sin(angle_radians)
+            coordinates_list.append((int(new_x), int(new_y)))
+
+        return coordinates_list
+
     def draw_potential_atoms(self, position):
         painter = QPainter(self)
         font = QFont("Arial", 16)
