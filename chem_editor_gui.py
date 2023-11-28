@@ -50,6 +50,9 @@ class ChemEditor(QWidget):
 
 
 class Canvas(QWidget):
+    # CONSTANTS
+    ATOM_RADIUS = 12
+
     def __init__(self):
         super().__init__()
 
@@ -79,19 +82,20 @@ class Canvas(QWidget):
     def set_element(self, new_element):
         self.element = new_element
 
-    def set_action_type(self, action):
+    def set_action_type(self, action: str):
         self.action_type = action
 
     def paintEvent(self, event):
         for atom in self.atoms:
-            self.draw_atom_circle_from_atom(atom)
-            self.draw_atom(atom)
+            self.draw_atom(atom.x_coords, atom.y_coords, atom.symbol)
 
             for bond in atom.bonds:
-                self.draw_bonds(bond)
-                self.draw_atom_circle(bond)
-                self.draw_atoms(bond)
-                self.draw_center_atom(bond)
+                self.draw_bonds(bond.atoms[0].x_coords, bond.atoms[0].y_coords, bond.atoms[1].x_coords,
+                                bond.atoms[1].y_coords, True)
+                self.draw_atom_circle(bond.atoms[1].x_coords, bond.atoms[1].y_coords, bond.atoms[0].x_coords,
+                                      bond.atoms[0].y_coords)
+                self.draw_atom(bond.atoms[1].x_coords, bond.atoms[1].y_coords, bond.atoms[1].symbol)
+                self.draw_center_atom(bond.atoms[0].x_coords, bond.atoms[0].y_coords, bond.atoms[0].symbol)
 
         # Check for selected atom and draw potential positions
         if self.selected:
@@ -99,27 +103,33 @@ class Canvas(QWidget):
                 try:
                     for possible_atom in self.atoms:
                         print(self.atoms)
-                        self.draw_possible_bonds(possible_atom)
-                        self.draw_potential_atom_circle(possible_atom.x_coords, possible_atom.y_coords)
-                        self.draw_center_atom_from_atom(self.selected_atom)
-                        self.draw_atom(possible_atom)
+                        self.draw_bonds(self.selected_atom.x_coords, self.selected_atom.y_coords,
+                                        possible_atom.x_coords, possible_atom.y_coords, False)
+                        self.draw_atom_circle(possible_atom.x_coords, possible_atom.y_coords,
+                                              self.selected_atom.x_coords,
+                                              self.selected_atom.y_coords)
+
+                        self.draw_center_atom(self.selected_atom.x_coords, self.selected_atom.y_coords,
+                                              self.selected_atom.symbol)
+                        self.draw_atom(possible_atom.x_coords, possible_atom.y_coords, possible_atom.symbol, False)
                 except AttributeError:
                     return
                 return
             print("selected")
             try:
-                potential_positions = self.calculate_potential_positions(self.selected_atom)
+                potential_positions = self.calc_potential_positions(self.selected_atom)
                 for pos in potential_positions:
-                    # Draw potential atoms and bonds
-                    self.draw_potential_bonds(pos)
-                    self.draw_potential_atom_circle(pos[0], pos[1])
-                    self.draw_potential_atoms(pos)
-                    self.draw_center_atom_from_atom(self.selected_atom)
+                    self.draw_bonds(self.selected_atom.x_coords, self.selected_atom.y_coords, pos[0], pos[1], False)
+                    self.draw_atom_circle(pos[0], pos[1], self.selected_atom.x_coords, self.selected_atom.y_coords)
+                    self.draw_atom(pos[0], pos[1], self.element.SYMBOL, True)
+                    self.draw_center_atom(self.selected_atom.x_coords, self.selected_atom.y_coords,
+                                          self.selected_atom.symbol)
             except AttributeError:
                 return
 
     # Function to draw potential positions for atoms
-    def calculate_potential_positions(self, atom) -> list[tuple[int, int]]:
+    @staticmethod
+    def calc_potential_positions(atom: chem_editor_logic.Atom) -> list[tuple[int, int]]:
         x = atom.x_coords
         y = atom.y_coords
         distance = 40
@@ -134,34 +144,21 @@ class Canvas(QWidget):
 
         return coordinates_list
 
-    def draw_potential_atoms(self, position):
-        painter = QPainter(self)
-        font = QFont("Arial", 16)
-        painter.setFont(font)
-        pen = QPen()
-        painter.setPen(pen)
-        pen.setColor(QColor(0, 150, 150))
-
-        # Draw the letter
-        letter_width = painter.fontMetrics().horizontalAdvance(self.element.SYMBOL)
-        letter_height = painter.fontMetrics().height()
-        letter_x = position[0] - letter_width / 2
-        letter_y = position[1] + letter_height / 4
-        painter.drawText(int(letter_x), int(letter_y), self.element.SYMBOL)
-
-    def draw_potential_bonds(self, position):
+    def draw_bonds(self, atom1_x: int, atom1_y: int, atom2_x: int, atom2_y: int, actual_bond: bool = False):
         painter = QPainter(self)
         pen = QPen()
-        painter.setPen(pen)
 
         # Draw the bond line from one atom to another
-        pen.setColor(QColor(255, 0, 0))
+        pen.setColor(QColor(0, 0, 0))
         pen.setWidth(2)
-        painter.setPen(pen)
-        painter.drawLine(QPoint(self.selected_atom.x_coords, self.selected_atom.y_coords),
-                         QPoint(position[0], position[1]))
 
-    def draw_potential_atom_circle(self, x, y):
+        if not actual_bond:
+            pen.setColor(QColor(255, 0, 0))
+        painter.setPen(pen)
+
+        painter.drawLine(QPoint(atom1_x, atom1_y), QPoint(atom2_x, atom2_y))
+
+    def draw_atom_circle(self, atom1_x: int, atom1_y: int, atom2_x: int, atom2_y: int):
         painter = QPainter(self)
 
         # Set the brush color to match the background color
@@ -173,79 +170,32 @@ class Canvas(QWidget):
         painter.setPen(pen)
 
         # Draw a filled circle
-        circle_radius = 12
-        circle_center = QPointF(x, y)
+        circle_center = QPointF(atom2_x, atom2_y)
+        circle_radius = Canvas.ATOM_RADIUS
         painter.drawEllipse(circle_center, circle_radius, circle_radius)
 
-        circle_center = QPointF(self.selected_atom.x_coords, self.selected_atom.y_coords)
+        circle_center = QPointF(atom1_x, atom1_y)
         painter.drawEllipse(circle_center, circle_radius, circle_radius)
 
-    def draw_bonds(self, bond):
-        painter = QPainter(self)
-        pen = QPen()
-        painter.setPen(pen)
-
-        # Draw the bond line from one atom to another
-        pen.setColor(QColor(0, 0, 0))
-        pen.setWidth(2)
-        painter.setPen(pen)
-        painter.drawLine(QPoint(bond.atoms[0].x_coords, bond.atoms[0].y_coords),
-                         QPoint(bond.atoms[1].x_coords, bond.atoms[1].y_coords))
-
-    def draw_atom_circle(self, bond):
-        painter = QPainter(self)
-
-        # Set the brush color to match the background color
-        background_color = self.palette().color(self.backgroundRole())
-        brush = QBrush(background_color)
-        painter.setBrush(brush)
-        pen = QPen()
-        pen.setStyle(Qt.PenStyle.NoPen)
-        painter.setPen(pen)
-
-        # Draw a filled circle
-        circle_center = QPointF(bond.atoms[1].x_coords, bond.atoms[1].y_coords)
-        circle_radius = 12
-        painter.drawEllipse(circle_center, circle_radius, circle_radius)
-
-        circle_center = QPointF(bond.atoms[0].x_coords, bond.atoms[0].y_coords)
-        painter.drawEllipse(circle_center, circle_radius, circle_radius)
-
-    def draw_atom_circle_from_atom(self, atom):
-        painter = QPainter(self)
-
-        # Set the brush color to match the background color
-        background_color = self.palette().color(self.backgroundRole())
-        brush = QBrush(background_color)
-        painter.setBrush(brush)
-        pen = QPen()
-        pen.setStyle(Qt.PenStyle.NoPen)
-        painter.setPen(pen)
-
-        # Draw a filled circle
-        circle_center = QPointF(atom.x_coords, atom.y_coords)
-        circle_radius = 12
-        painter.drawEllipse(circle_center, circle_radius, circle_radius)
-
-        circle_center = QPointF(atom.x_coords, atom.y_coords)
-        painter.drawEllipse(circle_center, circle_radius, circle_radius)
-
-    def draw_atoms(self, bond):
+    def draw_atom(self, atom_x: int, atom_y: int, symbol: str, potential: bool = False):
         painter = QPainter(self)
         font = QFont("Arial", 16)
         painter.setFont(font)
         pen = QPen()
-        painter.setPen(pen)
         pen.setColor(QColor(0, 0, 0))
+
+        if potential:
+            pen.setColor(QColor(100, 100, 100))
+        painter.setPen(pen)
 
         # Draw the letter
-        letter_width = painter.fontMetrics().horizontalAdvance(bond.atoms[1].symbol)
+        letter_width = painter.fontMetrics().horizontalAdvance(symbol)
         letter_height = painter.fontMetrics().height()
-        letter_x = bond.atoms[1].x_coords - letter_width / 2
-        letter_y = bond.atoms[1].y_coords + letter_height / 4
-        painter.drawText(int(letter_x), int(letter_y), bond.atoms[1].symbol)
+        letter_x = atom_x - letter_width / 2
+        letter_y = atom_y + letter_height / 4
+        painter.drawText(int(letter_x), int(letter_y), symbol)
 
-    def draw_atom(self, atom):
+    def draw_center_atom(self, atom_x: int, atom_y: int, symbol: str):
         painter = QPainter(self)
         font = QFont("Arial", 16)
         painter.setFont(font)
@@ -253,54 +203,12 @@ class Canvas(QWidget):
         painter.setPen(pen)
         pen.setColor(QColor(0, 0, 0))
 
-        # Draw the letter
-        letter_width = painter.fontMetrics().horizontalAdvance(atom.symbol)
-        letter_height = painter.fontMetrics().height()
-        letter_x = atom.x_coords - letter_width / 2
-        letter_y = atom.y_coords + letter_height / 4
-        painter.drawText(int(letter_x), int(letter_y), atom.symbol)
-
-    def draw_center_atom(self, bond):
-        painter = QPainter(self)
-        font = QFont("Arial", 16)
-        painter.setFont(font)
-        pen = QPen()
-        painter.setPen(pen)
-        pen.setColor(QColor(0, 0, 0))
-
-        letter_width = painter.fontMetrics().horizontalAdvance(bond.atoms[0].symbol)
+        letter_width = painter.fontMetrics().horizontalAdvance(symbol)
         letter_height = painter.fontMetrics().height()
 
-        letter_x = bond.atoms[0].x_coords - letter_width / 2
-        letter_y = bond.atoms[0].y_coords + letter_height / 4
-        painter.drawText(int(letter_x), int(letter_y), bond.atoms[0].symbol)
-
-    def draw_center_atom_from_atom(self, atom):
-        painter = QPainter(self)
-        font = QFont("Arial", 16)
-        painter.setFont(font)
-        pen = QPen()
-        painter.setPen(pen)
-        pen.setColor(QColor(0, 0, 0))
-
-        letter_width = painter.fontMetrics().horizontalAdvance(atom.symbol)
-        letter_height = painter.fontMetrics().height()
-
-        letter_x = atom.x_coords - letter_width / 2
-        letter_y = atom.y_coords + letter_height / 4
-        painter.drawText(int(letter_x), int(letter_y), atom.symbol)
-
-    def draw_possible_bonds(self, atom):
-        painter = QPainter(self)
-        pen = QPen()
-        painter.setPen(pen)
-
-        # Draw the bond line from one atom to another
-        pen.setColor(QColor(255, 0, 0))
-        pen.setWidth(2)
-        painter.setPen(pen)
-        painter.drawLine(QPoint(self.selected_atom.x_coords, self.selected_atom.y_coords),
-                         QPoint(atom.x_coords, atom.y_coords))
+        letter_x = atom_x - letter_width / 2
+        letter_y = atom_y + letter_height / 4
+        painter.drawText(int(letter_x), int(letter_y), symbol)
 
     def mousePressEvent(self, event):
         if event.button() == Qt.MouseButton.LeftButton:
@@ -311,7 +219,7 @@ class Canvas(QWidget):
                 for atom in self.atoms:
                     atom_x = atom.x_coords
                     atom_y = atom.y_coords
-                    atom_radius = 12
+                    atom_radius = Canvas.ATOM_RADIUS
 
                     if (
                             atom_x - atom_radius <= click_position.x() <= atom_x + atom_radius and
@@ -319,11 +227,9 @@ class Canvas(QWidget):
                     ):
                         self.selected = True
                         self.update()
-                        print(f"Clicked on atom for bond: {atom.symbol}")
 
                         # Check if the atom has the maximum allowed bonds
                         if len(atom.bonds) < atom.outer_electrons:
-                            print("Can form bond with atom", atom.symbol)
                             self.selected_atom = atom
                             self.temp_bond_list.append(atom)
                             if len(self.temp_bond_list) == 2:
@@ -331,8 +237,6 @@ class Canvas(QWidget):
                                 # Check if either atom already has the maximum allowed bonds
                                 if len(self.temp_bond_list[0].bonds) < self.temp_bond_list[0].outer_electrons and \
                                         len(self.temp_bond_list[1].bonds) < self.temp_bond_list[1].outer_electrons:
-                                    print("Can form bond between", self.temp_bond_list[0].symbol, "and",
-                                          self.temp_bond_list[1].symbol)
                                     if self.temp_bond_list[0] is self.temp_bond_list[1]:
                                         print("Trying to bond to itself")
                                         self.temp_bond_list.clear()
@@ -351,12 +255,16 @@ class Canvas(QWidget):
                     self.selected = False
             else:
                 if self.selected:
-                    potential_radius = 12
-                    if len(self.selected_atom.bonds) >= self.selected_atom.outer_electrons:
+                    potential_radius = Canvas.ATOM_RADIUS
+                    try:
+                        if len(self.selected_atom.bonds) >= self.selected_atom.outer_electrons:
+                            self.selected = False
+                            self.update()
+                            return
+                    except AttributeError:
                         self.selected = False
-                        self.update()
                         return
-                    potential_positions = self.calculate_potential_positions(self.selected_atom)
+                    potential_positions = self.calc_potential_positions(self.selected_atom)
                     for pos in potential_positions:
                         if (
                                 pos[0] - potential_radius <= click_position.x() <= pos[0] + potential_radius and
@@ -373,7 +281,7 @@ class Canvas(QWidget):
                 for atom in self.atoms:
                     atom_x = atom.x_coords
                     atom_y = atom.y_coords
-                    atom_radius = 12
+                    atom_radius = Canvas.ATOM_RADIUS
 
                     if (
                             atom_x - atom_radius <= click_position.x() <= atom_x + atom_radius and
