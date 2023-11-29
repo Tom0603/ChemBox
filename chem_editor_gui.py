@@ -36,16 +36,16 @@ class ChemEditor(QWidget):
 
         self.chem_logic = chem_editor_logic
 
-    def choose_carbon(self):
+    def choose_carbon(self) -> None:
         self.c.set_element(self.chem_logic.Carbon)
 
-    def choose_hydrogen(self):
+    def choose_hydrogen(self) -> None:
         self.c.set_element(self.chem_logic.Hydrogen)
 
-    def choose_draw_action(self):
+    def choose_draw_action(self) -> None:
         self.c.set_action_type("draw")
 
-    def choose_bond_action(self):
+    def choose_bond_action(self) -> None:
         self.c.set_action_type("bond")
 
 
@@ -79,13 +79,13 @@ class Canvas(QWidget):
         # Set default value of selected_atom to None
         self.selected_atom = None
 
-    def set_element(self, new_element):
+    def set_element(self, new_element) -> None:
         self.element = new_element
 
-    def set_action_type(self, action: str):
+    def set_action_type(self, action: str) -> None:
         self.action_type = action
 
-    def paintEvent(self, event):
+    def paintEvent(self, event) -> None:
         for atom in self.atoms:
             self.draw_atom(atom.x_coords, atom.y_coords, atom.symbol)
 
@@ -144,7 +144,7 @@ class Canvas(QWidget):
 
         return coordinates_list
 
-    def draw_bonds(self, atom1_x: int, atom1_y: int, atom2_x: int, atom2_y: int, actual_bond: bool = False):
+    def draw_bonds(self, atom1_x: int, atom1_y: int, atom2_x: int, atom2_y: int, actual_bond: bool = False) -> None:
         painter = QPainter(self)
         pen = QPen()
 
@@ -158,7 +158,7 @@ class Canvas(QWidget):
 
         painter.drawLine(QPoint(atom1_x, atom1_y), QPoint(atom2_x, atom2_y))
 
-    def draw_atom_circle(self, atom1_x: int, atom1_y: int, atom2_x: int, atom2_y: int):
+    def draw_atom_circle(self, atom1_x: int, atom1_y: int, atom2_x: int, atom2_y: int) -> None:
         painter = QPainter(self)
 
         # Set the brush color to match the background color
@@ -177,7 +177,7 @@ class Canvas(QWidget):
         circle_center = QPointF(atom1_x, atom1_y)
         painter.drawEllipse(circle_center, circle_radius, circle_radius)
 
-    def draw_atom(self, atom_x: int, atom_y: int, symbol: str, potential: bool = False):
+    def draw_atom(self, atom_x: int, atom_y: int, symbol: str, potential: bool = False) -> None:
         painter = QPainter(self)
         font = QFont("Arial", 16)
         painter.setFont(font)
@@ -195,7 +195,7 @@ class Canvas(QWidget):
         letter_y = atom_y + letter_height / 4
         painter.drawText(int(letter_x), int(letter_y), symbol)
 
-    def draw_center_atom(self, atom_x: int, atom_y: int, symbol: str):
+    def draw_center_atom(self, atom_x: int, atom_y: int, symbol: str) -> None:
         painter = QPainter(self)
         font = QFont("Arial", 16)
         painter.setFont(font)
@@ -210,7 +210,7 @@ class Canvas(QWidget):
         letter_y = atom_y + letter_height / 4
         painter.drawText(int(letter_x), int(letter_y), symbol)
 
-    def mousePressEvent(self, event):
+    def mousePressEvent(self, event) -> None:
         if event.button() == Qt.MouseButton.LeftButton:
             click_position = event.pos()
 

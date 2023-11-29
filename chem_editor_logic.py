@@ -5,17 +5,17 @@ from math import sqrt
 
 @dataclass
 class Atom:
-    def __init__(self, element, coordinates):
+    def __init__(self, element, coordinates: list[int, int]):
         self.symbol: str = element.SYMBOL
         self.outer_electrons: int = element.OUTER_ELECTRONS
         self.x_coords: int = coordinates[0]
         self.y_coords: int = coordinates[1]
         self.full_shell: int = element.FULL_SHELL
-        self.bonds = []
+        self.bonds: list[Bond] = []
         self.extra_electrons: int = 0
         self.overall_electrons: int = (self.outer_electrons + self.extra_electrons)
 
-    def bond(self, bonding_atom, order=1):
+    def bond(self, bonding_atom, order: int = 1):
         print(self.overall_electrons)
         print(bonding_atom.overall_electrons)
         print(self.overall_electrons + order)
@@ -36,7 +36,7 @@ class Atom:
 
 @dataclass
 class Bond:
-    def __init__(self, atom1, atom2, order):
+    def __init__(self, atom1, atom2, order: int):
         self.atoms = [atom1, atom2]
         self.order: int = order
         self._length: float = self.get_bond_length()
