@@ -87,16 +87,24 @@ class Canvas(QWidget):
         self.element = self.chem_logic.Carbon
 
         # List containing all atoms on the Canvas
-        self.atoms = []
+        self.atoms: list[chem_editor_logic.Atom] = []
 
-        self.temp_bond_list = []
+        # Temporary list of atoms for bonding
+        self.temp_bond_list: list[chem_editor_logic.Atom] = []
 
-        self.action_type = "draw"
+        # Set default action type to draw
+        self.action_type: str = "draw"
+
+        # Set default bond order to 1
+        # 1: single bond
+        # 2: double bond
+        # 3: triple bond
         self.bond_order: int = 1
 
-        self.selected = False
+        # Initially no atom is selected
+        self.selected: bool = False
 
-        # Set default value of selected_atom to None
+        # Initially no atom is selected
         self.selected_atom = None
 
     def set_element(self, new_element) -> None:
@@ -109,9 +117,12 @@ class Canvas(QWidget):
         self.bond_order = order
 
     def paintEvent(self, event) -> None:
+
+        # Draw every atom in self.atoms list
         for atom in self.atoms:
             self.draw_atom(atom.x_coords, atom.y_coords, atom.symbol)
 
+            # For every bond of atom, draw the bond, and redraw the atoms again
             for bond in atom.bonds:
                 print("order: ", bond.order)
                 if bond.order == 2:
@@ -121,8 +132,8 @@ class Canvas(QWidget):
                     self.draw_triple_bond(bond.atoms[0].x_coords, bond.atoms[0].y_coords, bond.atoms[1].x_coords,
                                           bond.atoms[1].y_coords, True)
                 else:
-                    self.draw_bonds(bond.atoms[0].x_coords, bond.atoms[0].y_coords, bond.atoms[1].x_coords,
-                                    bond.atoms[1].y_coords, True)
+                    self.draw_single_bond(bond.atoms[0].x_coords, bond.atoms[0].y_coords, bond.atoms[1].x_coords,
+                                          bond.atoms[1].y_coords, True)
 
                 self.draw_atom_circle(bond.atoms[1].x_coords, bond.atoms[1].y_coords, bond.atoms[0].x_coords,
                                       bond.atoms[0].y_coords)
@@ -133,11 +144,8 @@ class Canvas(QWidget):
         if self.selected:
             if self.action_type == "bond":
                 try:
+                    # Draw every potential bond from that atom in different colour and redraw the atoms
                     for possible_atom in self.atoms:
-                        print("this should work")
-                        print(self.atoms)
-                        print(possible_atom)
-
                         if self.bond_order == 2:
                             print("draw 2")
                             self.draw_double_bond(self.selected_atom.x_coords, self.selected_atom.y_coords,
@@ -148,9 +156,8 @@ class Canvas(QWidget):
                                                   possible_atom.x_coords, possible_atom.y_coords, False)
                         else:
                             print("draw 1")
-                            self.draw_bonds(self.selected_atom.x_coords, self.selected_atom.y_coords,
-                                            possible_atom.x_coords, possible_atom.y_coords, False)
-                        print("HUHHHH")
+                            self.draw_single_bond(self.selected_atom.x_coords, self.selected_atom.y_coords,
+                                                  possible_atom.x_coords, possible_atom.y_coords, False)
                         self.draw_atom_circle(possible_atom.x_coords, possible_atom.y_coords,
                                               self.selected_atom.x_coords,
                                               self.selected_atom.y_coords)
@@ -163,8 +170,10 @@ class Canvas(QWidget):
                 return
             print("selected")
             try:
+                # Calculate possible positions for new atoms in 360° around the selected atom
                 potential_positions = self.calc_potential_positions(self.selected_atom)
                 for pos in potential_positions:
+                    # If atoms at position don't overlap, draw the potential bonds and atoms in different colour
                     if not self.check_atom_overlap(pos[0], pos[1]):
                         if self.bond_order == 2:
                             self.draw_double_bond(self.selected_atom.x_coords, self.selected_atom.y_coords, pos[0],
@@ -173,8 +182,8 @@ class Canvas(QWidget):
                             self.draw_triple_bond(self.selected_atom.x_coords, self.selected_atom.y_coords,
                                                   pos[0], pos[1], False)
                         else:
-                            self.draw_bonds(self.selected_atom.x_coords, self.selected_atom.y_coords,
-                                            pos[0], pos[1], False)
+                            self.draw_single_bond(self.selected_atom.x_coords, self.selected_atom.y_coords,
+                                                  pos[0], pos[1], False)
                         self.draw_atom_circle(pos[0], pos[1], self.selected_atom.x_coords, self.selected_atom.y_coords)
                         self.draw_atom(pos[0], pos[1], self.element.SYMBOL, True)
                         self.draw_center_atom(self.selected_atom.x_coords, self.selected_atom.y_coords,
@@ -185,6 +194,11 @@ class Canvas(QWidget):
     # Function to draw potential positions for atoms
     @staticmethod
     def calc_potential_positions(atom: chem_editor_logic.Atom) -> list[tuple[int, int]]:
+        """
+
+        :param atom:
+        :return: list of tuples containing x and y coordinates of potential positions for new atoms
+        """
         x = atom.x_coords
         y = atom.y_coords
         distance = 40
@@ -208,52 +222,55 @@ class Canvas(QWidget):
             ):
                 return True
 
-    def draw_bonds(self, atom1_x: int, atom1_y: int, atom2_x: int, atom2_y: int, actual_bond: bool) -> None:
+    def draw_single_bond(self, atom1_x: int, atom1_y: int, atom2_x: int, atom2_y: int, actual_bond: bool) -> None:
         painter = QPainter(self)
         pen = QPen()
 
-        # Draw the bond line from one atom to another
+        # Set colour black
         pen.setColor(QColor(0, 0, 0))
         pen.setWidth(2)
 
         if not actual_bond:
+            # Set colour red
             pen.setColor(QColor(255, 0, 0))
         painter.setPen(pen)
 
         painter.drawLine(QPoint(atom1_x, atom1_y), QPoint(atom2_x, atom2_y))
 
-    def draw_double_bond(self, atom1_x: int, atom1_y: int, atom2_x: int, atom2_y: int, actual_bond: bool):
+    def draw_double_bond(self, atom1_x: int, atom1_y: int, atom2_x: int, atom2_y: int, actual_bond: bool) -> None:
         painter = QPainter(self)
         pen = QPen()
 
-        # Draw the bond line from one atom to another
+        # Set colour black
         pen.setColor(QColor(0, 0, 0))
         pen.setWidth(2)
 
         if not actual_bond:
+            # Set colour red
             pen.setColor(QColor(255, 0, 0))
         painter.setPen(pen)
 
-        # Draw a second line parallel to the first line for a double bond
+        # Draw two lines for a double bond
         offset = 3
         painter.drawLine(QPoint(atom1_x - offset, atom1_y - offset),
                          QPoint(atom2_x - offset, atom2_y - offset))
         painter.drawLine(QPoint(atom1_x + offset, atom1_y + offset),
                          QPoint(atom2_x + offset, atom2_y + offset))
 
-    def draw_triple_bond(self, atom1_x: int, atom1_y: int, atom2_x: int, atom2_y: int, actual_bond: bool):
+    def draw_triple_bond(self, atom1_x: int, atom1_y: int, atom2_x: int, atom2_y: int, actual_bond: bool) -> None:
         painter = QPainter(self)
         pen = QPen()
 
-        # Draw the bond line from one atom to another
+        # Set colour black
         pen.setColor(QColor(0, 0, 0))
         pen.setWidth(2)
 
         if not actual_bond:
+            # Set colour red
             pen.setColor(QColor(255, 0, 0))
         painter.setPen(pen)
 
-        # Draw two more lines for a triple bond
+        # Draw three lines for a triple bond
         offset = 4
         painter.drawLine(QPoint(atom1_x, atom1_y),
                          QPoint(atom2_x, atom2_y))
@@ -263,6 +280,12 @@ class Canvas(QWidget):
                          QPoint(atom2_x + offset, atom2_y + offset))
 
     def draw_atom_circle(self, atom1_x: int, atom1_y: int, atom2_x: int, atom2_y: int) -> None:
+        """
+        This function draws a circle in the same colour as the background colour to prevent bonds from overlapping with
+        atom. This function must be called after drawing bonds in order to overwrite them, and before drawing atoms,
+        as this would make the atoms invisible.
+        """
+
         painter = QPainter(self)
 
         # Set the brush color to match the background color
@@ -292,7 +315,7 @@ class Canvas(QWidget):
             pen.setColor(QColor(100, 100, 100))
         painter.setPen(pen)
 
-        # Draw the letter
+        # Calculate position to draw atom in the center of the "atom circle"
         letter_width = painter.fontMetrics().horizontalAdvance(symbol)
         letter_height = painter.fontMetrics().height()
         letter_x = atom_x - letter_width / 2
@@ -304,8 +327,8 @@ class Canvas(QWidget):
         font = QFont("Arial", 16)
         painter.setFont(font)
         pen = QPen()
-        painter.setPen(pen)
         pen.setColor(QColor(0, 0, 0))
+        painter.setPen(pen)
 
         letter_width = painter.fontMetrics().horizontalAdvance(symbol)
         letter_height = painter.fontMetrics().height()
@@ -344,42 +367,23 @@ class Canvas(QWidget):
                         self.selected = True
                         self.update()
 
-                        # Check if the atom has the maximum allowed bonds
-                        if len(atom.bonds) < atom.outer_electrons:
-                            self.selected_atom = atom
-                            self.temp_bond_list.append(atom)
-                            if len(self.temp_bond_list) == 2:
-
-                                # Check if either atom already has the maximum allowed bonds
-                                if len(self.temp_bond_list[0].bonds) < self.temp_bond_list[0].outer_electrons and \
-                                        len(self.temp_bond_list[1].bonds) < self.temp_bond_list[1].outer_electrons:
-                                    if self.temp_bond_list[0] is self.temp_bond_list[1]:
-                                        print("Trying to bond to itself")
-                                        self.temp_bond_list.clear()
-                                        return
-                                    self.temp_bond_list[0].bond(self.temp_bond_list[1], self.bond_order)
-                                    self.temp_bond_list.clear()
-                                    self.selected_atom = None
-                                    self.update()
-                                else:
-                                    print("Bonding unavailable, one or both atoms have the maximum number of bonds.")
-                            return
-                        else:
-                            print("Bonding unavailable, atom has the maximum number of bonds.")
-                            print(atom.bonds)
-                            return
+                        self.selected_atom = atom
+                        self.temp_bond_list.append(atom)
+                        if len(self.temp_bond_list) == 2:
+                            if self.temp_bond_list[0] is self.temp_bond_list[1]:
+                                print("Trying to bond to itself")
+                                self.temp_bond_list.clear()
+                                return
+                            self.temp_bond_list[0].bond(self.temp_bond_list[1], self.bond_order)
+                            self.temp_bond_list.clear()
+                            self.selected_atom = None
+                            self.update()
+                        return 
                     self.selected = False
+
             else:
                 if self.selected:
                     potential_radius = Canvas.ATOM_RADIUS
-                    try:
-                        if len(self.selected_atom.bonds) >= self.selected_atom.outer_electrons:
-                            self.selected = False
-                            self.update()
-                            return
-                    except AttributeError:
-                        self.selected = False
-                        return
                     potential_positions = self.calc_potential_positions(self.selected_atom)
                     for pos in potential_positions:
                         if not self.check_atom_overlap(pos[0], pos[1]):
