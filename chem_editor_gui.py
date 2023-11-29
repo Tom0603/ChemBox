@@ -119,11 +119,12 @@ class Canvas(QWidget):
             try:
                 potential_positions = self.calc_potential_positions(self.selected_atom)
                 for pos in potential_positions:
-                    self.draw_bonds(self.selected_atom.x_coords, self.selected_atom.y_coords, pos[0], pos[1], False)
-                    self.draw_atom_circle(pos[0], pos[1], self.selected_atom.x_coords, self.selected_atom.y_coords)
-                    self.draw_atom(pos[0], pos[1], self.element.SYMBOL, True)
-                    self.draw_center_atom(self.selected_atom.x_coords, self.selected_atom.y_coords,
-                                          self.selected_atom.symbol)
+                    if not self.check_atom_overlap(pos[0], pos[1]):
+                        self.draw_bonds(self.selected_atom.x_coords, self.selected_atom.y_coords, pos[0], pos[1], False)
+                        self.draw_atom_circle(pos[0], pos[1], self.selected_atom.x_coords, self.selected_atom.y_coords)
+                        self.draw_atom(pos[0], pos[1], self.element.SYMBOL, True)
+                        self.draw_center_atom(self.selected_atom.x_coords, self.selected_atom.y_coords,
+                                              self.selected_atom.symbol)
             except AttributeError:
                 return
 
@@ -143,6 +144,15 @@ class Canvas(QWidget):
             coordinates_list.append((int(new_x), int(new_y)))
 
         return coordinates_list
+
+    def check_atom_overlap(self, pos_x: int, pos_y: int) -> bool:
+        atom_radius = Canvas.ATOM_RADIUS
+        for atom in self.atoms:
+            if (
+                    atom.x_coords - atom_radius <= pos_x <= atom.x_coords + atom_radius and
+                    atom.y_coords - atom_radius <= pos_y <= atom.y_coords + atom_radius
+            ):
+                return True
 
     def draw_bonds(self, atom1_x: int, atom1_y: int, atom2_x: int, atom2_y: int, actual_bond: bool = False) -> None:
         painter = QPainter(self)
@@ -210,6 +220,18 @@ class Canvas(QWidget):
         letter_y = atom_y + letter_height / 4
         painter.drawText(int(letter_x), int(letter_y), symbol)
 
+    def check_clicked_on_atom(self, pos_x: int, pos_y: int) -> bool:
+        atom_radius = Canvas.ATOM_RADIUS
+        for atom in self.atoms:
+            if (
+                    atom.x_coords - atom_radius <= pos_x <= atom.x_coords + atom_radius and
+                    atom.y_coords - atom_radius <= pos_y <= atom.y_coords + atom_radius
+            ):
+                self.selected = True
+                self.selected_atom = atom
+                self.update()
+                return True
+
     def mousePressEvent(self, event) -> None:
         if event.button() == Qt.MouseButton.LeftButton:
             click_position = event.pos()
@@ -266,32 +288,23 @@ class Canvas(QWidget):
                         return
                     potential_positions = self.calc_potential_positions(self.selected_atom)
                     for pos in potential_positions:
-                        if (
-                                pos[0] - potential_radius <= click_position.x() <= pos[0] + potential_radius and
-                                pos[1] - potential_radius <= click_position.y() <= pos[1] + potential_radius
-                        ):
-                            new_atom = chem_editor_logic.Atom(self.element, [pos[0], pos[1]])
-                            self.atoms.append(new_atom)
-                            new_atom.bond(self.selected_atom)
+                        if not self.check_atom_overlap(pos[0], pos[1]):
+                            if (
+                                    pos[0] - potential_radius <= click_position.x() <= pos[0] + potential_radius and
+                                    pos[1] - potential_radius <= click_position.y() <= pos[1] + potential_radius
+                            ):
+                                new_atom = chem_editor_logic.Atom(self.element, [pos[0], pos[1]])
+                                self.atoms.append(new_atom)
+                                new_atom.bond(self.selected_atom)
+                                print("bonded")
+                                print(self.selected_atom.symbol)
                     self.selected = False
                     self.update()
                     return
 
                 # Check if there is an atom at clicked position
-                for atom in self.atoms:
-                    atom_x = atom.x_coords
-                    atom_y = atom.y_coords
-                    atom_radius = Canvas.ATOM_RADIUS
-
-                    if (
-                            atom_x - atom_radius <= click_position.x() <= atom_x + atom_radius and
-                            atom_y - atom_radius <= click_position.y() <= atom_y + atom_radius
-                    ):
-                        self.selected = True
-                        self.selected_atom = atom
-                        self.update()
-                        print(f"Clicked on atom: {atom.symbol}")
-                        return
+                if self.check_clicked_on_atom(click_position.x(), click_position.y()):
+                    return
 
                 print(self.action_type)
 
