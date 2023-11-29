@@ -5,6 +5,7 @@ from math import sqrt
 
 @dataclass
 class Atom:
+
     def __init__(self, element, coordinates: list[int, int]):
         self.symbol: str = element.SYMBOL
         self.outer_electrons: int = element.OUTER_ELECTRONS
@@ -15,23 +16,27 @@ class Atom:
         self.extra_electrons: int = 0
         self.overall_electrons: int = (self.outer_electrons + self.extra_electrons)
 
-    def bond(self, bonding_atom, order: int = 1):
-        print(self.overall_electrons)
-        print(bonding_atom.overall_electrons)
-        print(self.overall_electrons + order)
-        print(bonding_atom.overall_electrons + order)
+    def check_is_bond_possible(self, bonding_atom, order: int = 1) -> bool:
         if (self.overall_electrons + order) > self.full_shell:
             print("Bonding unavailable, shell is full.")
-            return
+            return False
         elif (bonding_atom.overall_electrons + order) > bonding_atom.full_shell:
             print("Bonding unavailable, bonding atoms shell is full.")
+            return False
+        else:
+            return True
+
+    def bond(self, bonding_atom, order: int = 1):
+        if not self.check_is_bond_possible(bonding_atom, order):
             return
         new_bond = Bond(self, bonding_atom, order)
         self.bonds.append(new_bond)
         bonding_atom.bonds.append(new_bond)
+
         self.extra_electrons += order
         bonding_atom.extra_electrons += order
         self.overall_electrons = (self.outer_electrons + self.extra_electrons)
+        bonding_atom.overall_electrons = (bonding_atom.outer_electrons + bonding_atom.extra_electrons)
 
 
 @dataclass
