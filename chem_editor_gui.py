@@ -21,15 +21,25 @@ class ChemEditor(QWidget):
         self.bond_action_button = QPushButton("Bond")
         self.draw_action_button = QPushButton("Draw")
 
+        self.single_bond_button = QPushButton("Single")
+        self.double_bond_button = QPushButton("Double")
+        self.triple_bond_button = QPushButton("Triple")
+
         self.editor_layout.addWidget(self.carbon_button, 0, 0)
         self.editor_layout.addWidget(self.hydrogen_button, 0, 1)
         self.editor_layout.addWidget(self.bond_action_button, 0, 9)
         self.editor_layout.addWidget(self.draw_action_button, 0, 10)
+        self.editor_layout.addWidget(self.single_bond_button, 0, 17)
+        self.editor_layout.addWidget(self.double_bond_button, 0, 18)
+        self.editor_layout.addWidget(self.triple_bond_button, 0, 19)
 
         self.carbon_button.clicked.connect(self.choose_carbon)
         self.hydrogen_button.clicked.connect(self.choose_hydrogen)
         self.bond_action_button.clicked.connect(self.choose_bond_action)
         self.draw_action_button.clicked.connect(self.choose_draw_action)
+        self.single_bond_button.clicked.connect(self.choose_first_order)
+        self.double_bond_button.clicked.connect(self.choose_second_order)
+        self.triple_bond_button.clicked.connect(self.choose_third_order)
 
         self.c = Canvas()
         self.editor_layout.addWidget(self.c, 1, 0, 20, 20)
@@ -47,6 +57,15 @@ class ChemEditor(QWidget):
 
     def choose_bond_action(self) -> None:
         self.c.set_action_type("bond")
+
+    def choose_first_order(self) -> None:
+        self.c.set_bond_order(1)
+
+    def choose_second_order(self) -> None:
+        self.c.set_bond_order(2)
+
+    def choose_third_order(self) -> None:
+        self.c.set_bond_order(3)
 
 
 class Canvas(QWidget):
@@ -73,6 +92,7 @@ class Canvas(QWidget):
         self.temp_bond_list = []
 
         self.action_type = "draw"
+        self.bond_order: int = 1
 
         self.selected = False
 
@@ -85,13 +105,25 @@ class Canvas(QWidget):
     def set_action_type(self, action: str) -> None:
         self.action_type = action
 
+    def set_bond_order(self, order: int) -> None:
+        self.bond_order = order
+
     def paintEvent(self, event) -> None:
         for atom in self.atoms:
             self.draw_atom(atom.x_coords, atom.y_coords, atom.symbol)
 
             for bond in atom.bonds:
-                self.draw_bonds(bond.atoms[0].x_coords, bond.atoms[0].y_coords, bond.atoms[1].x_coords,
-                                bond.atoms[1].y_coords, True)
+                print("order: ", bond.order)
+                if bond.order == 2:
+                    self.draw_double_bond(bond.atoms[0].x_coords, bond.atoms[0].y_coords, bond.atoms[1].x_coords,
+                                          bond.atoms[1].y_coords, True)
+                elif bond.order == 3:
+                    self.draw_triple_bond(bond.atoms[0].x_coords, bond.atoms[0].y_coords, bond.atoms[1].x_coords,
+                                          bond.atoms[1].y_coords, True)
+                else:
+                    self.draw_bonds(bond.atoms[0].x_coords, bond.atoms[0].y_coords, bond.atoms[1].x_coords,
+                                    bond.atoms[1].y_coords, True)
+
                 self.draw_atom_circle(bond.atoms[1].x_coords, bond.atoms[1].y_coords, bond.atoms[0].x_coords,
                                       bond.atoms[0].y_coords)
                 self.draw_atom(bond.atoms[1].x_coords, bond.atoms[1].y_coords, bond.atoms[1].symbol)
@@ -102,9 +134,23 @@ class Canvas(QWidget):
             if self.action_type == "bond":
                 try:
                     for possible_atom in self.atoms:
+                        print("this should work")
                         print(self.atoms)
-                        self.draw_bonds(self.selected_atom.x_coords, self.selected_atom.y_coords,
-                                        possible_atom.x_coords, possible_atom.y_coords, False)
+                        print(possible_atom)
+
+                        if self.bond_order == 2:
+                            print("draw 2")
+                            self.draw_double_bond(self.selected_atom.x_coords, self.selected_atom.y_coords,
+                                                  possible_atom.x_coords, possible_atom.y_coords, False)
+                        elif self.bond_order == 3:
+                            print("draw 3")
+                            self.draw_triple_bond(self.selected_atom.x_coords, self.selected_atom.y_coords,
+                                                  possible_atom.x_coords, possible_atom.y_coords, False)
+                        else:
+                            print("draw 1")
+                            self.draw_bonds(self.selected_atom.x_coords, self.selected_atom.y_coords,
+                                            possible_atom.x_coords, possible_atom.y_coords, False)
+                        print("HUHHHH")
                         self.draw_atom_circle(possible_atom.x_coords, possible_atom.y_coords,
                                               self.selected_atom.x_coords,
                                               self.selected_atom.y_coords)
@@ -120,7 +166,15 @@ class Canvas(QWidget):
                 potential_positions = self.calc_potential_positions(self.selected_atom)
                 for pos in potential_positions:
                     if not self.check_atom_overlap(pos[0], pos[1]):
-                        self.draw_bonds(self.selected_atom.x_coords, self.selected_atom.y_coords, pos[0], pos[1], False)
+                        if self.bond_order == 2:
+                            self.draw_double_bond(self.selected_atom.x_coords, self.selected_atom.y_coords, pos[0],
+                                                  pos[1], False)
+                        elif self.bond_order == 3:
+                            self.draw_triple_bond(self.selected_atom.x_coords, self.selected_atom.y_coords,
+                                                  pos[0], pos[1], False)
+                        else:
+                            self.draw_bonds(self.selected_atom.x_coords, self.selected_atom.y_coords,
+                                            pos[0], pos[1], False)
                         self.draw_atom_circle(pos[0], pos[1], self.selected_atom.x_coords, self.selected_atom.y_coords)
                         self.draw_atom(pos[0], pos[1], self.element.SYMBOL, True)
                         self.draw_center_atom(self.selected_atom.x_coords, self.selected_atom.y_coords,
@@ -154,7 +208,7 @@ class Canvas(QWidget):
             ):
                 return True
 
-    def draw_bonds(self, atom1_x: int, atom1_y: int, atom2_x: int, atom2_y: int, actual_bond: bool = False) -> None:
+    def draw_bonds(self, atom1_x: int, atom1_y: int, atom2_x: int, atom2_y: int, actual_bond: bool) -> None:
         painter = QPainter(self)
         pen = QPen()
 
@@ -167,6 +221,46 @@ class Canvas(QWidget):
         painter.setPen(pen)
 
         painter.drawLine(QPoint(atom1_x, atom1_y), QPoint(atom2_x, atom2_y))
+
+    def draw_double_bond(self, atom1_x: int, atom1_y: int, atom2_x: int, atom2_y: int, actual_bond: bool):
+        painter = QPainter(self)
+        pen = QPen()
+
+        # Draw the bond line from one atom to another
+        pen.setColor(QColor(0, 0, 0))
+        pen.setWidth(2)
+
+        if not actual_bond:
+            pen.setColor(QColor(255, 0, 0))
+        painter.setPen(pen)
+
+        # Draw a second line parallel to the first line for a double bond
+        offset = 3
+        painter.drawLine(QPoint(atom1_x - offset, atom1_y - offset),
+                         QPoint(atom2_x - offset, atom2_y - offset))
+        painter.drawLine(QPoint(atom1_x + offset, atom1_y + offset),
+                         QPoint(atom2_x + offset, atom2_y + offset))
+
+    def draw_triple_bond(self, atom1_x: int, atom1_y: int, atom2_x: int, atom2_y: int, actual_bond: bool):
+        painter = QPainter(self)
+        pen = QPen()
+
+        # Draw the bond line from one atom to another
+        pen.setColor(QColor(0, 0, 0))
+        pen.setWidth(2)
+
+        if not actual_bond:
+            pen.setColor(QColor(255, 0, 0))
+        painter.setPen(pen)
+
+        # Draw two more lines for a triple bond
+        offset = 4
+        painter.drawLine(QPoint(atom1_x, atom1_y),
+                         QPoint(atom2_x, atom2_y))
+        painter.drawLine(QPoint(atom1_x - offset, atom1_y - offset),
+                         QPoint(atom2_x - offset, atom2_y - offset))
+        painter.drawLine(QPoint(atom1_x + offset, atom1_y + offset),
+                         QPoint(atom2_x + offset, atom2_y + offset))
 
     def draw_atom_circle(self, atom1_x: int, atom1_y: int, atom2_x: int, atom2_y: int) -> None:
         painter = QPainter(self)
@@ -263,7 +357,7 @@ class Canvas(QWidget):
                                         print("Trying to bond to itself")
                                         self.temp_bond_list.clear()
                                         return
-                                    self.temp_bond_list[0].bond(self.temp_bond_list[1])
+                                    self.temp_bond_list[0].bond(self.temp_bond_list[1], self.bond_order)
                                     self.temp_bond_list.clear()
                                     self.selected_atom = None
                                     self.update()
@@ -294,16 +388,18 @@ class Canvas(QWidget):
                                     pos[1] - potential_radius <= click_position.y() <= pos[1] + potential_radius
                             ):
                                 new_atom = chem_editor_logic.Atom(self.element, [pos[0], pos[1]])
-                                self.atoms.append(new_atom)
-                                new_atom.bond(self.selected_atom)
-                                print("bonded")
-                                print(self.selected_atom.symbol)
+                                if new_atom.check_is_bond_possible(self.selected_atom, self.bond_order):
+                                    self.atoms.append(new_atom)
+                                    new_atom.bond(self.selected_atom, self.bond_order)
+                                    print("bonded")
+                                    print(self.selected_atom.symbol)
                     self.selected = False
                     self.update()
                     return
 
                 # Check if there is an atom at clicked position
                 if self.check_clicked_on_atom(click_position.x(), click_position.y()):
+                    print(self.selected_atom.overall_electrons)
                     return
 
                 print(self.action_type)
