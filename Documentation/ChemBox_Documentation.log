@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.141592653-2.6-1.40.25 (TeX Live 2023) (preloaded format=pdflatex 2023.10.31)  28 NOV 2023 13:39
+This is pdfTeX, Version 3.141592653-2.6-1.40.25 (TeX Live 2023) (preloaded format=pdflatex 2023.10.31)  1 DEC 2023 11:42
 entering extended mode
  restricted \write18 enabled.
  %&-line parsing enabled.
@@ -87,20 +87,20 @@ File: l3backend-pdftex.def 2023-01-16 L3 backend support: PDF output (pdfTeX)
 (./ChemBox_Documentation.aux)
 \openout1 = `ChemBox_Documentation.aux'.
 
-LaTeX Font Info:    Checking defaults for OML/cmm/m/it on input line 35.
-LaTeX Font Info:    ... okay on input line 35.
-LaTeX Font Info:    Checking defaults for OMS/cmsy/m/n on input line 35.
-LaTeX Font Info:    ... okay on input line 35.
-LaTeX Font Info:    Checking defaults for OT1/cmr/m/n on input line 35.
-LaTeX Font Info:    ... okay on input line 35.
-LaTeX Font Info:    Checking defaults for T1/cmr/m/n on input line 35.
-LaTeX Font Info:    ... okay on input line 35.
-LaTeX Font Info:    Checking defaults for TS1/cmr/m/n on input line 35.
-LaTeX Font Info:    ... okay on input line 35.
-LaTeX Font Info:    Checking defaults for OMX/cmex/m/n on input line 35.
-LaTeX Font Info:    ... okay on input line 35.
-LaTeX Font Info:    Checking defaults for U/cmr/m/n on input line 35.
-LaTeX Font Info:    ... okay on input line 35.
+LaTeX Font Info:    Checking defaults for OML/cmm/m/it on input line 36.
+LaTeX Font Info:    ... okay on input line 36.
+LaTeX Font Info:    Checking defaults for OMS/cmsy/m/n on input line 36.
+LaTeX Font Info:    ... okay on input line 36.
+LaTeX Font Info:    Checking defaults for OT1/cmr/m/n on input line 36.
+LaTeX Font Info:    ... okay on input line 36.
+LaTeX Font Info:    Checking defaults for T1/cmr/m/n on input line 36.
+LaTeX Font Info:    ... okay on input line 36.
+LaTeX Font Info:    Checking defaults for TS1/cmr/m/n on input line 36.
+LaTeX Font Info:    ... okay on input line 36.
+LaTeX Font Info:    Checking defaults for OMX/cmex/m/n on input line 36.
+LaTeX Font Info:    ... okay on input line 36.
+LaTeX Font Info:    Checking defaults for U/cmr/m/n on input line 36.
+LaTeX Font Info:    ... okay on input line 36.
 \c@lstlisting=\count268
 
 (/usr/local/texlive/2023/texmf-dist/tex/context/base/mkii/supp-pdf.mkii
@@ -116,12 +116,7 @@ LaTeX Font Info:    ... okay on input line 35.
 \MPnumerator=\count273
 \makeMPintoPDFobject=\count274
 \everyMPtoPDFconversion=\toks21
-)
-LaTeX Font Info:    External font `cmex10' loaded for size
-(Font)              <14.4> on input line 37.
-LaTeX Font Info:    External font `cmex10' loaded for size
-(Font)              <7> on input line 37.
- [1
+) [1
 
 {/usr/local/texlive/2023/texmf-var/fonts/map/pdftex/updmap/pdftex.map}]
 (./ChemBox_Documentation.toc
@@ -135,45 +130,50 @@ LaTeX Font Info:    External font `cmex10' loaded for size
 \tf@toc=\write3
 \openout3 = `ChemBox_Documentation.toc'.
 
- [2]
-Underfull \hbox (badness 10000) in paragraph at lines 53--60
+ [1]
+Underfull \hbox (badness 10000) in paragraph at lines 75--82
 
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 53--60
+Underfull \hbox (badness 10000) in paragraph at lines 75--82
 
  []
 
-[3]
-Underfull \hbox (badness 10000) in paragraph at lines 74--79
-
- []
-
-
-Underfull \hbox (badness 10000) in paragraph at lines 74--79
+[2]
+Underfull \hbox (badness 10000) in paragraph at lines 96--101
 
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 74--79
+Underfull \hbox (badness 10000) in paragraph at lines 96--101
 
  []
 
-[4] [5]
-Underfull \hbox (badness 10000) in paragraph at lines 125--128
+
+Underfull \hbox (badness 10000) in paragraph at lines 96--101
 
  []
 
-[6] [7] (./ChemBox_Documentation.aux) ) 
+[3] [4]
+Underfull \hbox (badness 10000) in paragraph at lines 147--150
+
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 156--158
+
+ []
+
+[5] [6] (./ChemBox_Documentation.aux) ) 
 Here is how much of TeX's memory you used:
- 2874 strings out of 476025
- 42737 string characters out of 5790016
+ 2870 strings out of 476025
+ 42672 string characters out of 5790016
  1857388 words of memory out of 5000000
- 23357 multiletter control sequences out of 15000+600000
- 517455 words of font info for 49 fonts, out of 8000000 for 9000
+ 23353 multiletter control sequences out of 15000+600000
+ 516840 words of font info for 47 fonts, out of 8000000 for 9000
  1141 hyphenation exceptions out of 8191
- 41i,10n,48p,632b,262s stack positions out of 10000i,1000n,20000p,200000b,200000s
+ 41i,10n,48p,632b,335s stack positions out of 10000i,1000n,20000p,200000b,200000s
 </usr/local/texlive/2023/texmf-dist/font
 s/type1/public/amsfonts/cm/cmbx12.pfb></usr/local/texlive/2023/texmf-dist/fonts
 /type1/public/amsfonts/cm/cmmi12.pfb></usr/local/texlive/2023/texmf-dist/fonts/
@@ -183,7 +183,7 @@ pe1/public/amsfonts/cm/cmr12.pfb></usr/local/texlive/2023/texmf-dist/fonts/type
 public/amsfonts/cm/cmr8.pfb></usr/local/texlive/2023/texmf-dist/fonts/type1/pub
 lic/amsfonts/cm/cmsy10.pfb></usr/local/texlive/2023/texmf-dist/fonts/type1/publ
 ic/amsfonts/cm/cmsy8.pfb>
-Output written on ChemBox_Documentation.pdf (7 pages, 108369 bytes).
+Output written on ChemBox_Documentation.pdf (7 pages, 112167 bytes).
 PDF statistics:
  68 PDF objects out of 1000 (max. 8388607)
  42 compressed objects within 1 object stream

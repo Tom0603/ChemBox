@@ -29,14 +29,36 @@
 
 \lstset{style=mystyle}
 
+
 \title{ChemBox Project Documentation}
 \author{Tom Schneider}
 
 \begin{document}
-
-\maketitle
-
-\pagebreak
+\begin{titlepage}
+    \begin{center}
+        \vspace*{1cm}
+        
+        \huge ChemBox Project Documentation
+        
+        \vspace{1cm}
+        
+        \Large Tom Schneider
+        
+        \vfill
+        
+        \textbf{Date:} \today \\
+        
+        \vspace{1cm}
+        
+        \textbf{Center Number:} 29065 \\
+        \textbf{Candidate Number:} 7638 \\
+        
+        \vspace{1cm}
+        
+        \textbf{Ellesmere College}
+        
+    \end{center}
+\end{titlepage}
 
 \tableofcontents
 
@@ -132,10 +154,29 @@ The required objectives for this module are:\\
 In the tool bar on the top end of the application, there has to be a list of buttons for choosing the element, which must include the most common elements (Carbon, Hydrogen, Sulphur, Chlorine, etc.). There also has to be the option to choose the bond order (single, double or triple bond) as well as choosing the option to form a dative bond. Another essential option in form of buttons should be removing atoms and bonds as well as being able to safe the drawn structures as a document.\\
 Possible non-essential enhancements are extra information about atoms upon highlighting as well as getting information like the molar mass and the empirical formula of a molecule after highlighting.
 \item Canvas:\\
-The canvas is the area in which the user can draw their molecules. There are a number of essential features that must be included here. The user must be able to draw atoms by clicking on the canvas. Upon selecting an existing atom on the canvas, depending on the chosen action type, the user should either have the option to draw and bond a new atom from the shown potential atoms or bond the atom to one of the other atoms that it could possibly bond to, which will be highlighted. 
+The canvas is the area in which the user can draw their molecules. There are a number of essential features that must be included here.\\
+	\begin{enumerate}
+	\item The user must be able to draw atoms by clicking on the canvas.
+	\item Upon selecting an existing atom on the canvas, depending on the chosen action type, the user should have different options:
+		\begin{enumerate}
+		\item When the chosen action type is "Draw", a number of greyed out atoms and bonds to those atoms should be drawn, out of which the user can choose where he wants to place his next atom.
+		\item When the chosen action type is "Bond", the program should draw a bond from the selected atom to every existing atom on the canvas, with which a bond would be possible. The colour of those bonds needs to be different to the colour of the actual existing bonds to avoid confusion.
+		\end{enumerate}
+	\end{enumerate}
 
 \end{enumerate}
 
+\subsection{Current System}
+
+\subsection{Planning}
+
+\section{Documented Design}
+
+\section{Technical Solution}
+
+\section{Testing}
+
+\section{Evaluation}
 \newpage
 
 
