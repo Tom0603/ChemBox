@@ -17,6 +17,9 @@ class ChemEditor(QWidget):
 
         self.carbon_button = QPushButton("C")
         self.hydrogen_button = QPushButton("H")
+        self.oxygen_button = QPushButton("O")
+        self.chlorine_button = QPushButton("Cl")
+        self.fluorine_button = QPushButton("F")
 
         self.bond_action_button = QPushButton("Bond")
         self.draw_action_button = QPushButton("Draw")
@@ -27,6 +30,9 @@ class ChemEditor(QWidget):
 
         self.editor_layout.addWidget(self.carbon_button, 0, 0)
         self.editor_layout.addWidget(self.hydrogen_button, 0, 1)
+        self.editor_layout.addWidget(self.oxygen_button, 0, 2)
+        self.editor_layout.addWidget(self.chlorine_button, 0, 3)
+        self.editor_layout.addWidget(self.fluorine_button, 0, 4)
         self.editor_layout.addWidget(self.bond_action_button, 0, 9)
         self.editor_layout.addWidget(self.draw_action_button, 0, 10)
         self.editor_layout.addWidget(self.single_bond_button, 0, 17)
@@ -35,6 +41,9 @@ class ChemEditor(QWidget):
 
         self.carbon_button.clicked.connect(self.choose_carbon)
         self.hydrogen_button.clicked.connect(self.choose_hydrogen)
+        self.oxygen_button.clicked.connect(self.choose_oxygen)
+        self.chlorine_button.clicked.connect(self.choose_chlorine)
+        self.fluorine_button.clicked.connect(self.choose_fluorine)
         self.bond_action_button.clicked.connect(self.choose_bond_action)
         self.draw_action_button.clicked.connect(self.choose_draw_action)
         self.single_bond_button.clicked.connect(self.choose_first_order)
@@ -51,6 +60,15 @@ class ChemEditor(QWidget):
 
     def choose_hydrogen(self) -> None:
         self.c.set_element(self.chem_logic.Hydrogen)
+
+    def choose_oxygen(self) -> None:
+        self.c.set_element(self.chem_logic.Oxygen)
+
+    def choose_chlorine(self) -> None:
+        self.c.set_element(self.chem_logic.Chlorine)
+
+    def choose_fluorine(self) -> None:
+        self.c.set_element(self.chem_logic.Fluorine)
 
     def choose_draw_action(self) -> None:
         self.c.set_action_type("draw")
