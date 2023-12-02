@@ -109,12 +109,15 @@ class Canvas(QWidget):
 
     def set_element(self, new_element) -> None:
         self.element = new_element
+        self.update()
 
     def set_action_type(self, action: str) -> None:
         self.action_type = action
+        self.update()
 
     def set_bond_order(self, order: int) -> None:
         self.bond_order = order
+        self.update()
 
     def paintEvent(self, event) -> None:
 
@@ -378,7 +381,7 @@ class Canvas(QWidget):
                             self.temp_bond_list.clear()
                             self.selected_atom = None
                             self.update()
-                        return 
+                        return
                     self.selected = False
 
             else:
