@@ -192,23 +192,25 @@ class Canvas(QWidget):
             print("selected")
             try:
                 # Calculate possible positions for new atoms in 360° around the selected atom
-                potential_positions = self.calc_potential_positions(self.selected_atom)
-                for pos in potential_positions:
-                    # If atoms at position don't overlap, draw the potential bonds and atoms in different colour
-                    if not self.check_atom_overlap(pos[0], pos[1]):
-                        if self.bond_order == 2:
-                            self.draw_double_bond(self.selected_atom.x_coords, self.selected_atom.y_coords, pos[0],
-                                                  pos[1], False)
-                        elif self.bond_order == 3:
-                            self.draw_triple_bond(self.selected_atom.x_coords, self.selected_atom.y_coords,
-                                                  pos[0], pos[1], False)
-                        else:
-                            self.draw_single_bond(self.selected_atom.x_coords, self.selected_atom.y_coords,
-                                                  pos[0], pos[1], False)
-                        self.draw_atom_circle(pos[0], pos[1], self.selected_atom.x_coords, self.selected_atom.y_coords)
-                        self.draw_atom(pos[0], pos[1], self.element.SYMBOL, True)
-                        self.draw_center_atom(self.selected_atom.x_coords, self.selected_atom.y_coords,
-                                              self.selected_atom.symbol)
+                if self.selected_atom is not None:
+                    potential_positions = self.calc_potential_positions(self.selected_atom)
+                    for pos in potential_positions:
+                        # If atoms at position don't overlap, draw the potential bonds and atoms in different colour
+                        if not self.check_atom_overlap(pos[0], pos[1]):
+                            if self.bond_order == 2:
+                                self.draw_double_bond(self.selected_atom.x_coords, self.selected_atom.y_coords, pos[0],
+                                                      pos[1], False)
+                            elif self.bond_order == 3:
+                                self.draw_triple_bond(self.selected_atom.x_coords, self.selected_atom.y_coords,
+                                                      pos[0], pos[1], False)
+                            else:
+                                self.draw_single_bond(self.selected_atom.x_coords, self.selected_atom.y_coords,
+                                                      pos[0], pos[1], False)
+                            self.draw_atom_circle(pos[0], pos[1], self.selected_atom.x_coords,
+                                                  self.selected_atom.y_coords)
+                            self.draw_atom(pos[0], pos[1], self.element.SYMBOL, True)
+                            self.draw_center_atom(self.selected_atom.x_coords, self.selected_atom.y_coords,
+                                                  self.selected_atom.symbol)
             except AttributeError:
                 return
 
@@ -220,6 +222,7 @@ class Canvas(QWidget):
         :param atom:
         :return: list of tuples containing x and y coordinates of potential positions for new atoms
         """
+
         x = atom.x_coords
         y = atom.y_coords
         distance = 40
@@ -405,22 +408,23 @@ class Canvas(QWidget):
             else:
                 if self.selected:
                     potential_radius = Canvas.ATOM_RADIUS
-                    potential_positions = self.calc_potential_positions(self.selected_atom)
-                    for pos in potential_positions:
-                        if not self.check_atom_overlap(pos[0], pos[1]):
-                            if (
-                                    pos[0] - potential_radius <= click_position.x() <= pos[0] + potential_radius and
-                                    pos[1] - potential_radius <= click_position.y() <= pos[1] + potential_radius
-                            ):
-                                new_atom = chem_editor_logic.Atom(self.element, [pos[0], pos[1]])
-                                if new_atom.check_is_bond_possible(self.selected_atom, self.bond_order):
-                                    self.atoms.append(new_atom)
-                                    new_atom.bond(self.selected_atom, self.bond_order)
-                                    print("bonded")
-                                    print(self.selected_atom.symbol)
-                    self.selected = False
-                    self.update()
-                    return
+                    if self.selected_atom is not None:
+                        potential_positions = self.calc_potential_positions(self.selected_atom)
+                        for pos in potential_positions:
+                            if not self.check_atom_overlap(pos[0], pos[1]):
+                                if (
+                                        pos[0] - potential_radius <= click_position.x() <= pos[0] + potential_radius and
+                                        pos[1] - potential_radius <= click_position.y() <= pos[1] + potential_radius
+                                ):
+                                    new_atom = chem_editor_logic.Atom(self.element, [pos[0], pos[1]])
+                                    if new_atom.check_is_bond_possible(self.selected_atom, self.bond_order):
+                                        self.atoms.append(new_atom)
+                                        new_atom.bond(self.selected_atom, self.bond_order)
+                                        print("bonded")
+                                        print(self.selected_atom.symbol)
+                        self.selected = False
+                        self.update()
+                        return
 
                 # Check if there is an atom at clicked position
                 if self.check_clicked_on_atom(click_position.x(), click_position.y()):
