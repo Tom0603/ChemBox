@@ -1,19 +1,10 @@
 from PyQt6.QtWidgets import QGridLayout, QWidget, QPushButton, QLineEdit, QLabel, QComboBox
 
 
-class AmountOfSubstance(QWidget):
-    """
-    This class holds all the calculations concerning the amount of a substance.
-    Examples of this are the standard calculation n=m/mr or the c=n/v equation.
-    """
-
+class MolesCalculator(QWidget):
     def __init__(self):
-        super(QWidget, self).__init__()
+        super(QWidget).__init__()
         self.moles_layout = QGridLayout()
-        self.conc_layout = QGridLayout()
-        self.avogadro_layout = QGridLayout()
-
-        self.avogadros_constant = 6.02214076
 
         # Unit conversions
         self.mass_conversions = {
@@ -63,77 +54,7 @@ class AmountOfSubstance(QWidget):
 
         self.moles_unit_dropdown.setCurrentIndex(2)
 
-        # Initialise concentration calculation Layout
-        self.conc_label_conc = QLabel("Concentration:")
-        self.moles_label_conc = QLabel("Moles:")
-        self.vol_label_conc = QLabel("Volume:")
-
-        self.conc_input_conc = QLineEdit()
-        self.moles_input_conc = QLineEdit()
-        self.vol_input_conc = QLineEdit()
-
-        self.calculate_button_conc = QPushButton("Calculate")
-        self.calculate_button_conc.clicked.connect(self.conc_calculation)
-
-        self.moles_unit_dropdown_conc = QComboBox()
-        self.moles_unit_dropdown_conc.addItem("μmol")
-        self.moles_unit_dropdown_conc.addItem("mmol")
-        self.moles_unit_dropdown_conc.addItem("mol")
-
-        self.moles_unit_dropdown_conc.setCurrentIndex(2)
-
-        self.vol_unit_drop_down_conc = QComboBox()
-        self.vol_unit_drop_down_conc.addItem("cm³")
-        self.vol_unit_drop_down_conc.addItem("dm³")
-        self.vol_unit_drop_down_conc.addItem("m³")
-
-        self.vol_unit_drop_down_conc.setCurrentIndex(1)
-
-        # Initialise Avogadro's calculator
-        self.mass_label_avogadro = QLabel("Mass:")
-        self.moles_label_avogadro = QLabel("Moles:")
-        self.molecular_weight_label_avogadro = QLabel("Molecular weight:")
-        self.num_atoms_label_avogadro = QLabel("Number of atoms:")
-
-        self.mass_input_avogadro = QLineEdit()
-        self.moles_input_avogadro = QLineEdit()
-        self.molecular_weight_input_avogadro = QLineEdit()
-        self.num_atoms_input_avogadro = QLineEdit()
-
-        self.calculate_button_avogadro = QPushButton("Calculate")
-        self.calculate_button_avogadro.clicked.connect(self.calculate_avogadro)
-
-        self.mass_unit_dropdown_avo = QComboBox()
-        self.mass_unit_dropdown_avo.addItem("mg")
-        self.mass_unit_dropdown_avo.addItem("g")
-        self.mass_unit_dropdown_avo.addItem("kg")
-        self.mass_unit_dropdown_avo.addItem("t")
-
-        self.mass_unit_dropdown_avo.setCurrentIndex(1)
-
-        # Initialise Atom Economy calculator
-
         self.get_moles_layout()
-        self.get_conc_layout()
-        self.get_avogadro_layout()
-
-    def get_moles_layout(self):
-        f"""
-        This function adds all the essential widgets to the {self.moles_layout} 
-        """
-
-        self.moles_layout.addWidget(self.moles_label, 0, 0)
-        self.moles_layout.addWidget(self.mass_label, 1, 0)
-        self.moles_layout.addWidget(self.mr_label, 2, 0)
-
-        self.moles_layout.addWidget(self.moles_input, 0, 1)
-        self.moles_layout.addWidget(self.mass_input, 1, 1)
-        self.moles_layout.addWidget(self.mr_input, 2, 1)
-
-        self.moles_layout.addWidget(self.moles_unit_dropdown, 0, 2)
-        self.moles_layout.addWidget(self.mass_unit_dropdown, 1, 2)
-
-        self.moles_layout.addWidget(self.calculate_button, 3, 1)
 
     def moles_calculation(self):
         """
@@ -174,10 +95,83 @@ class AmountOfSubstance(QWidget):
         else:
             self.mr_input.setText(str(result))
 
+    def get_moles_layout(self):
+        f"""
+        This function adds all the essential widgets to the {self.moles_layout} 
+        """
+
+        self.moles_layout.addWidget(self.moles_label, 0, 0)
+        self.moles_layout.addWidget(self.mass_label, 1, 0)
+        self.moles_layout.addWidget(self.mr_label, 2, 0)
+
+        self.moles_layout.addWidget(self.moles_input, 0, 1)
+        self.moles_layout.addWidget(self.mass_input, 1, 1)
+        self.moles_layout.addWidget(self.mr_input, 2, 1)
+
+        self.moles_layout.addWidget(self.moles_unit_dropdown, 0, 2)
+        self.moles_layout.addWidget(self.mass_unit_dropdown, 1, 2)
+
+        self.moles_layout.addWidget(self.calculate_button, 3, 1)
+
+
+class ConcCalculator(QWidget):
+    def __init__(self):
+        super(QWidget).__init__()
+        self.conc_layout = QGridLayout()
+
+        # Unit conversions
+        self.mass_conversions = {
+            "mg": 0.001,
+            "g": 1,
+            "kg": 1000,
+            "t": 1000000
+        }
+
+        self.mole_conversions = {
+            "μmol": 0.000001,
+            "mmol": 0.001,
+            "mol": 1,
+        }
+
+        self.volume_conversions = {
+            "cm³": 0.001,
+            "dm³": 1.0,
+            "m³": 1000.0,
+
+        }
+
+        # Initialise concentration calculation Layout
+        self.conc_label_conc = QLabel("Concentration:")
+        self.moles_label_conc = QLabel("Moles:")
+        self.vol_label_conc = QLabel("Volume:")
+
+        self.conc_input_conc = QLineEdit()
+        self.moles_input_conc = QLineEdit()
+        self.vol_input_conc = QLineEdit()
+
+        self.calculate_button_conc = QPushButton("Calculate")
+        self.calculate_button_conc.clicked.connect(self.conc_calculation)
+
+        self.moles_unit_dropdown_conc = QComboBox()
+        self.moles_unit_dropdown_conc.addItem("μmol")
+        self.moles_unit_dropdown_conc.addItem("mmol")
+        self.moles_unit_dropdown_conc.addItem("mol")
+
+        self.moles_unit_dropdown_conc.setCurrentIndex(2)
+
+        self.vol_unit_drop_down_conc = QComboBox()
+        self.vol_unit_drop_down_conc.addItem("cm³")
+        self.vol_unit_drop_down_conc.addItem("dm³")
+        self.vol_unit_drop_down_conc.addItem("m³")
+
+        self.vol_unit_drop_down_conc.setCurrentIndex(1)
+
+        self.get_conc_layout()
+
     def get_conc_layout(self):
         f"""
-        This function adds all the essential widgets to the {self.conc_layout} 
-        """
+           This function adds all the essential widgets to the {self.conc_layout} 
+           """
 
         self.conc_layout.addWidget(self.conc_label_conc, 0, 0)
         self.conc_layout.addWidget(self.moles_label_conc, 1, 0)
@@ -198,26 +192,26 @@ class AmountOfSubstance(QWidget):
         and returns the value in the GUI.
         """
 
-        moles_unit = self.moles_unit_dropdown.currentText()
+        moles_unit = self.moles_unit_dropdown_conc.currentText()
         vol_unit = self.vol_unit_drop_down_conc.currentText()
 
         if not self.conc_input_conc.text():
             try:
-                conc = (float(self.moles_input.text()) * self.mole_conversions[moles_unit]) / (
+                conc = (float(self.moles_input_conc.text()) * self.mole_conversions[moles_unit]) / (
                         float(self.vol_input_conc.text()) * self.volume_conversions[vol_unit])
                 self.conc_input_conc.setText(str(conc))
             except ValueError:
                 print("Value Error")
-        elif not self.moles_input.text():
+        elif not self.moles_input_conc.text():
             try:
                 moles = float(self.conc_input_conc.text()) * (
                         float(self.vol_input_conc.text()) * self.volume_conversions[vol_unit])
-                self.mass_input.setText(str(moles))
+                (self.moles_input_conc.setText(str(moles)))
             except ValueError:
                 print("Value Error")
         else:
             try:
-                vol = (float(self.moles_input.text()) * self.mole_conversions[moles_unit]) / float(
+                vol = (float(self.moles_input_conc.text()) * self.mole_conversions[moles_unit]) / float(
                     self.conc_input_conc.text())
                 self.vol_input_conc.setText(str(vol))
             except ValueError:
@@ -230,6 +224,66 @@ class AmountOfSubstance(QWidget):
             self.moles_input_conc.setText(str(result))
         else:
             self.vol_input_conc.setText(str(result))
+
+
+class AvogadroCalculator(QWidget):
+    """
+    This class holds all the calculations concerning the amount of a substance.
+    Examples of this are the standard calculation n=m/mr or the c=n/v equation.
+    """
+
+    def __init__(self):
+        super(QWidget, self).__init__()
+        self.avogadro_layout = QGridLayout()
+
+        self.avogadros_constant = 6.02214076
+
+        # Unit conversions
+        self.mass_conversions = {
+            "mg": 0.001,
+            "g": 1,
+            "kg": 1000,
+            "t": 1000000
+        }
+
+        self.mole_conversions = {
+            "μmol": 0.000001,
+            "mmol": 0.001,
+            "mol": 1,
+        }
+
+        self.volume_conversions = {
+            "cm³": 0.001,
+            "dm³": 1.0,
+            "m³": 1000.0,
+
+        }
+
+        # Initialise Avogadro's calculator
+        self.mass_label_avogadro = QLabel("Mass:")
+        self.moles_label_avogadro = QLabel("Moles:")
+        self.molecular_weight_label_avogadro = QLabel("Molecular weight:")
+        self.num_atoms_label_avogadro = QLabel("Number of atoms:")
+
+        self.mass_input_avogadro = QLineEdit()
+        self.moles_input_avogadro = QLineEdit()
+        self.molecular_weight_input_avogadro = QLineEdit()
+        self.num_atoms_input_avogadro = QLineEdit()
+
+        self.calculate_button_avogadro = QPushButton("Calculate")
+        self.calculate_button_avogadro.clicked.connect(self.calculate_avogadro)
+
+        self.mass_unit_dropdown_avo = QComboBox()
+        self.mass_unit_dropdown_avo.addItem("mg")
+        self.mass_unit_dropdown_avo.addItem("g")
+        self.mass_unit_dropdown_avo.addItem("kg")
+        self.mass_unit_dropdown_avo.addItem("t")
+
+        self.mass_unit_dropdown_avo.setCurrentIndex(1)
+
+        # Initialise Atom Economy calculator
+
+        self.get_avogadro_layout()
 
     def get_avogadro_layout(self):
         f"""
@@ -315,7 +369,7 @@ class AmountOfSubstance(QWidget):
         self.num_atoms_input_avogadro.setText(num_atoms)
 
 
-class IdealGasLaw(QWidget):
+class IdealGasLawCalculator(QWidget):
     def __init__(self):
         super(QWidget, self).__init__()
         self.ideal_gas_layout = QGridLayout()
