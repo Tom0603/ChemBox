@@ -227,11 +227,6 @@ class ConcCalculator(QWidget):
 
 
 class AvogadroCalculator(QWidget):
-    """
-    This class holds all the calculations concerning the amount of a substance.
-    Examples of this are the standard calculation n=m/mr or the c=n/v equation.
-    """
-
     def __init__(self):
         super(QWidget, self).__init__()
         self.avogadro_layout = QGridLayout()
