@@ -1,5 +1,4 @@
-from PyQt6.QtWidgets import QApplication, QMainWindow, QTabWidget, QGridLayout, QWidget, QPushButton, \
-    QLineEdit, QLabel, QComboBox, QHBoxLayout, QVBoxLayout, QTableWidget, QTableWidgetItem
+from PyQt6.QtWidgets import QWidget, QPushButton, QLineEdit, QLabel, QVBoxLayout
 
 import re
 from sympy import Matrix, lcm

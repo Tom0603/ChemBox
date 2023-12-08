@@ -47,10 +47,10 @@ class ChemBox(QMainWindow):
         self.side_bar.ideal_gas_tab.setLayout(self.ideal_gas_law.ideal_gas_layout)
 
         self.chem_balancer = ChemBalancer()
-        self.tab_bar.tab3.setLayout(self.chem_balancer.balancer_layout)
+        self.tab_bar.tab2.setLayout(self.chem_balancer.balancer_layout)
 
         self.chem_editor = ChemEditor()
-        self.tab_bar.tab5.setLayout(self.chem_editor.editor_layout)
+        self.tab_bar.tab3.setLayout(self.chem_editor.editor_layout)
 
         # self.interactiveTable = InteractiveTable()
         # self.tabBar.tab2.setLayout(self.interactiveTable.tableLayout)
