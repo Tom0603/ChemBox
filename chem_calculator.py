@@ -448,8 +448,8 @@ class IdealGasLawCalculator(QWidget):
         def _calculate_pressure():
             try:
                 pressure = (float(self.moles_input_igl.text()) * self.ideal_gas_constant * (float(
-                    self.temperature_input_igl.text()) + self.temperature_conversions[temperature_unit])) / (float(
-                    self.volume_input_igl.text()) * self.volume_conversions[volume_unit])
+                    self.temperature_input_igl.text()) + self.temperature_conversions[temperature_unit])) / (
+                                       float(self.volume_input_igl.text()) * self.volume_conversions[volume_unit])
                 return pressure
             except ValueError:
                 return "Value Error"
@@ -493,3 +493,106 @@ class IdealGasLawCalculator(QWidget):
             self.result_label_igl.setText(f"Number of moles: {_calculate_moles()}")
         else:
             self.result_label_igl.setText("wtf are you doing mate")
+
+
+class AtomEconCalculator(QWidget):
+    def __init__(self):
+        super().__init__()
+
+        self.atom_econ_layout = QGridLayout()
+        self.reagent_list = []
+
+        self.first_reagent_label = QLabel("Reagent 1")
+        self.desired_product_label = QLabel("Desired Product")
+        self.atom_economy_label = QLabel("Atom Economy")
+
+        self.first_reagent = QLineEdit()
+        self.reagent_list.append(self.first_reagent)
+
+        self.desired_product = QLineEdit()
+        self.atom_economy = QLineEdit()
+
+        self.add_reagent_button = QPushButton("Add Reagent", self)
+        self.add_reagent_button.clicked.connect(self.add_reagent)
+
+        self.calculate_button = QPushButton("Calculate")
+        self.calculate_button.clicked.connect(self.calculate)
+
+        self.atom_econ_layout.addWidget(self.first_reagent_label, 0, 0)
+        self.atom_econ_layout.addWidget(self.first_reagent, 0, 1)
+        self.atom_econ_layout.addWidget(self.desired_product_label, 1, 0)
+        self.atom_econ_layout.addWidget(self.desired_product, 1, 1)
+        self.atom_econ_layout.addWidget(self.atom_economy_label, 2, 0)
+        self.atom_econ_layout.addWidget(self.atom_economy, 2, 1)
+        self.atom_econ_layout.addWidget(self.add_reagent_button, 3, 0)
+        self.atom_econ_layout.addWidget(self.calculate_button, 3, 1)
+
+    def add_reagent(self):
+        new_reagent = QLineEdit()
+        new_label = QLabel(f"Reagent {len(self.reagent_list) + 1}")
+        self.reagent_list.append(new_reagent)
+        self.atom_econ_layout.addWidget(new_label)
+        self.atom_econ_layout.addWidget(new_reagent)
+
+    def get_reagents(self):
+        total = 0.0
+        for reagent in self.reagent_list:
+            try:
+                total += float(reagent.text())
+            except ValueError:
+                continue
+        return total
+
+    def calculate_atom_econ(self):
+        try:
+            atom_economy = (float(self.desired_product.text()) / self.get_reagents()) * 100
+        except ValueError:
+            return "ValueError you twat"
+        return atom_economy
+
+    def calculate_desired_product(self):
+        try:
+            desired_product = (self.get_reagents() * float(self.atom_economy.text())) / 100
+        except ValueError:
+            return "ValueError you twat"
+        return desired_product
+
+    def calculate_reagent(self):
+        try:
+            reagent = ((float(self.desired_product.text()) / float(
+                self.atom_economy.text())) - self.get_reagents()) * 100
+        except ValueError:
+            return "ValueError you twat"
+        return reagent
+
+    def calculate(self):
+        if not self.first_reagent.text():
+            reagent = self.calculate_reagent()
+            self.update_ui(reagent)
+        elif not self.desired_product.text():
+            desired_product = self.calculate_desired_product()
+            self.update_ui(desired_product)
+        elif not self.atom_economy.text():
+            atom_economy = self.calculate_atom_econ()
+            self.update_ui(atom_economy)
+        else:
+            return ValueError
+
+    def update_ui(self, result):
+        if not self.first_reagent.text():
+            try:
+                self.first_reagent.setText(str(result))
+            except ValueError:
+                return
+        elif not self.desired_product.text():
+            try:
+                self.desired_product.setText(str(result))
+            except ValueError:
+                return
+        elif not self.atom_economy.text():
+            try:
+                self.atom_economy.setText(str(result))
+            except ValueError:
+                return
+        else:
+            return ValueError
