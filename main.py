@@ -4,8 +4,8 @@ from PyQt6.QtWidgets import QApplication, QMainWindow, QWidget, QPushButton, QVB
 
 from chem_editor_gui import ChemEditor
 
-from chem_calculator import MolesCalculator, ConcCalculator, AvogadroCalculator, IdealGasLawCalculator, \
-    AtomEconCalculator
+from chem_calculator import MolesCalculator, ConcCalculator, AvogadroCalculator, IdealGasLawCalculator
+
 from chem_balancer import ChemBalancer
 from gui_comps import TabBar, SideBar
 
@@ -34,7 +34,6 @@ class ChemBox(QMainWindow):
         self.concentration_calc = ConcCalculator()
         self.avogadro_calc = AvogadroCalculator()
         self.ideal_gas_law_calc = IdealGasLawCalculator()
-        self.atom_econ_calc = AtomEconCalculator()
 
         # Initialise moles tab in sidebar
         self.side_bar.moles_tab.setLayout(self.moles_calc.moles_layout)
@@ -47,9 +46,6 @@ class ChemBox(QMainWindow):
 
         # Initialise igl tab in sidebar
         self.side_bar.ideal_gas_tab.setLayout(self.ideal_gas_law_calc.ideal_gas_layout)
-
-        # Initialise Atom Economy tab in sidebar
-        self.side_bar.atom_econ_tab.setLayout(self.atom_econ_calc.atom_econ_layout)
 
         self.chem_balancer = ChemBalancer()
         self.tab_bar.tab2.setLayout(self.chem_balancer.balancer_layout)

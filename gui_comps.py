@@ -30,8 +30,8 @@ class SideBar(QWidget):
         self.conc_tab_button = QPushButton("Concentration")
         self.avogadro_tab_button = QPushButton("Avogadro's Calculator")
         self.ideal_gas_tab_button = QPushButton("Ideal Gas Equation")
-        self.atom_econ_tab_button = QPushButton("Atom Economy")
-        self.perc_yield_tab_button = QPushButton("% Yield")
+        self.atom_econ_tab_button = QPushButton("Free Tab 1")
+        self.perc_yield_tab_button = QPushButton("Free Tab 2")
 
         self.moles_tab_button.clicked.connect(self.moles_button)
         self.conc_tab_button.clicked.connect(self.conc_button)
