@@ -235,6 +235,8 @@ class Canvas(QWidget):
             new_y = y + distance * math.sin(angle_radians)
             coordinates_list.append((int(new_x), int(new_y)))
 
+        print(x, y)
+        print(coordinates_list)
         return coordinates_list
 
     def check_atom_overlap(self, pos_x: int, pos_y: int) -> bool:
@@ -274,12 +276,10 @@ class Canvas(QWidget):
             pen.setColor(QColor(255, 0, 0))
         painter.setPen(pen)
 
-        # Draw two lines for a double bond
-        offset = 3
-        painter.drawLine(QPoint(atom1_x - offset, atom1_y - offset),
-                         QPoint(atom2_x - offset, atom2_y - offset))
-        painter.drawLine(QPoint(atom1_x + offset, atom1_y + offset),
-                         QPoint(atom2_x + offset, atom2_y + offset))
+        offset = 2
+        diag_offset = 3
+
+        self.__diagonal_bonds(atom1_x, atom1_y, atom2_x, atom2_y, painter, offset, diag_offset)
 
     def draw_triple_bond(self, atom1_x: int, atom1_y: int, atom2_x: int, atom2_y: int, actual_bond: bool) -> None:
         painter = QPainter(self)
@@ -294,14 +294,45 @@ class Canvas(QWidget):
             pen.setColor(QColor(255, 0, 0))
         painter.setPen(pen)
 
-        # Draw three lines for a triple bond
         offset = 4
+        diag_offset = 6
+
         painter.drawLine(QPoint(atom1_x, atom1_y),
                          QPoint(atom2_x, atom2_y))
-        painter.drawLine(QPoint(atom1_x - offset, atom1_y - offset),
-                         QPoint(atom2_x - offset, atom2_y - offset))
-        painter.drawLine(QPoint(atom1_x + offset, atom1_y + offset),
-                         QPoint(atom2_x + offset, atom2_y + offset))
+        self.__diagonal_bonds(atom1_x, atom1_y, atom2_x, atom2_y, painter, offset, diag_offset)
+
+    def __diagonal_bonds(self, atom1_x: int, atom1_y: int, atom2_x: int, atom2_y: int, painter: QPainter, offset: int,
+                         diag_offset: int):
+        # Top left diagonal
+        if atom2_x < atom1_x and atom2_y < atom1_y:
+            painter.drawLine(QPoint(atom1_x, atom1_y - diag_offset),
+                             QPoint(atom2_x + diag_offset, atom2_y))
+            painter.drawLine(QPoint(atom1_x - diag_offset, atom1_y),
+                             QPoint(atom2_x, atom2_y + diag_offset))
+        # Bottom left diagonal
+        elif atom2_x < atom1_x and atom2_y > atom1_y:
+            painter.drawLine(QPoint(atom1_x - diag_offset, atom1_y),
+                             QPoint(atom2_x, atom2_y - diag_offset))
+            painter.drawLine(QPoint(atom1_x, atom1_y + diag_offset),
+                             QPoint(atom2_x + diag_offset, atom2_y))
+        # Top right diagonal
+        elif atom2_x > atom1_x and atom2_y < atom1_y:
+            painter.drawLine(QPoint(atom1_x, atom1_y - diag_offset),
+                             QPoint(atom2_x - diag_offset, atom2_y))
+            painter.drawLine(QPoint(atom1_x + diag_offset, atom1_y),
+                             QPoint(atom2_x, atom2_y + diag_offset))
+        # Bottom right diagonal
+        elif atom2_x > atom1_x and atom2_y > atom1_y:
+            painter.drawLine(QPoint(atom1_x + diag_offset, atom1_y),
+                             QPoint(atom2_x, atom2_y - diag_offset))
+            painter.drawLine(QPoint(atom1_x, atom1_y + diag_offset),
+                             QPoint(atom2_x - diag_offset, atom2_y))
+        # Horizontal and Vertical lines
+        else:
+            painter.drawLine(QPoint(atom1_x - offset, atom1_y - offset),
+                             QPoint(atom2_x - offset, atom2_y - offset))
+            painter.drawLine(QPoint(atom1_x + offset, atom1_y + offset),
+                             QPoint(atom2_x + offset, atom2_y + offset))
 
     def draw_atom_circle(self, atom1_x: int, atom1_y: int, atom2_x: int, atom2_y: int) -> None:
         """
