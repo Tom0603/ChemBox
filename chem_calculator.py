@@ -1,5 +1,8 @@
+from PyQt6.QtGui import QFont
 from PyQt6.QtWidgets import QGridLayout, QWidget, QPushButton, QLineEdit, QLabel, QComboBox, QVBoxLayout, QScrollArea, \
     QHBoxLayout
+
+from math import log
 
 
 class MolesCalculator(QWidget):
@@ -450,7 +453,7 @@ class IdealGasLawCalculator(QWidget):
             try:
                 pressure = (float(self.moles_input_igl.text()) * self.ideal_gas_constant * (float(
                     self.temperature_input_igl.text()) + self.temperature_conversions[temperature_unit])) / (
-                                       float(self.volume_input_igl.text()) * self.volume_conversions[volume_unit])
+                                   float(self.volume_input_igl.text()) * self.volume_conversions[volume_unit])
                 return pressure
             except ValueError:
                 return "Value Error"
@@ -484,13 +487,203 @@ class IdealGasLawCalculator(QWidget):
             except ValueError:
                 return "Value Error"
 
-        if self.pressure_input_igl.text() == "":
+        if self.pressure_input_igl.text().strip() == "":
             self.result_label_igl.setText(f"Pressure: {_calculate_pressure()}")
-        elif self.volume_input_igl.text() == "":
+        elif self.volume_input_igl.text().strip() == "":
             self.result_label_igl.setText(f"Volume: {_calculate_volume()}")
-        elif self.temperature_input_igl.text() == "":
+        elif self.temperature_input_igl.text().strip() == "":
             self.result_label_igl.setText(f"Temperature: {_calculate_temperature()}")
-        elif self.moles_input_igl.text() == "":
+        elif self.moles_input_igl.text().strip() == "":
             self.result_label_igl.setText(f"Number of moles: {_calculate_moles()}")
         else:
             self.result_label_igl.setText("wtf are you doing mate")
+
+
+class EquilibriumCalculator(QWidget):
+    def __init__(self):
+        super(QWidget, self).__init__()
+
+        self.layout = QGridLayout()
+
+        # Set up line edits and labels
+        self.equation_label = QLabel("a[A] + b[B] ⇌ c[C] + d[D]")
+        self.equation_label.setFont(QFont("SansSerif", 22))
+        self.equation_label.setStyleSheet("color: darkGray;")
+
+        self.calc_button = QPushButton("Calculate")
+        self.calc_button.clicked.connect(self.check_empty_input)
+
+        self.conc_a_label = QLabel("Concentration [A]:")
+        self.conc_a = QLineEdit()
+
+        self.conc_b_label = QLabel("Concentration [B]:")
+        self.conc_b = QLineEdit()
+
+        self.conc_c_label = QLabel("Concentration [C]:")
+        self.conc_c = QLineEdit()
+
+        self.conc_d_label = QLabel("Concentration [D]:")
+        self.conc_d = QLineEdit()
+
+        self.coeff_a_label = QLabel("Coefficient a:")
+        self.coeff_a = QLineEdit()
+
+        self.coeff_b_label = QLabel("Coefficient b:")
+        self.coeff_b = QLineEdit()
+
+        self.coeff_c_label = QLabel("Coefficient c:")
+        self.coeff_c = QLineEdit()
+
+        self.coeff_d_label = QLabel("Coefficient d:")
+        self.coeff_d = QLineEdit()
+
+        self.equilibrium_constant_label = QLabel("Equilibrium Constant k:")
+        self.equilibrium_constant = QLineEdit()
+
+        self.input_list = [self.conc_a, self.conc_b, self.conc_c, self.conc_d, self.coeff_a, self.coeff_b, self.coeff_c,
+                           self.coeff_d, self.equilibrium_constant]
+        self.concentration_list = [self.conc_a, self.conc_b, self.conc_c, self.conc_d]
+        self.coeff_list = [self.coeff_a, self.coeff_b, self.coeff_c, self.coeff_d]
+
+        self.calculated_value = None
+
+        self.layout.addWidget(self.equation_label, 0, 0)
+        self.layout.addWidget(self.calc_button, 10, 0, 2, 0)
+
+        self.layout.addWidget(self.conc_a_label, 1, 0)
+        self.layout.addWidget(self.conc_a, 1, 1)
+        self.layout.addWidget(self.coeff_a_label, 2, 0)
+        self.layout.addWidget(self.coeff_a, 2, 1)
+        self.layout.addWidget(self.conc_b_label, 3, 0)
+        self.layout.addWidget(self.conc_b, 3, 1)
+        self.layout.addWidget(self.coeff_b_label, 4, 0)
+        self.layout.addWidget(self.coeff_b, 4, 1)
+        self.layout.addWidget(self.conc_c_label, 5, 0)
+        self.layout.addWidget(self.conc_c, 5, 1)
+        self.layout.addWidget(self.coeff_c_label, 6, 0)
+        self.layout.addWidget(self.coeff_c, 6, 1)
+        self.layout.addWidget(self.conc_d_label, 7, 0)
+        self.layout.addWidget(self.conc_d, 7, 1)
+        self.layout.addWidget(self.coeff_d_label, 8, 0)
+        self.layout.addWidget(self.coeff_d, 8, 1)
+        self.layout.addWidget(self.equilibrium_constant_label, 9, 0)
+        self.layout.addWidget(self.equilibrium_constant, 9, 1)
+
+    def check_empty_input(self):
+        empty_count = 0
+        empty_input = None
+
+        for item in self.input_list:
+            if item.text().strip() == "":
+                empty_count += 1
+                empty_input = item
+
+        if empty_input in self.concentration_list and empty_count == 1 or self.calculated_value in self.concentration_list:
+            self.calculate_concentration(empty_input)
+        elif empty_input in self.coeff_list and empty_count == 1 or self.calculated_value in self.coeff_list:
+            self.calculate_coefficient(empty_input)
+        elif empty_input == self.equilibrium_constant and empty_count == 1 or self.calculated_value == self.equilibrium_constant:
+            self.calculate_constant()
+        else:
+            return "Invalid Input Error"
+
+    def calculate_constant(self):
+        try:
+            k = ((float(self.conc_c.text()) ** float(self.coeff_c.text())) * (
+                    float(self.conc_d.text()) ** float(self.coeff_d.text()))) / (
+                        (float(self.conc_a.text()) ** float(self.coeff_a.text())) *
+                        (float(self.conc_b.text()) ** float(self.coeff_b.text())))
+        except OverflowError:
+            print("Overflow Error, inputted numbers too big")
+            return
+        self.calculated_value = self.equilibrium_constant
+        self.update_gui(self.equilibrium_constant, k)
+
+    def calculate_concentration(self, to_find):
+        if to_find == self.conc_a or to_find == self.calculated_value:
+            conc = ((float(self.conc_c.text()) ** float(self.coeff_c.text())) * (
+                    float(self.conc_d.text()) ** float(self.coeff_d.text()))) / (
+                           float(self.equilibrium_constant.text()) * (
+                           float(self.conc_b.text()) ** float(self.coeff_b.text())))
+            if float(self.coeff_a.text()) > 1:
+                conc = conc ** (1 / float(self.coeff_a.text()))
+            self.calculated_value = to_find
+            self.update_gui(to_find, conc)
+            return
+
+        if to_find == self.conc_b or to_find == self.calculated_value:
+            conc = ((float(self.conc_c.text()) ** float(self.coeff_c.text())) * (
+                    float(self.conc_d.text()) ** float(self.coeff_d.text()))) / (
+                           float(self.equilibrium_constant.text()) * (
+                           float(self.conc_a.text()) ** float(self.coeff_a.text())))
+            if float(self.coeff_b.text()) > 1:
+                conc = conc ** (1 / float(self.coeff_b.text()))
+            self.calculated_value = to_find
+            self.update_gui(to_find, conc)
+            return
+
+        if to_find == self.conc_c or to_find == self.calculated_value:
+            conc = ((float(self.conc_a.text()) ** float(self.coeff_a.text())) * (
+                    float(self.conc_b.text()) ** float(self.coeff_b.text())) * (
+                        float(self.equilibrium_constant.text())) / (
+                            float(self.conc_d.text()) ** float(self.coeff_d.text())))
+            if float(self.coeff_c.text()) > 1:
+                conc = conc ** (1 / float(self.coeff_c.text()))
+            self.calculated_value = to_find
+            self.update_gui(to_find, conc)
+            return
+
+        if to_find == self.conc_d or to_find == self.calculated_value:
+            conc = ((float(self.conc_a.text()) ** float(self.coeff_a.text())) * (
+                    float(self.conc_b.text()) ** float(self.coeff_b.text())) * (
+                        float(self.equilibrium_constant.text())) / (
+                            float(self.conc_c.text()) ** float(self.coeff_c.text())))
+            if float(self.coeff_d.text()) > 1:
+                conc = conc ** (1 / float(self.coeff_d.text()))
+            self.update_gui(to_find, conc)
+            return
+
+    def calculate_coefficient(self, to_find):
+        if to_find == self.coeff_a or to_find == self.calculated_value:
+            coeff = ((float(self.conc_c.text()) ** float(self.coeff_c.text())) * (
+                    float(self.conc_d.text()) ** float(self.coeff_d.text()))) / (
+                            float(self.equilibrium_constant.text()) * (
+                            float(self.conc_b.text()) ** float(self.coeff_b.text())))
+            coeff = int(log(coeff, float(self.conc_a.text())))
+            self.calculated_value = to_find
+            self.update_gui(to_find, coeff)
+            return
+
+        if to_find == self.coeff_b or to_find == self.calculated_value:
+            coeff = ((float(self.conc_c.text()) ** float(self.coeff_c.text())) * (
+                    float(self.conc_d.text()) ** float(self.coeff_d.text()))) / (
+                            float(self.equilibrium_constant.text()) * (
+                            float(self.conc_a.text()) ** float(self.coeff_a.text())))
+            coeff = int(log(coeff, float(self.conc_b.text())))
+            self.calculated_value = to_find
+            self.update_gui(to_find, coeff)
+            return
+
+        if to_find == self.coeff_c or to_find == self.calculated_value:
+            coeff = ((float(self.conc_a.text()) ** float(self.coeff_a.text())) * (
+                    float(self.conc_b.text()) ** float(self.coeff_b.text())) * (
+                         float(self.equilibrium_constant.text())) / (
+                             float(self.conc_d.text()) ** float(self.coeff_d.text())))
+            coeff = int(log(coeff, float(self.conc_c.text())))
+            self.calculated_value = to_find
+            self.update_gui(to_find, coeff)
+            return
+
+        if to_find == self.coeff_d or to_find == self.calculated_value:
+            coeff = ((float(self.conc_a.text()) ** float(self.coeff_a.text())) * (
+                    float(self.conc_b.text()) ** float(self.coeff_b.text())) * (
+                         float(self.equilibrium_constant.text())) / (
+                             float(self.conc_c.text()) ** float(self.coeff_c.text())))
+            coeff = int(log(coeff, float(self.conc_d.text())))
+            self.calculated_value = to_find
+            self.update_gui(to_find, coeff)
+            return
+
+    def update_gui(self, empty_input, value):
+        if empty_input is self.calculated_value:
+            empty_input.setText(str(value))

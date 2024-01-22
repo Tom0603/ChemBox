@@ -30,14 +30,14 @@ class SideBar(QWidget):
         self.conc_tab_button = QPushButton("Concentration")
         self.avogadro_tab_button = QPushButton("Avogadro's Calculator")
         self.ideal_gas_tab_button = QPushButton("Ideal Gas Equation")
-        self.atom_econ_tab_button = QPushButton("Free Tab 1")
+        self.equilibrium_tab_button = QPushButton("Equilibrium Constant")
         self.perc_yield_tab_button = QPushButton("Free Tab 2")
 
         self.moles_tab_button.clicked.connect(self.moles_button)
         self.conc_tab_button.clicked.connect(self.conc_button)
         self.avogadro_tab_button.clicked.connect(self.avogadro_button)
         self.ideal_gas_tab_button.clicked.connect(self.ideal_gas_button)
-        self.atom_econ_tab_button.clicked.connect(self.atom_econ_button)
+        self.equilibrium_tab_button.clicked.connect(self.equilibrium_button)
         self.perc_yield_tab_button.clicked.connect(self.perc_yield_button)
 
         # Create tabs
@@ -45,7 +45,7 @@ class SideBar(QWidget):
         self.conc_tab = QWidget()
         self.avogadro_tab = QWidget()
         self.ideal_gas_tab = QWidget()
-        self.atom_econ_tab = QWidget()
+        self.equilibrium_tab = QWidget()
         self.perc_yield_tab = QWidget()
 
         # Add buttons to sidebar layout
@@ -53,7 +53,7 @@ class SideBar(QWidget):
         self.side_bar_layout.addWidget(self.conc_tab_button)
         self.side_bar_layout.addWidget(self.avogadro_tab_button)
         self.side_bar_layout.addWidget(self.ideal_gas_tab_button)
-        self.side_bar_layout.addWidget(self.atom_econ_tab_button)
+        self.side_bar_layout.addWidget(self.equilibrium_tab_button)
         self.side_bar_layout.addWidget(self.perc_yield_tab_button)
 
         self.side_bar_widget = QWidget()
@@ -65,7 +65,7 @@ class SideBar(QWidget):
         self.page_widget.addTab(self.conc_tab, "")
         self.page_widget.addTab(self.avogadro_tab, "")
         self.page_widget.addTab(self.ideal_gas_tab, "")
-        self.page_widget.addTab(self.atom_econ_tab, "")
+        self.page_widget.addTab(self.equilibrium_tab, "")
         self.page_widget.addTab(self.perc_yield_tab, "")
 
         self.page_widget.setCurrentIndex(0)
@@ -98,7 +98,7 @@ class SideBar(QWidget):
     def ideal_gas_button(self):
         self.page_widget.setCurrentIndex(3)
 
-    def atom_econ_button(self):
+    def equilibrium_button(self):
         self.page_widget.setCurrentIndex(4)
 
     def perc_yield_button(self):
