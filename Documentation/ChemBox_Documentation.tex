@@ -66,19 +66,15 @@
 
 \section{Analysis}
 
-\subsection{Problem Definition}
+\subsection{Introduction}
 
-ChemBox is a software project with the aim of creating an interactive, user-friendly and intuitive toolbox for automating and simplifying complex and repetitive tasks that come up on a daily basis for students, educators and professionals in the field of chemistry. ChemBox features a wide range of chemistry-related tools, including equation balancing, molecular weight calculation and a chemical molecule editor.
-
-\subsection{Background to the Problem}
-
-In today's digital age, the integration of technology into the field of chemistry has become increasingly important.\\
+Technology gives us the benefits of saving time and doing work more efficiently. The use of software and technology in chemistry does not only help increase accuracy and decrease human error, but also reduces the time spent performing repetitive tasks by hand. ChemBox is a software project with the aim of creating an interactive, user-friendly and intuitive toolbox for automating and simplifying complex and repetitive tasks that come up on a daily basis for students, educators and professionals in the field of chemistry. The application features a range of different tools that should help chemists work more efficiently and also carry out their work more accurately. ChemBox is split into three distinct modules with different functionalities.\\
 \linebreak
-Chemists frequently need to carry out complex calculations such as enthalpy changes, thermodynamics or rate constants. These calculations can be time-consuming and error-prone when performed manually.
-Although balancing small chemical equations seems like a rather straight forward task, it can get very complicated very quickly when equations get longer or complex ions come into play.
-Visualising molecular structures can play a vital role in understanding a substances chemical properties or understanding interactions with other substances.\\
+The first module is the "ChemCalculator". The aim of this part of the program is to help the user carry out calculations by filling in equations and formulae. Although substituting numbers into predefined equations is a rather trivial task, it leaves a lot of room for human error when it comes to things like converting between units or applying mathematical laws correctly. This module should help the user with the most important and at the same time most trivial tasks in chemistry.\\
 \linebreak
-The use of software and technology in chemistry does not only help increase accuracy and decrease human error, but also reduces the time spent doing repetitive tasks by hand which is especially important in the industry. But also in academia, technology plays a crucial role in helping chemists perform complex calculations, balancing difficult equations or understanding the chemical properties of a substance.
+The second module, "ChemBalancer", is for balancing chemical equations, as the name already suggests. Chemical equations come up in every lab experiment, calculation or research problem. While balancing short equations made up of very few different elements is arguably a rather easy task, it can get quite tricky when you have to work with a large number of different elements, complex ions or just very long equations. Making just a tiny mistake when balancing an important equation can cause a big set back as it can take long to find small errors like mixing up a 2 with a 3.\\
+\linebreak
+The third and last module is the "ChemEditor". Visualising molecular structures can play a vital role in understanding a substances chemical properties or understanding interactions with other substances. Drawing molecules out by hand is pretty straight forward. It is knowing when a bond is valid and which atoms bond together and which don't that is the tricky part. Having a tool that can help you make sure the chemical molecule you want to draw can even exist, can be a great help not only for beginner level chemists but also for more experienced chemists.
 
 \newpage
 
@@ -91,7 +87,7 @@ In the early stage, the main users of this system will be pupils and staff atten
 
 Through being an A-Level Chemistry student myself, I have learned a lot about using chemical equations and performing calculations as well as balancing chemical equations and visualising chemical substances and molecules. I was able to identify a number calculations that processes that come up on a regular basis.
 
-\subsubsection{Chemical Equations and Calculations}
+\subsubsection{Chemical Equations and Calculations - ChemCalculator}
 
 One essential part of the program is to complete calculations which are based on chemical formulae.
 Where appropriate the program should allow the user to choose from a wide range of different units for each calculation, so the user doesn't have to calculate the conversion from $cm^{3}$ to $dm^{3}$ for example.\\
@@ -122,7 +118,7 @@ The equation the calculator will be based on is:
 \[{\Delta}G = {\Delta}H - T{\Delta}S\]
 \begin{quote}
 (${\Delta}$G = Gibbs Free Energy) (${\Delta}$H = enthalpy)\\
-(t = temperature) (${\Delta}$S = entropy)
+(T = temperature) (${\Delta}$S = entropy)
 \end{quote}
 \item Equilibrium Constant calculation for a reversible reaction:
 \[a[A] + b[B] \rightleftharpoons c[C] + d[D]\]
@@ -160,24 +156,24 @@ The canvas is the area in which the user can draw their molecules. There are a n
 	\item Upon selecting an existing atom on the canvas, depending on the chosen action type, the user should have different options:
 		\begin{enumerate}
 		\item When the chosen action type is "Draw", a number of greyed out atoms and bonds to those atoms should be drawn, out of which the user can choose where he wants to place his next atom.
-		\item When the chosen action type is "Bond", the program should draw a bond from the selected atom to every existing atom on the canvas, with which a bond would be possible. The colour of those bonds needs to be different to the colour of the actual existing bonds to avoid confusion.
+		\item When the chosen action type is "Bond", the program should draw a bond from the selected atom to every existing atom on the canvas, with which a bond would be possible. The colour of those bonds needs to be different to the colour of the actual existing 		bonds, to avoid confusion.
 		\end{enumerate}
 	\end{enumerate}
-
 \end{enumerate}
 
-\subsection{Current System}
+\subsection{Current and Proposed Systems}
+
+The current standard is to work out chemical equations or draw molecules on paper. This might make sense for simple equations or small molecules, but it gets less efficient and more difficult as complexity increases. Although there are some software solutions for very specific tasks, there isn't one intuitive and easy to use application that combines the different tasks in one place.\\
+\linebreak
+Naturally, drawing molecules with pen and paper feels best and is the preferred choice by most people. This project is not here to replace that, it should merely pose as a help for chemists when working certain things out.
 
 \subsection{Planning}
 
 \section{Documented Design}
 
-\section{Technical Solution}
-
 \section{Testing}
 
 \section{Evaluation}
 \newpage
-
 
 \end{document}

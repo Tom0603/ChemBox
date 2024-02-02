@@ -1,14 +1,12 @@
 \contentsline {section}{\numberline {1}Analysis}{2}{}%
-\contentsline {subsection}{\numberline {1.1}Problem Definition}{2}{}%
-\contentsline {subsection}{\numberline {1.2}Background to the Problem}{2}{}%
-\contentsline {subsection}{\numberline {1.3}Prospective Users}{3}{}%
-\contentsline {subsection}{\numberline {1.4}Specific Objectives}{3}{}%
-\contentsline {subsubsection}{\numberline {1.4.1}Chemical Equations and Calculations}{3}{}%
-\contentsline {subsubsection}{\numberline {1.4.2}Chemical Equation Balancer - ChemBalancer}{5}{}%
-\contentsline {subsubsection}{\numberline {1.4.3}Visualisation of Chemical Molecules - ChemEditor}{5}{}%
-\contentsline {subsection}{\numberline {1.5}Current System}{6}{}%
-\contentsline {subsection}{\numberline {1.6}Planning}{6}{}%
+\contentsline {subsection}{\numberline {1.1}Introduction}{2}{}%
+\contentsline {subsection}{\numberline {1.2}Prospective Users}{3}{}%
+\contentsline {subsection}{\numberline {1.3}Specific Objectives}{3}{}%
+\contentsline {subsubsection}{\numberline {1.3.1}Chemical Equations and Calculations - ChemCalculator}{3}{}%
+\contentsline {subsubsection}{\numberline {1.3.2}Chemical Equation Balancer - ChemBalancer}{5}{}%
+\contentsline {subsubsection}{\numberline {1.3.3}Visualisation of Chemical Molecules - ChemEditor}{5}{}%
+\contentsline {subsection}{\numberline {1.4}Current and Proposed Systems}{6}{}%
+\contentsline {subsection}{\numberline {1.5}Planning}{6}{}%
 \contentsline {section}{\numberline {2}Documented Design}{6}{}%
-\contentsline {section}{\numberline {3}Technical Solution}{6}{}%
-\contentsline {section}{\numberline {4}Testing}{6}{}%
-\contentsline {section}{\numberline {5}Evaluation}{6}{}%
+\contentsline {section}{\numberline {3}Testing}{6}{}%
+\contentsline {section}{\numberline {4}Evaluation}{6}{}%
