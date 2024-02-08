@@ -1,7 +1,7 @@
 from PyQt6.QtCore import Qt, QPointF
 from PyQt6.QtCore import QPoint
-from PyQt6.QtWidgets import QWidget, QGridLayout, QPushButton
-from PyQt6.QtGui import QPainter, QPen, QColor, QFont, QPalette, QBrush
+from PyQt6.QtWidgets import QWidget, QGridLayout, QPushButton, QLabel
+from PyQt6.QtGui import QPixmap, QPainter, QPen, QColor, QFont, QBrush
 
 import chem_editor_logic
 
@@ -86,18 +86,16 @@ class ChemEditor(QWidget):
         self.c.set_bond_order(3)
 
 
-class Canvas(QWidget):
+class Canvas(QLabel):
     # CONSTANTS
     ATOM_RADIUS = 12
 
     def __init__(self):
         super().__init__()
 
-        # Set the background color
-        self.setAutoFillBackground(True)
-        palette = self.palette()
-        palette.setColor(QPalette.ColorRole.Window, QColor(200, 200, 200))
-        self.setPalette(palette)
+        self.pixmap = QPixmap(1280, 720)
+        self.pixmap.fill(QColor(200, 200, 200))
+        self.setPixmap(self.pixmap)
 
         self.chem_logic = chem_editor_logic
 
@@ -139,53 +137,77 @@ class Canvas(QWidget):
 
     def paintEvent(self, event) -> None:
 
+        self.pixmap.fill(QColor(200, 200, 200))
+        # Initialise painter
+        init_painter = QPainter(self)
+        init_painter.drawPixmap(0, 0, self.pixmap)
+
+        # Initialise pixmap painter
+        pix_painter = QPainter(self.pixmap)
+        font = QFont("Arial", 16)
+        pix_painter.setFont(font)
+
+        pen = QPen(QColor(0, 0, 0))
+        pen.setWidth(2)
+        pix_painter.setPen(pen)
+
         # Draw every atom in self.atoms list
         for atom in self.atoms:
-            self.draw_atom(atom.x_coords, atom.y_coords, atom.symbol)
+            self.draw_atom(atom.x_coords, atom.y_coords, atom.symbol, pix_painter, pen, False)
+            print("welp")
 
             # For every bond of atom, draw the bond, and redraw the atoms again
             for bond in atom.bonds:
                 print("order: ", bond.order)
                 if bond.order == 2:
                     self.draw_double_bond(bond.atoms[0].x_coords, bond.atoms[0].y_coords, bond.atoms[1].x_coords,
-                                          bond.atoms[1].y_coords, True)
+                                          bond.atoms[1].y_coords, pix_painter, pen, True)
                 elif bond.order == 3:
                     self.draw_triple_bond(bond.atoms[0].x_coords, bond.atoms[0].y_coords, bond.atoms[1].x_coords,
-                                          bond.atoms[1].y_coords, True)
+                                          bond.atoms[1].y_coords, pix_painter, pen, True)
                 else:
                     self.draw_single_bond(bond.atoms[0].x_coords, bond.atoms[0].y_coords, bond.atoms[1].x_coords,
-                                          bond.atoms[1].y_coords, True)
+                                          bond.atoms[1].y_coords, pix_painter, pen, True)
 
                 self.draw_atom_circle(bond.atoms[1].x_coords, bond.atoms[1].y_coords, bond.atoms[0].x_coords,
-                                      bond.atoms[0].y_coords)
-                self.draw_atom(bond.atoms[1].x_coords, bond.atoms[1].y_coords, bond.atoms[1].symbol)
-                self.draw_center_atom(bond.atoms[0].x_coords, bond.atoms[0].y_coords, bond.atoms[0].symbol)
+                                      bond.atoms[0].y_coords, pix_painter, pen)
+                pen.setStyle(Qt.PenStyle.SolidLine)
+                pix_painter.setPen(pen)
+                self.draw_atom(bond.atoms[1].x_coords, bond.atoms[1].y_coords, bond.atoms[1].symbol, pix_painter, pen,
+                               False)
+                self.draw_center_atom(bond.atoms[0].x_coords, bond.atoms[0].y_coords, bond.atoms[0].symbol, pix_painter)
 
         # Check for selected atom and draw potential positions
         if self.selected:
             if self.action_type == "bond":
                 try:
+                    init_painter.drawPixmap(0, 0, self.pixmap)
                     # Draw every potential bond from that atom in different colour and redraw the atoms
                     for possible_atom in self.atoms:
                         if self.bond_order == 2:
                             print("draw 2")
                             self.draw_double_bond(self.selected_atom.x_coords, self.selected_atom.y_coords,
-                                                  possible_atom.x_coords, possible_atom.y_coords, False)
+                                                  possible_atom.x_coords, possible_atom.y_coords, pix_painter, pen,
+                                                  False)
                         elif self.bond_order == 3:
                             print("draw 3")
                             self.draw_triple_bond(self.selected_atom.x_coords, self.selected_atom.y_coords,
-                                                  possible_atom.x_coords, possible_atom.y_coords, False)
+                                                  possible_atom.x_coords, possible_atom.y_coords, pix_painter, pen,
+                                                  False)
                         else:
                             print("draw 1")
                             self.draw_single_bond(self.selected_atom.x_coords, self.selected_atom.y_coords,
-                                                  possible_atom.x_coords, possible_atom.y_coords, False)
+                                                  possible_atom.x_coords, possible_atom.y_coords, pix_painter, pen,
+                                                  False)
                         self.draw_atom_circle(possible_atom.x_coords, possible_atom.y_coords,
-                                              self.selected_atom.x_coords,
-                                              self.selected_atom.y_coords)
-
+                                              self.selected_atom.x_coords, self.selected_atom.y_coords, pix_painter,
+                                              pen)
+                        pen.setStyle(Qt.PenStyle.SolidLine)
+                        pix_painter.setPen(pen)
                         self.draw_center_atom(self.selected_atom.x_coords, self.selected_atom.y_coords,
-                                              self.selected_atom.symbol)
-                        self.draw_atom(possible_atom.x_coords, possible_atom.y_coords, possible_atom.symbol, False)
+                                              self.selected_atom.symbol, pix_painter)
+                        self.draw_atom(possible_atom.x_coords, possible_atom.y_coords, possible_atom.symbol,
+                                       pix_painter, pen, False)
                 except AttributeError:
                     return
                 return
@@ -199,20 +221,26 @@ class Canvas(QWidget):
                         if not self.check_atom_overlap(pos[0], pos[1]):
                             if self.bond_order == 2:
                                 self.draw_double_bond(self.selected_atom.x_coords, self.selected_atom.y_coords, pos[0],
-                                                      pos[1], False)
+                                                      pos[1], pix_painter, pen, False)
                             elif self.bond_order == 3:
                                 self.draw_triple_bond(self.selected_atom.x_coords, self.selected_atom.y_coords,
-                                                      pos[0], pos[1], False)
+                                                      pos[0], pos[1], pix_painter, pen, False)
                             else:
                                 self.draw_single_bond(self.selected_atom.x_coords, self.selected_atom.y_coords,
-                                                      pos[0], pos[1], False)
+                                                      pos[0], pos[1], pix_painter, pen, False)
                             self.draw_atom_circle(pos[0], pos[1], self.selected_atom.x_coords,
-                                                  self.selected_atom.y_coords)
-                            self.draw_atom(pos[0], pos[1], self.element.SYMBOL, True)
+                                                  self.selected_atom.y_coords, pix_painter, pen)
+                            pen.setStyle(Qt.PenStyle.SolidLine)
+                            pix_painter.setPen(pen)
+                            self.draw_atom(pos[0], pos[1], self.element.SYMBOL, pix_painter, pen, True)
                             self.draw_center_atom(self.selected_atom.x_coords, self.selected_atom.y_coords,
-                                                  self.selected_atom.symbol)
+                                                  self.selected_atom.symbol, pix_painter)
+                    init_painter.drawPixmap(0, 0, self.pixmap)
             except AttributeError:
                 return
+        init_painter.drawPixmap(0, 0, self.pixmap)
+        init_painter.end()
+        pix_painter.end()
 
     # Function to draw potential positions for atoms
     @staticmethod
@@ -248,51 +276,36 @@ class Canvas(QWidget):
             ):
                 return True
 
-    def draw_single_bond(self, atom1_x: int, atom1_y: int, atom2_x: int, atom2_y: int, actual_bond: bool) -> None:
-        painter = QPainter(self)
-        pen = QPen()
-
-        # Set colour black
-        pen.setColor(QColor(0, 0, 0))
-        pen.setWidth(2)
+    def draw_single_bond(self, atom1_x: int, atom1_y: int, atom2_x: int, atom2_y: int, painter: QPainter, pen: QPen,
+                         actual_bond: bool = True) -> None:
 
         if not actual_bond:
             # Set colour red
             pen.setColor(QColor(255, 0, 0))
-        painter.setPen(pen)
+            painter.setPen(pen)
 
         painter.drawLine(QPoint(atom1_x, atom1_y), QPoint(atom2_x, atom2_y))
 
-    def draw_double_bond(self, atom1_x: int, atom1_y: int, atom2_x: int, atom2_y: int, actual_bond: bool) -> None:
-        painter = QPainter(self)
-        pen = QPen()
-
-        # Set colour black
-        pen.setColor(QColor(0, 0, 0))
-        pen.setWidth(2)
+    def draw_double_bond(self, atom1_x: int, atom1_y: int, atom2_x: int, atom2_y: int, painter: QPainter, pen: QPen,
+                         actual_bond: bool = True) -> None:
 
         if not actual_bond:
             # Set colour red
             pen.setColor(QColor(255, 0, 0))
-        painter.setPen(pen)
+            painter.setPen(pen)
 
         offset = 2
         diag_offset = 3
 
         self.__diagonal_bonds(atom1_x, atom1_y, atom2_x, atom2_y, painter, offset, diag_offset)
 
-    def draw_triple_bond(self, atom1_x: int, atom1_y: int, atom2_x: int, atom2_y: int, actual_bond: bool) -> None:
-        painter = QPainter(self)
-        pen = QPen()
-
-        # Set colour black
-        pen.setColor(QColor(0, 0, 0))
-        pen.setWidth(2)
+    def draw_triple_bond(self, atom1_x: int, atom1_y: int, atom2_x: int, atom2_y: int, painter: QPainter, pen: QPen,
+                         actual_bond: bool = True) -> None:
 
         if not actual_bond:
             # Set colour red
             pen.setColor(QColor(255, 0, 0))
-        painter.setPen(pen)
+            painter.setPen(pen)
 
         offset = 4
         diag_offset = 6
@@ -334,20 +347,18 @@ class Canvas(QWidget):
             painter.drawLine(QPoint(atom1_x + offset, atom1_y + offset),
                              QPoint(atom2_x + offset, atom2_y + offset))
 
-    def draw_atom_circle(self, atom1_x: int, atom1_y: int, atom2_x: int, atom2_y: int) -> None:
+    def draw_atom_circle(self, atom1_x: int, atom1_y: int, atom2_x: int, atom2_y: int, painter: QPainter,
+                         pen: QPen) -> None:
         """
         This function draws a circle in the same colour as the background colour to prevent bonds from overlapping with
         atom. This function must be called after drawing bonds in order to overwrite them, and before drawing atoms,
         as this would make the atoms invisible.
         """
 
-        painter = QPainter(self)
-
         # Set the brush color to match the background color
-        background_color = self.palette().color(self.backgroundRole())
+        background_color = QColor(200, 200, 200)
         brush = QBrush(background_color)
         painter.setBrush(brush)
-        pen = QPen()
         pen.setStyle(Qt.PenStyle.NoPen)
         painter.setPen(pen)
 
@@ -359,16 +370,12 @@ class Canvas(QWidget):
         circle_center = QPointF(atom1_x, atom1_y)
         painter.drawEllipse(circle_center, circle_radius, circle_radius)
 
-    def draw_atom(self, atom_x: int, atom_y: int, symbol: str, potential: bool = False) -> None:
-        painter = QPainter(self)
-        font = QFont("Arial", 16)
-        painter.setFont(font)
-        pen = QPen()
-        pen.setColor(QColor(0, 0, 0))
+    def draw_atom(self, atom_x: int, atom_y: int, symbol: str, painter: QPainter, pen: QPen,
+                  potential: bool = False) -> None:
 
         if potential:
             pen.setColor(QColor(100, 100, 100))
-        painter.setPen(pen)
+            painter.setPen(pen)
 
         # Calculate position to draw atom in the center of the "atom circle"
         letter_width = painter.fontMetrics().horizontalAdvance(symbol)
@@ -377,13 +384,7 @@ class Canvas(QWidget):
         letter_y = atom_y + letter_height / 4
         painter.drawText(int(letter_x), int(letter_y), symbol)
 
-    def draw_center_atom(self, atom_x: int, atom_y: int, symbol: str) -> None:
-        painter = QPainter(self)
-        font = QFont("Arial", 16)
-        painter.setFont(font)
-        pen = QPen()
-        pen.setColor(QColor(0, 0, 0))
-        painter.setPen(pen)
+    def draw_center_atom(self, atom_x: int, atom_y: int, symbol: str, painter: QPainter) -> None:
 
         letter_width = painter.fontMetrics().horizontalAdvance(symbol)
         letter_height = painter.fontMetrics().height()
@@ -406,6 +407,7 @@ class Canvas(QWidget):
 
     def mousePressEvent(self, event) -> None:
         if event.button() == Qt.MouseButton.LeftButton:
+            print("click")
             click_position = event.pos()
 
             if self.action_type == "bond":
