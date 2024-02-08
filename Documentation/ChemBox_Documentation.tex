@@ -81,18 +81,20 @@ The third and last module is the "ChemEditor". Visualising molecular structures 
 \subsection{Prospective Users}
 
 Chembox will provide valuable tools to a diverse user base, spanning from students to professional chemists. The intuitive and straight forward design will allow users with varying backgrounds and degrees to use ChemBox for their own specific needs.\\
-In the early stage, the main users of this system will be pupils and staff attending Ellesmere College, but it could be a goal to get A-Level students all over the country and even students at university level and professionals in the industry to use the program.
+In the early stage, the main users of this system will be pupils and staff attending Ellesmere College, but it could be a goal to make the software available open source to anyone online.\\
+Engaging with pupils at the college during the early stages allows for a valuable user feedback loop. This direct interaction with the user group will provide insights into the software's usability, identify potential improvements, and address any specific requirements that may arise within the college context.
+
 
 \subsection{Specific Objectives}
 
-Through being an A-Level Chemistry student myself, I have learned a lot about using chemical equations and performing calculations as well as balancing chemical equations and visualising chemical substances and molecules. I was able to identify a number calculations that processes that come up on a regular basis.
+Through being an A-Level Chemistry student myself, I have learned a lot about using chemical equations and performing calculations as well as balancing chemical equations and visualising chemical substances and molecules. I was able to identify a number calculations that processes that come up on a regular basis and divide them into non-negotiable and nice-to-have objectives.
 
 \subsubsection{Chemical Equations and Calculations - ChemCalculator}
 
-One essential part of the program is to complete calculations which are based on chemical formulae.
-Where appropriate the program should allow the user to choose from a wide range of different units for each calculation, so the user doesn't have to calculate the conversion from $cm^{3}$ to $dm^{3}$ for example.\\
+The first module of the program is for performing  calculations which are based on chemical formulae.
+Where appropriate the program should allow the user to choose from a range of different units for each calculation, so the user doesn't have to calculate the conversions like the one from $cm^{3}$ to $dm^{3}$ for example.\\
 \linebreak
-A list containing all of the proposed calculations below:\\
+Required functionalities:\\
 \linebreak
 
 \begin{enumerate}
@@ -105,6 +107,8 @@ A list containing all of the proposed calculations below:\\
 \item Avogadro's number calculations. The user should be able to give a number of different inputs, including mass, moles, molecular weight and the number of atoms. After giving two independent inputs, the program should be able to calculate the rest of the values using Avogadro's number.\\
 The equation the calculator will be based on is:
 \[number\: of\: atoms = Avogadro's\: number \times moles\]
+This should be paired with a mole calculator for the possibility use the following formula:
+\[number\: of\: atoms = Avogadro's\: number \times \frac{mass}{molar\: mass}\]
 \item Atom Economy calculation:
 \[Atom\: Economy = \frac{Mr\: of\: desired\: product}{Sum\: of\: Mr\: of\: all\: reactants}\times 100\]
 \item Percentage Yield calculation:
@@ -113,12 +117,6 @@ The equation the calculator will be based on is:
 \[q = mc {\Delta} T\]
 \begin{quote}
 (q = energy change) (m = mass) (c = specific heat capacity) (${\Delta}$T = temperature change)
-\end{quote}
-\item Gibbs Free Energy calculation:
-\[{\Delta}G = {\Delta}H - T{\Delta}S\]
-\begin{quote}
-(${\Delta}$G = Gibbs Free Energy) (${\Delta}$H = enthalpy)\\
-(T = temperature) (${\Delta}$S = entropy)
 \end{quote}
 \item Equilibrium Constant calculation for a reversible reaction:
 \[a[A] + b[B] \rightleftharpoons c[C] + d[D]\]
@@ -131,6 +129,23 @@ The equation the calculator will be based on is:
 
 \end{enumerate}
 
+Non-essential objectives:
+\begin{enumerate}
+\item Gibbs Free Energy calculation:
+\[{\Delta}G = {\Delta}H - T{\Delta}S\]
+\begin{quote}
+(${\Delta}$G = Gibbs Free Energy) (${\Delta}$H = enthalpy)\\
+(T = temperature) (${\Delta}$S = entropy)
+\end{quote}
+\item Acid calculations - pH and $[H^{+}]$
+\[pH = -log[H^{+}]\]
+\[[H^{+}] = 10^{-pH}\]
+\item Acid dissociation constants $K_{a}$ and $pK_{a}$
+\[K_{a} = \frac{[H^{+}][A^{-}]}{[HA]}\]
+\[pK_{a} = -logK_{a}\]
+\[K_{a} = 10^{-pK_{a}}\]
+\end{enumerate}
+
 \newpage
 
 \subsubsection{Chemical Equation Balancer - ChemBalancer}
@@ -140,7 +155,7 @@ It must be able to handle subscript numbers, brackets and complex ions.
 
 \subsubsection{Visualisation of Chemical Molecules - ChemEditor}
 
-Another substantial part of the program will be the ChemEditor module, which can be used for visualising the structures of chemical molecules. This module will require a user-friendly and easy to use interface, with the main focus on the canvas. The user should have the option to choose from a range of different elements what he wants to add to the canvas. In a tool bar, the user should also be able to choose the bond order (single, double, triple) and the charge on each atom. When clicking on an atom, there should be an option to add a bond to another atom or delete the atom.\\
+The third part of the program will be the ChemEditor module, which can be used for visualising the structures of chemical molecules. This module will require a user-friendly and easy to use interface, with the main focus on the canvas. The user should have the option to choose from a range of different elements what he wants to add to the canvas. In a tool bar, the user should also be able to choose the bond order (single, double, triple) and the charge on each atom. When clicking on an atom, there should be an option to add a bond to another atom or delete the atom.\\
 When the user constructs their molecules, ChemEditor will have to conduct real-time checks to ensure that atoms do not exceed their valence electrons and that it is chemically possible to have a molecule with the given structure. \\
 The required objectives for this module are:\\
 
@@ -148,7 +163,7 @@ The required objectives for this module are:\\
 
 \item Tool bar:\\
 In the tool bar on the top end of the application, there has to be a list of buttons for choosing the element, which must include the most common elements (Carbon, Hydrogen, Sulphur, Chlorine, etc.). There also has to be the option to choose the bond order (single, double or triple bond) as well as choosing the option to form a dative bond. Another essential option in form of buttons should be removing atoms and bonds as well as being able to safe the drawn structures as a document.\\
-Possible non-essential enhancements are extra information about atoms upon highlighting as well as getting information like the molar mass and the empirical formula of a molecule after highlighting.
+A possible non-essential enhancement would be getting extra information about atoms upon highlighting as well as getting information like the molar mass and the empirical formula of a molecule after highlighting.
 \item Canvas:\\
 The canvas is the area in which the user can draw their molecules. There are a number of essential features that must be included here.\\
 	\begin{enumerate}
@@ -166,8 +181,6 @@ The canvas is the area in which the user can draw their molecules. There are a n
 The current standard is to work out chemical equations or draw molecules on paper. This might make sense for simple equations or small molecules, but it gets less efficient and more difficult as complexity increases. Although there are some software solutions for very specific tasks, there isn't one intuitive and easy to use application that combines the different tasks in one place.\\
 \linebreak
 Naturally, drawing molecules with pen and paper feels best and is the preferred choice by most people. This project is not here to replace that, it should merely pose as a help for chemists when working certain things out.
-
-\subsection{Planning}
 
 \section{Documented Design}
 
