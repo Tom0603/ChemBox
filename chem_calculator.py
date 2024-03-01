@@ -687,3 +687,79 @@ class EquilibriumCalculator(QWidget):
     def update_gui(self, empty_input, value):
         if empty_input is self.calculated_value:
             empty_input.setText(str(value))
+
+
+class GibbsFreeEnergyCalculator(QWidget):
+    def __init__(self):
+        super(QWidget, self).__init__()
+
+        self.layout = QGridLayout()
+
+        self.temperature_conversions = {
+            "°C": 273.15,
+            "°K": 0.0,
+        }
+
+        self.general_energy_conversions = {
+            "kJ": 1.0,
+            "J": 1000.0
+        }
+
+        self.entropy_conversions = {
+            "kJ": 1000.0,
+            "J": 1.0
+        }
+
+        self.gibbs_free_energy_label = QLabel("Gibbs Free Energy (ΔG):")
+        self.enthalpy_change_label = QLabel("Enthalpy Change (ΔH):")
+        self.temp_label = QLabel("Temperature:")
+        self.entropy_change_label = QLabel("Entropy Change (ΔS):")
+
+        self.gibbs_free_energy_input = QLineEdit()
+        self.enthalpy_change_input = QLineEdit()
+        self.temp_input = QLineEdit()
+        self.entropy_change_input = QLineEdit()
+
+        self.gibbs_free_energy_unit_dropdown = QComboBox()
+        self.gibbs_free_energy_unit_dropdown.addItem("kJ")
+        self.gibbs_free_energy_unit_dropdown.addItem("J")
+
+        self.gibbs_free_energy_unit_dropdown.setCurrentIndex(0)
+
+        self.enthalpy_change_unit_dropdown = QComboBox()
+        self.enthalpy_change_unit_dropdown.addItem("kJ")
+        self.enthalpy_change_unit_dropdown.addItem("J")
+
+        self.enthalpy_change_unit_dropdown.setCurrentIndex(0)
+
+        self.temp_unit_dropdown = QComboBox()
+        self.temp_unit_dropdown.addItem("°C")
+        self.temp_unit_dropdown.addItem("°K")
+
+        self.entropy_change_unit_dropdown = QComboBox()
+        self.entropy_change_unit_dropdown.addItem("kJ")
+        self.entropy_change_unit_dropdown.addItem("J")
+
+        self.entropy_change_unit_dropdown.setCurrentIndex(1)
+
+        self.calculate_button = QPushButton("Calculate")
+
+        self.layout.addWidget(self.gibbs_free_energy_label, 0, 0)
+        self.layout.addWidget(self.gibbs_free_energy_input, 0, 1)
+        self.layout.addWidget(self.gibbs_free_energy_unit_dropdown, 0, 2)
+
+        self.layout.addWidget(self.enthalpy_change_label, 1, 0)
+        self.layout.addWidget(self.enthalpy_change_input, 1, 1)
+        self.layout.addWidget(self.enthalpy_change_unit_dropdown, 1, 2)
+
+        self.layout.addWidget(self.temp_label, 2, 0)
+        self.layout.addWidget(self.temp_input, 2, 1)
+        self.layout.addWidget(self.temp_unit_dropdown, 2, 2)
+
+        self.layout.addWidget(self.entropy_change_label, 3, 0)
+        self.layout.addWidget(self.entropy_change_input, 3, 1)
+        self.layout.addWidget(self.entropy_change_unit_dropdown, 3, 2)
+
+        self.layout.addWidget(self.calculate_button, 4, 0, 1, 3)
+
+    def calculate_free_energy_change(self):
