@@ -702,12 +702,7 @@ class GibbsFreeEnergyCalculator(QWidget):
 
         self.general_energy_conversions = {
             "kJ": 1.0,
-            "J": 1000.0
-        }
-
-        self.entropy_conversions = {
-            "kJ": 1000.0,
-            "J": 1.0
+            "J": 0.001
         }
 
         self.gibbs_free_energy_label = QLabel("Gibbs Free Energy (ΔG):")
@@ -736,6 +731,8 @@ class GibbsFreeEnergyCalculator(QWidget):
         self.temp_unit_dropdown.addItem("°C")
         self.temp_unit_dropdown.addItem("°K")
 
+        self.temp_unit_dropdown.setCurrentIndex(1)
+
         self.entropy_change_unit_dropdown = QComboBox()
         self.entropy_change_unit_dropdown.addItem("kJ")
         self.entropy_change_unit_dropdown.addItem("J")
@@ -743,6 +740,7 @@ class GibbsFreeEnergyCalculator(QWidget):
         self.entropy_change_unit_dropdown.setCurrentIndex(1)
 
         self.calculate_button = QPushButton("Calculate")
+        self.calculate_button.clicked.connect(self.perform_calculation)
 
         self.layout.addWidget(self.gibbs_free_energy_label, 0, 0)
         self.layout.addWidget(self.gibbs_free_energy_input, 0, 1)
@@ -762,4 +760,83 @@ class GibbsFreeEnergyCalculator(QWidget):
 
         self.layout.addWidget(self.calculate_button, 4, 0, 1, 3)
 
-    def calculate_free_energy_change(self):
+    def update_gibbs_free_energy(self, free_energy):
+        self.gibbs_free_energy_input.setText(free_energy)
+
+    def update_enthalpy_change(self, enthalpy_change):
+        self.enthalpy_change_input.setText(enthalpy_change)
+
+    def update_temperature(self, temp):
+        self.temp_input.setText(temp)
+
+    def update_entropy_change(self, entropy_change):
+        self.entropy_change_input.setText(entropy_change)
+
+    def perform_calculation(self):
+        free_energy_unit = self.gibbs_free_energy_unit_dropdown.currentText()
+        enthalpy_unit = self.enthalpy_change_unit_dropdown.currentText()
+        temp_unit = self.temp_unit_dropdown.currentText()
+        entropy_unit = self.entropy_change_unit_dropdown.currentText()
+
+        if self.gibbs_free_energy_input.text().strip() == "":
+            free_energy = self.calculate_free_energy_change(free_energy_unit, enthalpy_unit, temp_unit, entropy_unit)
+            if free_energy:
+                self.update_gibbs_free_energy(str(free_energy))
+        elif self.enthalpy_change_input.text().strip() == "":
+            enthalpy_change = self.calculate_enthalpy_change(free_energy_unit, enthalpy_unit, temp_unit, entropy_unit)
+            if enthalpy_change:
+                self.update_enthalpy_change(str(enthalpy_change))
+        elif self.temp_input.text().strip() == "":
+            temperature = self.calculate_temperature(free_energy_unit, enthalpy_unit, temp_unit, entropy_unit)
+            if temperature:
+                self.update_temperature(str(temperature))
+        elif self.entropy_change_input.text().strip() == "":
+            entropy_change = self.calculate_entropy_change(free_energy_unit, enthalpy_unit, temp_unit, entropy_unit)
+            if entropy_change:
+                self.update_entropy_change(str(entropy_change))
+
+    def calculate_free_energy_change(self, free_energy_unit, enthalpy_unit, temp_unit, entropy_unit):
+        try:
+            free_energy = (float(self.enthalpy_change_input.text()) * self.general_energy_conversions[
+                enthalpy_unit]) - ((float(self.temp_input.text()) + self.temperature_conversions[temp_unit]) * (
+                float(self.entropy_change_input.text()) * self.general_energy_conversions[entropy_unit]))
+            free_energy = free_energy * self.general_energy_conversions[free_energy_unit]
+            return free_energy
+        except ValueError:
+            print("Value Error")
+            return
+
+    def calculate_enthalpy_change(self, free_energy_unit, enthalpy_unit, temp_unit, entropy_unit):
+        try:
+            enthalpy_change = (float(self.gibbs_free_energy_input.text()) * self.general_energy_conversions[
+                free_energy_unit]) + ((float(self.temp_input.text()) + self.temperature_conversions[temp_unit]) * (
+                float(self.entropy_change_input.text()) * self.general_energy_conversions[entropy_unit]))
+            enthalpy_change = enthalpy_change * self.general_energy_conversions[enthalpy_unit]
+            return enthalpy_change
+        except ValueError:
+            print("Value Error")
+            return
+
+    def calculate_temperature(self, free_energy_unit, enthalpy_unit, temp_unit, entropy_unit):
+        try:
+            temperature = ((float(self.enthalpy_change_input.text()) * self.general_energy_conversions[
+                enthalpy_unit]) - (float(self.gibbs_free_energy_input.text()) * self.general_energy_conversions[
+                free_energy_unit])) / (
+                                  float(self.entropy_change_input.text()) * self.general_energy_conversions[entropy_unit])
+            temperature = temperature + self.temperature_conversions[temp_unit]
+            return temperature
+        except ValueError:
+            print("Value Error")
+            return
+
+    def calculate_entropy_change(self, free_energy_unit, enthalpy_unit, temp_unit, entropy_unit):
+        try:
+            entropy_change = ((float(self.enthalpy_change_input.text()) * self.general_energy_conversions[
+                enthalpy_unit]) - (float(self.gibbs_free_energy_input.text()) * self.general_energy_conversions[
+                free_energy_unit])) / (
+                                     float(self.temp_input.text()) + self.temperature_conversions[temp_unit])
+            entropy_change = entropy_change / self.general_energy_conversions[entropy_unit]
+            return entropy_change
+        except ValueError:
+            print("Value Error")
+            return
