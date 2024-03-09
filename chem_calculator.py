@@ -7,7 +7,7 @@ from math import log
 
 class MolesCalculator(QWidget):
     def __init__(self):
-        super(QWidget).__init__()
+        super(QWidget, self).__init__()
         self.moles_layout = QGridLayout()
 
         # Unit conversions
@@ -69,14 +69,14 @@ class MolesCalculator(QWidget):
         mass_unit = self.mass_unit_dropdown.currentText()
         moles_unit = self.moles_unit_dropdown.currentText()
 
-        if not self.moles_input.text():
+        if not self.moles_input.text().strip():
             try:
                 moles = (float(self.mass_input.text()) * self.mass_conversions[mass_unit]) / float(self.mr_input.text())
                 self.update_moles_calculation(moles)
                 self.moles_unit_dropdown.setCurrentText("mol")
             except ValueError:
                 print("Value Error")
-        elif not self.mass_input.text():
+        elif not self.mass_input.text().strip():
             try:
                 mass = (float(self.moles_input.text()) * self.mole_conversions[moles_unit]) * float(
                     self.mr_input.text())
@@ -120,7 +120,7 @@ class MolesCalculator(QWidget):
 
 class ConcCalculator(QWidget):
     def __init__(self):
-        super(QWidget).__init__()
+        super(QWidget, self).__init__()
         self.conc_layout = QGridLayout()
 
         # Unit conversions
@@ -386,7 +386,6 @@ class IdealGasLawCalculator(QWidget):
         self.temperature_label_igl = QLabel("Temperature:")
         self.moles_label_igl = QLabel("Amount of substance - moles:")
         self.calculate_button_igl = QPushButton('Calculate')
-        self.result_label_igl = QLabel('Result will appear here')
 
         self.pressure_conversions = {
             "Pa": 1.0,
@@ -424,7 +423,6 @@ class IdealGasLawCalculator(QWidget):
         self.ideal_gas_layout.addWidget(self.moles_label_igl, 3, 0)
         self.ideal_gas_layout.addWidget(self.moles_input_igl, 3, 1)
         self.ideal_gas_layout.addWidget(self.calculate_button_igl, 4, 0)
-        self.ideal_gas_layout.addWidget(self.result_label_igl, 4, 1)
 
         self.pressure_drop_down_igl.addItem("Pa")
         self.pressure_drop_down_igl.addItem("kPa")
@@ -487,16 +485,14 @@ class IdealGasLawCalculator(QWidget):
             except ValueError:
                 return "Value Error"
 
-        if self.pressure_input_igl.text().strip() == "":
-            self.result_label_igl.setText(f"Pressure: {_calculate_pressure()}")
-        elif self.volume_input_igl.text().strip() == "":
-            self.result_label_igl.setText(f"Volume: {_calculate_volume()}")
-        elif self.temperature_input_igl.text().strip() == "":
-            self.result_label_igl.setText(f"Temperature: {_calculate_temperature()}")
-        elif self.moles_input_igl.text().strip() == "":
-            self.result_label_igl.setText(f"Number of moles: {_calculate_moles()}")
-        else:
-            self.result_label_igl.setText("wtf are you doing mate")
+        if not self.pressure_input_igl.text().strip():
+            self.pressure_input_igl.setText(str(_calculate_pressure()))
+        elif not self.volume_input_igl.text().strip():
+            self.volume_input_igl.setText(str(_calculate_volume()))
+        elif not self.temperature_input_igl.text().strip():
+            self.temperature_input_igl.setText(str(_calculate_temperature()))
+        elif not self.moles_input_igl.text().strip():
+            self.moles_input_igl.setText(str(_calculate_moles()))
 
 
 class EquilibriumCalculator(QWidget):
