@@ -18,11 +18,12 @@ class ChemBox(QMainWindow):
         # set window properties
         self.left = 300
         self.top = 300
-        self.width = 800
-        self.height = 480
+        self.width = 1280
+        self.height = 720
         self.title = "ChemBox"
         self.setWindowTitle(self.title)
         self.setGeometry(self.left, self.top, self.width, self.height)
+        self.setFixedSize(self.width, self.height)
 
         self.tab_bar = TabBar()
         self.setCentralWidget(self.tab_bar)
