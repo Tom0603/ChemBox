@@ -1,6 +1,6 @@
 from PyQt6.QtCore import Qt, QPointF
 from PyQt6.QtCore import QPoint
-from PyQt6.QtWidgets import QWidget, QGridLayout, QPushButton, QLabel
+from PyQt6.QtWidgets import QWidget, QGridLayout, QPushButton, QLabel, QFileDialog
 from PyQt6.QtGui import QPixmap, QPainter, QPen, QColor, QFont, QBrush
 
 import chem_editor_logic
@@ -27,6 +27,8 @@ class ChemEditor(QWidget):
         self.remove_button = QPushButton("Remove")
         self.reset_button = QPushButton("Reset")
 
+        self.save_button = QPushButton("Save")
+
         self.single_bond_button = QPushButton("Single")
         self.double_bond_button = QPushButton("Double")
         self.triple_bond_button = QPushButton("Triple")
@@ -40,6 +42,7 @@ class ChemEditor(QWidget):
         self.editor_layout.addWidget(self.draw_action_button, 0, 10)
         self.editor_layout.addWidget(self.remove_button, 0, 11)
         self.editor_layout.addWidget(self.reset_button, 0, 12)
+        self.editor_layout.addWidget(self.save_button, 0, 13)
         self.editor_layout.addWidget(self.single_bond_button, 0, 17)
         self.editor_layout.addWidget(self.double_bond_button, 0, 18)
         self.editor_layout.addWidget(self.triple_bond_button, 0, 19)
@@ -53,12 +56,13 @@ class ChemEditor(QWidget):
         self.draw_action_button.clicked.connect(self.choose_draw_action)
         self.remove_button.clicked.connect(self.remove_action)
         self.reset_button.clicked.connect(self.reset_action)
+        self.save_button.clicked.connect(self.save_action)
         self.single_bond_button.clicked.connect(self.choose_first_order)
         self.double_bond_button.clicked.connect(self.choose_second_order)
         self.triple_bond_button.clicked.connect(self.choose_third_order)
 
         self.c = Canvas()
-        self.editor_layout.addWidget(self.c, 1, 0, 20, 20)
+        self.editor_layout.addWidget(self.c, 1, 0, 25, 25)
 
         self.chem_logic = chem_editor_logic
 
@@ -88,6 +92,9 @@ class ChemEditor(QWidget):
 
     def reset_action(self) -> None:
         self.c.reset_canvas()
+
+    def save_action(self) -> None:
+        self.c.save()
 
     def choose_first_order(self) -> None:
         self.c.set_bond_order(1)
@@ -135,6 +142,18 @@ class Canvas(QLabel):
 
         # Initially no atom is selected
         self.selected_atom = None
+
+    def save(self):
+        # Select file path
+        filePath, _ = QFileDialog.getSaveFileName(self, "Save Image", "",
+                                                  "PNG(*.png);;JPEG(*.jpg *.jpeg);;All Files(*.*) ")
+
+        # If file path is blank return back
+        if filePath == "":
+            return
+
+        # Save canvas at desired path
+        self.pixmap.save(filePath)
 
     def set_element(self, new_element) -> None:
         self.element = new_element
