@@ -178,11 +178,9 @@ class Canvas(QLabel):
         # Draw every atom in self.atoms list
         for atom in self.atoms:
             self.draw_atom(atom.x_coords, atom.y_coords, atom.symbol, pix_painter, pen, False)
-            print("welp")
 
             # For every bond of atom, draw the bond, and redraw the atoms again
             for bond in atom.bonds:
-                print("order: ", bond.order)
                 if bond.order == 2:
                     self.draw_double_bond(bond.atoms[0].x_coords, bond.atoms[0].y_coords, bond.atoms[1].x_coords,
                                           bond.atoms[1].y_coords, pix_painter, pen, True)
@@ -429,23 +427,37 @@ class Canvas(QLabel):
                 self.update()
                 return True
 
-    def remove_atom(self, pos_x: int, pos_y: int):
+    def remove_atom(self, pos_x: int, pos_y: int) -> None:
         atom_radius = Canvas.ATOM_RADIUS
 
         self.atoms = [atom for atom in self.atoms if not (
                 atom.x_coords - atom_radius <= pos_x <= atom.x_coords + atom_radius and
                 atom.y_coords - atom_radius <= pos_y <= atom.y_coords + atom_radius
         )]
-
         self.selected_atom = None
+        self.update()
+
+    def remove_bond(self, pos_x: int, pos_y: int):
+        atom_radius = Canvas.ATOM_RADIUS
+        for atom in self.atoms:
+            if (
+                    atom.x_coords - atom_radius <= pos_x <= atom.x_coords + atom_radius and
+                    atom.y_coords - atom_radius <= pos_y <= atom.y_coords + atom_radius
+            ):
+                for bond in atom.bonds:
+                    if atom is bond.atoms[0]:
+                        atom.break_bond(bond.atoms[1], bond.order)
+                    elif atom is bond.atoms[1]:
+                        atom.break_bond(bond.atoms[0], bond.order)
+                atom.bonds.clear()
         self.update()
 
     def mousePressEvent(self, event) -> None:
         if event.button() == Qt.MouseButton.LeftButton:
-            print("click")
             click_position = event.pos()
 
             if self.action_type == "remove":
+                self.remove_bond(click_position.x(), click_position.y())
                 self.remove_atom(click_position.x(), click_position.y())
             elif self.action_type == "bond":
                 self.selected_atom = None

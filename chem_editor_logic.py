@@ -3,7 +3,6 @@ from dataclasses import dataclass
 from math import sqrt
 
 
-@dataclass
 class Atom:
 
     def __init__(self, element, coordinates: list[int, int]):
@@ -18,6 +17,12 @@ class Atom:
 
     def __eq__(self, other):
         return self.symbol == other.symbol and [self.x_coords, self.y_coords] == [other.x_coords, other.y_coords]
+
+    def add_outer_electrons(self, num: int):
+        self.outer_electrons += num
+
+    def remove_outer_electrons(self, num: int):
+        self.outer_electrons -= num
 
     def check_is_bond_possible(self, bonding_atom, order: int = 1) -> bool:
         if (self.overall_electrons + order) > self.full_shell:
@@ -41,8 +46,11 @@ class Atom:
         self.overall_electrons = (self.outer_electrons + self.extra_electrons)
         bonding_atom.overall_electrons = (bonding_atom.outer_electrons + bonding_atom.extra_electrons)
 
+    def break_bond(self, atom, order: int = 1):
+        atom.bonds = [bond for bond in atom.bonds if not (self in bond.atoms)]
+        atom.remove_outer_electrons(order)
 
-@dataclass
+
 class Bond:
     def __init__(self, atom1, atom2, order: int):
         self.atoms = [atom1, atom2]
