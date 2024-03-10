@@ -16,6 +16,9 @@ class Atom:
         self.extra_electrons: int = 0
         self.overall_electrons: int = (self.outer_electrons + self.extra_electrons)
 
+    def __eq__(self, other):
+        return self.symbol == other.symbol and [self.x_coords, self.y_coords] == [other.x_coords, other.y_coords]
+
     def check_is_bond_possible(self, bonding_atom, order: int = 1) -> bool:
         if (self.overall_electrons + order) > self.full_shell:
             print("Bonding unavailable, shell is full.")

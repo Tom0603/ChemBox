@@ -24,6 +24,9 @@ class ChemEditor(QWidget):
         self.bond_action_button = QPushButton("Bond")
         self.draw_action_button = QPushButton("Draw")
 
+        self.remove_button = QPushButton("Remove")
+        self.reset_button = QPushButton("Reset")
+
         self.single_bond_button = QPushButton("Single")
         self.double_bond_button = QPushButton("Double")
         self.triple_bond_button = QPushButton("Triple")
@@ -35,6 +38,8 @@ class ChemEditor(QWidget):
         self.editor_layout.addWidget(self.fluorine_button, 0, 4)
         self.editor_layout.addWidget(self.bond_action_button, 0, 9)
         self.editor_layout.addWidget(self.draw_action_button, 0, 10)
+        self.editor_layout.addWidget(self.remove_button, 0, 11)
+        self.editor_layout.addWidget(self.reset_button, 0, 12)
         self.editor_layout.addWidget(self.single_bond_button, 0, 17)
         self.editor_layout.addWidget(self.double_bond_button, 0, 18)
         self.editor_layout.addWidget(self.triple_bond_button, 0, 19)
@@ -46,6 +51,8 @@ class ChemEditor(QWidget):
         self.fluorine_button.clicked.connect(self.choose_fluorine)
         self.bond_action_button.clicked.connect(self.choose_bond_action)
         self.draw_action_button.clicked.connect(self.choose_draw_action)
+        self.remove_button.clicked.connect(self.remove_action)
+        self.reset_button.clicked.connect(self.reset_action)
         self.single_bond_button.clicked.connect(self.choose_first_order)
         self.double_bond_button.clicked.connect(self.choose_second_order)
         self.triple_bond_button.clicked.connect(self.choose_third_order)
@@ -75,6 +82,12 @@ class ChemEditor(QWidget):
 
     def choose_bond_action(self) -> None:
         self.c.set_action_type("bond")
+
+    def remove_action(self) -> None:
+        self.c.set_action_type("remove")
+
+    def reset_action(self) -> None:
+        self.c.reset_canvas()
 
     def choose_first_order(self) -> None:
         self.c.set_bond_order(1)
@@ -134,6 +147,17 @@ class Canvas(QLabel):
     def set_bond_order(self, order: int) -> None:
         self.bond_order = order
         self.update()
+
+    def remove(self):
+        if self.selected:
+            self.atoms.remove(self.selected_atom)
+        self.update()
+
+    def reset_canvas(self):
+        self.atoms.clear()
+        self.temp_bond_list.clear()
+        self.set_action_type("draw")
+        self.set_bond_order(1)
 
     def paintEvent(self, event) -> None:
 
@@ -405,12 +429,25 @@ class Canvas(QLabel):
                 self.update()
                 return True
 
+    def remove_atom(self, pos_x: int, pos_y: int):
+        atom_radius = Canvas.ATOM_RADIUS
+
+        self.atoms = [atom for atom in self.atoms if not (
+                atom.x_coords - atom_radius <= pos_x <= atom.x_coords + atom_radius and
+                atom.y_coords - atom_radius <= pos_y <= atom.y_coords + atom_radius
+        )]
+
+        self.selected_atom = None
+        self.update()
+
     def mousePressEvent(self, event) -> None:
         if event.button() == Qt.MouseButton.LeftButton:
             print("click")
             click_position = event.pos()
 
-            if self.action_type == "bond":
+            if self.action_type == "remove":
+                self.remove_atom(click_position.x(), click_position.y())
+            elif self.action_type == "bond":
                 self.selected_atom = None
                 for atom in self.atoms:
                     atom_x = atom.x_coords
@@ -437,7 +474,6 @@ class Canvas(QLabel):
                             self.update()
                         return
                     self.selected = False
-
             else:
                 if self.selected:
                     potential_radius = Canvas.ATOM_RADIUS
