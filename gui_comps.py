@@ -32,6 +32,7 @@ class SideBar(QWidget):
         self.ideal_gas_tab_button = QPushButton("Ideal Gas Equation")
         self.equilibrium_tab_button = QPushButton("Equilibrium Constant")
         self.gibbs_free_energy_tab_button = QPushButton("Gibbs Free Energy Calculator")
+        self.specific_heat_tab_button = QPushButton("Specific Heat Calculator")
 
         self.moles_tab_button.clicked.connect(self.moles_button)
         self.conc_tab_button.clicked.connect(self.conc_button)
@@ -39,6 +40,7 @@ class SideBar(QWidget):
         self.ideal_gas_tab_button.clicked.connect(self.ideal_gas_button)
         self.equilibrium_tab_button.clicked.connect(self.equilibrium_button)
         self.gibbs_free_energy_tab_button.clicked.connect(self.gibbs_free_energy_button)
+        self.specific_heat_tab_button.clicked.connect(self.specific_heat_button)
 
         # Create tabs
         self.moles_tab = QWidget()
@@ -47,6 +49,7 @@ class SideBar(QWidget):
         self.ideal_gas_tab = QWidget()
         self.equilibrium_tab = QWidget()
         self.gibbs_free_energy_tab = QWidget()
+        self.specific_heat_tab = QWidget()
 
         # Add buttons to sidebar layout
         self.side_bar_layout.addWidget(self.moles_tab_button)
@@ -55,6 +58,7 @@ class SideBar(QWidget):
         self.side_bar_layout.addWidget(self.ideal_gas_tab_button)
         self.side_bar_layout.addWidget(self.equilibrium_tab_button)
         self.side_bar_layout.addWidget(self.gibbs_free_energy_tab_button)
+        self.side_bar_layout.addWidget(self.specific_heat_tab_button)
 
         self.side_bar_widget = QWidget()
         self.side_bar_widget.setLayout(self.side_bar_layout)
@@ -67,6 +71,7 @@ class SideBar(QWidget):
         self.page_widget.addTab(self.ideal_gas_tab, "")
         self.page_widget.addTab(self.equilibrium_tab, "")
         self.page_widget.addTab(self.gibbs_free_energy_tab, "")
+        self.page_widget.addTab(self.specific_heat_tab, "")
 
         self.page_widget.setCurrentIndex(0)
         self.page_widget.setStyleSheet('''QTabBar::tab{
@@ -103,3 +108,6 @@ class SideBar(QWidget):
 
     def gibbs_free_energy_button(self):
         self.page_widget.setCurrentIndex(5)
+
+    def specific_heat_button(self):
+        self.page_widget.setCurrentIndex(6)
