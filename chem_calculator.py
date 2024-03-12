@@ -1,6 +1,5 @@
 from PyQt6.QtGui import QFont
-from PyQt6.QtWidgets import QGridLayout, QWidget, QPushButton, QLineEdit, QLabel, QComboBox, QVBoxLayout, QScrollArea, \
-    QHBoxLayout
+from PyQt6.QtWidgets import QGridLayout, QWidget, QPushButton, QLineEdit, QLabel, QComboBox
 
 from math import log
 
@@ -795,7 +794,7 @@ class GibbsFreeEnergyCalculator(QWidget):
         try:
             free_energy = (float(self.enthalpy_change_input.text()) * self.general_energy_conversions[
                 enthalpy_unit]) - ((float(self.temp_input.text()) + self.temperature_conversions[temp_unit]) * (
-                float(self.entropy_change_input.text()) * self.general_energy_conversions[entropy_unit]))
+                    float(self.entropy_change_input.text()) * self.general_energy_conversions[entropy_unit]))
             free_energy = free_energy * self.general_energy_conversions[free_energy_unit]
             return free_energy
         except ValueError:
@@ -806,7 +805,7 @@ class GibbsFreeEnergyCalculator(QWidget):
         try:
             enthalpy_change = (float(self.gibbs_free_energy_input.text()) * self.general_energy_conversions[
                 free_energy_unit]) + ((float(self.temp_input.text()) + self.temperature_conversions[temp_unit]) * (
-                float(self.entropy_change_input.text()) * self.general_energy_conversions[entropy_unit]))
+                    float(self.entropy_change_input.text()) * self.general_energy_conversions[entropy_unit]))
             enthalpy_change = enthalpy_change * self.general_energy_conversions[enthalpy_unit]
             return enthalpy_change
         except ValueError:
@@ -818,7 +817,8 @@ class GibbsFreeEnergyCalculator(QWidget):
             temperature = ((float(self.enthalpy_change_input.text()) * self.general_energy_conversions[
                 enthalpy_unit]) - (float(self.gibbs_free_energy_input.text()) * self.general_energy_conversions[
                 free_energy_unit])) / (
-                                  float(self.entropy_change_input.text()) * self.general_energy_conversions[entropy_unit])
+                                  float(self.entropy_change_input.text()) * self.general_energy_conversions[
+                              entropy_unit])
             temperature = temperature + self.temperature_conversions[temp_unit]
             return temperature
         except ValueError:
@@ -835,4 +835,156 @@ class GibbsFreeEnergyCalculator(QWidget):
             return entropy_change
         except ValueError:
             print("Value Error")
+            return
+
+
+class SpecificHeatCalculator(QWidget):
+    def __init__(self):
+        super(QWidget, self).__init__()
+
+        self.layout = QGridLayout()
+
+        self.mass_conversions = {
+            "mg": 1000.0,
+            "g": 1.0,
+            "kg": 0.001
+        }
+
+        self.temperature_conversions = {
+            "°C": 273.15,
+            "°K": 0.0,
+        }
+
+        self.energy_conversions = {
+            "kJ": 0.001,
+            "J": 1.0
+        }
+
+        self.energy_label = QLabel("Heat Energy: ")
+        self.mass_label = QLabel("Mass: ")
+        self.heat_capacity_label = QLabel("Specific Heat Capacity: ")
+        self.temperature_change_label = QLabel("Temperature Change: ")
+
+        self.energy_input = QLineEdit()
+        self.mass_input = QLineEdit()
+        self.heat_capacity_input = QLineEdit()
+        self.temperature_change_input = QLineEdit()
+
+        self.energy_unit_dropdown = QComboBox()
+        self.energy_unit_dropdown.addItem("J")
+        self.energy_unit_dropdown.addItem("kJ")
+
+        self.energy_unit_dropdown.setCurrentIndex(0)
+
+        self.mass_unit_dropdown = QComboBox()
+        self.mass_unit_dropdown.addItem("mg")
+        self.mass_unit_dropdown.addItem("g")
+        self.mass_unit_dropdown.addItem("kg")
+
+        self.mass_unit_dropdown.setCurrentIndex(1)
+
+        self.temp_unit_dropdown = QComboBox()
+        self.temp_unit_dropdown.addItem("°C")
+        self.temp_unit_dropdown.addItem("°K")
+
+        self.temp_unit_dropdown.setCurrentIndex(1)
+
+        self.calculate_button = QPushButton("Calculate")
+
+        self.calculate_button.clicked.connect(self.calculate)
+
+        self.layout.addWidget(self.energy_label, 0, 0)
+        self.layout.addWidget(self.energy_input, 0, 1)
+        self.layout.addWidget(self.energy_unit_dropdown, 0, 2)
+
+        self.layout.addWidget(self.mass_label, 1, 0)
+        self.layout.addWidget(self.mass_input, 1, 1)
+        self.layout.addWidget(self.mass_unit_dropdown, 1, 2)
+
+        self.layout.addWidget(self.heat_capacity_label, 2, 0)
+        self.layout.addWidget(self.heat_capacity_input, 2, 1)
+
+        self.layout.addWidget(self.temperature_change_label, 3, 0)
+        self.layout.addWidget(self.temperature_change_input, 3, 1)
+        self.layout.addWidget(self.temp_unit_dropdown, 3, 2)
+
+        self.layout.addWidget(self.calculate_button, 4, 1)
+
+    def update_energy(self, energy):
+        self.energy_input.setText(str(energy))
+
+    def update_mass(self, mass):
+        self.mass_input.setText(str(mass))
+
+    def update_heat_capacity(self, hc):
+        self.heat_capacity_input.setText(str(hc))
+
+    def update_temp_change(self, temp):
+        self.temperature_change_input.setText(str(temp))
+
+    def calculate(self):
+        energy_unit = self.energy_conversions[self.energy_unit_dropdown.currentText()]
+        mass_unit = self.mass_conversions[self.mass_unit_dropdown.currentText()]
+        temp_unit = self.temperature_conversions[self.temp_unit_dropdown.currentText()]
+
+        if not self.energy_input.text().strip():
+            energy = self.__calculate_energy(energy_unit, mass_unit, temp_unit)
+            if energy:
+                self.update_energy(energy)
+        if not self.mass_input.text().strip():
+            mass = self.__calculate_mass(energy_unit, mass_unit, temp_unit)
+            if mass:
+                self.update_mass(mass)
+        if not self.heat_capacity_input.text().strip():
+            heat_capacity = self.__calculate_heat_capacity(energy_unit, mass_unit, temp_unit)
+            if heat_capacity:
+                self.update_heat_capacity(heat_capacity)
+        if not self.temperature_change_input.text().strip():
+            temp = self.__calculate_temp_change(energy_unit, mass_unit, temp_unit)
+            if temp:
+                self.update_temp_change(temp)
+
+    def __calculate_energy(self, energy_unit, mass_unit, temp_unit):
+        try:
+            q = (float(self.mass_input.text()) * mass_unit) * float(self.heat_capacity_input.text()) * (
+                    float(self.temperature_change_input.text()) + temp_unit)
+            q = q * energy_unit
+
+            return q
+        except ValueError:
+            print("ValueError")
+            return
+
+    def __calculate_mass(self, energy_unit, mass_unit, temp_unit):
+        try:
+            mass = (float(self.energy_input.text()) * energy_unit) / (float(self.heat_capacity_input.text()) * (
+                    float(self.temperature_change_input.text()) + temp_unit))
+            mass = mass * mass_unit
+
+            return mass
+        except ValueError:
+            print("ValueError")
+            return
+
+    def __calculate_heat_capacity(self, energy_unit, mass_unit, temp_unit):
+        try:
+            heat_capacity = (float(self.energy_input.text()) * energy_unit) / (
+                    (float(self.mass_input.text()) * mass_unit) * (
+                    float(self.temperature_change_input.text()) + temp_unit))
+
+            return heat_capacity
+        except ValueError:
+            print("ValueError")
+            return
+
+    def __calculate_temp_change(self, energy_unit, mass_unit, temp_unit):
+        try:
+            temp_change = (float(self.energy_input.text()) * energy_unit) / (
+                    (float(self.mass_input.text()) * mass_unit) * (
+                float(self.heat_capacity_input.text())))
+            temp_change = temp_change + temp_unit
+
+            return temp_change
+        except ValueError:
+            print("ValueError")
             return

@@ -5,7 +5,7 @@ from PyQt6.QtWidgets import QApplication, QMainWindow, QWidget, QPushButton, QVB
 from chem_editor_gui import ChemEditor
 
 from chem_calculator import MolesCalculator, ConcCalculator, AvogadroCalculator, IdealGasLawCalculator, \
-    EquilibriumCalculator, GibbsFreeEnergyCalculator
+    EquilibriumCalculator, GibbsFreeEnergyCalculator, SpecificHeatCalculator
 
 from chem_balancer import ChemBalancer
 from gui_comps import TabBar, SideBar
@@ -38,6 +38,7 @@ class ChemBox(QMainWindow):
         self.ideal_gas_law_calc = IdealGasLawCalculator()
         self.equilibrium_calc = EquilibriumCalculator()
         self.gibbs_calc = GibbsFreeEnergyCalculator()
+        self.specific_heat_calc = SpecificHeatCalculator()
 
         # Initialise moles tab in sidebar
         self.side_bar.moles_tab.setLayout(self.moles_calc.moles_layout)
@@ -56,6 +57,9 @@ class ChemBox(QMainWindow):
 
         # Initialise gibbs free energy calculator
         self.side_bar.gibbs_free_energy_tab.setLayout(self.gibbs_calc.layout)
+
+        # Initialise specific heat energy calculator
+        self.side_bar.specific_heat_tab.setLayout(self.specific_heat_calc.layout)
 
         self.chem_balancer = ChemBalancer()
         self.tab_bar.tab2.setLayout(self.chem_balancer.balancer_layout)
