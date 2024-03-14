@@ -1,7 +1,19 @@
 \documentclass[a4paper,12pt]{article}
 \usepackage[utf8]{inputenc}
 \usepackage{listings}
-\usepackage{xcolor}
+\usepackage[table]{xcolor}
+\usepackage{graphicx}
+
+\graphicspath{{/Users/tom/Documents/Programmieren/ChemBox/Documentation/Images/}}
+
+\usepackage{tikz}
+\usetikzlibrary{shapes.geometric, arrows}
+
+\tikzstyle{startstop} = [rectangle, rounded corners, minimum width=3cm, minimum height=1cm,text centered, draw=black, fill=red!30]
+\tikzstyle{io} = [trapezium, trapezium left angle=70, trapezium right angle=110, minimum width=3cm, minimum height=1cm, text centered, draw=black, fill=blue!30]
+\tikzstyle{process} = [rectangle, minimum width=3cm, minimum height=1cm, text centered, draw=black, fill=orange!30]
+\tikzstyle{decision} = [diamond, minimum width=3cm, minimum height=1cm, text centered, draw=black, fill=green!30]
+\tikzstyle{arrow} = [thick,->,>=stealth]
 
 \definecolor{codegreen}{rgb}{0,0.6,0}
 \definecolor{codegray}{rgb}{0.5,0.5,0.5}
@@ -24,7 +36,7 @@
     showspaces=false,                
     showstringspaces=false,
     showtabs=false,                  
-    tabsize=2
+    tabsize=2,
 }
 
 \lstset{style=mystyle}
@@ -182,7 +194,179 @@ The current standard is to work out chemical equations or draw molecules on pape
 \linebreak
 Naturally, drawing molecules with pen and paper feels best and is the preferred choice by most people. This project is not here to replace that, it should merely pose as a help for chemists when working certain things out.
 
+\newpage
+
 \section{Documented Design}
+
+\subsection{Introduction to the Documented Design}
+
+In this section, I will outline the decisions, that have outlined the development of the ChemBox project and explain the programming techniques used to implement certain algorithms and structures.\\
+The program is written in python, with the aim of using as little external frameworks and dependencies as possible, and therefore creating most of this project from scratch. For the GUI implementation, I chose to use the PyQt6 framework, which is a powerful tool for creating GUI applications in python.\\
+\subsection{Code breakdown}
+
+The very first function that is called when running the project is the main() function. The purpose of this function is to create the application (Listing 1: line 2) and apply the styling specified in the $style.css$ file to it. It then creates and displays an instance of the ChemBox class.
+
+\begin{lstlisting}[language=Python, caption=main() function]
+def main():
+    app = QApplication(sys.argv)
+
+    # Load CSS file
+    app.setStyleSheet(open('style.css').read())
+    
+    main_win = ChemBox()
+    main_win.show()
+    sys.exit(app.exec())
+\end{lstlisting}
+
+\newpage
+
+The ChemBox class is the heart of the program, the point where all the different components are merged together to create one complete application. The class inherits from QMainWindow, which is the standard class from which every PyQt6 application has to inherit, to gain access essential tools for displaying the application. The ChemBox class contains only the constructor, in which the layout of the graphical user interface is specified. The constructor defines the dimensions, the title and geometry of the window. It then creates an instance of the TabBar class, which will act as the central widget of the program. Next, the constructor creates instances of the three big components of the project, ChemCalculator (implemented under parent "SideBar()"), ChemBalancer and ChemEditor, and sets their specific layouts as the layout of their allocated tabs (Listing 2: lines 18 - 25).
+
+\begin{lstlisting}[language=Python, caption=Code snippet of ChemBox class No.1]
+class ChemBox(QMainWindow):
+    def __init__(self):
+        super().__init__()
+
+        # set window properties
+        self.__left = 300
+        self.__top = 300
+        self.__width = 1280
+        self.__height = 720
+        self.__title = "ChemBox"
+        self.setWindowTitle(self.__title)
+        self.setGeometry(self.__left, self.__top, self.__width, self.__height)
+        self.setFixedSize(self.__width, self.__height)
+
+        self.tab_bar = TabBar()
+        self.setCentralWidget(self.tab_bar)
+
+        self.side_bar = SideBar()
+        self.tab_bar.tab1.setLayout(self.side_bar.main_layout)
+
+        self.chem_balancer = ChemBalancer()
+        self.tab_bar.tab2.setLayout(self.chem_balancer.balancer_layout)
+
+        self.chem_editor = ChemEditor()
+        self.tab_bar.tab3.setLayout(self.chem_editor.editor_layout)
+\end{lstlisting}
+
+\newpage
+
+This next part of the constructor of the ChemBox class creates instances of every individual component of the ChemCalculator module (Listing 3: lines 1 - 7). After that, each calculator module's layout is set as the corresponding layout for the specified sidebar tabs.
+
+\begin{lstlisting}[language=Python, caption=Code snippet of ChemBox class No.2]
+        self.moles_calc = MolesCalculator()
+        self.concentration_calc = ConcCalculator()
+        self.avogadro_calc = AvogadroCalculator()
+        self.ideal_gas_law_calc = IdealGasLawCalculator()
+        self.equilibrium_calc = EquilibriumCalculator()
+        self.gibbs_calc = GibbsFreeEnergyCalculator()
+        self.specific_heat_calc = SpecificHeatCalculator()
+
+        # Initialise moles tab in sidebar
+        self.side_bar.moles_tab.setLayout(self.moles_calc.moles_layout)
+
+        # Initialise concentration tab in sidebar
+        self.side_bar.conc_tab.setLayout(self.concentration_calc.conc_layout)
+
+        # Initialise avogadro's calculator tab in sidebar
+        self.side_bar.avogadro_tab.setLayout(self.avogadro_calc.avogadro_layout)
+
+        # Initialise igl tab in sidebar
+        self.side_bar.ideal_gas_tab.setLayout(self.ideal_gas_law_calc.ideal_gas_layout)
+
+        # Initialise equilibrium constant calculator tab
+        self.side_bar.equilibrium_tab.setLayout(self.equilibrium_calc.layout)
+
+        # Initialise gibbs free energy calculator
+        self.side_bar.gibbs_free_energy_tab.setLayout(self.gibbs_calc.layout)
+
+        # Initialise specific heat energy calculator
+        self.side_bar.specific_heat_tab.setLayout(self.specific_heat_calc.layout)
+\end{lstlisting}
+
+\newpage
+
+The tab bar is implemented in the $gui\_comps.py$ file, as a simple class, that inherits from QWidget, which allows for the class to have a specific layout. The tab bar is created as a horizontal layout using QHBoxLayout, which means that every widget added to it, lines up horizontally.\\
+The QTabWidget holds the widgets, which act as a place holder for the specific layouts of each tab.\\
+
+\begin{lstlisting}[language=Python, caption=TabBar implementation]
+from PyQt6.QtWidgets import QTabWidget, QWidget, QHBoxLayout
+
+
+class TabBar(QWidget):
+    def __init__(self):
+        super(QWidget, self).__init__()
+
+        self.layout = QHBoxLayout(self)
+
+        self.tabs = QTabWidget()
+        self.tab1 = QWidget()
+        self.tab2 = QWidget()
+        self.tab3 = QWidget()
+        self.tabs.addTab(self.tab1, "ChemCalculator")
+        self.tabs.addTab(self.tab2, "ChemBalancer")
+        self.tabs.addTab(self.tab3, "ChemEditor")
+
+        self.layout.addWidget(self.tabs)
+        self.setLayout(self.layout)
+\end{lstlisting}
+
+
+The goal was to achieve a design like the one illustrated in Figure 1, where 1, 2 and 3 in the small boxes at the top of the screen represent buttons in the tab bar.
+
+\begin{figure} [h]
+	\centering
+	\includegraphics[scale=0.4]{tabs_mockup}
+	\caption{Mockup drawing of tab bar}
+	\label{fig:tabs_mockup}
+\end{figure}
+\newpage
+
+When developing the ChemCalculator module, the first issue I encountered was how I would create a layout that would work for multiple separate sub-calculators. I had three different possible systems for displaying the module. The first option was creating a sidebar, where the user a choose the exact calculator they were looking for, and then always displaying the selected one. The second option was very similar, but with an additional tab bar at the top or bottom of the screen. This solution is not very good looking and could cause confusion with the actual tab bar that allows the user to switch between the programs modules. The third option was putting every calculator on the same page, each in it's own area, clearly separated from the others, and make the window scrollable. I decided against this option, as this design could have gotten very messy. Therefore, I decided to create a sidebar for the ChemCalculator. \\
+As there is no built-in sidebar widget in PyQt6, I have designed my own way of creating one. I did so by using the QTabWidget, which I also used for the tab bar, but not display it. I was able to benefit from the already existing widget, for the switching between calculators, and use buttons placed on the left side of the screen as a replacement for an actual sidebar. The buttons connect to a method, which changes the the current index of the tab widget to the according number of the calculator, which updates the page that is displayed. This is illustrated in the following code snippet (Listing 5), which only includes the example on a single button, for better readability of this document.
+
+\begin{lstlisting}[language=Python, caption=Sidebar example]
+class SideBar(QWidget):
+    def __init__(self):
+        super(QWidget, self).__init__()
+        self.side_bar_layout = QVBoxLayout()
+        
+        self.gibbs_free_energy_tab_button = QPushButton("Gibbs Free Energy Calculator")
+
+        self.gibbs_free_energy_tab_button.clicked.connect(self.gibbs_free_energy_button)
+      
+        self.gibbs_free_energy_tab = QWidget()
+
+        # Add buttons to sidebar layout
+        self.side_bar_layout.addWidget(self.gibbs_free_energy_tab_button)
+
+        self.side_bar_widget = QWidget()
+        self.side_bar_widget.setLayout(self.side_bar_layout)
+
+        self.page_widget = QTabWidget()
+
+        self.page_widget.addTab(self.gibbs_free_energy_tab, "")
+        self.page_widget.setCurrentIndex(0)
+        self.page_widget.setStyleSheet('''QTabBar::tab{
+        width: 0; 
+        height: 0; 
+        margin: 0; 
+        padding: 0; 
+        border: none;
+        }''')
+
+        self.main_layout = QHBoxLayout()
+        self.main_layout.addWidget(self.side_bar_widget)
+        self.main_layout.addWidget(self.page_widget)
+
+        self.main_widget = QWidget()
+        self.main_widget.setLayout(self.main_layout)
+        
+    def gibbs_free_energy_button(self):
+        self.page_widget.setCurrentIndex(5)
+\end{lstlisting}
+\newpage
 
 \section{Testing}
 
