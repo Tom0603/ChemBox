@@ -32,35 +32,6 @@ class ChemBox(QMainWindow):
 
         self.tab_bar.tab1.setLayout(self.chem_calculator.main_layout)
 
-        self.moles_calc = MolesCalculator()
-        self.concentration_calc = ConcCalculator()
-        self.avogadro_calc = AvogadroCalculator()
-        self.ideal_gas_law_calc = IdealGasLawCalculator()
-        self.equilibrium_calc = EquilibriumCalculator()
-        self.gibbs_calc = GibbsFreeEnergyCalculator()
-        self.specific_heat_calc = SpecificHeatCalculator()
-
-        # Initialise moles tab in sidebar
-        self.chem_calculator.moles_tab.setLayout(self.moles_calc.moles_layout)
-
-        # Initialise concentration tab in sidebar
-        self.chem_calculator.conc_tab.setLayout(self.concentration_calc.conc_layout)
-
-        # Initialise avogadro's calculator tab in sidebar
-        self.chem_calculator.avogadro_tab.setLayout(self.avogadro_calc.avogadro_layout)
-
-        # Initialise igl tab in sidebar
-        self.chem_calculator.ideal_gas_tab.setLayout(self.ideal_gas_law_calc.ideal_gas_layout)
-
-        # Initialise equilibrium constant calculator tab
-        self.chem_calculator.equilibrium_tab.setLayout(self.equilibrium_calc.layout)
-
-        # Initialise gibbs free energy calculator
-        self.chem_calculator.gibbs_free_energy_tab.setLayout(self.gibbs_calc.layout)
-
-        # Initialise specific heat energy calculator
-        self.chem_calculator.specific_heat_tab.setLayout(self.specific_heat_calc.layout)
-
         self.chem_balancer = ChemBalancer()
         self.tab_bar.tab2.setLayout(self.chem_balancer.balancer_layout)
 

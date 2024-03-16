@@ -11,6 +11,14 @@ class ChemCalculator(QWidget):
 
         self.side_bar_layout = QVBoxLayout()
 
+        self.moles_calc = MolesCalculator()
+        self.concentration_calc = ConcCalculator()
+        self.avogadro_calc = AvogadroCalculator()
+        self.ideal_gas_law_calc = IdealGasLawCalculator()
+        self.equilibrium_calc = EquilibriumCalculator()
+        self.gibbs_calc = GibbsFreeEnergyCalculator()
+        self.specific_heat_calc = SpecificHeatCalculator()
+
         # Create buttons
         self.moles_tab_button = QPushButton("Moles")
         self.conc_tab_button = QPushButton("Concentration")
@@ -20,13 +28,13 @@ class ChemCalculator(QWidget):
         self.gibbs_free_energy_tab_button = QPushButton("Gibbs Free Energy Calculator")
         self.specific_heat_tab_button = QPushButton("Specific Heat Calculator")
 
-        self.moles_tab_button.clicked.connect(self.moles_button)
-        self.conc_tab_button.clicked.connect(self.conc_button)
-        self.avogadro_tab_button.clicked.connect(self.avogadro_button)
-        self.ideal_gas_tab_button.clicked.connect(self.ideal_gas_button)
-        self.equilibrium_tab_button.clicked.connect(self.equilibrium_button)
-        self.gibbs_free_energy_tab_button.clicked.connect(self.gibbs_free_energy_button)
-        self.specific_heat_tab_button.clicked.connect(self.specific_heat_button)
+        self.moles_tab_button.clicked.connect(self.moles_action)
+        self.conc_tab_button.clicked.connect(self.conc_action)
+        self.avogadro_tab_button.clicked.connect(self.avogadro_action)
+        self.ideal_gas_tab_button.clicked.connect(self.ideal_gas_action)
+        self.equilibrium_tab_button.clicked.connect(self.equilibrium_action)
+        self.gibbs_free_energy_tab_button.clicked.connect(self.gibbs_free_energy_action)
+        self.specific_heat_tab_button.clicked.connect(self.specific_heat_action)
 
         # Create tabs
         self.moles_tab = QWidget()
@@ -36,6 +44,27 @@ class ChemCalculator(QWidget):
         self.equilibrium_tab = QWidget()
         self.gibbs_free_energy_tab = QWidget()
         self.specific_heat_tab = QWidget()
+
+        # Initialise moles tab in sidebar
+        self.moles_tab.setLayout(self.moles_calc.moles_layout)
+
+        # Initialise concentration tab in sidebar
+        self.conc_tab.setLayout(self.concentration_calc.conc_layout)
+
+        # Initialise avogadro's calculator tab in sidebar
+        self.avogadro_tab.setLayout(self.avogadro_calc.avogadro_layout)
+
+        # Initialise igl tab in sidebar
+        self.ideal_gas_tab.setLayout(self.ideal_gas_law_calc.ideal_gas_layout)
+
+        # Initialise equilibrium constant calculator tab
+        self.equilibrium_tab.setLayout(self.equilibrium_calc.layout)
+
+        # Initialise gibbs free energy calculator
+        self.gibbs_free_energy_tab.setLayout(self.gibbs_calc.layout)
+
+        # Initialise specific heat energy calculator
+        self.specific_heat_tab.setLayout(self.specific_heat_calc.layout)
 
         # Add buttons to sidebar layout
         self.side_bar_layout.addWidget(self.moles_tab_button)
@@ -77,26 +106,43 @@ class ChemCalculator(QWidget):
 
     # Define actions for each button
 
-    def moles_button(self):
+    def moles_action(self):
         self.page_widget.setCurrentIndex(0)
 
-    def conc_button(self):
+    def conc_action(self):
         self.page_widget.setCurrentIndex(1)
 
-    def avogadro_button(self):
+    def avogadro_action(self):
         self.page_widget.setCurrentIndex(2)
 
-    def ideal_gas_button(self):
+    def ideal_gas_action(self):
         self.page_widget.setCurrentIndex(3)
 
-    def equilibrium_button(self):
+    def equilibrium_action(self):
         self.page_widget.setCurrentIndex(4)
 
-    def gibbs_free_energy_button(self):
+    def gibbs_free_energy_action(self):
         self.page_widget.setCurrentIndex(5)
 
-    def specific_heat_button(self):
+    def specific_heat_action(self):
         self.page_widget.setCurrentIndex(6)
+
+
+def find_empty_input(input_list) -> QLineEdit | None:
+    """
+    An algorithm for finding the empty input out of a list of inputs.
+    """
+
+    count = 0
+    empty = None
+
+    for i in range(len(input_list)):
+        if not input_list[i].text().strip():
+            count += 1
+            empty = input_list[i]
+
+    if count == 1:
+        return empty
 
 
 class MolesCalculator(QWidget):
@@ -134,8 +180,10 @@ class MolesCalculator(QWidget):
         self.mass_input = QLineEdit()
         self.mr_input = QLineEdit()
 
+        self.input_list = [self.moles_input, self.mass_input, self.mr_input]
+
         self.calculate_button = QPushButton("Calculate")
-        self.calculate_button.clicked.connect(self.moles_calculation)
+        self.calculate_button.clicked.connect(self.calculate)
 
         self.mass_unit_dropdown = QComboBox()
         self.mass_unit_dropdown.addItem("mg")
@@ -154,44 +202,59 @@ class MolesCalculator(QWidget):
 
         self.get_moles_layout()
 
-    def moles_calculation(self):
+    def calculate(self):
         """
-        This function performs all the calculation needed for the molesCalculation,
-        and returns the value in the GUI.
+        This function routes to the correct calculation, which is then performed.
         """
 
-        mass_unit = self.mass_unit_dropdown.currentText()
-        moles_unit = self.moles_unit_dropdown.currentText()
+        mass_unit = self.mass_conversions[self.mass_unit_dropdown.currentText()]
+        moles_unit = self.mole_conversions[self.moles_unit_dropdown.currentText()]
 
-        if not self.moles_input.text().strip():
-            try:
-                moles = (float(self.mass_input.text()) * self.mass_conversions[mass_unit]) / float(self.mr_input.text())
-                self.update_moles_calculation(moles)
-                self.moles_unit_dropdown.setCurrentText("mol")
-            except ValueError:
-                print("Value Error")
-        elif not self.mass_input.text().strip():
-            try:
-                mass = (float(self.moles_input.text()) * self.mole_conversions[moles_unit]) * float(
-                    self.mr_input.text())
-                self.update_moles_calculation(mass)
-            except ValueError:
-                print("Value Error")
+        to_calc = find_empty_input(self.input_list)
+
+        if to_calc is self.moles_input:
+            self.calculate_moles(mass_unit)
+        elif to_calc is self.mass_input:
+            self.calculate_mass(moles_unit)
+        elif to_calc is self.mr_input:
+            self.calculate_mr(mass_unit, moles_unit)
         else:
-            try:
-                mr = (float(self.mass_input.text()) * self.mass_conversions[mass_unit]) / (
-                        float(self.moles_input.text()) * self.mole_conversions[moles_unit])
-                self.update_moles_calculation(mr)
-            except ValueError:
-                print("Value Error")
+            return
+
+    def calculate_moles(self, mass_unit):
+        """
+        Calculates the moles and calls for an update of the gui input and adjusts the moles unit dropdown.
+        """
+
+        moles = (float(self.mass_input.text()) * mass_unit) / float(self.mr_input.text())
+        self.update_moles_calculation(moles)
+        self.moles_unit_dropdown.setCurrentIndex(2)
+
+    def calculate_mass(self, moles_unit):
+        """
+        Calculates the mass and calls for an update of the gui input and adjusts the moles unit dropdown.
+        """
+
+        mass = (float(self.moles_input.text()) * moles_unit) * float(
+            self.mr_input.text())
+        self.update_moles_calculation(mass)
+        self.mass_unit_dropdown.setCurrentIndex(1)
+
+    def calculate_mr(self, mass_unit, moles_unit):
+        """
+        Calculates the mr and calls for an update of the gui input.
+        """
+
+        mr = (float(self.mass_input.text()) * mass_unit) / (
+                float(self.moles_input.text()) * moles_unit)
+        self.update_moles_calculation(mr)
 
     def update_moles_calculation(self, result):
-        if not self.moles_input.text():
-            self.moles_input.setText(str(result))
-        elif not self.mass_input.text():
-            self.mass_input.setText(str(result))
-        else:
-            self.mr_input.setText(str(result))
+        """
+        Uses the find_empty_input() function to find the empty input, and then updates it using the result parameter.
+        """
+
+        find_empty_input(self.input_list).setText(str(result))
 
     def get_moles_layout(self):
         f"""
