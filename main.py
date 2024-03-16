@@ -4,11 +4,11 @@ from PyQt6.QtWidgets import QApplication, QMainWindow
 
 from chem_editor_gui import ChemEditor
 
-from chem_calculator import MolesCalculator, ConcCalculator, AvogadroCalculator, IdealGasLawCalculator, \
+from chem_calculator import ChemCalculator, MolesCalculator, ConcCalculator, AvogadroCalculator, IdealGasLawCalculator, \
     EquilibriumCalculator, GibbsFreeEnergyCalculator, SpecificHeatCalculator
 
 from chem_balancer import ChemBalancer
-from gui_comps import TabBar, ChemCalculator
+from gui_comps import TabBar
 
 
 class ChemBox(QMainWindow):
