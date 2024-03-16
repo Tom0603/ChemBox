@@ -8,7 +8,7 @@ from chem_calculator import MolesCalculator, ConcCalculator, AvogadroCalculator,
     EquilibriumCalculator, GibbsFreeEnergyCalculator, SpecificHeatCalculator
 
 from chem_balancer import ChemBalancer
-from gui_comps import TabBar, SideBar
+from gui_comps import TabBar, ChemCalculator
 
 
 class ChemBox(QMainWindow):
@@ -28,9 +28,9 @@ class ChemBox(QMainWindow):
         self.tab_bar = TabBar()
         self.setCentralWidget(self.tab_bar)
 
-        self.side_bar = SideBar()
+        self.chem_calculator = ChemCalculator()
 
-        self.tab_bar.tab1.setLayout(self.side_bar.main_layout)
+        self.tab_bar.tab1.setLayout(self.chem_calculator.main_layout)
 
         self.moles_calc = MolesCalculator()
         self.concentration_calc = ConcCalculator()
@@ -41,25 +41,25 @@ class ChemBox(QMainWindow):
         self.specific_heat_calc = SpecificHeatCalculator()
 
         # Initialise moles tab in sidebar
-        self.side_bar.moles_tab.setLayout(self.moles_calc.moles_layout)
+        self.chem_calculator.moles_tab.setLayout(self.moles_calc.moles_layout)
 
         # Initialise concentration tab in sidebar
-        self.side_bar.conc_tab.setLayout(self.concentration_calc.conc_layout)
+        self.chem_calculator.conc_tab.setLayout(self.concentration_calc.conc_layout)
 
         # Initialise avogadro's calculator tab in sidebar
-        self.side_bar.avogadro_tab.setLayout(self.avogadro_calc.avogadro_layout)
+        self.chem_calculator.avogadro_tab.setLayout(self.avogadro_calc.avogadro_layout)
 
         # Initialise igl tab in sidebar
-        self.side_bar.ideal_gas_tab.setLayout(self.ideal_gas_law_calc.ideal_gas_layout)
+        self.chem_calculator.ideal_gas_tab.setLayout(self.ideal_gas_law_calc.ideal_gas_layout)
 
         # Initialise equilibrium constant calculator tab
-        self.side_bar.equilibrium_tab.setLayout(self.equilibrium_calc.layout)
+        self.chem_calculator.equilibrium_tab.setLayout(self.equilibrium_calc.layout)
 
         # Initialise gibbs free energy calculator
-        self.side_bar.gibbs_free_energy_tab.setLayout(self.gibbs_calc.layout)
+        self.chem_calculator.gibbs_free_energy_tab.setLayout(self.gibbs_calc.layout)
 
         # Initialise specific heat energy calculator
-        self.side_bar.specific_heat_tab.setLayout(self.specific_heat_calc.layout)
+        self.chem_calculator.specific_heat_tab.setLayout(self.specific_heat_calc.layout)
 
         self.chem_balancer = ChemBalancer()
         self.tab_bar.tab2.setLayout(self.chem_balancer.balancer_layout)

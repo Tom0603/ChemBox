@@ -19,7 +19,7 @@ class TabBar(QWidget):
         self.setLayout(self.layout)
 
 
-class SideBar(QWidget):
+class ChemCalculator(QWidget):
     def __init__(self):
         super(QWidget, self).__init__()
 

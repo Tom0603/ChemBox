@@ -18,10 +18,10 @@ class Atom:
     def __eq__(self, other):
         return self.symbol == other.symbol and [self.x_coords, self.y_coords] == [other.x_coords, other.y_coords]
 
-    def add_outer_electrons(self, num: int):
+    def __add_outer_electrons(self, num: int):
         self.outer_electrons += num
 
-    def remove_outer_electrons(self, num: int):
+    def __remove_outer_electrons(self, num: int):
         self.outer_electrons -= num
 
     def check_is_bond_possible(self, bonding_atom, order: int = 1) -> bool:
@@ -48,7 +48,7 @@ class Atom:
 
     def break_bond(self, atom, order: int = 1):
         atom.bonds = [bond for bond in atom.bonds if not (self in bond.atoms)]
-        atom.remove_outer_electrons(order)
+        atom.__remove_outer_electrons(order)
 
 
 class Bond:
