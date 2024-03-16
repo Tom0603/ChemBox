@@ -49,7 +49,7 @@ class ChemCalculator(QWidget):
         self.moles_tab.setLayout(self.moles_calc.moles_layout)
 
         # Initialise concentration tab in sidebar
-        self.conc_tab.setLayout(self.concentration_calc.conc_layout)
+        self.conc_tab.setLayout(self.concentration_calc.layout)
 
         # Initialise avogadro's calculator tab in sidebar
         self.avogadro_tab.setLayout(self.avogadro_calc.avogadro_layout)
@@ -128,9 +128,10 @@ class ChemCalculator(QWidget):
         self.page_widget.setCurrentIndex(6)
 
 
-def find_empty_input(input_list) -> QLineEdit | None:
+def find_empty_input(input_list: list[QLineEdit]) -> QLineEdit | None:
     """
     An algorithm for finding the empty input out of a list of inputs.
+    Only works when looking for a single empty input.
     """
 
     count = 0
@@ -210,7 +211,7 @@ class MolesCalculator(QWidget):
         mass_unit = self.mass_conversions[self.mass_unit_dropdown.currentText()]
         moles_unit = self.mole_conversions[self.moles_unit_dropdown.currentText()]
 
-        to_calc = find_empty_input(self.input_list)
+        to_calc = find_empty_input(self.input_list.copy())
 
         if to_calc is self.moles_input:
             self.calculate_moles(mass_unit)
@@ -227,7 +228,7 @@ class MolesCalculator(QWidget):
         """
 
         moles = (float(self.mass_input.text()) * mass_unit) / float(self.mr_input.text())
-        self.update_moles_calculation(moles)
+        self.update_input(moles)
         self.moles_unit_dropdown.setCurrentIndex(2)
 
     def calculate_mass(self, moles_unit):
@@ -237,7 +238,7 @@ class MolesCalculator(QWidget):
 
         mass = (float(self.moles_input.text()) * moles_unit) * float(
             self.mr_input.text())
-        self.update_moles_calculation(mass)
+        self.update_input(mass)
         self.mass_unit_dropdown.setCurrentIndex(1)
 
     def calculate_mr(self, mass_unit, moles_unit):
@@ -247,14 +248,14 @@ class MolesCalculator(QWidget):
 
         mr = (float(self.mass_input.text()) * mass_unit) / (
                 float(self.moles_input.text()) * moles_unit)
-        self.update_moles_calculation(mr)
+        self.update_input(mr)
 
-    def update_moles_calculation(self, result):
+    def update_input(self, result):
         """
         Uses the find_empty_input() function to find the empty input, and then updates it using the result parameter.
         """
 
-        find_empty_input(self.input_list).setText(str(result))
+        find_empty_input(self.input_list.copy()).setText(str(result))
 
     def get_moles_layout(self):
         f"""
@@ -278,16 +279,9 @@ class MolesCalculator(QWidget):
 class ConcCalculator(QWidget):
     def __init__(self):
         super(QWidget, self).__init__()
-        self.conc_layout = QGridLayout()
+        self.layout = QGridLayout()
 
         # Unit conversions
-        self.mass_conversions = {
-            "mg": 0.001,
-            "g": 1,
-            "kg": 1000,
-            "t": 1000000
-        }
-
         self.mole_conversions = {
             "μmol": 0.000001,
             "mmol": 0.001,
@@ -302,89 +296,107 @@ class ConcCalculator(QWidget):
         }
 
         # Initialise concentration calculation Layout
-        self.conc_label_conc = QLabel("Concentration:")
-        self.moles_label_conc = QLabel("Moles:")
-        self.vol_label_conc = QLabel("Volume:")
+        self.conc_label = QLabel("Concentration:")
+        self.moles_label = QLabel("Moles:")
+        self.vol_label = QLabel("Volume:")
 
-        self.conc_input_conc = QLineEdit()
-        self.moles_input_conc = QLineEdit()
-        self.vol_input_conc = QLineEdit()
+        self.conc_input = QLineEdit()
+        self.moles_input = QLineEdit()
+        self.vol_input = QLineEdit()
 
-        self.calculate_button_conc = QPushButton("Calculate")
-        self.calculate_button_conc.clicked.connect(self.conc_calculation)
+        self.input_list = [self.conc_input, self.moles_input, self.vol_input]
 
-        self.moles_unit_dropdown_conc = QComboBox()
-        self.moles_unit_dropdown_conc.addItem("μmol")
-        self.moles_unit_dropdown_conc.addItem("mmol")
-        self.moles_unit_dropdown_conc.addItem("mol")
+        self.calculate_button = QPushButton("Calculate")
+        self.calculate_button.clicked.connect(self.calculate)
 
-        self.moles_unit_dropdown_conc.setCurrentIndex(2)
+        self.moles_unit_dropdown = QComboBox()
+        self.moles_unit_dropdown.addItem("μmol")
+        self.moles_unit_dropdown.addItem("mmol")
+        self.moles_unit_dropdown.addItem("mol")
 
-        self.vol_unit_drop_down_conc = QComboBox()
-        self.vol_unit_drop_down_conc.addItem("cm³")
-        self.vol_unit_drop_down_conc.addItem("dm³")
-        self.vol_unit_drop_down_conc.addItem("m³")
+        self.moles_unit_dropdown.setCurrentIndex(2)
 
-        self.vol_unit_drop_down_conc.setCurrentIndex(1)
+        self.vol_unit_drop_down = QComboBox()
+        self.vol_unit_drop_down.addItem("cm³")
+        self.vol_unit_drop_down.addItem("dm³")
+        self.vol_unit_drop_down.addItem("m³")
+
+        self.vol_unit_drop_down.setCurrentIndex(1)
 
         self.get_conc_layout()
 
+    def calculate(self):
+        """
+        This function routes to the correct calculation, which is then performed.
+        """
+
+        moles_unit = self.mole_conversions[self.moles_unit_dropdown.currentText()]
+        vol_unit = self.volume_conversions[self.vol_unit_drop_down.currentText()]
+
+        to_calc = find_empty_input(self.input_list.copy())
+
+        if to_calc is self.moles_input:
+            self.calculate_moles(vol_unit)
+        elif to_calc is self.vol_input:
+            self.calculate_vol(moles_unit)
+        elif to_calc is self.conc_input:
+            self.calculate_conc(moles_unit, vol_unit)
+        else:
+            return
+
+    def calculate_moles(self, vol_unit):
+        """
+        Calculates the moles and calls for an update of the gui input and adjusts the moles unit dropdown.
+        """
+
+        moles = float(self.conc_input.text()) * (
+                float(self.vol_input.text()) * vol_unit)
+        self.update_input(moles)
+        self.moles_unit_dropdown.setCurrentIndex(2)
+
+    def calculate_vol(self, moles_unit):
+        """
+        Calculates the volume and calls for an update of the gui input.
+        """
+
+        vol = (float(self.moles_input.text()) * moles_unit) / float(
+            self.conc_input.text())
+        self.update_input(vol)
+        self.vol_unit_drop_down.setCurrentIndex(1)
+
+    def calculate_conc(self, moles_unit, vol_unit):
+        """
+        Calculates the concentration and calls for an update of the gui input.
+        """
+
+        conc = (float(self.moles_input.text()) * moles_unit) / (
+                float(self.vol_input.text()) * vol_unit)
+        self.update_input(conc)
+
+    def update_input(self, result):
+        """
+        Uses the find_empty_input() function to find the empty input, and then updates it using the result parameter.
+        """
+
+        find_empty_input(self.input_list).setText(str(result))
+
     def get_conc_layout(self):
-        f"""
-           This function adds all the essential widgets to the {self.conc_layout} 
+        """
+           This function adds all the essential widgets to the layout.
            """
 
-        self.conc_layout.addWidget(self.conc_label_conc, 0, 0)
-        self.conc_layout.addWidget(self.moles_label_conc, 1, 0)
-        self.conc_layout.addWidget(self.vol_label_conc, 2, 0)
+        self.layout.addWidget(self.conc_label, 0, 0)
+        self.layout.addWidget(self.moles_label, 1, 0)
+        self.layout.addWidget(self.vol_label, 2, 0)
 
-        self.conc_layout.addWidget(self.conc_input_conc, 0, 1)
-        self.conc_layout.addWidget(self.moles_input_conc, 1, 1)
-        self.conc_layout.addWidget(self.vol_input_conc, 2, 1)
+        self.layout.addWidget(self.conc_input, 0, 1)
+        self.layout.addWidget(self.moles_input, 1, 1)
+        self.layout.addWidget(self.vol_input, 2, 1)
 
-        self.conc_layout.addWidget(self.moles_unit_dropdown_conc, 1, 2)
-        self.conc_layout.addWidget(self.vol_unit_drop_down_conc, 2, 2)
+        self.layout.addWidget(self.moles_unit_dropdown, 1, 2)
+        self.layout.addWidget(self.vol_unit_drop_down, 2, 2)
 
-        self.conc_layout.addWidget(self.calculate_button_conc, 3, 1)
-
-    def conc_calculation(self):
-        """
-        This function performs all the calculation needed for the concentration calculation,
-        and returns the value in the GUI.
-        """
-
-        moles_unit = self.moles_unit_dropdown_conc.currentText()
-        vol_unit = self.vol_unit_drop_down_conc.currentText()
-
-        if not self.conc_input_conc.text():
-            try:
-                conc = (float(self.moles_input_conc.text()) * self.mole_conversions[moles_unit]) / (
-                        float(self.vol_input_conc.text()) * self.volume_conversions[vol_unit])
-                self.conc_input_conc.setText(str(conc))
-            except ValueError:
-                print("Value Error")
-        elif not self.moles_input_conc.text():
-            try:
-                moles = float(self.conc_input_conc.text()) * (
-                        float(self.vol_input_conc.text()) * self.volume_conversions[vol_unit])
-                (self.moles_input_conc.setText(str(moles)))
-            except ValueError:
-                print("Value Error")
-        else:
-            try:
-                vol = (float(self.moles_input_conc.text()) * self.mole_conversions[moles_unit]) / float(
-                    self.conc_input_conc.text())
-                self.vol_input_conc.setText(str(vol))
-            except ValueError:
-                print("Value Error")
-
-    def update_conc_calculation(self, result):
-        if not self.conc_input_conc:
-            self.conc_input_conc.setText(str(result))
-        elif not self.moles_input_conc:
-            self.moles_input_conc.setText(str(result))
-        else:
-            self.vol_input_conc.setText(str(result))
+        self.layout.addWidget(self.calculate_button, 3, 1)
 
 
 class AvogadroCalculator(QWidget):
