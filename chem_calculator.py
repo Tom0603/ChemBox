@@ -1,8 +1,10 @@
 from PyQt6.QtGui import QFont
-from PyQt6.QtWidgets import QGridLayout, QWidget, QPushButton, QLineEdit, QLabel, QComboBox, QStackedLayout, \
-    QHBoxLayout, QTabWidget, QVBoxLayout
+from PyQt6.QtWidgets import QGridLayout, QWidget, QPushButton, QLineEdit, QLabel, QComboBox, QHBoxLayout, QTabWidget, \
+    QVBoxLayout
 
 from math import log
+
+from gui_comps import RateBox, RateResultBox
 
 
 class ChemCalculator(QWidget):
@@ -18,6 +20,7 @@ class ChemCalculator(QWidget):
         self.equilibrium_calc = EquilibriumCalculator()
         self.gibbs_calc = GibbsFreeEnergyCalculator()
         self.specific_heat_calc = SpecificHeatCalculator()
+        self.rate_calc = RateCalculator()
 
         # Create buttons
         self.moles_tab_button = QPushButton("Moles")
@@ -27,6 +30,7 @@ class ChemCalculator(QWidget):
         self.equilibrium_tab_button = QPushButton("Equilibrium Constant")
         self.gibbs_free_energy_tab_button = QPushButton("Gibbs Free Energy Calculator")
         self.specific_heat_tab_button = QPushButton("Specific Heat Calculator")
+        self.rate_tab_button = QPushButton("Rate Constant")
 
         self.moles_tab_button.clicked.connect(self.moles_action)
         self.conc_tab_button.clicked.connect(self.conc_action)
@@ -35,6 +39,7 @@ class ChemCalculator(QWidget):
         self.equilibrium_tab_button.clicked.connect(self.equilibrium_action)
         self.gibbs_free_energy_tab_button.clicked.connect(self.gibbs_free_energy_action)
         self.specific_heat_tab_button.clicked.connect(self.specific_heat_action)
+        self.rate_tab_button.clicked.connect(self.rate_action)
 
         # Create tabs
         self.moles_tab = QWidget()
@@ -44,6 +49,7 @@ class ChemCalculator(QWidget):
         self.equilibrium_tab = QWidget()
         self.gibbs_free_energy_tab = QWidget()
         self.specific_heat_tab = QWidget()
+        self.rate_tab = QWidget()
 
         # Initialise moles tab in sidebar
         self.moles_tab.setLayout(self.moles_calc.moles_layout)
@@ -66,6 +72,9 @@ class ChemCalculator(QWidget):
         # Initialise specific heat energy calculator
         self.specific_heat_tab.setLayout(self.specific_heat_calc.layout)
 
+        # Initialise rate constant calculator
+        self.rate_tab.setLayout(self.rate_calc.layout)
+
         # Add buttons to sidebar layout
         self.side_bar_layout.addWidget(self.moles_tab_button)
         self.side_bar_layout.addWidget(self.conc_tab_button)
@@ -74,6 +83,7 @@ class ChemCalculator(QWidget):
         self.side_bar_layout.addWidget(self.equilibrium_tab_button)
         self.side_bar_layout.addWidget(self.gibbs_free_energy_tab_button)
         self.side_bar_layout.addWidget(self.specific_heat_tab_button)
+        self.side_bar_layout.addWidget(self.rate_tab_button)
 
         self.side_bar_widget = QWidget()
         self.side_bar_widget.setLayout(self.side_bar_layout)
@@ -87,6 +97,7 @@ class ChemCalculator(QWidget):
         self.page_widget.addTab(self.equilibrium_tab, "")
         self.page_widget.addTab(self.gibbs_free_energy_tab, "")
         self.page_widget.addTab(self.specific_heat_tab, "")
+        self.page_widget.addTab(self.rate_tab, "")
 
         self.page_widget.setCurrentIndex(0)
         self.page_widget.setStyleSheet('''QTabBar::tab{
@@ -126,6 +137,9 @@ class ChemCalculator(QWidget):
 
     def specific_heat_action(self):
         self.page_widget.setCurrentIndex(6)
+
+    def rate_action(self):
+        self.page_widget.setCurrentIndex(7)
 
 
 def find_empty_input(input_list: list[QLineEdit]) -> QLineEdit | None:
@@ -1159,3 +1173,240 @@ class SpecificHeatCalculator(QWidget):
         except ValueError:
             print("ValueError")
             return
+
+
+class RateCalculator(QWidget):
+    def __init__(self):
+        super(QWidget, self).__init__()
+
+        self.order_conversion = {
+            "First": 1,
+            "Second": 2
+        }
+
+        self.layout = QVBoxLayout()
+
+        self.calculate_button = QPushButton("Calculate")
+        self.calculate_button.clicked.connect(self.calculate)
+
+        self.step_dropdown = QComboBox()
+        self.step_dropdown.addItem("Unimolecular")
+        self.step_dropdown.addItem("Bimolecular")
+        self.step_dropdown.addItem("Trimolecular")
+        self.step_dropdown.currentIndexChanged.connect(self.get_ui)
+
+        self.layout.addWidget(self.step_dropdown)
+
+        # Unimolecular Box
+        self.unimol_box = RateBox("[A]")
+        self.unimol_box_widget = QWidget()
+        self.unimol_box_widget.setLayout(self.unimol_box.box_layout)
+
+        self.unimol_conc_input = self.unimol_box.conc_input
+        self.unimol_order_input = self.unimol_box.order_input
+
+        self.unimol_order_input.currentTextChanged.connect(self.get_total_order)
+
+        # Bimolecular Box
+        self.bimol_box = RateBox("[B]")
+        self.bimol_box_widget = QWidget()
+        self.bimol_box_widget.setLayout(self.bimol_box.box_layout)
+
+        self.bimol_conc_input = self.bimol_box.conc_input
+        self.bimol_order_input = self.bimol_box.order_input
+
+        self.bimol_order_input.currentTextChanged.connect(self.get_total_order)
+
+        # Trimolecular Box
+        self.trimol_box = RateBox("[C]")
+        self.trimol_box_widget = QWidget()
+        self.trimol_box_widget.setLayout(self.trimol_box.box_layout)
+
+        self.trimol_conc_input = self.trimol_box.conc_input
+        self.trimol_order_input = self.trimol_box.order_input
+
+        self.trimol_order_input.currentTextChanged.connect(self.get_total_order)
+
+        # Result Box
+        self.result_box = RateResultBox()
+        self.result_box_widget = QWidget()
+        self.result_box_widget.setLayout(self.result_box.box_layout)
+
+        self.rate_constant_input = self.result_box.rate_constant_input
+        self.rate_input = self.result_box.rate_input
+        self.total_order_input = self.result_box.total_order_input
+        self.total_order_input.setReadOnly(True)
+
+        # List containing every line edit currently visible on screen
+        self.input_list = [self.unimol_conc_input, self.rate_constant_input, self.rate_input]
+        self.conc_input_list = [self.unimol_conc_input, self.bimol_conc_input, self.trimol_conc_input]
+
+        self.get_ui()
+
+    def get_ui(self) -> None:
+        """
+        This method adds the necessary widgets to the current layout and makes sure that widgets are removed or added
+        when needed.
+        """
+
+        self.update_input_list()
+        self.get_total_order()
+
+        self.layout.addWidget(self.unimol_box_widget)
+        self.layout.addWidget(self.bimol_box_widget)
+        self.layout.addWidget(self.trimol_box_widget)
+        self.layout.addWidget(self.result_box_widget)
+        self.layout.addWidget(self.calculate_button)
+
+        # Hide the widgets to ensure correct order of display
+        self.bimol_box_widget.hide()
+        self.trimol_box_widget.hide()
+        self.result_box_widget.hide()
+        self.calculate_button.hide()
+
+        if self.step_dropdown.currentIndex() == 1:
+            self.bimol_box_widget.show()
+            self.result_box_widget.show()
+            self.calculate_button.show()
+        elif self.step_dropdown.currentIndex() == 2:
+            self.bimol_box_widget.show()
+            self.trimol_box_widget.show()
+            self.result_box_widget.show()
+            self.calculate_button.show()
+        else:
+            self.result_box_widget.show()
+            self.calculate_button.show()
+
+    def update_input_list(self) -> None:
+        """
+        This function makes sure the self.input_list is always xup-to-date with the inputs displayed in the gui.
+        """
+
+        if self.bimol_conc_input in self.input_list.copy():
+            self.input_list.remove(self.bimol_conc_input)
+        if self.trimol_conc_input in self.input_list.copy():
+            self.input_list.remove(self.trimol_conc_input)
+
+        if self.step_dropdown.currentIndex() == 1:
+            self.input_list.append(self.bimol_conc_input)
+        elif self.step_dropdown.currentIndex() == 2:
+            self.input_list.append(self.bimol_conc_input)
+            self.input_list.append(self.trimol_conc_input)
+
+    def calculate(self) -> None:
+        """
+        This method checks which input has been left empty, and then calls the according method to calculate the
+        missing value.
+        """
+
+        unimol_order = self.order_conversion[self.unimol_order_input.currentText()]
+        bimol_order = self.order_conversion[self.bimol_order_input.currentText()]
+        trimol_order = self.order_conversion[self.trimol_order_input.currentText()]
+
+        to_find = find_empty_input(self.input_list)
+
+        if to_find is self.rate_input:
+            self.calculate_rate(unimol_order, bimol_order, trimol_order)
+        elif to_find is self.rate_constant_input:
+            self.calculate_rate_constant(unimol_order, bimol_order, trimol_order)
+        elif to_find in self.conc_input_list:
+            self.calculate_concentration(to_find, unimol_order, bimol_order, trimol_order)
+
+    def get_total_order(self) -> None:
+        """
+        This method makes sure the total order is always displayed correctly.
+        """
+
+        unimol_order = self.order_conversion[self.unimol_order_input.currentText()]
+        bimol_order = self.order_conversion[self.bimol_order_input.currentText()]
+        trimol_order = self.order_conversion[self.trimol_order_input.currentText()]
+
+        total_order = unimol_order
+        if self.step_dropdown.currentIndex() == 1:
+            total_order += bimol_order
+        elif self.step_dropdown.currentIndex() == 2:
+            total_order += bimol_order + trimol_order
+
+        self.update_total_order(total_order)
+
+    def calculate_rate(self, unimol_order: int, bimol_order: int, trimol_order: int) -> None:
+        """
+        Calculates the rate of the reaction based on the elementary step
+        (unimolecula, bimolecular, trimolecular), and then calls the update_input() method to display the calculated
+        result.
+        """
+
+        rate = float(self.rate_constant_input.text()) * (float(self.unimol_conc_input.text()) ** unimol_order)
+
+        if self.step_dropdown.currentIndex() == 1:
+            rate = rate * (float(self.bimol_conc_input.text()) ** bimol_order)
+        elif self.step_dropdown.currentIndex() == 2:
+            rate = rate * (float(self.bimol_conc_input.text()) ** bimol_order) * (
+                    float(self.trimol_conc_input.text()) ** trimol_order)
+
+        self.update_input(rate)
+
+    def calculate_rate_constant(self, unimol_order: int, bimol_order: int, trimol_order: int) -> None:
+        """
+        Calculates the rate constant based on the elementary step
+        (unimolecula, bimolecular, trimolecular), and calls the update_input method to display the calculated result.
+        """
+
+        total_conc = (float(self.unimol_conc_input) ** unimol_order)
+
+        if self.step_dropdown.currentIndex() == 1:
+            total_conc = total_conc * (float(self.bimol_conc_input.text()) ** bimol_order)
+        elif self.step_dropdown.currentIndex() == 2:
+            total_conc = total_conc * (float(self.bimol_conc_input.text()) ** bimol_order) * (
+                    float(self.trimol_conc_input.text()) ** trimol_order)
+
+        rate_constant = float(self.rate_input) / total_conc
+
+        self.update_input(rate_constant)
+
+    def calculate_concentration(self, to_find: QLineEdit, unimol_order: int, bimol_order: int,
+                                trimol_order: int) -> None:
+        """
+        Calculates the concentration of the given empty concentration input, based on the elementary step
+        (unimolecula, bimolecular, trimolecular), and then calls the update_input() method to display the calculated
+        result.
+        """
+
+        concentration = float(self.rate_input.text()) / float(self.rate_constant_input.text())
+
+        if to_find is self.unimol_conc_input:
+            if self.step_dropdown.currentIndex() == 1:
+                concentration = concentration / (float(self.bimol_conc_input.text()) ** bimol_order)
+            elif self.step_dropdown.currentIndex() == 2:
+                concentration = concentration / ((float(self.bimol_conc_input.text()) ** bimol_order) * (
+                        float(self.trimol_conc_input.text()) ** trimol_order))
+            concentration = concentration ** (1 / unimol_order)
+        elif to_find is self.bimol_conc_input:
+            if self.step_dropdown.currentIndex() == 1:
+                concentration = concentration / (float(self.unimol_conc_input.text()) ** unimol_order)
+            elif self.step_dropdown.currentIndex() == 2:
+                concentration = concentration / ((float(self.unimol_conc_input.text()) ** unimol_order) * (
+                        float(self.trimol_conc_input.text()) ** trimol_order))
+            concentration = concentration ** (1 / bimol_order)
+        elif to_find is self.trimol_conc_input:
+            concentration = concentration / (
+                    (float(self.unimol_conc_input.text()) ** unimol_order) * (
+                    float(self.bimol_conc_input.text()) ** bimol_order))
+            concentration = concentration ** (1 / trimol_order)
+        else:
+            return
+        self.update_input(concentration)
+
+    def update_input(self, result: float) -> None:
+        """
+        Uses the find_empty_input() function to find the empty input, and then updates it using the result parameter.
+        """
+
+        find_empty_input(self.input_list.copy()).setText(str(result))
+
+    def update_total_order(self, order: float) -> None:
+        """
+        Updates the total order input with the order parameter.
+        """
+
+        self.total_order_input.setText(str(order))
