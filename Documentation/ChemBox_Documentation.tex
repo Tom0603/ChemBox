@@ -8,6 +8,23 @@
 
 \usepackage{algpseudocode}
 \usepackage{algorithm}
+
+% Redefine the keywords to use the new command
+\algrenewcommand\algorithmicif{\textbf{IF}}
+\algrenewcommand\algorithmicthen{\textbf{THEN}}
+\algrenewcommand\algorithmicelse{\textbf{ELSE}}
+\algrenewcommand\algorithmicend{\textbf{END}}
+\algrenewcommand\algorithmicfor{\textbf{FOR}}
+\algrenewcommand\algorithmicdo{\textbf{DO}}
+\algrenewcommand\algorithmicwhile{\textbf{WHILE}}
+\algrenewcommand\algorithmicloop{\textbf{LOOP}}
+\algrenewcommand\algorithmicrepeat{\textbf{REPEAT}}
+\algrenewcommand\algorithmicuntil{\textbf{UNTIL}}
+\algrenewcommand\algorithmicreturn{\textbf{RETURN}}
+\algrenewcommand\algorithmicfunction{\textbf{SUBROUTINE}}
+
+
+
 \usepackage{tikz}
 \usetikzlibrary{shapes.geometric, arrows}
 
@@ -28,7 +45,7 @@
     keywordstyle=\color{magenta},
     numberstyle=\tiny\color{codegray},
     stringstyle=\color{codepurple},
-    basicstyle=\ttfamily\footnotesize,
+    basicstyle=\fontsize{8}{10}\ttfamily,
     breakatwhitespace=false,         
     breaklines=true,                 
     captionpos=b,                    
@@ -329,7 +346,7 @@ The algorithm will have to take a list of inputs as a parameter, and use iterati
 \begin{algorithmic}
 \State $ input\_list \gets []$
 \State $ count \gets 0$
-\State $ empty_input \gets NONE$
+\State $ empty\_input \gets NONE$
 \For{$i \gets 0\ to\ Len(input$\_$list)$}
 \If{$ input\_list[i]\ is\ empty$}
 	\State $ count \gets count\ $+$\ 1$
@@ -341,6 +358,555 @@ The algorithm will have to take a list of inputs as a parameter, and use iterati
 \EndIf
 \end{algorithmic}
 \end{algorithm}
+
+\newpage
+
+\subsection{Algorithm Design for ChemBalancer}
+
+Figure 3 includes my initial attempt at visualising how an equation balancer could work. My first version of this module worked on a very similar system, although I struggled with finding a method of consistently balancing the equations after splitting them into their smallest possible components. 
+
+\begin{figure} [h]
+	\centering
+	\includegraphics[scale=0.4]{balance_flow}
+	\caption{Initial flowchart for balancer}
+	\label{fig:balance_flow}
+\end{figure}
+
+The following code blocks contains the code of my initial, failed, attempt at the balancer.
+
+\begin{lstlisting}[language=Python, caption=Method for splitting equation into components]
+def splitEquation(self):
+        self.equationSplit = self.equationInput.text().split(" = ")
+        self.reactants = self.equationSplit[0]
+        try:
+            self.products = self.equationSplit[1]
+        except IndexError:
+            print("Wrong user input")
+        self.reactantComponents = self.reactants.split(" + ")
+        self.productComponents = self.products.split(" + ")
+\end{lstlisting}
+
+The splitEquation method uses string manipulation to extract the individual molecules of the equation and store them in separate lists for reactants and products.\\
+After finding the individual molecules in the equation, the parseComponent method is called to get the elements used in the molecules, and the amount of them. This is done through if statements, as there is only a limited amount of different possibilities. The longest element symbol consists of three letters, where the first letter of every atom is always capitalised, and the following ones are not. The subscript number (number of atoms or element in a given molecule) can be found easily, as numbers within molecules always belong to the preceding element (H2O - the 2 belongs to the hydrogen). Individual elements are found by checking for capital letters. An element starts with a capital letter and ends at the next capital letter, which is where the next element starts. The same techniques were used to find brackets and complex ions in the equation.
+
+\begin{lstlisting}[language=Python, caption=parseComponent method for finding elements]
+def parseComponent(self, component, countsDict, totalDict):
+        # Check for coefficient
+        try:
+            if component[0] in self.integers:
+                try:
+                    if component[0 + 1] in self.integers:
+                        try:
+                            if component[0 + 2] in self.integers:
+                                coefficient = int(component[0: 0 + 3])
+                            else:
+                                coefficient = int(component[0: 0 + 2])
+                        except IndexError:
+                            coefficient = int(component[0: 0 + 2])
+                    else:
+                        coefficient = int(component[0])
+                except IndexError:
+                    coefficient = int(component[0])
+            else:
+                coefficient = 1
+            for i in range(len(component)):
+                try:
+                    openBracket = component.find("(")
+                    closedBracket = component.find(")")
+                except IndexError:
+                    continue
+                try:
+                    if component[i].isupper() and component[i - 1] != "(":
+                        try:
+                            if component[i + 1].islower():
+                                try:
+                                    if component[i + 2].islower():
+                                        element = component[i:(i + 3)]
+                                        if openBracket < i < closedBracket:
+                                            subCoefficient = self.getSubCoefficient(component)
+                                        else:
+                                            subCoefficient = 1
+
+                                        # Check for subscript
+                                        try:
+                                            if component[i + 3] in self.integers:
+                                                try:
+                                                    if component[i + 4] in self.integers:
+                                                        try:
+                                                            if component[i + 5] in self.integers:
+                                                                subscript = int(component[(i + 3): (i + 6)])
+                                                            else:
+                                                                subscript = int(component[(i + 3): (i + 5)])
+                                                        except IndexError:
+                                                            subscript = int(component[(i + 3): (i + 5)])
+                                                    else:
+                                                        subscript = int(component[i + 3])
+                                                except IndexError:
+                                                    subscript = int(component[i + 3])
+                                            else:
+                                                subscript = 1
+                                        except IndexError:
+                                            subscript = 1
+                                    else:
+                                        element = component[i:(i + 2)]
+
+                                        if openBracket < i < closedBracket:
+                                            subCoefficient = self.getSubCoefficient(component)
+                                        else:
+                                            subCoefficient = 1
+
+                                        # Check for subscript
+                                        try:
+                                            if component[i + 2] in self.integers:
+                                                try:
+                                                    if component[i + 3] in self.integers:
+                                                        try:
+                                                            if component[i + 4] in self.integers:
+                                                                subscript = int(component[(i + 2): (i + 5)])
+                                                        except IndexError:
+                                                            subscript = int(component[(i + 2): (i + 4)])
+                                                except IndexError:
+                                                    subscript = int(component[i + 2])
+                                            else:
+                                                subscript = 1
+                                        except IndexError:
+                                            subscript = 1
+                                except IndexError:
+                                    element = component[i:(i + 2)]
+                                    if openBracket < i < closedBracket:
+                                        subCoefficient = self.getSubCoefficient(component)
+                                    else:
+                                        subCoefficient = 1
+                            else:
+                                element = component[i]
+                                if openBracket < i < closedBracket:
+                                    subCoefficient = self.getSubCoefficient(component)
+                                else:
+                                    subCoefficient = 1
+                                try:
+                                    # Check for subscript
+                                    if component[i + 1] in self.integers:
+                                        try:
+                                            if component[i + 2] in self.integers:
+                                                try:
+                                                    if component[i + 3] in self.integers:
+                                                        subscript = int(component[i + 1: i + 4])
+                                                except IndexError:
+                                                    subscript = int(component[i + 1: i + 3])
+                                            else:
+                                                subscript = int(component[i + 1])
+                                        except IndexError:
+                                            subscript = int(component[i + 1])
+                                    else:
+                                        subscript = 1
+                                except IndexError:
+                                    subscript = 1
+                        except IndexError:
+                            element = component[i]
+
+                            if openBracket < i < closedBracket:
+                                subCoefficient = self.getSubCoefficient(component)
+                            else:
+                                subCoefficient = 1
+
+                            try:
+                                # Check for subscript
+                                if component[i + 1] in self.integers:
+                                    try:
+                                        if component[i + 2] in self.integers:
+                                            try:
+                                                if component[i + 3] in self.integers:
+                                                    subscript = int(component[i + 1: i + 4])
+                                            except IndexError:
+                                                subscript = int(component[i + 1: i + 3])
+                                        else:
+                                            subscript = int(component[i + 1])
+                                    except IndexError:
+                                        subscript = int(component[i + 1])
+                                else:
+                                    subscript = 1
+                            except IndexError:
+                                subscript = 1
+                        try:
+                            if element in countsDict:
+                                countsDict[element] = int(countsDict[element]) + subscript * coefficient * subCoefficient
+                            else:
+                                countsDict[element] = subscript * coefficient * subCoefficient
+
+                            if element in totalDict:
+                                totalDict[element] = int(totalDict[element]) + subscript * coefficient * subCoefficient
+                            else:
+                                totalDict[element] = subscript * coefficient * subCoefficient
+                        except UnboundLocalError:
+                            continue
+
+                    # Check for brackets / complex ion in equation
+                    elif component[i] == "(":
+                        try:
+                            if component[i + 2] == ")":
+                                element = component[i + 1]
+                                try:
+                                    if component[i + 3] in self.integers:
+                                        try:
+                                            if component[i + 4] in self.integers:
+                                                try:
+                                                    if component[i + 5] in self.integers:
+                                                        subscript = int(component[(i + 3): (i + 6)])
+                                                    else:
+                                                        subscript = int(component[(i + 3): (i + 5)])
+                                                except IndexError:
+                                                    subscript = int(component[(i + 3): (i + 5)])
+                                            else:
+                                                subscript = int(component[(i + 3): (i + 4)])
+                                        except IndexError:
+                                            subscript = int(component[i + 3])
+                                    else:
+                                        subscript = 1
+                                except IndexError:
+                                    subscript = 1
+                            elif component[i + 1].isupper():
+                                if component[i + 2].islower():
+                                    try:
+                                        if component[i + 3].islower():
+                                            element = component[(i + 1): (i + 4)]
+
+                                            # Check for subscript within brackets
+                                            try:
+                                                if component[i + 4] in self.integers:
+                                                    try:
+                                                        if component[i + 5] in self.integers:
+                                                            try:
+                                                                if component[i + 6] in self.integers:
+                                                                    subscript = int(component[(i + 4): (i + 7)])
+                                                                else:
+                                                                    subscript = int(component[(i + 4): (i + 6)])
+                                                            except IndexError:
+                                                                subscript = int(component[(i + 4): (i + 6)])
+                                                        else:
+                                                            subscript = int(component[i + 4])
+                                                    except IndexError:
+                                                        subscript = int(component[i + 4])
+                                                else:
+                                                    subscript = 1
+                                            except IndexError:
+                                                subscript = 1
+
+                                            # Find subscript coefficient of complex ion
+                                            subCoefficient = self.getSubCoefficient(component)
+                                        else:
+                                            element = component[(i + 1): (i + 3)]
+
+                                            # Check for subscript within brackets
+                                            try:
+                                                if component[i + 3] in self.integers:
+                                                    try:
+                                                        if component[i + 4] in self.integers:
+                                                            try:
+                                                                if component[i + 5] in self.integers:
+                                                                    subscript = int(component[(i + 3): (i + 6)])
+                                                                else:
+                                                                    subscript = int(component[(i + 3): (i + 5)])
+                                                            except IndexError:
+                                                                subscript = int(component[(i + 3): (i + 5)])
+                                                    except IndexError:
+                                                        subscript = int(component[i + 3])
+                                                else:
+                                                    subscript = 1
+                                            except IndexError:
+                                                subscript = 1
+
+                                            # Find subscript coefficient of complex ion
+                                            subCoefficient = self.getSubCoefficient(component)
+                                    except IndexError:
+                                        element = component[(i + 1): (i + 3)]
+
+                                        # Check for subscript within brackets
+                                        try:
+                                            if component[i + 3] in self.integers:
+                                                try:
+                                                    if component[i + 4] in self.integers:
+                                                        try:
+                                                            if component[i + 5] in self.integers:
+                                                                subscript = int(component[(i + 3): (i + 6)])
+                                                            else:
+                                                                subscript = int(component[(i + 3): (i + 5)])
+                                                        except IndexError:
+                                                            subscript = int(component[(i + 3): (i + 5)])
+                                                except IndexError:
+                                                    subscript = int(component[i + 3])
+                                            else:
+                                                subscript = 1
+                                        except IndexError:
+                                            subscript = 1
+
+                                        # Find subscript coefficient of complex ion
+                                        subCoefficient = self.getSubCoefficient(component)
+                                else:
+                                    element = component[i + 1]
+
+                                    # Check for subscript within brackets
+                                    try:
+                                        if component[i + 2] in self.integers:
+                                            try:
+                                                if component[i + 3] in self.integers:
+                                                    try:
+                                                        if component[i + 4] in self.integers:
+                                                            subscript = int(component[(i + 2): (i + 5)])
+                                                        else:
+                                                            subscript = int(component[(i + 2): (i + 4)])
+                                                    except IndexError:
+                                                        subscript = int(component[(i + 2): (i + 4)])
+                                            except IndexError:
+                                                subscript = int(component[i + 2])
+                                        else:
+                                            subscript = 1
+                                    except IndexError:
+                                        subscript = 1
+
+                                    # Find subscript coefficient of complex ion
+                                    subCoefficient = self.getSubCoefficient(component)
+                        except IndexError:
+                            print("wrong user input ")
+                        try:
+                            if element in countsDict:
+                                countsDict[element] += subscript * subCoefficient * coefficient
+                            else:
+                                countsDict[element] = subscript * subCoefficient * coefficient
+                            if element in totalDict:
+                                totalDict[element] += subscript * subCoefficient * coefficient
+                            else:
+                                totalDict[element] = subscript * subCoefficient * coefficient
+                        except UnboundLocalError:
+                            continue
+                    else:
+                        continue
+                except IndexError:
+                	continue
+        except IndexError:
+            None
+\end{lstlisting}
+
+Although this code is very overly complicated, it worked most of the times for basic or intermediate level equations.\\
+The main problem this version of the balancer ran into, was the actual balancing of the equations. The version uses a loop to attempt balancing, where copies of the left and right hand side components are created together with dictionaries to track the total count of elements. Each component then gets a randomly generated coefficient between 1 and 10, and the loop continues until the count on the left side equals the count on the right side. Once a balanced equation is found, the coefficients are normalised to their smallest integer values using the greatest common divisor (GCD) The balanced equation is then put back together and returned to the user.\\
+
+\begin{lstlisting}[language=Python, caption=balance method]
+def balance(self):
+        if self.balanced:
+            equation = str()
+            for dictionary in self.left:
+                compound = str()
+                for element in dictionary:
+                    compound += element
+                    if dictionary[element] > 1:
+                        compound += str(dictionary[element])
+                equation += compound
+                equation += " + "
+            equation = equation[:len(equation) - 3] + " = "
+            for dictionary in self.right:
+                compound = str()
+                for element in dictionary:
+                    compound += element
+                    if dictionary[element] > 1:
+                        compound += str(dictionary[element])
+                    else:
+                        pass
+                equation += compound
+                equation += " + "
+            equation = equation[:len(equation) - 2]
+        else:
+            while not self.balanced:
+                tempLeft = list()
+                tempRight = list()
+                totalLeft = dict()
+                totalRight = dict()
+
+                for item in self.left:
+                    newDict = dict()
+                    for key in item:
+                        newDict[key] = item[key]
+                    tempLeft.append(newDict)
+
+                for item in self.right:
+                    newDict = dict()
+                    for key in item:
+                        newDict[key] = item[key]
+                    tempRight.append(newDict)
+
+                leftCoefficients = [randint(1, 10) for _ in range(len(tempLeft))]
+                rightCoefficients = [randint(1, 10) for _ in range(len(tempRight))]
+
+                for index in range(0, len(leftCoefficients)):
+                    for key in tempLeft[index]:
+                        tempLeft[index][key] *= leftCoefficients[index]
+                        if key not in totalLeft:
+                            totalLeft[key] = tempLeft[index][key]
+                        else:
+                            totalLeft[key] += tempLeft[index][key]
+
+                for index in range(0, len(rightCoefficients)):
+                    for key in tempRight[index]:
+                        tempRight[index][key] *= rightCoefficients[index]
+                        if key not in totalRight:
+                            totalRight[key] = tempRight[index][key]
+                        else:
+                            totalRight[key] += tempRight[index][key]
+
+                self.balanced = True
+                for key in totalLeft:
+                    if totalLeft[key] != totalRight[key]:
+                        self.balanced = False
+                    else:
+                        continue
+
+            bigTup = tuple(leftCoefficients + rightCoefficients)
+            leftCoefficients = list(map(lambda x: int(x / reduce(gcd, bigTup)), leftCoefficients))
+            rightCoefficients = list(map(lambda x: int(x / reduce(gcd, bigTup)), rightCoefficients))
+
+            balancedEquation = str()
+            for index in range(0, len(self.left)):
+                if leftCoefficients[index] != 1:
+                    compound = str(leftCoefficients[index])
+                else:
+                    compound = str()
+                for key in self.left[index]:
+                    compound += key
+                    if self.left[index][key] != 1:
+                        compound += str(self.left[index][key])
+                balancedEquation += compound
+                balancedEquation += " + "
+            balancedEquation = balancedEquation[:len(balancedEquation) - 3] + " = "
+            for index in range(0, len(self.right)):
+                if rightCoefficients[index] != 1:
+                    compound = str(rightCoefficients[index])
+                else:
+                    compound = str()
+                for key in self.right[index]:
+                    compound += key
+                    if self.right[index][key] != 1:
+                        compound += str(self.right[index][key])
+                balancedEquation += compound
+                balancedEquation += " + "
+            balancedEquation = balancedEquation[:len(balancedEquation) - 2]
+            return self.balancedLabel.setText(f"{balancedEquation}")
+\end{lstlisting}
+
+\newpage
+
+This version had a few obvious limitations, it relied on randomly generated coefficients, which is not a very reliable system of finding the correct coefficients. Although the random generation usually provides coefficients, it  may not always produce the most optimal or smallest possible coefficients. The normalisation step using the greatest common divisor ensures that the coefficients are integer multiples of each other, but it does not guarantee the smallest 	possible coefficients. If a balanced equation cannot be found with the randomly generated coefficients, there is also a possibility of infinite looping.
+
+\begin{figure} [h]
+	\centering
+	\includegraphics[scale=0.5]{initial_balance_test}
+	\caption{Initial balancer test}
+	\label{fig:initial_balance_test}
+\end{figure}
+
+The test in Figure 4 shows, that the system works (at least for simple equations). Just the simple addition of two carbon atoms and four hydrogen atoms to get the equation $ C2H6 + O2 = CO2 + H2O$ is already too much for the system, as this will end in an infinite loop. This loop can be prevented by increasing the range of possibilities for the randomly generated integers (for example from between 1 and 10 to between 1 and 100) but this means there is always a limit to what is possible for the balancer. Figure 5 shows the state of the program after trying to balance the equation with the original range of one to 10. The program in the figure is in the state of an infinite loop.
+
+\begin{figure} [h]
+	\centering
+	\includegraphics[scale=0.5]{initial_balance_test2}
+	\caption{Initial balancer test No. 2}
+	\label{fig:initial_balance_test2}
+\end{figure}
+
+\newpage
+
+Whilst researching for better ways to implement a chemical equation balancer in python, I came across regular expressions, which around that same time, we also covered in out A-Level Computer Science lessons. Knowing about regular expressions helped me significantly improve the effectiveness of my balancer, when it comes to extracting individual elements and their amount from the equation. In my search for the best possible way to do so, I wrote a number of algorithms, which extend each other perfectly, to finish the job together.\\
+This algorithm (Algorithm 2) takes the full equation as a parameter from the user input and removes any whites paces from it. It then splits it up into separate reactants and products, and lastly, it extracts the individual reagents within the reactants and products.
+\begin{algorithm}
+\caption{Algorithm to split equation}\label{alg:cap}
+\begin{algorithmic}
+\Function{$ split\_equation$}{$ $}
+\State $ stripped\_equation \gets USERINPUT$
+\State $ stripped\_equation \gets stripped\_equation.STRIP(" ")$
+\State $ equation\_split \gets stripped\_equation.SPLIT("=")$
+\State $ reactants \gets equation\_split[0].SPLIT("+")$
+\State $ products \gets equation\_split[1].SPLIT("+")$
+\EndFunction
+\end{algorithmic}
+\end{algorithm}
+
+This second algorithm(Algorithm 3), which I designed for the task mentioned above, uses regular expressions, to identify separate reagents within a chemical compound by identifying brackets. The goal is to split up compounds like $ CuNO3)2$ into $ ["Cu",\ "(NO3)2"]$, where $Cu$ and $(NO3)2$ are two separate entries in the list. The method then iterates over each reagent, and checks if it starts with an opening bracket. If it does, this indicates, that there is a chemical compound enclosed in the brackets. It extracts the inner compound and the subscript ($ (OH)2$ indicates that the $(OH)$ group exists twice), and then passes these two variables as parameters to the "find\_elements" method, along with the "index" and "side" parameters.
+
+\begin{algorithm}
+\footnotesize
+\caption{Algorithm to find reagents}\label{alg:cap}
+\begin{algorithmic}
+\Function{$find\_reagents$}{$compound,\ index,\ side$}
+\State $ reagents \gets SPLIT\ compound\ INTO\ reagents\ USING\ REGEX\ PATTERN$
+\For{$ reagent\ IN\ reagents$}
+\If{$ reagent\ BEGINS\ WITH\ "("$}
+	\State $ inner\_compound \gets SUBSTRING(1,\ LEN(reagent))$
+	\State $ bracket\_subscript \gets SPLIT\ reagent\ BY\ ")"\ AND\ GET\ SECOND\ PART$
+	\If{$ bracket\_subscript\ EXISTS$}
+		\State $ bracket\_subscript \gets INT(bracket\_subscript)$
+	\Else
+		\State $ bracket\_subscript \gets 1$
+	\EndIf
+	\State $ find\_elements(inner\_compound,\ index,\ bracket\_subscript,\ side)$
+\Else
+	\State $ bracket\_subscript \gets 1$
+	\State $ find\_elements(reagent,\ index,\ bracket\_subscript,\ side)$
+\EndIf
+\EndFor
+\EndFunction
+\end{algorithmic}
+\end{algorithm}
+
+The next algorithm (Algorithm 4) uses a regular expression to obtain the elements and associated subscript values. Each extracted element is then stored together with the correlated subscript value as a tuple, inside a list (For example: $Cr2O7$ $\rightarrow$ $[("Cr",\ "2"),\ ("O",\ "7")]$). The algorithm then iterates through each tuple (elements, subscript) in the element\_counts list.
+With every iteration, a different subroutine named add\_to\_matrix is called, passing the current element, index, the product of the bracket\_subscript and subscript, and the side argument.
+
+\newpage
+
+\begin{algorithm}
+\footnotesize
+\caption{Algorithm to find elements}\label{alg:cap}
+\begin{algorithmic}
+\Function{$find\_reagents$}{$reagent,\ index,\ bracket\_subscript,\ side$}
+\State $ element\_counts \gets SPLIT\ reagent\ INTO\ element\_counts\ USING\ REGEX\ PATTERN$
+\For{$ element,\ subscript\ IN\ element\_counts$}
+\If{$ subscript\ DOES\ NOT\ EXIST$}
+	\State $ subscript \gets 1$
+\Else
+	\State $ subscript \gets INT(subscript)$
+\EndIf
+\State $ add\_to\_matrix(element,\ index,\ bracket\_subscript * subscript,\ side)$
+\EndFor
+\EndFunction
+\end{algorithmic}
+\end{algorithm}
+
+While I was conducting my research, I found a neat solution to balancing equations, matrix operations. As we had only covered the rudimentary principles of matrix operations, I chose to use the article I had found on the internet to get a better understanding of the topic. After getting a grasp of the concept, and after trying out the code in the article, I had found a different way to tackle my problem. I decided not to reinvent the wheel, but to take the already existing algorithm and improve it, so it could be used for practically any tractable equation there is.\\
+To address the problem, I decided to record a number of issues and possible improvements for the existing algorithm.
+
+\begin{enumerate}
+\item The first issue I had with the algorithm was, that it asked for separate inputs of reactants and products. Luckily, I had already solved this problem with the algorithms illustrated earlier.
+\item Another issue the original algorithm had was the lack of structure and modularity. By organising the code in a class based structure, I ensured good readability for the code, as well as making it easier to maintain.
+\item The original version had poor input validation and error handling. One common error I got with the early implementation of the algorithm was what I call a nullspace error. The nullspace is a linear subspace that contains a set of vectors that transform to the zero$^{th}$ vector under a given linear transformation: multiplication with the matrix A, represented as $ Ax = 0$. In the context of chemical equations, the nullspace contains the coefficients, that balance the equation.\\
+Entering the unbalanced equation $ K4[Fe(SCN)6] + K2Cr2O7 + H2SO4$\\ $ = Fe2(SO4)3 + Cr2(SO4)3 + CO2 + H2O + K2SO4 + KNO3$ resulted in a "nullspace error" (Figure 6). 
+
+\newpage
+
+\begin{figure} [h]
+	\centering
+	\includegraphics[scale=0.5]{nullspace_error}
+	\caption{Nullspace error}
+	\label{fig:nullspace_error}
+\end{figure}
+
+I managed to neutralise this error by having a more accurate and efficient method of separating out molecules, elements, etc. as shown in Algorithm 3 and Algorithm 4, before passing them on to the method that adds the items to the matrix.\\
+I also made sure to use pythons built in exception handling to catch any expected and unexpected errors or exceptions.
+\end{enumerate}
+
+Using the current working system, inputting the chemical equation mentioned before results in a perfectly balanced equation (Figure 7).
+
+\begin{figure} [h]
+	\centering
+	\includegraphics[scale=0.3]{working_balancer}
+	\caption{Balanced equation}
+	\label{fig:working_balancer}
+\end{figure}
 
 \newpage
 

@@ -11,5 +11,6 @@
 \contentsline {subsection}{\numberline {2.2}Project Hierarchy}{8}{}%
 \contentsline {subsection}{\numberline {2.3}Structure of the GUI}{9}{}%
 \contentsline {subsection}{\numberline {2.4}Algorithm Design for ChemCalculator}{12}{}%
-\contentsline {section}{\numberline {3}Testing}{13}{}%
-\contentsline {section}{\numberline {4}Evaluation}{13}{}%
+\contentsline {subsection}{\numberline {2.5}Algorithm Design for ChemBalancer}{13}{}%
+\contentsline {section}{\numberline {3}Testing}{28}{}%
+\contentsline {section}{\numberline {4}Evaluation}{28}{}%
