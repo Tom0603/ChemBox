@@ -686,7 +686,7 @@ def parseComponent(self, component, countsDict, totalDict):
             None
 \end{lstlisting}
 
-Although this code is very overly complicated, it worked most of the times for basic or intermediate level equations.\\
+Although this code is overly complicated, it worked most of the times for basic or intermediate level equations.\\
 The main problem this version of the balancer ran into, was the actual balancing of the equations. The version uses a loop to attempt balancing, where copies of the left and right hand side components are created together with dictionaries to track the total count of elements. Each component then gets a randomly generated coefficient between 1 and 10, and the loop continues until the count on the left side equals the count on the right side. Once a balanced equation is found, the coefficients are normalised to their smallest integer values using the greatest common divisor (GCD) The balanced equation is then put back together and returned to the user.\\
 
 \begin{lstlisting}[language=Python, caption=balance method]
@@ -890,7 +890,7 @@ Entering the unbalanced equation $ K4[Fe(SCN)6] + K2Cr2O7 + H2SO4$\\ $ = Fe2(SO4
 
 \begin{figure} [h]
 	\centering
-	\includegraphics[scale=0.5]{nullspace_error}
+	\includegraphics[scale=0.4]{nullspace_error}
 	\caption{Nullspace error}
 	\label{fig:nullspace_error}
 \end{figure}

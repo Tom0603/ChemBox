@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.141592653-2.6-1.40.25 (TeX Live 2023) (preloaded format=pdflatex 2023.10.31)  17 MAR 2024 20:16
+This is pdfTeX, Version 3.141592653-2.6-1.40.25 (TeX Live 2023) (preloaded format=pdflatex 2023.10.31)  18 MAR 2024 00:19
 entering extended mode
  restricted \write18 enabled.
  %&-line parsing enabled.
@@ -669,12 +669,7 @@ e_error.png Graphic file (type png)
 _error.png>
 Package pdftex.def Info: /Users/tom/Documents/Programmieren/ChemBox/Documentati
 on/Images//nullspace_error.png  used on input line 893.
-(pdftex.def)             Requested size: 445.16203pt x 59.2211pt.
-
-Overfull \hbox (55.16203pt too wide) in paragraph at lines 893--894
- [][] 
- []
-
+(pdftex.def)             Requested size: 356.12419pt x 47.37614pt.
 </Users/tom/Documents/Programmieren/ChemBox/Documentation/Images//working_balan
 cer.png, id=117, 1276.77pt x 741.77126pt>
 File: /Users/tom/Documents/Programmieren/ChemBox/Documentation/Images//working_
@@ -684,9 +679,9 @@ alancer.png>
 Package pdftex.def Info: /Users/tom/Documents/Programmieren/ChemBox/Documentati
 on/Images//working_balancer.png  used on input line 906.
 (pdftex.def)             Requested size: 383.03395pt x 222.5331pt.
-[27 </Users/tom/Documents/Programmieren/ChemBox/Documentation/Images//nullspace
-_error.png> </Users/tom/Documents/Programmieren/ChemBox/Documentation/Images//w
-orking_balancer.png>] [28] (./ChemBox_Documentation.aux)
+ [27 </Users/tom/Documents/Programmieren/ChemBox/Documentation/Images//nullspac
+e_error.png> </Users/tom/Documents/Programmieren/ChemBox/Documentation/Images//
+working_balancer.png>] [28] (./ChemBox_Documentation.aux)
 
 LaTeX Warning: There were multiply-defined labels.
 
@@ -713,7 +708,7 @@ live/2023/texmf-dist/fonts/type1/public/amsfonts/cm/cmr8.pfb></usr/local/texliv
 e/2023/texmf-dist/fonts/type1/public/amsfonts/cm/cmsy10.pfb></usr/local/texlive
 /2023/texmf-dist/fonts/type1/public/amsfonts/cm/cmsy8.pfb></usr/local/texlive/2
 023/texmf-dist/fonts/type1/public/amsfonts/cm/cmtt8.pfb>
-Output written on ChemBox_Documentation.pdf (29 pages, 432597 bytes).
+Output written on ChemBox_Documentation.pdf (29 pages, 432605 bytes).
 PDF statistics:
  186 PDF objects out of 1000 (max. 8388607)
  111 compressed objects within 2 object streams
