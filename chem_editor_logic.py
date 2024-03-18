@@ -70,36 +70,36 @@ class Bond:
         return length
 
 
-@dataclass
-class Carbon:
-    SYMBOL: str = "C"
-    OUTER_ELECTRONS: int = 4
-    FULL_SHELL: int = 8
+# dataclass
+# lass Carbon:
+#    SYMBOL: str = "C"
+#    OUTER_ELECTRONS: int = 4
+#    FULL_SHELL: int = 8
 
 
-@dataclass
-class Hydrogen:
-    SYMBOL: str = "H"
-    OUTER_ELECTRONS: int = 1
-    FULL_SHELL: int = 2
+# dataclass
+# lass Hydrogen:
+#    SYMBOL: str = "H"
+#    OUTER_ELECTRONS: int = 1
+#    FULL_SHELL: int = 2
 
 
-@dataclass
-class Oxygen:
-    SYMBOL: str = "O"
-    OUTER_ELECTRONS: int = 6
-    FULL_SHELL: int = 8
+# dataclass
+# lass Oxygen:
+#    SYMBOL: str = "O"
+#    OUTER_ELECTRONS: int = 6
+#    FULL_SHELL: int = 8
 
 
-@dataclass
-class Chlorine:
-    SYMBOL: str = "Cl"
-    OUTER_ELECTRONS: int = 7
-    FULL_SHELL: int = 8
+# dataclass
+# lass Chlorine:
+#    SYMBOL: str = "Cl"
+#    OUTER_ELECTRONS: int = 7
+#    FULL_SHELL: int = 8
 
 
-@dataclass
-class Fluorine:
-    SYMBOL: str = "F"
-    OUTER_ELECTRONS: int = 7
-    FULL_SHELL: int = 8
+# dataclass
+# lass Fluorine:
+#    SYMBOL: str = "F"
+#    OUTER_ELECTRONS: int = 7
+#    FULL_SHELL: int = 8

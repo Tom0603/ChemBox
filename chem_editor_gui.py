@@ -16,14 +16,8 @@ class ChemEditor(QWidget):
         self.editor_layout = QGridLayout()
         self.setLayout(self.editor_layout)
 
-        self.carbon_button = QPushButton("C")
-        self.hydrogen_button = QPushButton("H")
-        self.oxygen_button = QPushButton("O")
-        self.chlorine_button = QPushButton("Cl")
-        self.fluorine_button = QPushButton("F")
-
-        self.bond_action_button = QPushButton("Bond")
         self.draw_action_button = QPushButton("Draw")
+        self.bond_action_button = QPushButton("Bond")
 
         self.remove_button = QPushButton("Remove")
         self.reset_button = QPushButton("Reset")
@@ -34,25 +28,15 @@ class ChemEditor(QWidget):
         self.double_bond_button = QPushButton("Double")
         self.triple_bond_button = QPushButton("Triple")
 
-        self.editor_layout.addWidget(self.carbon_button, 0, 0)
-        self.editor_layout.addWidget(self.hydrogen_button, 0, 1)
-        self.editor_layout.addWidget(self.oxygen_button, 0, 2)
-        self.editor_layout.addWidget(self.chlorine_button, 0, 3)
-        self.editor_layout.addWidget(self.fluorine_button, 0, 4)
-        self.editor_layout.addWidget(self.bond_action_button, 0, 9)
         self.editor_layout.addWidget(self.draw_action_button, 0, 10)
-        self.editor_layout.addWidget(self.remove_button, 0, 11)
-        self.editor_layout.addWidget(self.reset_button, 0, 12)
-        self.editor_layout.addWidget(self.save_button, 0, 13)
-        self.editor_layout.addWidget(self.single_bond_button, 0, 17)
-        self.editor_layout.addWidget(self.double_bond_button, 0, 18)
-        self.editor_layout.addWidget(self.triple_bond_button, 0, 19)
+        self.editor_layout.addWidget(self.bond_action_button, 0, 11)
+        self.editor_layout.addWidget(self.remove_button, 0, 12, 1, 2)
+        self.editor_layout.addWidget(self.reset_button, 0, 14)
+        self.editor_layout.addWidget(self.save_button, 0, 15)
+        self.editor_layout.addWidget(self.single_bond_button, 0, 22)
+        self.editor_layout.addWidget(self.double_bond_button, 0, 23)
+        self.editor_layout.addWidget(self.triple_bond_button, 0, 24)
 
-        self.carbon_button.clicked.connect(self.choose_carbon)
-        self.hydrogen_button.clicked.connect(self.choose_hydrogen)
-        self.oxygen_button.clicked.connect(self.choose_oxygen)
-        self.chlorine_button.clicked.connect(self.choose_chlorine)
-        self.fluorine_button.clicked.connect(self.choose_fluorine)
         self.bond_action_button.clicked.connect(self.choose_bond_action)
         self.draw_action_button.clicked.connect(self.choose_draw_action)
         self.remove_button.clicked.connect(self.remove_action)
@@ -62,8 +46,8 @@ class ChemEditor(QWidget):
         self.double_bond_button.clicked.connect(self.choose_second_order)
         self.triple_bond_button.clicked.connect(self.choose_third_order)
 
-        self.c = Canvas()
-        self.editor_layout.addWidget(self.c, 1, 0, 25, 25)
+        self.canvas = Canvas()
+        self.editor_layout.addWidget(self.canvas, 1, 0, 25, 25)
 
         self.periodic_table = PeriodicTable()
 
@@ -72,7 +56,7 @@ class ChemEditor(QWidget):
         self.periodic_table_btn = QPushButton("Elements")
         self.periodic_table_btn.clicked.connect(self.show_periodic_table)
 
-        self.editor_layout.addWidget(self.periodic_table_btn, 0, 6)
+        self.editor_layout.addWidget(self.periodic_table_btn, 0, 0, 1, 2)
 
         self.chem_logic = chem_editor_logic
 
@@ -80,46 +64,31 @@ class ChemEditor(QWidget):
         self.periodic_table.show()
 
     def set_element(self, data) -> None:
-        self.c.set_element(data)
-
-    def choose_carbon(self) -> None:
-        self.c.set_element(self.chem_logic.Carbon)
-
-    def choose_hydrogen(self) -> None:
-        self.c.set_element(self.chem_logic.Hydrogen)
-
-    def choose_oxygen(self) -> None:
-        self.c.set_element(self.chem_logic.Oxygen)
-
-    def choose_chlorine(self) -> None:
-        self.c.set_element(self.chem_logic.Chlorine)
-
-    def choose_fluorine(self) -> None:
-        self.c.set_element(self.chem_logic.Fluorine)
+        self.canvas.set_element(data)
 
     def choose_draw_action(self) -> None:
-        self.c.set_action_type("draw")
+        self.canvas.set_action_type("draw")
 
     def choose_bond_action(self) -> None:
-        self.c.set_action_type("bond")
+        self.canvas.set_action_type("bond")
 
     def remove_action(self) -> None:
-        self.c.set_action_type("remove")
+        self.canvas.set_action_type("remove")
 
     def reset_action(self) -> None:
-        self.c.reset_canvas()
+        self.canvas.reset_canvas()
 
     def save_action(self) -> None:
-        self.c.save()
+        self.canvas.save()
 
     def choose_first_order(self) -> None:
-        self.c.set_bond_order(1)
+        self.canvas.set_bond_order(1)
 
     def choose_second_order(self) -> None:
-        self.c.set_bond_order(2)
+        self.canvas.set_bond_order(2)
 
     def choose_third_order(self) -> None:
-        self.c.set_bond_order(3)
+        self.canvas.set_bond_order(3)
 
 
 class Canvas(QLabel):
@@ -244,6 +213,7 @@ class Canvas(QLabel):
                                False)
                 self.draw_center_atom(bond.atoms[0].x_coords, bond.atoms[0].y_coords, bond.atoms[0].symbol, pix_painter)
 
+        init_painter.drawPixmap(0, 0, self.pixmap)
         # Check for selected atom and draw potential positions
         if self.selected:
             if self.action_type == "bond":
@@ -279,12 +249,14 @@ class Canvas(QLabel):
                     return
                 return
             print("selected")
+            init_painter.drawPixmap(0, 0, self.pixmap)
             try:
                 # Calculate possible positions for new atoms in 360° around the selected atom
                 if self.selected_atom is not None:
                     print("YEAAA BUDDY")
                     potential_positions = self.calc_potential_positions(self.selected_atom)
                     for pos in potential_positions:
+                        print(f"{pos = }")
                         # If atoms at position don't overlap, draw the potential bonds and atoms in different colour
                         if not self.check_atom_overlap(pos[0], pos[1]):
                             if self.bond_order == 2:
@@ -605,4 +577,6 @@ class PeriodicTable(QWidget):
 
         data = sender_button.property("data")
         self.element_clicked.emit(data)
+
+        self.hide()
         print("data: ", data)
