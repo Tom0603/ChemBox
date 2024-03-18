@@ -5,7 +5,7 @@ from sympy import Matrix, lcm
 
 
 class ChemBalancer(QWidget):
-    f"""
+    """
     This module is responsible for balancing chemical equations.
     It parses user-provided chemical equations, identifies reactants and products, 
     and calculates the coefficients to achieve a balanced equation.
@@ -97,8 +97,10 @@ class ChemBalancer(QWidget):
         :param side: "1" for reactants, "-1" for products.
         """
 
+        print("compound", compound)
         # Split the compound by parentheses
         reagents = re.split("(\([A-Za-z0-9]*\)[0-9]*)", compound)
+        print("Reagents", reagents)
         for reagent in reagents:
             if reagent.startswith("("):
                 # Extract the element within parentheses
@@ -127,8 +129,10 @@ class ChemBalancer(QWidget):
         :param side: "1" for reactants, "-1" for products.
         """
 
+        print("reagent in find_el", reagent)
         # Use regex to separate elements and subscripts
         element_counts = re.findall("([A-Z][a-z]*)([0-9]*)", reagent)
+        print("element counts", element_counts)
         for element, subscript in element_counts:
             if not subscript:
                 subscript = 1
@@ -218,4 +222,4 @@ class ChemBalancer(QWidget):
                 self.balanced_equation += self.products[i]
             if i < len(self.products) - 1:
                 self.balanced_equation += " + "
-        self.equation_input.setText(f"{self.balanced_equation}")
+        self.balanced_label.setText(f"{self.balanced_equation}")

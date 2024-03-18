@@ -1,4 +1,4 @@
-from PyQt6.QtCore import Qt, QPointF
+from PyQt6.QtCore import Qt, QPointF, pyqtSignal
 from PyQt6.QtCore import QPoint
 from PyQt6.QtWidgets import QWidget, QGridLayout, QPushButton, QLabel, QFileDialog
 from PyQt6.QtGui import QPixmap, QPainter, QPen, QColor, QFont, QBrush
@@ -6,6 +6,7 @@ from PyQt6.QtGui import QPixmap, QPainter, QPen, QColor, QFont, QBrush
 import chem_editor_logic
 
 import math
+import json
 
 
 class ChemEditor(QWidget):
@@ -64,7 +65,22 @@ class ChemEditor(QWidget):
         self.c = Canvas()
         self.editor_layout.addWidget(self.c, 1, 0, 25, 25)
 
+        self.periodic_table = PeriodicTable()
+
+        self.periodic_table.element_clicked.connect(self.set_element)
+
+        self.periodic_table_btn = QPushButton("Elements")
+        self.periodic_table_btn.clicked.connect(self.show_periodic_table)
+
+        self.editor_layout.addWidget(self.periodic_table_btn, 0, 6)
+
         self.chem_logic = chem_editor_logic
+
+    def show_periodic_table(self):
+        self.periodic_table.show()
+
+    def set_element(self, data) -> None:
+        self.c.set_element(data)
 
     def choose_carbon(self) -> None:
         self.c.set_element(self.chem_logic.Carbon)
@@ -120,7 +136,7 @@ class Canvas(QLabel):
         self.chem_logic = chem_editor_logic
 
         # Set default element to carbon
-        self.element = self.chem_logic.Carbon
+        self.element = self.get_carbon()
 
         # List containing all atoms on the Canvas
         self.atoms: list[chem_editor_logic.Atom] = []
@@ -142,6 +158,16 @@ class Canvas(QLabel):
 
         # Initially no atom is selected
         self.selected_atom = None
+
+    def get_carbon(self):
+        print("GET CARBON")
+        elements = json.load(open("elements.json"))
+
+        for element, data in elements.items():
+            if element == "Carbon":
+                return data
+
+            print(element)
 
     def save(self):
         # Select file path
@@ -256,6 +282,7 @@ class Canvas(QLabel):
             try:
                 # Calculate possible positions for new atoms in 360° around the selected atom
                 if self.selected_atom is not None:
+                    print("YEAAA BUDDY")
                     potential_positions = self.calc_potential_positions(self.selected_atom)
                     for pos in potential_positions:
                         # If atoms at position don't overlap, draw the potential bonds and atoms in different colour
@@ -533,6 +560,49 @@ class Canvas(QLabel):
 
                 print(self.action_type)
 
+                print(self.element)
                 new_atom = chem_editor_logic.Atom(self.element, [click_position.x(), click_position.y()])
                 self.atoms.append(new_atom)
                 self.update()
+
+
+class PeriodicTable(QWidget):
+    element_clicked = pyqtSignal(dict)
+
+    def __init__(self):
+        super(QWidget, self).__init__()
+
+        self.layout = QGridLayout()
+        self.setLayout(self.layout)
+
+        self.load_elements()
+
+    def load_elements(self):
+        self.elements = json.load(open("elements.json"))
+
+        for element, data in self.elements.items():
+            # TODO: add colour for element groups
+
+            symbol = data["symbol"]
+            group = data["group"]
+            period = data["period"]
+            outer_el = data["outer_electrons"]
+
+            button = QPushButton(f"{symbol}")
+            button.setFixedSize(40, 40)
+
+            button.clicked.connect(self.button_clicked)
+
+            button.setProperty("data", data)
+
+            button.setToolTip(
+                f"Element: {element}\nGroup: {group}\nPeriod: {period}\nOuter Electrons: {outer_el}")
+
+            self.layout.addWidget(button, period, group)
+
+    def button_clicked(self):
+        sender_button = self.sender()
+
+        data = sender_button.property("data")
+        self.element_clicked.emit(data)
+        print("data: ", data)

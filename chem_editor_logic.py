@@ -4,13 +4,12 @@ from math import sqrt
 
 
 class Atom:
-
-    def __init__(self, element, coordinates: list[int, int]):
-        self.symbol: str = element.SYMBOL
-        self.outer_electrons: int = element.OUTER_ELECTRONS
+    def __init__(self, element_data, coordinates: list[int, int]):
+        self.symbol: str = element_data["symbol"]
+        self.outer_electrons: int = element_data["outer_electrons"]
         self.x_coords: int = coordinates[0]
         self.y_coords: int = coordinates[1]
-        self.full_shell: int = element.FULL_SHELL
+        self.full_shell: int = element_data["full_shell"]
         self.bonds: list[Bond] = []
         self.extra_electrons: int = 0
         self.overall_electrons: int = (self.outer_electrons + self.extra_electrons)
