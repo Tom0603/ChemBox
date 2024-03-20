@@ -213,7 +213,6 @@ class Canvas(QLabel):
                                False)
                 self.draw_center_atom(bond.atoms[0].x_coords, bond.atoms[0].y_coords, bond.atoms[0].symbol, pix_painter)
 
-        init_painter.drawPixmap(0, 0, self.pixmap)
         # Check for selected atom and draw potential positions
         if self.selected:
             if self.action_type == "bond":
@@ -249,14 +248,11 @@ class Canvas(QLabel):
                     return
                 return
             print("selected")
-            init_painter.drawPixmap(0, 0, self.pixmap)
             try:
                 # Calculate possible positions for new atoms in 360° around the selected atom
                 if self.selected_atom is not None:
-                    print("YEAAA BUDDY")
                     potential_positions = self.calc_potential_positions(self.selected_atom)
                     for pos in potential_positions:
-                        print(f"{pos = }")
                         # If atoms at position don't overlap, draw the potential bonds and atoms in different colour
                         if not self.check_atom_overlap(pos[0], pos[1]):
                             if self.bond_order == 2:
@@ -272,7 +268,16 @@ class Canvas(QLabel):
                                                   self.selected_atom.y_coords, pix_painter, pen)
                             pen.setStyle(Qt.PenStyle.SolidLine)
                             pix_painter.setPen(pen)
-                            self.draw_atom(pos[0], pos[1], self.element.SYMBOL, pix_painter, pen, True)
+
+                            # Use of self.element["symbol"], as the whole elements json data is stored in self.element
+                            # E.g. {'symbol': 'C',
+                            # 'atomic_number': 6,
+                            # 'group': 14,
+                            # 'period': 2,
+                            # 'outer_electrons': 4,
+                            # 'full_shell': 8}
+
+                            self.draw_atom(pos[0], pos[1], self.element["symbol"], pix_painter, pen, True)
                             self.draw_center_atom(self.selected_atom.x_coords, self.selected_atom.y_coords,
                                                   self.selected_atom.symbol, pix_painter)
                     init_painter.drawPixmap(0, 0, self.pixmap)
@@ -527,7 +532,7 @@ class Canvas(QLabel):
 
                 # Check if there is an atom at clicked position
                 if self.check_clicked_on_atom(click_position.x(), click_position.y()):
-                    print(self.selected_atom.overall_electrons)
+                    print(f"{self.selected_atom = }")
                     return
 
                 print(self.action_type)
@@ -546,6 +551,8 @@ class PeriodicTable(QWidget):
 
         self.layout = QGridLayout()
         self.setLayout(self.layout)
+
+        self.elements = None
 
         self.load_elements()
 
@@ -579,4 +586,3 @@ class PeriodicTable(QWidget):
         self.element_clicked.emit(data)
 
         self.hide()
-        print("data: ", data)

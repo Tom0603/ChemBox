@@ -69,7 +69,6 @@ class Bond:
             return
         return length
 
-
 # dataclass
 # lass Carbon:
 #    SYMBOL: str = "C"
