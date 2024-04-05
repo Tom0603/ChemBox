@@ -1,10 +1,5 @@
-from dataclasses import dataclass
-
-from math import sqrt
-
-
 class Atom:
-    def __init__(self, element_data, coordinates: list[int, int]):
+    def __init__(self, element_data: dict, coordinates: list[int, int]):
         self.symbol: str = element_data["symbol"]
         self.outer_electrons: int = element_data["outer_electrons"]
         self.x_coords: int = coordinates[0]
@@ -14,13 +9,13 @@ class Atom:
         self.extra_electrons: int = 0
         self.overall_electrons: int = (self.outer_electrons + self.extra_electrons)
 
-    def __eq__(self, other):
+    def __eq__(self, other) -> bool:
         return self.symbol == other.symbol and [self.x_coords, self.y_coords] == [other.x_coords, other.y_coords]
 
-    def __add_outer_electrons(self, num: int):
+    def __add_outer_electrons(self, num: int) -> None:
         self.outer_electrons += num
 
-    def __remove_outer_electrons(self, num: int):
+    def __remove_outer_electrons(self, num: int) -> None:
         self.outer_electrons -= num
 
     def check_is_bond_possible(self, bonding_atom, order: int = 1) -> bool:
@@ -33,7 +28,7 @@ class Atom:
         else:
             return True
 
-    def bond(self, bonding_atom, order: int = 1):
+    def bond(self, bonding_atom, order: int = 1) -> None:
         if not self.check_is_bond_possible(bonding_atom, order):
             return
         new_bond = Bond(self, bonding_atom, order)
@@ -45,29 +40,15 @@ class Atom:
         self.overall_electrons = (self.outer_electrons + self.extra_electrons)
         bonding_atom.overall_electrons = (bonding_atom.outer_electrons + bonding_atom.extra_electrons)
 
-    def break_bond(self, atom, order: int = 1):
+    def break_bond(self, atom, order: int = 1) -> None:
         atom.bonds = [bond for bond in atom.bonds if not (self in bond.atoms)]
         atom.__remove_outer_electrons(order)
 
 
 class Bond:
-    def __init__(self, atom1, atom2, order: int):
-        self.atoms = [atom1, atom2]
+    def __init__(self, atom1: Atom, atom2: Atom, order: int):
+        self.atoms: list = [atom1, atom2]
         self.order: int = order
-        self._length: float = self.get_bond_length()
-
-    def get_bond_length(self):
-        """
-        Get the bond length using pythagoras
-        """
-
-        x = self.atoms[1].x_coords - self.atoms[0].x_coords
-        y = self.atoms[1].y_coords - self.atoms[0].y_coords
-        try:
-            length = sqrt(x ** 2 + y ** 2)
-        except RecursionError:
-            return
-        return length
 
 # dataclass
 # lass Carbon:

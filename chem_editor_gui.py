@@ -105,7 +105,7 @@ class Canvas(QLabel):
         self.chem_logic = chem_editor_logic
 
         # Set default element to carbon
-        self.element = self.get_carbon()
+        self.element: dict = self.get_carbon()
 
         # List containing all atoms on the Canvas
         self.atoms: list[chem_editor_logic.Atom] = []
@@ -128,7 +128,7 @@ class Canvas(QLabel):
         # Initially no atom is selected
         self.selected_atom = None
 
-    def get_carbon(self):
+    def get_carbon(self) -> dict:
         print("GET CARBON")
         elements = json.load(open("elements.json"))
 
@@ -136,9 +136,7 @@ class Canvas(QLabel):
             if element == "Carbon":
                 return data
 
-            print(element)
-
-    def save(self):
+    def save(self) -> None:
         # Select file path
         filePath, _ = QFileDialog.getSaveFileName(self, "Save Image", "",
                                                   "PNG(*.png);;JPEG(*.jpg *.jpeg);;All Files(*.*) ")
@@ -150,7 +148,7 @@ class Canvas(QLabel):
         # Save canvas at desired path
         self.pixmap.save(filePath)
 
-    def set_element(self, new_element) -> None:
+    def set_element(self, new_element: dict) -> None:
         self.element = new_element
         self.update()
 
@@ -162,12 +160,12 @@ class Canvas(QLabel):
         self.bond_order = order
         self.update()
 
-    def remove(self):
+    def remove(self) -> None:
         if self.selected:
             self.atoms.remove(self.selected_atom)
         self.update()
 
-    def reset_canvas(self):
+    def reset_canvas(self) -> None:
         self.atoms.clear()
         self.temp_bond_list.clear()
         self.set_action_type("draw")
@@ -360,7 +358,7 @@ class Canvas(QLabel):
         self.__diagonal_bonds(atom1_x, atom1_y, atom2_x, atom2_y, painter, offset, diag_offset)
 
     def __diagonal_bonds(self, atom1_x: int, atom1_y: int, atom2_x: int, atom2_y: int, painter: QPainter, offset: int,
-                         diag_offset: int):
+                         diag_offset: int) -> None:
         # Top left diagonal
         if atom2_x < atom1_x and atom2_y < atom1_y:
             painter.drawLine(QPoint(atom1_x, atom1_y - diag_offset),
@@ -460,7 +458,7 @@ class Canvas(QLabel):
         self.selected_atom = None
         self.update()
 
-    def remove_bond(self, pos_x: int, pos_y: int):
+    def remove_bond(self, pos_x: int, pos_y: int) -> None:
         atom_radius = Canvas.ATOM_RADIUS
         for atom in self.atoms:
             if (
@@ -556,7 +554,7 @@ class PeriodicTable(QWidget):
 
         self.load_elements()
 
-    def load_elements(self):
+    def load_elements(self) -> None:
         self.elements = json.load(open("elements.json"))
 
         for element, data in self.elements.items():
@@ -579,7 +577,7 @@ class PeriodicTable(QWidget):
 
             self.layout.addWidget(button, period, group)
 
-    def button_clicked(self):
+    def button_clicked(self) -> None:
         sender_button = self.sender()
 
         data = sender_button.property("data")
