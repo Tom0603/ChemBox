@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.141592653-2.6-1.40.25 (TeX Live 2023) (preloaded format=pdflatex 2023.10.31)  18 MAR 2024 00:19
+This is pdfTeX, Version 3.141592653-2.6-1.40.25 (TeX Live 2023) (preloaded format=pdflatex 2023.10.31)  24 MAR 2024 18:25
 entering extended mode
  restricted \write18 enabled.
  %&-line parsing enabled.
@@ -23,6 +23,7 @@ File: size12.clo 2022/07/02 v1.4n Standard LaTeX file (size option)
 \belowcaptionskip=\skip49
 \bibindent=\dimen140
 )
+(./ads/packages.tex
 (/usr/local/texlive/2023/texmf-dist/tex/latex/base/inputenc.sty
 Package: inputenc 2021/02/14 v1.3d Input encoding file
 \inpenc@prehook=\toks16
@@ -443,7 +444,7 @@ File: tikzlibraryarrows.code.tex 2023-01-15 v3.1.10 (3.1.10)
 code.tex
 File: pgflibraryarrows.code.tex 2023-01-15 v3.1.10 (3.1.10)
 \arrowsize=\dimen199
-))
+)))
 (/usr/local/texlive/2023/texmf-dist/tex/latex/l3backend/l3backend-pdftex.def
 File: l3backend-pdftex.def 2023-01-16 L3 backend support: PDF output (pdfTeX)
 \l__color_backend_stack_int=\count298
@@ -465,20 +466,20 @@ LaTeX Warning: Label `alg:cap' multiply defined.
 )
 \openout1 = `ChemBox_Documentation.aux'.
 
-LaTeX Font Info:    Checking defaults for OML/cmm/m/it on input line 67.
-LaTeX Font Info:    ... okay on input line 67.
-LaTeX Font Info:    Checking defaults for OMS/cmsy/m/n on input line 67.
-LaTeX Font Info:    ... okay on input line 67.
-LaTeX Font Info:    Checking defaults for OT1/cmr/m/n on input line 67.
-LaTeX Font Info:    ... okay on input line 67.
-LaTeX Font Info:    Checking defaults for T1/cmr/m/n on input line 67.
-LaTeX Font Info:    ... okay on input line 67.
-LaTeX Font Info:    Checking defaults for TS1/cmr/m/n on input line 67.
-LaTeX Font Info:    ... okay on input line 67.
-LaTeX Font Info:    Checking defaults for OMX/cmex/m/n on input line 67.
-LaTeX Font Info:    ... okay on input line 67.
-LaTeX Font Info:    Checking defaults for U/cmr/m/n on input line 67.
-LaTeX Font Info:    ... okay on input line 67.
+LaTeX Font Info:    Checking defaults for OML/cmm/m/it on input line 13.
+LaTeX Font Info:    ... okay on input line 13.
+LaTeX Font Info:    Checking defaults for OMS/cmsy/m/n on input line 13.
+LaTeX Font Info:    ... okay on input line 13.
+LaTeX Font Info:    Checking defaults for OT1/cmr/m/n on input line 13.
+LaTeX Font Info:    ... okay on input line 13.
+LaTeX Font Info:    Checking defaults for T1/cmr/m/n on input line 13.
+LaTeX Font Info:    ... okay on input line 13.
+LaTeX Font Info:    Checking defaults for TS1/cmr/m/n on input line 13.
+LaTeX Font Info:    ... okay on input line 13.
+LaTeX Font Info:    Checking defaults for OMX/cmex/m/n on input line 13.
+LaTeX Font Info:    ... okay on input line 13.
+LaTeX Font Info:    Checking defaults for U/cmr/m/n on input line 13.
+LaTeX Font Info:    ... okay on input line 13.
 \c@lstlisting=\count299
  (/usr/local/texlive/2023/texmf-dist/tex/context/base/mkii/supp-pdf.mkii
 [Loading MPS to PDF converter (version 2006.09.02).]
@@ -517,52 +518,52 @@ LaTeX Font Info:    External font `cmex10' loaded for size
 \openout4 = `ChemBox_Documentation.toc'.
 
  [1]
-Underfull \hbox (badness 10000) in paragraph at lines 102--109
+Underfull \hbox (badness 10000) in paragraph at lines 48--55
 
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 102--109
+Underfull \hbox (badness 10000) in paragraph at lines 48--55
 
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 102--109
+Underfull \hbox (badness 10000) in paragraph at lines 48--55
 
  []
 
 [2]
-Underfull \hbox (badness 10000) in paragraph at lines 125--130
+Underfull \hbox (badness 10000) in paragraph at lines 71--76
 
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 125--130
+Underfull \hbox (badness 10000) in paragraph at lines 71--76
 
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 125--130
+Underfull \hbox (badness 10000) in paragraph at lines 71--76
 
  []
 
 [3] [4] [5]
-Underfull \hbox (badness 10000) in paragraph at lines 189--192
+Underfull \hbox (badness 10000) in paragraph at lines 135--138
 
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 198--200
+Underfull \hbox (badness 10000) in paragraph at lines 144--146
 
  []
 
 [6]
-Underfull \hbox (badness 10000) in paragraph at lines 212--215
+Underfull \hbox (badness 10000) in paragraph at lines 158--161
 
  []
 
 [7]
-Underfull \hbox (badness 10000) in paragraph at lines 222--224
+Underfull \hbox (badness 10000) in paragraph at lines 168--170
 
  []
 
@@ -573,7 +574,7 @@ rarchy.png Graphic file (type png)
 <use /Users/tom/Documents/Programmieren/ChemBox/Documentation/Images//base_hier
 archy.png>
 Package pdftex.def Info: /Users/tom/Documents/Programmieren/ChemBox/Documentati
-on/Images//base_hierarchy.png  used on input line 231.
+on/Images//base_hierarchy.png  used on input line 177.
 (pdftex.def)             Requested size: 284.65845pt x 198.73897pt.
 [8 </Users/tom/Documents/Programmieren/ChemBox/Documentation/Images//base_hiera
 rchy.png>] (/usr/local/texlive/2023/texmf-dist/tex/latex/listings/lstlang1.sty
@@ -586,15 +587,15 @@ kup.png Graphic file (type png)
 <use /Users/tom/Documents/Programmieren/ChemBox/Documentation/Images//tabs_mock
 up.png>
 Package pdftex.def Info: /Users/tom/Documents/Programmieren/ChemBox/Documentati
-on/Images//tabs_mockup.png  used on input line 277.
+on/Images//tabs_mockup.png  used on input line 223.
 (pdftex.def)             Requested size: 405.9093pt x 260.16739pt.
 
-Overfull \hbox (15.9093pt too wide) in paragraph at lines 277--278
+Overfull \hbox (15.9093pt too wide) in paragraph at lines 223--224
  [][] 
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 282--283
+Underfull \hbox (badness 10000) in paragraph at lines 228--229
 
  []
 
@@ -607,11 +608,11 @@ flow.png Graphic file (type png)
 <use /Users/tom/Documents/Programmieren/ChemBox/Documentation/Images//balance_f
 low.png>
 Package pdftex.def Info: /Users/tom/Documents/Programmieren/ChemBox/Documentati
-on/Images//balance_flow.png  used on input line 370.
+on/Images//balance_flow.png  used on input line 316.
 (pdftex.def)             Requested size: 344.07939pt x 290.68085pt.
  [13 </Users/tom/Documents/Programmieren/ChemBox/Documentation/Images//balance_
 flow.png>] [14] [15] [16] [17] [18] [19]
-Underfull \hbox (badness 10000) in paragraph at lines 689--691
+Underfull \hbox (badness 10000) in paragraph at lines 635--637
 
  []
 
@@ -623,7 +624,7 @@ balance_test.png Graphic file (type png)
 <use /Users/tom/Documents/Programmieren/ChemBox/Documentation/Images//initial_b
 alance_test.png>
 Package pdftex.def Info: /Users/tom/Documents/Programmieren/ChemBox/Documentati
-on/Images//initial_balance_test.png  used on input line 799.
+on/Images//initial_balance_test.png  used on input line 745.
 (pdftex.def)             Requested size: 238.8919pt x 153.57336pt.
 </Users/tom/Documents/Programmieren/ChemBox/Documentation/Images//initial_balan
 ce_test2.png, id=97, 563.10374pt x 334.24875pt>
@@ -632,7 +633,7 @@ balance_test2.png Graphic file (type png)
 <use /Users/tom/Documents/Programmieren/ChemBox/Documentation/Images//initial_b
 alance_test2.png>
 Package pdftex.def Info: /Users/tom/Documents/Programmieren/ChemBox/Documentati
-on/Images//initial_balance_test2.png  used on input line 808.
+on/Images//initial_balance_test2.png  used on input line 754.
 (pdftex.def)             Requested size: 281.55118pt x 167.12396pt.
 
 
@@ -642,17 +643,17 @@ LaTeX Warning: `h' float specifier changed to `ht'.
 alance_test.png>] [24 </Users/tom/Documents/Programmieren/ChemBox/Documentation
 /Images//initial_balance_test2.png>]
 LaTeX Font Info:    External font `cmex10' loaded for size
-(Font)              <7> on input line 836.
+(Font)              <7> on input line 782.
 LaTeX Font Info:    External font `cmex10' loaded for size
-(Font)              <5> on input line 836.
+(Font)              <5> on input line 782.
  [25]
-Overfull \hbox (29.72571pt too wide) in paragraph at lines 867--868
+Overfull \hbox (29.72571pt too wide) in paragraph at lines 813--814
 [] $\OML/cmm/m/it/10 element[]counts \OMS/cmsy/m/n/10   \OML/cmm/m/it/10 SPLIT 
 reagent INTO element[]counts USING REGEX PATTERN$ 
  []
 
 
-Overfull \hbox (3.60753pt too wide) in paragraph at lines 886--888
+Overfull \hbox (3.60753pt too wide) in paragraph at lines 832--834
 \OT1/cmr/m/n/12 Entering the un-bal-anced equa-tion $\OML/cmm/m/it/12 K\OT1/cmr
 /m/n/12 4[\OML/cmm/m/it/12 Fe\OT1/cmr/m/n/12 (\OML/cmm/m/it/12 SCN\OT1/cmr/m/n/
 12 )6] + \OML/cmm/m/it/12 K\OT1/cmr/m/n/12 2\OML/cmm/m/it/12 Cr\OT1/cmr/m/n/12 
@@ -668,7 +669,7 @@ e_error.png Graphic file (type png)
 <use /Users/tom/Documents/Programmieren/ChemBox/Documentation/Images//nullspace
 _error.png>
 Package pdftex.def Info: /Users/tom/Documents/Programmieren/ChemBox/Documentati
-on/Images//nullspace_error.png  used on input line 893.
+on/Images//nullspace_error.png  used on input line 839.
 (pdftex.def)             Requested size: 356.12419pt x 47.37614pt.
 </Users/tom/Documents/Programmieren/ChemBox/Documentation/Images//working_balan
 cer.png, id=117, 1276.77pt x 741.77126pt>
@@ -677,23 +678,23 @@ balancer.png Graphic file (type png)
 <use /Users/tom/Documents/Programmieren/ChemBox/Documentation/Images//working_b
 alancer.png>
 Package pdftex.def Info: /Users/tom/Documents/Programmieren/ChemBox/Documentati
-on/Images//working_balancer.png  used on input line 906.
+on/Images//working_balancer.png  used on input line 852.
 (pdftex.def)             Requested size: 383.03395pt x 222.5331pt.
  [27 </Users/tom/Documents/Programmieren/ChemBox/Documentation/Images//nullspac
 e_error.png> </Users/tom/Documents/Programmieren/ChemBox/Documentation/Images//
-working_balancer.png>] [28] (./ChemBox_Documentation.aux)
+working_balancer.png>] [28] [29] (./ChemBox_Documentation.aux)
 
 LaTeX Warning: There were multiply-defined labels.
 
  ) 
 Here is how much of TeX's memory you used:
- 15669 strings out of 476025
- 319736 string characters out of 5790016
+ 15676 strings out of 476025
+ 319850 string characters out of 5790016
  2988388 words of memory out of 5000000
- 35881 multiletter control sequences out of 15000+600000
+ 35884 multiletter control sequences out of 15000+600000
  518087 words of font info for 52 fonts, out of 8000000 for 9000
  1141 hyphenation exceptions out of 8191
- 84i,10n,80p,986b,1681s stack positions out of 10000i,1000n,20000p,200000b,200000s
+ 89i,10n,83p,986b,1681s stack positions out of 10000i,1000n,20000p,200000b,200000s
 </usr/local/texlive/2023/texmf-dist/fonts/type1/public/amsfonts/cm/cmbx10.pfb
 ></usr/local/texlive/2023/texmf-dist/fonts/type1/public/amsfonts/cm/cmbx12.pfb>
 </usr/local/texlive/2023/texmf-dist/fonts/type1/public/amsfonts/cm/cmmi10.pfb><
@@ -708,10 +709,10 @@ live/2023/texmf-dist/fonts/type1/public/amsfonts/cm/cmr8.pfb></usr/local/texliv
 e/2023/texmf-dist/fonts/type1/public/amsfonts/cm/cmsy10.pfb></usr/local/texlive
 /2023/texmf-dist/fonts/type1/public/amsfonts/cm/cmsy8.pfb></usr/local/texlive/2
 023/texmf-dist/fonts/type1/public/amsfonts/cm/cmtt8.pfb>
-Output written on ChemBox_Documentation.pdf (29 pages, 432605 bytes).
+Output written on ChemBox_Documentation.pdf (30 pages, 432735 bytes).
 PDF statistics:
- 186 PDF objects out of 1000 (max. 8388607)
- 111 compressed objects within 2 object streams
+ 189 PDF objects out of 1000 (max. 8388607)
+ 113 compressed objects within 2 object streams
  0 named destinations out of 1000 (max. 500000)
  48 words of extra memory for PDF output out of 10000 (max. 10000000)
 

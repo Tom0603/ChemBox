@@ -1,0 +1,53 @@
+\usepackage[utf8]{inputenc}
+\usepackage{listings}
+\usepackage[table]{xcolor}
+\usepackage{graphicx}
+
+\graphicspath{{/Users/tom/Documents/Programmieren/ChemBox/Documentation/Images/}}
+
+\usepackage{algpseudocode}
+\usepackage{algorithm}
+
+% Redefine the keywords to use the new command
+\algrenewcommand\algorithmicif{\textbf{IF}}
+\algrenewcommand\algorithmicthen{\textbf{THEN}}
+\algrenewcommand\algorithmicelse{\textbf{ELSE}}
+\algrenewcommand\algorithmicend{\textbf{END}}
+\algrenewcommand\algorithmicfor{\textbf{FOR}}
+\algrenewcommand\algorithmicdo{\textbf{DO}}
+\algrenewcommand\algorithmicwhile{\textbf{WHILE}}
+\algrenewcommand\algorithmicloop{\textbf{LOOP}}
+\algrenewcommand\algorithmicrepeat{\textbf{REPEAT}}
+\algrenewcommand\algorithmicuntil{\textbf{UNTIL}}
+\algrenewcommand\algorithmicreturn{\textbf{RETURN}}
+\algrenewcommand\algorithmicfunction{\textbf{SUBROUTINE}}
+
+\usepackage{tikz}
+\usetikzlibrary{shapes.geometric, arrows}
+
+\tikzstyle{startstop} = [rectangle, rounded corners, minimum width=3cm, minimum height=1cm,text centered, draw=black, fill=red!30]
+\tikzstyle{io} = [trapezium, trapezium left angle=70, trapezium right angle=110, minimum width=3cm, minimum height=1cm, text centered, draw=black, fill=blue!30]
+\tikzstyle{process} = [rectangle, minimum width=3cm, minimum height=1cm, text centered, draw=black, fill=orange!30]
+\tikzstyle{decision} = [diamond, minimum width=3cm, minimum height=1cm, text centered, draw=black, fill=green!30]
+\tikzstyle{arrow} = [thick,->,>=stealth]
+
+\lstdefinestyle{mystyle}{
+    backgroundcolor=\color{backcolour},   
+    commentstyle=\color{codegreen},
+    keywordstyle=\color{magenta},
+    numberstyle=\tiny\color{codegray},
+    stringstyle=\color{codepurple},
+    basicstyle=\fontsize{8}{10}\ttfamily,
+    breakatwhitespace=false,         
+    breaklines=true,                 
+    captionpos=b,                    
+    keepspaces=true,                 
+    numbers=left,                    
+    numbersep=5pt,                  
+    showspaces=false,                
+    showstringspaces=false,
+    showtabs=false,                  
+    tabsize=2,
+}
+
+\lstset{style=mystyle}
