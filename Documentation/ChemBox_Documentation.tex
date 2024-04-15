@@ -186,7 +186,7 @@ I will explain the hierarchy and program flow of the system, beginning with the 
 
 The ChemBox class is the heart of the program, the point where all the different components are merged together to create one complete application. To give a better understanding of the system, I will explain how I composed the GUI and what each major component does. The ChemBox class contains only the constructor method, in which the layout of the graphical user interface is specified. The constructor defines the dimensions, the title and geometry of the window and then creates an instance of the TabBar class, which will act as the central widget of the program. Next, an instance of each of the three big components of the project, ChemCalculator, ChemBalancer and ChemEditor is created, and allocated to a separate tab of the tab bar (Listing 1: lines 18 - 25).
 
-\begin{lstlisting}[language=Python, caption=Code snippet of ChemBox class No.1]
+\begin{lstlisting}[language=Python, caption=Code snippet of ChemBox class]
 class ChemBox(QMainWindow):
     def __init__(self):
         super().__init__()
