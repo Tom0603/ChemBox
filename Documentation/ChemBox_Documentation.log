@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.141592653-2.6-1.40.25 (TeX Live 2023) (preloaded format=pdflatex 2023.10.31)  13 APR 2024 11:00
+This is pdfTeX, Version 3.141592653-2.6-1.40.25 (TeX Live 2023) (preloaded format=pdflatex 2023.10.31)  15 APR 2024 13:59
 entering extended mode
  restricted \write18 enabled.
  %&-line parsing enabled.
@@ -682,16 +682,38 @@ on/Images//working_balancer.png  used on input line 852.
 (pdftex.def)             Requested size: 383.03395pt x 222.5331pt.
  [27 </Users/tom/Documents/Programmieren/ChemBox/Documentation/Images//nullspac
 e_error.png> </Users/tom/Documents/Programmieren/ChemBox/Documentation/Images//
-working_balancer.png>] [28] [29] (./ChemBox_Documentation.aux)
+working_balancer.png>]
+</Users/tom/Documents/Programmieren/ChemBox/Documentation/Images//atom_bond_ove
+rlap.png, id=123, 215.80624pt x 155.58125pt>
+File: /Users/tom/Documents/Programmieren/ChemBox/Documentation/Images//atom_bon
+d_overlap.png Graphic file (type png)
+<use /Users/tom/Documents/Programmieren/ChemBox/Documentation/Images//atom_bond
+_overlap.png>
+Package pdftex.def Info: /Users/tom/Documents/Programmieren/ChemBox/Documentati
+on/Images//atom_bond_overlap.png  used on input line 866.
+(pdftex.def)             Requested size: 107.90285pt x 77.79042pt.
+</Users/tom/Documents/Programmieren/ChemBox/Documentation/Images//bonds_no_over
+lap.png, id=124, 208.78pt x 171.64125pt>
+File: /Users/tom/Documents/Programmieren/ChemBox/Documentation/Images//bonds_no
+_overlap.png Graphic file (type png)
+<use /Users/tom/Documents/Programmieren/ChemBox/Documentation/Images//bonds_no_
+overlap.png>
+Package pdftex.def Info: /Users/tom/Documents/Programmieren/ChemBox/Documentati
+on/Images//bonds_no_overlap.png  used on input line 875.
+(pdftex.def)             Requested size: 104.38972pt x 85.8204pt.
+ [28 </Users/tom/Documents/Programmieren/ChemBox/Documentation/Images//atom_bon
+d_overlap.png> </Users/tom/Documents/Programmieren/ChemBox/Documentation/Images
+//bonds_no_overlap.png>] [29]
+(./ChemBox_Documentation.aux)
 
 LaTeX Warning: There were multiply-defined labels.
 
  ) 
 Here is how much of TeX's memory you used:
- 15676 strings out of 476025
- 319850 string characters out of 5790016
+ 15700 strings out of 476025
+ 321252 string characters out of 5790016
  2988388 words of memory out of 5000000
- 35884 multiletter control sequences out of 15000+600000
+ 35908 multiletter control sequences out of 15000+600000
  518087 words of font info for 52 fonts, out of 8000000 for 9000
  1141 hyphenation exceptions out of 8191
  89i,10n,83p,986b,1681s stack positions out of 10000i,1000n,20000p,200000b,200000s
@@ -709,10 +731,10 @@ live/2023/texmf-dist/fonts/type1/public/amsfonts/cm/cmr8.pfb></usr/local/texliv
 e/2023/texmf-dist/fonts/type1/public/amsfonts/cm/cmsy10.pfb></usr/local/texlive
 /2023/texmf-dist/fonts/type1/public/amsfonts/cm/cmsy8.pfb></usr/local/texlive/2
 023/texmf-dist/fonts/type1/public/amsfonts/cm/cmtt8.pfb>
-Output written on ChemBox_Documentation.pdf (30 pages, 433360 bytes).
+Output written on ChemBox_Documentation.pdf (30 pages, 438677 bytes).
 PDF statistics:
- 189 PDF objects out of 1000 (max. 8388607)
+ 193 PDF objects out of 1000 (max. 8388607)
  113 compressed objects within 2 object streams
  0 named destinations out of 1000 (max. 500000)
- 48 words of extra memory for PDF output out of 10000 (max. 10000000)
+ 58 words of extra memory for PDF output out of 10000 (max. 10000000)
 

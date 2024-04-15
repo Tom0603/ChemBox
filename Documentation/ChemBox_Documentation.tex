@@ -858,6 +858,25 @@ Using the current working system, inputting the chemical equation mentioned befo
 
 \section{Algorithm Design for ChemEditor}
 
+My initial attempt at creating the ChemEditor was a mixture of following the plan made in the analysis stage and trying out different things to see what works best. 
+One issue I encountered early on was that the bonds between atoms would start at the center of the atoms, and it could be very tricky to correctly adjust the starting end endpoints of each bond (Figure 8).
+
+\begin{figure} [h]
+	\centering
+	\includegraphics[scale=0.5]{atom_bond_overlap}
+	\caption{Overlap between atoms and bonds}
+	\label{fig:atom_bond_overlap}
+\end{figure}
+
+To overcome this problem, I decided to create a method for drawing an invisible circle in the same colour as the background behind the symbol of each atom to hide the bonds (draw\_atom\_circle() in code). This method is called after the bonds are drawn, in order to make the overlap with the atoms invisible in the eyes of the user. After drawing the bonds and drawing the circle, the actual atom is drawn on top of it, without any visible overlap between atoms and bonds. Evidently, there is a clear hierarchy as to how the drawing of atoms, bonds and everything else is drawn. After applying the required hierarchy, This is what the bonding of atoms looks like in the current version.
+
+\begin{figure} [h]
+	\centering
+	\includegraphics[scale=0.5]{bonds_no_overlap}
+	\caption{No overlap between atoms and bonds}
+	\label{fig:bonds_no_overlap}
+\end{figure}
+
 \newpage
 
 \section{Testing}
