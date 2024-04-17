@@ -209,7 +209,8 @@ class Canvas(QLabel):
                 pix_painter.setPen(pen)
                 self.draw_atom(bond.atoms[1].x_coords, bond.atoms[1].y_coords, bond.atoms[1].symbol, pix_painter, pen,
                                False)
-                self.draw_center_atom(bond.atoms[0].x_coords, bond.atoms[0].y_coords, bond.atoms[0].symbol, pix_painter)
+                self.draw_atom(bond.atoms[0].x_coords, bond.atoms[0].y_coords, bond.atoms[0].symbol, pix_painter, pen,
+                               False)
 
         # Check for selected atom and draw potential positions
         if self.selected:
@@ -238,8 +239,8 @@ class Canvas(QLabel):
                                               pen)
                         pen.setStyle(Qt.PenStyle.SolidLine)
                         pix_painter.setPen(pen)
-                        self.draw_center_atom(self.selected_atom.x_coords, self.selected_atom.y_coords,
-                                              self.selected_atom.symbol, pix_painter)
+                        self.draw_atom(self.selected_atom.x_coords, self.selected_atom.y_coords,
+                                       self.selected_atom.symbol, pix_painter, pen, False)
                         self.draw_atom(possible_atom.x_coords, possible_atom.y_coords, possible_atom.symbol,
                                        pix_painter, pen, False)
                 except AttributeError:
@@ -276,8 +277,8 @@ class Canvas(QLabel):
                             # 'full_shell': 8}
 
                             self.draw_atom(pos[0], pos[1], self.element["symbol"], pix_painter, pen, True)
-                            self.draw_center_atom(self.selected_atom.x_coords, self.selected_atom.y_coords,
-                                                  self.selected_atom.symbol, pix_painter)
+                            self.draw_atom(self.selected_atom.x_coords, self.selected_atom.y_coords,
+                                           self.selected_atom.symbol, pix_painter, pen, False)
                     init_painter.drawPixmap(0, 0, self.pixmap)
             except AttributeError:
                 return
@@ -423,15 +424,6 @@ class Canvas(QLabel):
         # Calculate position to draw atom in the center of the "atom circle"
         letter_width = painter.fontMetrics().horizontalAdvance(symbol)
         letter_height = painter.fontMetrics().height()
-        letter_x = atom_x - letter_width / 2
-        letter_y = atom_y + letter_height / 4
-        painter.drawText(int(letter_x), int(letter_y), symbol)
-
-    def draw_center_atom(self, atom_x: int, atom_y: int, symbol: str, painter: QPainter) -> None:
-
-        letter_width = painter.fontMetrics().horizontalAdvance(symbol)
-        letter_height = painter.fontMetrics().height()
-
         letter_x = atom_x - letter_width / 2
         letter_y = atom_y + letter_height / 4
         painter.drawText(int(letter_x), int(letter_y), symbol)
