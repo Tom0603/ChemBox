@@ -856,7 +856,7 @@ Using the current working system, inputting the chemical equation mentioned befo
 
 \newpage
 
-\section{Algorithm Design for ChemEditor}
+\subsection{Algorithm Design for ChemEditor}
 
 My initial attempt at creating the ChemEditor was a mixture of following the plan made in the analysis stage and trying out different things to see what works best. 
 One issue I encountered early on was that the bonds between atoms would start at the center of the atoms, and it could be very tricky to correctly adjust the starting end endpoints of each bond (Figure 8).
@@ -868,7 +868,7 @@ One issue I encountered early on was that the bonds between atoms would start at
 	\label{fig:atom_bond_overlap}
 \end{figure}
 
-To overcome this problem, I decided to create a method for drawing an invisible circle in the same colour as the background behind the symbol of each atom to hide the bonds (draw\_atom\_circle() in code). This method is called after the bonds are drawn, in order to make the overlap with the atoms invisible in the eyes of the user. After drawing the bonds and drawing the circle, the actual atom is drawn on top of it, without any visible overlap between atoms and bonds. Evidently, there is a clear hierarchy as to how the drawing of atoms, bonds and everything else is drawn. After applying the required hierarchy, This is what the bonding of atoms looks like in the current version.
+To overcome this problem, I decided to create a method for drawing an invisible circle in the same colour as the background behind the symbol of each atom to hide the bonds (draw\_atom\_circle() in code). This method is called after the bonds are drawn, in order to make the overlap with the atoms invisible in the eyes of the user. After drawing the bonds and drawing the circle, the actual atom is drawn on top of it, without any visible overlap between atoms and bonds. Evidently, there is a clear hierarchy as to how the drawing of atoms, bonds and everything else is drawn. After applying the required hierarchy, this is what the bonding of atoms looks like in the current version.
 
 \begin{figure} [h]
 	\centering
@@ -876,6 +876,63 @@ To overcome this problem, I decided to create a method for drawing an invisible 
 	\caption{No overlap between atoms and bonds}
 	\label{fig:bonds_no_overlap}
 \end{figure}
+
+One feature, which I thought would improve the user experience a lot was what I have called "drawing potential bonds". The goal of this is to draw a range of potential atoms and bonds in a circle around the selected atom in a different colour, so that the user only has to click on one of those potential atoms, and it gets drawn as an actual atom with a real bond to the selected atom. The "potential atoms" and the "potential bonds" related to the element chosen by the user in the "periodic table" and to the buttons suggesting single, double or triple bonds.\\
+To get all the potential positions for the atoms, I came up with the\\ "calc\_potential\_positions()" subroutine, which takes an instance of an atom as a parameter, in this case the atom selected by the user. It then accesses the atoms x and y coordinates and creates an empty list, which will later hold the positions of potential atoms. Using an iterative for loop, the method calculates the x and y components of a vector using the given angle and magnitude, which is the distance variable in this program. This subroutine is designed to calculate the positions of potential atoms every 45 degrees, and therefore return a maximum of 8 different tuples holding the positions.
+
+\begin{algorithm}
+\footnotesize
+\caption{Algorithm for finding potential atom positions}\label{alg:cap}
+\begin{algorithmic}
+\Function{$calc\_potential\_positions$}{$atom$}
+\State $ x\gets atom.x\_coords$
+\State $ y\gets atom.y\_coords$
+\State $ distance\gets 40$
+\State $ coordinate\_list\gets NONE$
+\For{$ angle\_degrees\gets 0\ TO\ 360\ STEP\ 45$}
+	\State $ angle\_radians\gets math.radians(angle\_degrees)$
+	\State $ new\_x\gets x\ +\ distance\ *\ math.cos(angle\_radians)$
+	\State $ new\_y\gets y\ +\ distance\ *\ math.sin(angle\_radians)$
+	\State $ APPEND\ (new\_x,\ new\_y)\ TO\ coordinate\_list$
+\EndFor
+\State $ RETURN\ coordinate\_list$
+\EndFunction
+\end{algorithmic}
+\end{algorithm}
+
+All the drawing happens in the "paintEvent" method inside the "Canvas" class. To get a better understanding of the following pseudocode for this method, I have put together a table containing all the methods used for it.
+
+\begin{table}[htbp]
+    \centering
+    \begin{tabularx}{\textwidth}{|X|X|X|}
+        \hline
+        \textbf{Method Name} & \textbf{Parameters} & \textbf{Description}\\
+        \hline
+        calc\_potential\_positions & Instance of atom class & Calculates and returns a list of positions for potential atoms in a circle around the atom. \\
+        \hline
+        check\_atom\_overlap & pos\_x, pos\_y & Iterates through list of atoms and checks for overlap, returns a boolean value. \\
+        \hline
+        draw\_single\_bond & atom1\_x: int, atom1\_y: int, atom2\_x: int, atom2\_y: int, painter, pen, actual\_bond: bool & Draws a bond line from one atom to another. \\
+        \hline
+        draw\_double\_bond & atom1\_x: int, atom1\_y: int, atom2\_x: int, atom2\_y: int, painter, pen, actual\_bond: bool & Draws two bond line next to each other from one atom to another. \\
+        \hline
+        draw\_triple\_bond & atom1\_x: int, atom1\_y: int, atom2\_x: int, atom2\_y: int, painter, pen, actual\_bond: bool & Draws three bond line next to each other from one atom to another. \\
+        \hline
+        \_\_diagonal\_bonds & atom1\_x: int, atom1\_y: int, atom2\_x: int, atom2\_y: int, painter, offset: int, diag\_offset: int & Handles the drawing of the diagonal bonds in double and triple bonds to avoid overlap of lines. \\
+        \hline
+        draw\_atom\_circle & atom1\_x: int, atom1\_y: int, atom2\_x: int, atom2\_y: int, painter, pen & Draws a circle in the same colour as the background colour to prevent bonds from visually overlapping with atom. \\
+        \hline
+        draw\_atom & atom1\_x: int, atom1\_y: int, symbol: str, painter, pen, potential: bool & Draws the atom symbol on the screen. \\
+        \hline
+    \end{tabularx}
+    \caption{Method Descriptions}
+    \label{tab:methods}
+\end{table}
+
+\newpage
+
+The pseudocode of my "paintEvent" method shows the clear structure and hierarchy when it comes to drawing out all the atoms and bonds on the canvas. The method can be broken down in to two main parts, the first one just iterates through a list of atoms and draws the atom and the associated bonds. The second part is only called if an atom is currently selected, and it essentially draws out the possible bonds or potential atoms around it.
+
 
 \newpage
 
