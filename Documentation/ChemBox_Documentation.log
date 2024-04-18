@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.141592653-2.6-1.40.25 (TeX Live 2023) (preloaded format=pdflatex 2023.10.31)  18 APR 2024 21:37
+This is pdfTeX, Version 3.141592653-2.6-1.40.25 (TeX Live 2023) (preloaded format=pdflatex 2023.10.31)  18 APR 2024 22:07
 entering extended mode
  restricted \write18 enabled.
  %&-line parsing enabled.
@@ -515,27 +515,6 @@ File: l3backend-pdftex.def 2023-01-16 L3 backend support: PDF output (pdfTeX)
 
 LaTeX Warning: Label `fig:tabs_mockup' multiply defined.
 
-
-LaTeX Warning: Label `alg:cap' multiply defined.
-
-
-LaTeX Warning: Label `alg:cap' multiply defined.
-
-
-LaTeX Warning: Label `alg:cap' multiply defined.
-
-
-LaTeX Warning: Label `alg:cap' multiply defined.
-
-
-LaTeX Warning: Label `alg:cap' multiply defined.
-
-
-LaTeX Warning: Label `alg:cap' multiply defined.
-
-
-LaTeX Warning: Label `alg:cap' multiply defined.
-
 )
 \openout1 = `ChemBox_Documentation.aux'.
 
@@ -917,13 +896,13 @@ LaTeX Warning: There were multiply-defined labels.
 
  ) 
 Here is how much of TeX's memory you used:
- 16664 strings out of 476025
- 350494 string characters out of 5790016
- 2989388 words of memory out of 5000000
- 36850 multiletter control sequences out of 15000+600000
+ 16675 strings out of 476025
+ 350756 string characters out of 5790016
+ 2988388 words of memory out of 5000000
+ 36861 multiletter control sequences out of 15000+600000
  518087 words of font info for 52 fonts, out of 8000000 for 9000
  1141 hyphenation exceptions out of 8191
- 104i,12n,97p,1172b,1681s stack positions out of 10000i,1000n,20000p,200000b,200000s
+ 104i,12n,97p,1172b,1683s stack positions out of 10000i,1000n,20000p,200000b,200000s
 </usr/local/texlive/2023/texmf-dist/fonts/type1/public/amsfonts/cm/cmbx10.pfb
 ></usr/local/texlive/2023/texmf-dist/fonts/type1/public/amsfonts/cm/cmbx12.pfb>
 </usr/local/texlive/2023/texmf-dist/fonts/type1/public/amsfonts/cm/cmmi10.pfb><

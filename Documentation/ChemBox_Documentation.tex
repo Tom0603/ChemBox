@@ -184,9 +184,9 @@ I will explain the hierarchy and program flow of the system, beginning with the 
 
 \subsection{Structure of the GUI}
 
-The ChemBox class is the heart of the program, the point where all the different components are merged together to create one complete application. To give a better understanding of the system, I will explain how I composed the GUI and what each major component does. The ChemBox class contains only the constructor method, in which the layout of the graphical user interface is specified. The constructor defines the dimensions, the title and geometry of the window and then creates an instance of the TabBar class, which will act as the central widget of the program. Next, an instance of each of the three big components of the project, ChemCalculator, ChemBalancer and ChemEditor is created, and allocated to a separate tab of the tab bar (Listing 1: lines 18 - 25).
+The ChemBox class is the heart of the program, the point where all the different components are merged together to create one complete application. To give a better understanding of the system, I will explain how I composed the GUI and what each major component does. The ChemBox class contains only the constructor method, in which the layout of the graphical user interface is specified. The constructor defines the dimensions, the title and geometry of the window and then creates an instance of the TabBar class, which will act as the central widget of the program. Next, an instance of each of the three big components of the project, ChemCalculator, ChemBalancer and ChemEditor is created, and allocated to a separate tab of the tab bar (Listing \ref{lst:chembox_snippet}: lines 18 - 25).
 
-\begin{lstlisting}[language=Python, caption=Code snippet of ChemBox class]
+\begin{lstlisting}[language=Python, caption=Code snippet of ChemBox class, label={lst:chembox_snippet}]
 class ChemBox(QMainWindow):
     def __init__(self):
         super().__init__()
@@ -216,7 +216,7 @@ class ChemBox(QMainWindow):
 
 \newpage
 The tab bar is used as the main widget of the program at all times, as it controls the navigation between modules.
-The goal was to achieve a design like the one illustrated in Figure 2, where 1, 2 and 3 in the small boxes at the top of the screen represent buttons in the tab bar for the three major modules of the ChemBox.
+The goal was to achieve a design like the one illustrated in Figure \ref{fig:tabs_mockup}, where 1, 2 and 3 in the small boxes at the top of the screen represent buttons in the tab bar for the three major modules of the ChemBox.
 
 \begin{figure} [h]
 	\centering
@@ -228,9 +228,9 @@ The goal was to achieve a design like the one illustrated in Figure 2, where 1, 
 The ChemCalculator module is the only part of the project with a special implementation of the user interface, which needs explanation.\\
 
 When developing the ChemCalculator module, the first issue I encountered was how I would create a layout that would work for multiple separate sub-calculators. I had three different possible systems for displaying the module. The first option was creating a sidebar, where the user can choose the exact calculator they were looking for, which is then displayed on the screen. The second option was very similar, but with an additional tab bar at the top or bottom of the screen. This solution is not very aesthetically pleasing, and could cause confusion with the actual tab bar that allows the user to switch between the three main modules. The third option was putting every calculator on the same page, each in it's own area, clearly separated from the others, and make the window scrollable. I decided against this option, as this design could have gotten very messy. Therefore, I decided to create a sidebar for the ChemCalculator. \\
-As there is no built-in sidebar widget in PyQt6, I have designed my own way of creating one. I did so by using the QTabWidget, which I also used for the tab bar, but not display it. I was able to benefit from the already existing widget, for the switching between calculators, and use buttons placed on the left side of the screen as a replacement for an actual sidebar. The buttons connect to a method, which changes the the current index of the tab widget to the according number of the calculator, which updates the page that is displayed. This is illustrated in the following code snippet (Listing 2), which only includes the example on a single button, for better readability of this document.
+As there is no built-in sidebar widget in PyQt6, I have designed my own way of creating one. I did so by using the QTabWidget, which I also used for the tab bar, but not display it. I was able to benefit from the already existing widget, for the switching between calculators, and use buttons placed on the left side of the screen as a replacement for an actual sidebar. The buttons connect to a method, which changes the the current index of the tab widget to the according number of the calculator, which updates the page that is displayed. This is illustrated in the following code snippet (Listing \ref{lst:chemcalculator_example}), which only includes the example on a single button, for better readability of this document.
 
-\begin{lstlisting}[language=Python, caption=Example of ChemCalculator implementation]
+\begin{lstlisting}[language=Python, caption=Example of ChemCalculator implementation, label={lst:chemcalculator_example}]
 class ChemCalculator(QWidget):
     def __init__(self):
         super(QWidget, self).__init__()
@@ -288,7 +288,7 @@ Essential for most individual calculators in the ChemCalculator module will be a
 The algorithm will have to take a list of inputs as a parameter, and use iteration to determine the blank one.
 
 \begin{algorithm}
-\caption{Algorithm to find empty input}\label{alg:cap}
+\caption{Algorithm to find empty input}\label{alg:fing_empty_input}
 \begin{algorithmic}
 \State $ input\_list \gets []$
 \State $ count \gets 0$
@@ -309,7 +309,7 @@ The algorithm will have to take a list of inputs as a parameter, and use iterati
 
 \subsection{Algorithm Design for ChemBalancer}
 
-Figure 3 includes my initial attempt at visualising how an equation balancer could work. My first version of this module worked on a very similar system, although I struggled with finding a method of consistently balancing the equations after splitting them into their smallest possible components. 
+Figure \ref{fig:balance_flow} includes my initial attempt at visualising how an equation balancer could work. My first version of this module worked on a very similar system, although I struggled with finding a method of consistently balancing the equations after splitting them into their smallest possible components. 
 
 \begin{figure} [h]
 	\centering
@@ -320,7 +320,7 @@ Figure 3 includes my initial attempt at visualising how an equation balancer cou
 
 The following code blocks contains the code of my initial, failed, attempt at the balancer.
 
-\begin{lstlisting}[language=Python, caption=Method for splitting equation into components]
+\begin{lstlisting}[language=Python, caption=Method for splitting equation into components, label={lst:split_equation}]
 def splitEquation(self):
         self.equationSplit = self.equationInput.text().split(" = ")
         self.reactants = self.equationSplit[0]
@@ -335,7 +335,7 @@ def splitEquation(self):
 The splitEquation method uses string manipulation to extract the individual molecules of the equation and store them in separate lists for reactants and products.\\
 After finding the individual molecules in the equation, the parseComponent method is called to get the elements used in the molecules, and the amount of them. This is done through if statements, as there is only a limited amount of different possibilities. The longest element symbol consists of three letters, where the first letter of every atom is always capitalised, and the following ones are not. The subscript number (number of atoms or element in a given molecule) can be found easily, as numbers within molecules always belong to the preceding element (H2O - the 2 belongs to the hydrogen). Individual elements are found by checking for capital letters. An element starts with a capital letter and ends at the next capital letter, which is where the next element starts. The same techniques were used to find brackets and complex ions in the equation.
 
-\begin{lstlisting}[language=Python, caption=parseComponent method for finding elements]
+\begin{lstlisting}[language=Python, caption=parseComponent method for finding elements, label={lst:parsecomponent}]
 def parseComponent(self, component, countsDict, totalDict):
         # Check for coefficient
         try:
@@ -635,7 +635,7 @@ def parseComponent(self, component, countsDict, totalDict):
 Although this code is overly complicated, it worked most of the times for basic or intermediate level equations.\\
 The main problem this version of the balancer ran into, was the actual balancing of the equations. The version uses a loop to attempt balancing, where copies of the left and right hand side components are created together with dictionaries to track the total count of elements. Each component then gets a randomly generated coefficient between 1 and 10, and the loop continues until the count on the left side equals the count on the right side. Once a balanced equation is found, the coefficients are normalised to their smallest integer values using the greatest common divisor (GCD) The balanced equation is then put back together and returned to the user.\\
 
-\begin{lstlisting}[language=Python, caption=balance method]
+\begin{lstlisting}[language=Python, caption=balance method, label={lst:balance_method}]
 def balance(self):
         if self.balanced:
             equation = str()
@@ -747,21 +747,21 @@ This version had a few obvious limitations, it relied on randomly generated coef
 	\label{fig:initial_balance_test}
 \end{figure}
 
-The test in Figure 4 shows, that the system works (at least for simple equations). Just the simple addition of two carbon atoms and four hydrogen atoms to get the equation $ C2H6 + O2 = CO2 + H2O$ is already too much for the system, as this will end in an infinite loop. This loop can be prevented by increasing the range of possibilities for the randomly generated integers (for example from between 1 and 10 to between 1 and 100) but this means there is always a limit to what is possible for the balancer. Figure 5 shows the state of the program after trying to balance the equation with the original range of one to 10. The program in the figure is in the state of an infinite loop.
+The test in Figure \ref{fig:initial_balance_test} shows, that the system works (at least for simple equations). Just the simple addition of two carbon atoms and four hydrogen atoms to get the equation $ C2H6 + O2 = CO2 + H2O$ is already too much for the system, as this will end in an infinite loop. This loop can be prevented by increasing the range of possibilities for the randomly generated integers (for example from between 1 and 10 to between 1 and 100) but this means there is always a limit to what is possible for the balancer. Figure \ref{fig:second_balance_test} shows the state of the program after trying to balance the equation with the original range of one to 10. The program in the figure is in the state of an infinite loop.
 
 \begin{figure} [h]
 	\centering
 	\includegraphics[scale=0.5]{initial_balance_test2}
 	\caption{Initial balancer test No. 2}
-	\label{fig:initial_balance_test2}
+	\label{fig:second_balance_test}
 \end{figure}
 
 \newpage
 
 Whilst researching for better ways to implement a chemical equation balancer in python, I came across regular expressions, which around that same time, we also covered in out A-Level Computer Science lessons. Knowing about regular expressions helped me significantly improve the effectiveness of my balancer, when it comes to extracting individual elements and their amount from the equation. In my search for the best possible way to do so, I wrote a number of algorithms, which extend each other perfectly, to finish the job together.\\
-This algorithm (Algorithm 2) takes the full equation as a parameter from the user input and removes any whites paces from it. It then splits it up into separate reactants and products, and lastly, it extracts the individual reagents within the reactants and products.
+This algorithm (Algorithm \ref{alg:new_split_equation}) takes the full equation as a parameter from the user input and removes any whites paces from it. It then splits it up into separate reactants and products, and lastly, it extracts the individual reagents within the reactants and products.
 \begin{algorithm}
-\caption{Algorithm to split equation}\label{alg:cap}
+\caption{Algorithm to split equation}\label{alg:new_split_equation}
 \begin{algorithmic}
 \Function{$ split\_equation$}{$ $}
 \State $ stripped\_equation \gets USERINPUT$
@@ -773,11 +773,11 @@ This algorithm (Algorithm 2) takes the full equation as a parameter from the use
 \end{algorithmic}
 \end{algorithm}
 
-This second algorithm(Algorithm 3), which I designed for the task mentioned above, uses regular expressions, to identify separate reagents within a chemical compound by identifying brackets. The goal is to split up compounds like $ CuNO3)2$ into $ ["Cu",\ "(NO3)2"]$, where $Cu$ and $(NO3)2$ are two separate entries in the list. The method then iterates over each reagent, and checks if it starts with an opening bracket. If it does, this indicates, that there is a chemical compound enclosed in the brackets. It extracts the inner compound and the subscript ($ (OH)2$ indicates that the $(OH)$ group exists twice), and then passes these two variables as parameters to the "find\_elements" method, along with the "index" and "side" parameters.
+This second algorithm(Algorithm \ref{alg:find_reagents}), which I designed for the task mentioned above, uses regular expressions, to identify separate reagents within a chemical compound by identifying brackets. The goal is to split up compounds like $ CuNO3)2$ into $ ["Cu",\ "(NO3)2"]$, where $Cu$ and $(NO3)2$ are two separate entries in the list. The method then iterates over each reagent, and checks if it starts with an opening bracket. If it does, this indicates, that there is a chemical compound enclosed in the brackets. It extracts the inner compound and the subscript ($ (OH)2$ indicates that the $(OH)$ group exists twice), and then passes these two variables as parameters to the "find\_elements" method, along with the "index" and "side" parameters.
 
 \begin{algorithm}
 \footnotesize
-\caption{Algorithm to find reagents}\label{alg:cap}
+\caption{Algorithm to find reagents}\label{alg:find_reagents}
 \begin{algorithmic}
 \Function{$find\_reagents$}{$compound,\ index,\ side$}
 \State $ reagents \gets SPLIT\ compound\ INTO\ reagents\ USING\ REGEX\ PATTERN$
@@ -800,14 +800,14 @@ This second algorithm(Algorithm 3), which I designed for the task mentioned abov
 \end{algorithmic}
 \end{algorithm}
 
-The next algorithm (Algorithm 4) uses a regular expression to obtain the elements and associated subscript values. Each extracted element is then stored together with the correlated subscript value as a tuple, inside a list (For example: $Cr2O7$ $\rightarrow$ $[("Cr",\ "2"),\ ("O",\ "7")]$). The algorithm then iterates through each tuple (elements, subscript) in the element\_counts list.
+The next algorithm (Algorithm \ref{alg:find_elements}) uses a regular expression to obtain the elements and associated subscript values. Each extracted element is then stored together with the correlated subscript value as a tuple, inside a list (For example: $Cr2O7$ $\rightarrow$ $[("Cr",\ "2"),\ ("O",\ "7")]$). The algorithm then iterates through each tuple (elements, subscript) in the element\_counts list.
 With every iteration, a different subroutine named add\_to\_matrix is called, passing the current element, index, the product of the bracket\_subscript and subscript, and the side argument.
 
 \newpage
 
 \begin{algorithm}
 \footnotesize
-\caption{Algorithm to find elements}\label{alg:cap}
+\caption{Algorithm to find elements}\label{alg:find_elements}
 \begin{algorithmic}
 \Function{$find\_reagents$}{$reagent,\ index,\ bracket\_subscript,\ side$}
 \State $ element\_counts \gets SPLIT\ reagent\ INTO\ element\_counts\ USING\ REGEX\ PATTERN$
@@ -830,7 +830,7 @@ To address the problem, I decided to record a number of issues and possible impr
 \item The first issue I had with the algorithm was, that it asked for separate inputs of reactants and products. Luckily, I had already solved this problem with the algorithms illustrated earlier.
 \item Another issue the original algorithm had was the lack of structure and modularity. By organising the code in a class based structure, I ensured good readability for the code, as well as making it easier to maintain.
 \item The original version had poor input validation and error handling. One common error I got with the early implementation of the algorithm was what I call a nullspace error. The nullspace is a linear subspace that contains a set of vectors that transform to the zero$^{th}$ vector under a given linear transformation: multiplication with the matrix A, represented as $ Ax = 0$. In the context of chemical equations, the nullspace contains the coefficients, that balance the equation.\\
-Entering the unbalanced equation $ K4[Fe(SCN)6] + K2Cr2O7 + H2SO4$\\ $ = Fe2(SO4)3 + Cr2(SO4)3 + CO2 + H2O + K2SO4 + KNO3$ resulted in a "nullspace error" (Figure 6). 
+Entering the unbalanced equation $ K4[Fe(SCN)6] + K2Cr2O7 + H2SO4$\\ $ = Fe2(SO4)3 + Cr2(SO4)3 + CO2 + H2O + K2SO4 + KNO3$ resulted in a "nullspace error" (Figure \ref{fig:nullspace_error}). 
 
 \newpage
 
@@ -841,11 +841,11 @@ Entering the unbalanced equation $ K4[Fe(SCN)6] + K2Cr2O7 + H2SO4$\\ $ = Fe2(SO4
 	\label{fig:nullspace_error}
 \end{figure}
 
-I managed to neutralise this error by having a more accurate and efficient method of separating out molecules, elements, etc. as shown in Algorithm 3 and Algorithm 4, before passing them on to the method that adds the items to the matrix.\\
+I managed to neutralise this error by having a more accurate and efficient method of separating out molecules, elements, etc. as shown in Algorithm \ref{alg:find_reagents} and Algorithm \ref{alg:find_elements}, before passing them on to the method that adds the items to the matrix.\\
 I also made sure to use pythons built in exception handling to catch any expected and unexpected errors or exceptions.
 \end{enumerate}
 
-Using the current working system, inputting the chemical equation mentioned before results in a perfectly balanced equation (Figure 7).
+Using the current working system, inputting the chemical equation mentioned before results in a perfectly balanced equation (Figure \ref{fig:working_balancer}).
 
 \begin{figure} [h]
 	\centering
@@ -950,7 +950,7 @@ One feature, which I thought would improve the user experience a lot was what I 
 
 \begin{algorithm}
 \footnotesize
-\caption{Algorithm for finding potential atom positions}\label{alg:cap}
+\caption{Algorithm for finding potential atom positions}\label{alg:calc_potential_pos}
 \begin{algorithmic}
 \Function{$calc\_potential\_positions$}{$atom$}
 \State $ x\gets atom.x\_coords$
@@ -968,7 +968,7 @@ One feature, which I thought would improve the user experience a lot was what I 
 \end{algorithmic}
 \end{algorithm}
 
-All the drawing happens in the "paintEvent" method inside the "Canvas" class. To get a better understanding of the following pseudocode for this method, I have put together a table containing all the methods used for it (Table 1).
+All the drawing happens in the "paintEvent" method inside the "Canvas" class. To get a better understanding of the following pseudocode for this method, I have put together a table containing all the methods used for it (Table \ref{tab:paintevent_methods}).
 
 \begin{table}[htbp]
     \centering
@@ -994,7 +994,7 @@ All the drawing happens in the "paintEvent" method inside the "Canvas" class. To
         \hline
     \end{tabularx}
     \caption{Method Descriptions}
-    \label{tab:methods}
+    \label{tab:paintevent_methods}
 \end{table}
 
 \newpage
@@ -1003,7 +1003,7 @@ The pseudocode of my "paintEvent" method shows the clear structure and hierarchy
 
 \begin{algorithm}
 \footnotesize
-\caption{paintEvent Algorithm, first part}\label{alg:cap}
+\caption{paintEvent Algorithm, first part}\label{alg:paintevent_first}
 \begin{algorithmic}
 \Function{$paintEvent$}{$event$}
 \For{$ atom\ IN\ atoms\_list$}
@@ -1027,13 +1027,13 @@ The pseudocode of my "paintEvent" method shows the clear structure and hierarchy
 \end{algorithm}
 
 For visualisation purposes, I have decided to split the pseudo code for the "paintEvent" method into the two parts mentioned before.\\
-As explained in an earlier part, it is essential to follow a certain hierarchy structure for drawing out the canvas. Algorithm 6 (paintEvent Algorithm, first part) illustrated this procedure perfectly. The very first thing to happen every time the "paintEvent" is called, is that using an iterative for-loop structure, every atom in the atoms list is being drawn on the canvas. In the bigger picture, this is so that all the atoms that are not bonded and don't need anything extra are drawn. Next, all the bonds of the specific atom are displayed, and the "atom circle" is drawn. And lastly both atoms on either side of the bond are drawn and the first part of the "paintEvent" method is completed. As noted at the start of this sub-section 2.6, it is important that for bonded atoms, the bond is drawn first , then the "atom circle" and lastly the actual atoms.
+As explained in an earlier part, it is essential to follow a certain hierarchy structure for drawing out the canvas. Algorithm \ref{alg:paintevent_first} (paintEvent Algorithm, first part) illustrated this procedure perfectly. The very first thing to happen every time the "paintEvent" is called, is that using an iterative for-loop structure, every atom in the atoms list is being drawn on the canvas. In the bigger picture, this is so that all the atoms that are not bonded and don't need anything extra are drawn. Next, all the bonds of the specific atom are displayed, and the "atom circle" is drawn. And lastly both atoms on either side of the bond are drawn and the first part of the "paintEvent" method is completed. As noted at the start of this sub-section 2.6, it is important that for bonded atoms, the bond is drawn first , then the "atom circle" and lastly the actual atoms.
 
 \newpage
 
 \begin{algorithm}
 \footnotesize
-\caption{paintEvent Algorithm, second part}\label{alg:cap}
+\caption{paintEvent Algorithm, second part}\label{alg:paintevent_second}
 \begin{algorithmic}
 \If{$ selected = True$}
 	\State $ x1\gets selected\_atom.x\_coords$
@@ -1061,7 +1061,7 @@ As explained in an earlier part, it is essential to follow a certain hierarchy s
 \end{algorithmic}
 \end{algorithm}
 
-This second part of the "paintEvent" (Algorithm 7), uses the\\
+This second part of the "paintEvent" (Algorithm \ref{alg:paintevent_second}), uses the\\
 "calc\_potential\_positions()" method discussed earlier and all in all just puts the whole functionality of drawing potential atoms and bonds around the selected atom together.\\
 
 \newpage
