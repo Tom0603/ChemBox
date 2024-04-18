@@ -858,8 +858,10 @@ Using the current working system, inputting the chemical equation mentioned befo
 
 \subsection{Algorithm Design for ChemEditor}
 
-My initial attempt at creating the ChemEditor was a mixture of following the plan made in the analysis stage and trying out different things to see what works best. 
-One issue I encountered early on was that the bonds between atoms would start at the center of the atoms, and it could be very tricky to correctly adjust the starting end endpoints of each bond (Figure 8).
+My initial attempt at creating the ChemEditor was a mixture of following the plan made in the analysis stage and trying out different things to see what works best.\\
+To start my work on this module, I decided to try to identify a number of structures I will have to implement. The ChemEditor can be broken down into a graphical user interface part and a logic part. The GUI section has to consist of two main classes, the "ChemEditor" class, which takes care of displaying all the buttons, the canvas and other parts of the GUI, and the "Canvas" class, which can be further broken down into two main structures, the "paintEvent", which takes care of all the drawing, and the "mousePressEvent", which defines what is supposed to happen after a users interaction with the interface. The segment taking care of the logic of this module must contain an "Atom" class and a "Bond" class which define certain actions and properties.\\
+\linebreak
+One issue I encountered early on when working on the canvas was, that the bonds between atoms would start at the center of the atoms, and it could be complicated to correctly adjust the starting end endpoints of each bond (Figure 8).
 
 \begin{figure} [h]
 	\centering
@@ -868,7 +870,9 @@ One issue I encountered early on was that the bonds between atoms would start at
 	\label{fig:atom_bond_overlap}
 \end{figure}
 
-To overcome this problem, I decided to create a method for drawing an invisible circle in the same colour as the background behind the symbol of each atom to hide the bonds (draw\_atom\_circle() in code). This method is called after the bonds are drawn, in order to make the overlap with the atoms invisible in the eyes of the user. After drawing the bonds and drawing the circle, the actual atom is drawn on top of it, without any visible overlap between atoms and bonds. Evidently, there is a clear hierarchy as to how the drawing of atoms, bonds and everything else is drawn. After applying the required hierarchy, this is what the bonding of atoms looks like in the current version.
+To overcome this problem, I decided to create a method for drawing an invisible circle in the same colour as the background behind the symbol of each atom to hide the bonds (draw\_atom\_circle() in code). This method is called after the bonds are drawn, in order to make the overlap with the atoms invisible in the eyes of the user. After drawing the bonds and drawing the circle, the actual atom is drawn on top of it, without any visible overlap between atoms and bonds. Evidently, there is a clear hierarchy as to how the drawing of atoms, bonds and everything else is drawn. After applying the required hierarchy, this is what the bonding of atoms looks like in the current version (Figure 9).
+
+\newpage
 
 \begin{figure} [h]
 	\centering
@@ -877,8 +881,7 @@ To overcome this problem, I decided to create a method for drawing an invisible 
 	\label{fig:bonds_no_overlap}
 \end{figure}
 
-One feature, which I thought would improve the user experience a lot was what I have called "drawing potential bonds". The goal of this is to draw a range of potential atoms and bonds in a circle around the selected atom in a different colour, so that the user only has to click on one of those potential atoms, and it gets drawn as an actual atom with a real bond to the selected atom. The "potential atoms" and the "potential bonds" related to the element chosen by the user in the "periodic table" and to the buttons suggesting single, double or triple bonds.\\
-To get all the potential positions for the atoms, I came up with the\\ "calc\_potential\_positions()" subroutine, which takes an instance of an atom as a parameter, in this case the atom selected by the user. It then accesses the atoms x and y coordinates and creates an empty list, which will later hold the positions of potential atoms. Using an iterative for loop, the method calculates the x and y components of a vector using the given angle and magnitude, which is the distance variable in this program. This subroutine is designed to calculate the positions of potential atoms every 45 degrees, and therefore return a maximum of 8 different tuples holding the positions.
+One feature, which I thought would improve the user experience a lot was what I have called "drawing potential bonds". The goal of this is to draw a range of potential atoms and bonds in a circle around the selected atom in a different colour, so that the user only has to click on one of those potential atoms, and it gets drawn as an actual atom with a real bond to the selected atom. The "potential atoms" and the "potential bonds" are related to the element chosen by the user in the "periodic table" and to the buttons suggesting the bond order.To get all the potential positions for the atoms, I created the "calc\_potential\_positions()" subroutine, which takes the atom instance selected by the user as a parameter and then accesses the atoms x and y coordinates and creates an empty list, which will later hold the positions of potential atoms. Using a for loop, the method calculates the x and y vector components using the given angle and magnitude (distance). This subroutine calculates the positions of potential atoms every 45 degrees, and therefore return a maximum of 8 different tuples holding the positions.
 
 \begin{algorithm}
 \footnotesize
@@ -900,7 +903,7 @@ To get all the potential positions for the atoms, I came up with the\\ "calc\_po
 \end{algorithmic}
 \end{algorithm}
 
-All the drawing happens in the "paintEvent" method inside the "Canvas" class. To get a better understanding of the following pseudocode for this method, I have put together a table containing all the methods used for it.
+All the drawing happens in the "paintEvent" method inside the "Canvas" class. To get a better understanding of the following pseudocode for this method, I have put together a table containing all the methods used for it (Table 1).
 
 \begin{table}[htbp]
     \centering
@@ -933,6 +936,68 @@ All the drawing happens in the "paintEvent" method inside the "Canvas" class. To
 
 The pseudocode of my "paintEvent" method shows the clear structure and hierarchy when it comes to drawing out all the atoms and bonds on the canvas. The method can be broken down in to two main parts, the first one just iterates through a list of atoms and draws the atom and the associated bonds. The second part is only called if an atom is currently selected, and it essentially draws out the possible bonds or potential atoms around it.
 
+\begin{algorithm}
+\footnotesize
+\caption{paintEvent Algorithm, first part}\label{alg:cap}
+\begin{algorithmic}
+\Function{$paintEvent$}{$event$}
+\For{$ atom\ IN\ atoms\_list$}
+	\State $ draw\_atom(x,\ y,\ symbol,\ painter,\ pen,\ False)$
+	\For{$ bond\ IN\ atom.bonds$}
+		\If{$ bond.order = 2$}
+			\State $ draw\_double\_bond(x1,\ y1,\ x2,\ y2,\ symbol,\ painter,\ True)$
+		\ElsIf{$ bond.order = 3$}
+			\State $ draw\_triple\_bond(x1,\ y1,\ x2,\ y2,\ symbol,\ painter,\ True)$
+		\Else
+			\State $ draw\_single\_bond(x1,\ y1,\ x2,\ y2,\ symbol,\ painter,\ True)$
+		\EndIf
+		\State $ draw\_atom\_circle(x2,\ y2,\ x1,\ y1,\ painter,\ pen)$
+		\State $ draw\_atom(x2,\ y2,\ symbol2,\ painter,\ pen,\ False)$
+		\State $ draw\_atom(x1,\ y1,\ symbol1,\ painter,\ pen,\ False)$
+	\EndFor
+\EndFor
+\State SECOND\ PART\ HERE
+\EndFunction
+\end{algorithmic}
+\end{algorithm}
+
+For visualisation purposes, I have decided to split the pseudo code for the "paintEvent" method into the two parts mentioned before.\\
+As explained in an earlier part, it is essential to follow a certain hierarchy structure for drawing out the canvas. Algorithm 6 (paintEvent Algorithm, first part) illustrated this procedure perfectly. The very first thing to happen every time the "paintEvent" is called, is that using an iterative for-loop structure, every atom in the atoms list is being drawn on the canvas. In the bigger picture, this is so that all the atoms that are not bonded and don't need anything extra are drawn. Next, all the bonds of the specific atom are displayed, and the "atom circle" is drawn. And lastly both atoms on either side of the bond are drawn and the first part of the "paintEvent" method is completed. As noted at the start of this sub-section 2.6, it is important that for bonded atoms, the bond is drawn first , then the "atom circle" and lastly the actual atoms.
+
+\newpage
+
+\begin{algorithm}
+\footnotesize
+\caption{paintEvent Algorithm, second part}\label{alg:cap}
+\begin{algorithmic}
+\If{$ selected = True$}
+	\State $ x1\gets selected\_atom.x\_coords$
+	\State $ y1\gets selected\_atom.y\_coords$
+	\If{$ action\_type != "bond"$}
+		\If{$ selected\_atom\ IS\ NOT\ NONE$}
+		\State $ potential\_positions\gets calc\_potential\_positions(selected\_atom)$
+		\For{$ pos\ IN\ potential\_positions$}
+			\If{$ check\_atom\_overlap(pos[0],\ pos[1]) = False$}
+				\If{$ bond\_order = 2$}
+					\State $ draw\_double\_bond(x1,\ y1,\ pos[0],\ pos[1],\ painter,\ pen,\ False)$
+				\ElsIf{$ bond\_order = 3$}
+					\State $ draw\_triple\_bond(x1,\ y1,\ pos[0],\ pos[1],\ painter,\ pen,\ False)$
+				\Else
+					\State $ draw\_single\_bond(x1,\ y1,\ pos[0],\ pos[1],\ painter,\ pen,\ False)$
+				\EndIf
+				\State $ draw\_atom\_circle(pos[0],\ pos[1],\ x1,\ y1,\  painter,\ pen)$
+				\State $ draw\_atom(pos[0],\ post[1],\ symbol,\ painter,\ pen,\ True)$
+				\State $ draw\_atom(x1,\ y1,\ symbol,\ painter,\ pen,\ False)$
+			\EndIf
+		\EndFor
+	\EndIf
+	\EndIf
+\EndIf
+\end{algorithmic}
+\end{algorithm}
+
+This second part of the "paintEvent" (Algorithm 7), uses the\\
+"calc\_potential\_positions()" method discussed earlier and all in all just puts the whole functionality of drawing potential atoms and bonds around the selected atom together.
 
 \newpage
 

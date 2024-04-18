@@ -13,5 +13,5 @@
 \contentsline {subsection}{\numberline {2.4}Algorithm Design for ChemCalculator}{12}{}%
 \contentsline {subsection}{\numberline {2.5}Algorithm Design for ChemBalancer}{13}{}%
 \contentsline {subsection}{\numberline {2.6}Algorithm Design for ChemEditor}{28}{}%
-\contentsline {section}{\numberline {3}Testing}{32}{}%
-\contentsline {section}{\numberline {4}Evaluation}{32}{}%
+\contentsline {section}{\numberline {3}Testing}{33}{}%
+\contentsline {section}{\numberline {4}Evaluation}{33}{}%
