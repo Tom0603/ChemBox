@@ -214,74 +214,43 @@ class Canvas(QLabel):
 
         # Check for selected atom and draw potential positions
         if self.selected:
-            if self.action_type == "bond":
+            print("selected")
+            if self.action_type != "bond":
                 try:
-                    init_painter.drawPixmap(0, 0, self.pixmap)
-                    # Draw every potential bond from that atom in different colour and redraw the atoms
-                    for possible_atom in self.atoms:
-                        if self.bond_order == 2:
-                            print("draw 2")
-                            self.draw_double_bond(self.selected_atom.x_coords, self.selected_atom.y_coords,
-                                                  possible_atom.x_coords, possible_atom.y_coords, pix_painter, pen,
-                                                  False)
-                        elif self.bond_order == 3:
-                            print("draw 3")
-                            self.draw_triple_bond(self.selected_atom.x_coords, self.selected_atom.y_coords,
-                                                  possible_atom.x_coords, possible_atom.y_coords, pix_painter, pen,
-                                                  False)
-                        else:
-                            print("draw 1")
-                            self.draw_single_bond(self.selected_atom.x_coords, self.selected_atom.y_coords,
-                                                  possible_atom.x_coords, possible_atom.y_coords, pix_painter, pen,
-                                                  False)
-                        self.draw_atom_circle(possible_atom.x_coords, possible_atom.y_coords,
-                                              self.selected_atom.x_coords, self.selected_atom.y_coords, pix_painter,
-                                              pen)
-                        pen.setStyle(Qt.PenStyle.SolidLine)
-                        pix_painter.setPen(pen)
-                        self.draw_atom(self.selected_atom.x_coords, self.selected_atom.y_coords,
-                                       self.selected_atom.symbol, pix_painter, pen, False)
-                        self.draw_atom(possible_atom.x_coords, possible_atom.y_coords, possible_atom.symbol,
-                                       pix_painter, pen, False)
+                    # Calculate possible positions for new atoms in 360° around the selected atom
+                    if self.selected_atom is not None:
+                        potential_positions = self.calc_potential_positions(self.selected_atom)
+                        for pos in potential_positions:
+                            # If atoms at position don't overlap, draw the potential bonds and atoms in different colour
+                            if not self.check_atom_overlap(pos[0], pos[1]):
+                                if self.bond_order == 2:
+                                    self.draw_double_bond(self.selected_atom.x_coords, self.selected_atom.y_coords, pos[0],
+                                                          pos[1], pix_painter, pen, False)
+                                elif self.bond_order == 3:
+                                    self.draw_triple_bond(self.selected_atom.x_coords, self.selected_atom.y_coords,
+                                                          pos[0], pos[1], pix_painter, pen, False)
+                                else:
+                                    self.draw_single_bond(self.selected_atom.x_coords, self.selected_atom.y_coords,
+                                                          pos[0], pos[1], pix_painter, pen, False)
+                                self.draw_atom_circle(pos[0], pos[1], self.selected_atom.x_coords,
+                                                      self.selected_atom.y_coords, pix_painter, pen)
+                                pen.setStyle(Qt.PenStyle.SolidLine)
+                                pix_painter.setPen(pen)
+
+                                # Use of self.element["symbol"], as the whole elements json data is stored in self.element
+                                # E.g. {'symbol': 'C',
+                                # 'atomic_number': 6,
+                                # 'group': 14,
+                                # 'period': 2,
+                                # 'outer_electrons': 4,
+                                # 'full_shell': 8}
+
+                                self.draw_atom(pos[0], pos[1], self.element["symbol"], pix_painter, pen, True)
+                                self.draw_atom(self.selected_atom.x_coords, self.selected_atom.y_coords,
+                                               self.selected_atom.symbol, pix_painter, pen, False)
+                        init_painter.drawPixmap(0, 0, self.pixmap)
                 except AttributeError:
                     return
-                return
-            print("selected")
-            try:
-                # Calculate possible positions for new atoms in 360° around the selected atom
-                if self.selected_atom is not None:
-                    potential_positions = self.calc_potential_positions(self.selected_atom)
-                    for pos in potential_positions:
-                        # If atoms at position don't overlap, draw the potential bonds and atoms in different colour
-                        if not self.check_atom_overlap(pos[0], pos[1]):
-                            if self.bond_order == 2:
-                                self.draw_double_bond(self.selected_atom.x_coords, self.selected_atom.y_coords, pos[0],
-                                                      pos[1], pix_painter, pen, False)
-                            elif self.bond_order == 3:
-                                self.draw_triple_bond(self.selected_atom.x_coords, self.selected_atom.y_coords,
-                                                      pos[0], pos[1], pix_painter, pen, False)
-                            else:
-                                self.draw_single_bond(self.selected_atom.x_coords, self.selected_atom.y_coords,
-                                                      pos[0], pos[1], pix_painter, pen, False)
-                            self.draw_atom_circle(pos[0], pos[1], self.selected_atom.x_coords,
-                                                  self.selected_atom.y_coords, pix_painter, pen)
-                            pen.setStyle(Qt.PenStyle.SolidLine)
-                            pix_painter.setPen(pen)
-
-                            # Use of self.element["symbol"], as the whole elements json data is stored in self.element
-                            # E.g. {'symbol': 'C',
-                            # 'atomic_number': 6,
-                            # 'group': 14,
-                            # 'period': 2,
-                            # 'outer_electrons': 4,
-                            # 'full_shell': 8}
-
-                            self.draw_atom(pos[0], pos[1], self.element["symbol"], pix_painter, pen, True)
-                            self.draw_atom(self.selected_atom.x_coords, self.selected_atom.y_coords,
-                                           self.selected_atom.symbol, pix_painter, pen, False)
-                    init_painter.drawPixmap(0, 0, self.pixmap)
-            except AttributeError:
-                return
         init_painter.drawPixmap(0, 0, self.pixmap)
         init_painter.end()
         pix_painter.end()
@@ -322,13 +291,15 @@ class Canvas(QLabel):
 
     def draw_single_bond(self, atom1_x: int, atom1_y: int, atom2_x: int, atom2_y: int, painter: QPainter, pen: QPen,
                          actual_bond: bool = True) -> None:
-
+        print("start single bond")
         if not actual_bond:
             # Set colour red
             pen.setColor(QColor(255, 0, 0))
             painter.setPen(pen)
+            print("reddddd")
 
         painter.drawLine(QPoint(atom1_x, atom1_y), QPoint(atom2_x, atom2_y))
+        print("end single bond")
 
     def draw_double_bond(self, atom1_x: int, atom1_y: int, atom2_x: int, atom2_y: int, painter: QPainter, pen: QPen,
                          actual_bond: bool = True) -> None:
