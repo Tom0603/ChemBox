@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.141592653-2.6-1.40.25 (TeX Live 2023) (preloaded format=pdflatex 2023.10.31)  17 APR 2024 21:09
+This is pdfTeX, Version 3.141592653-2.6-1.40.25 (TeX Live 2023) (preloaded format=pdflatex 2023.10.31)  18 APR 2024 19:04
 entering extended mode
  restricted \write18 enabled.
  %&-line parsing enabled.
@@ -66,9 +66,57 @@ l.6 \usepackage{
 \usepackage may only appear in the document preamble, i.e.,
 between \documentclass and \begin{document}.
 
+
+! LaTeX Error: \usepackage before \documentclass.
+
+See the LaTeX manual or LaTeX Companion for explanation.
+Type  H <return>  for immediate help.
+ ...                                              
+                                                  
+l.7 \usepackage{
+                pgf-umlcd}
+\usepackage may only appear in the document preamble, i.e.,
+between \documentclass and \begin{document}.
+
+
+! LaTeX Error: Command \umltextcolor undefined.
+
+See the LaTeX manual or LaTeX Companion for explanation.
+Type  H <return>  for immediate help.
+ ...                                              
+                                                  
+l.9 \renewcommand{\umltextcolor }
+                                 { black }
+Try typing  <return>  to proceed.
+If that doesn't work, type  X <return>  to quit.
+
+
+! LaTeX Error: Command \umlfillcolor undefined.
+
+See the LaTeX manual or LaTeX Companion for explanation.
+Type  H <return>  for immediate help.
+ ...                                              
+                                                  
+l.10 \renewcommand{\umlfillcolor }
+                                  { white }
+Try typing  <return>  to proceed.
+If that doesn't work, type  X <return>  to quit.
+
+
+! LaTeX Error: Command \umldrawcolor undefined.
+
+See the LaTeX manual or LaTeX Companion for explanation.
+Type  H <return>  for immediate help.
+ ...                                              
+                                                  
+l.11 \renewcommand{\umldrawcolor }
+                                  { black }
+Try typing  <return>  to proceed.
+If that doesn't work, type  X <return>  to quit.
+
 ! Undefined control sequence.
-l.9 \graphicspath
-                 {{/Users/tom/Documents/Programmieren/ChemBox/Documentation/...
+l.13 \graphicspath
+                  {{/Users/tom/Documents/Programmieren/ChemBox/Documentation...
 The control sequence at the end of the top line
 of your error message was never \def'ed. If you have
 misspelled it (e.g., `\hobx'), type `I' and the correct
@@ -82,8 +130,8 @@ See the LaTeX manual or LaTeX Companion for explanation.
 Type  H <return>  for immediate help.
  ...                                              
                                                   
-l.9 \graphicspath{{/
-                    Users/tom/Documents/Programmieren/ChemBox/Documentation/...
+l.13 \graphicspath{{/
+                     Users/tom/Documents/Programmieren/ChemBox/Documentation...
 
 You're in trouble here.  Try typing  <return>  to proceed.
 If that doesn't work, type  X <return>  to quit.
@@ -153,7 +201,7 @@ Missing character: There is no e in font nullfont!
 Missing character: There is no s in font nullfont!
 Missing character: There is no / in font nullfont!
 
-Overfull \hbox (20.0pt too wide) in paragraph at lines 9--10
+Overfull \hbox (20.0pt too wide) in paragraph at lines 13--14
 [] 
  []
 
@@ -164,7 +212,7 @@ See the LaTeX manual or LaTeX Companion for explanation.
 Type  H <return>  for immediate help.
  ...                                              
                                                   
-l.11 \usepackage{
+l.15 \usepackage{
                  algpseudocode}
 \usepackage may only appear in the document preamble, i.e.,
 between \documentclass and \begin{document}.
@@ -176,13 +224,13 @@ See the LaTeX manual or LaTeX Companion for explanation.
 Type  H <return>  for immediate help.
  ...                                              
                                                   
-l.12 \usepackage{
+l.16 \usepackage{
                  algorithm}
 \usepackage may only appear in the document preamble, i.e.,
 between \documentclass and \begin{document}.
 
 ! Undefined control sequence.
-l.15 \algrenewcommand
+l.19 \algrenewcommand
                      \algorithmicif{\textbf{IF}}
 The control sequence at the end of the top line
 of your error message was never \def'ed. If you have
@@ -191,7 +239,7 @@ spelling (e.g., `I\hbox'). Otherwise just continue,
 and I'll forget about whatever was undefined.
 
 ! Undefined control sequence.
-l.15 \algrenewcommand\algorithmicif
+l.19 \algrenewcommand\algorithmicif
                                    {\textbf{IF}}
 The control sequence at the end of the top line
 of your error message was never \def'ed. If you have
@@ -206,13 +254,13 @@ See the LaTeX manual or LaTeX Companion for explanation.
 Type  H <return>  for immediate help.
  ...                                              
                                                   
-l.15 \algrenewcommand\algorithmicif{\textbf{IF}
+l.19 \algrenewcommand\algorithmicif{\textbf{IF}
                                                }
 You're in trouble here.  Try typing  <return>  to proceed.
 If that doesn't work, type  X <return>  to quit.
 
 ! Undefined control sequence.
-l.16 \algrenewcommand
+l.20 \algrenewcommand
                      \algorithmicthen{\textbf{THEN}}
 The control sequence at the end of the top line
 of your error message was never \def'ed. If you have
@@ -221,7 +269,7 @@ spelling (e.g., `I\hbox'). Otherwise just continue,
 and I'll forget about whatever was undefined.
 
 ! Undefined control sequence.
-l.16 \algrenewcommand\algorithmicthen
+l.20 \algrenewcommand\algorithmicthen
                                      {\textbf{THEN}}
 The control sequence at the end of the top line
 of your error message was never \def'ed. If you have
@@ -230,7 +278,7 @@ spelling (e.g., `I\hbox'). Otherwise just continue,
 and I'll forget about whatever was undefined.
 
 ! Undefined control sequence.
-l.17 \algrenewcommand
+l.21 \algrenewcommand
                      \algorithmicelse{\textbf{ELSE}}
 The control sequence at the end of the top line
 of your error message was never \def'ed. If you have
@@ -239,7 +287,7 @@ spelling (e.g., `I\hbox'). Otherwise just continue,
 and I'll forget about whatever was undefined.
 
 ! Undefined control sequence.
-l.17 \algrenewcommand\algorithmicelse
+l.21 \algrenewcommand\algorithmicelse
                                      {\textbf{ELSE}}
 The control sequence at the end of the top line
 of your error message was never \def'ed. If you have
@@ -248,7 +296,7 @@ spelling (e.g., `I\hbox'). Otherwise just continue,
 and I'll forget about whatever was undefined.
 
 ! Undefined control sequence.
-l.18 \algrenewcommand
+l.22 \algrenewcommand
                      \algorithmicend{\textbf{END}}
 The control sequence at the end of the top line
 of your error message was never \def'ed. If you have
@@ -257,7 +305,7 @@ spelling (e.g., `I\hbox'). Otherwise just continue,
 and I'll forget about whatever was undefined.
 
 ! Undefined control sequence.
-l.18 \algrenewcommand\algorithmicend
+l.22 \algrenewcommand\algorithmicend
                                     {\textbf{END}}
 The control sequence at the end of the top line
 of your error message was never \def'ed. If you have
@@ -266,7 +314,7 @@ spelling (e.g., `I\hbox'). Otherwise just continue,
 and I'll forget about whatever was undefined.
 
 ! Undefined control sequence.
-l.19 \algrenewcommand
+l.23 \algrenewcommand
                      \algorithmicfor{\textbf{FOR}}
 The control sequence at the end of the top line
 of your error message was never \def'ed. If you have
@@ -275,7 +323,7 @@ spelling (e.g., `I\hbox'). Otherwise just continue,
 and I'll forget about whatever was undefined.
 
 ! Undefined control sequence.
-l.19 \algrenewcommand\algorithmicfor
+l.23 \algrenewcommand\algorithmicfor
                                     {\textbf{FOR}}
 The control sequence at the end of the top line
 of your error message was never \def'ed. If you have
@@ -284,7 +332,7 @@ spelling (e.g., `I\hbox'). Otherwise just continue,
 and I'll forget about whatever was undefined.
 
 ! Undefined control sequence.
-l.20 \algrenewcommand
+l.24 \algrenewcommand
                      \algorithmicdo{\textbf{DO}}
 The control sequence at the end of the top line
 of your error message was never \def'ed. If you have
@@ -293,7 +341,7 @@ spelling (e.g., `I\hbox'). Otherwise just continue,
 and I'll forget about whatever was undefined.
 
 ! Undefined control sequence.
-l.20 \algrenewcommand\algorithmicdo
+l.24 \algrenewcommand\algorithmicdo
                                    {\textbf{DO}}
 The control sequence at the end of the top line
 of your error message was never \def'ed. If you have
@@ -302,7 +350,7 @@ spelling (e.g., `I\hbox'). Otherwise just continue,
 and I'll forget about whatever was undefined.
 
 ! Undefined control sequence.
-l.21 \algrenewcommand
+l.25 \algrenewcommand
                      \algorithmicwhile{\textbf{WHILE}}
 The control sequence at the end of the top line
 of your error message was never \def'ed. If you have
@@ -311,7 +359,7 @@ spelling (e.g., `I\hbox'). Otherwise just continue,
 and I'll forget about whatever was undefined.
 
 ! Undefined control sequence.
-l.21 \algrenewcommand\algorithmicwhile
+l.25 \algrenewcommand\algorithmicwhile
                                       {\textbf{WHILE}}
 The control sequence at the end of the top line
 of your error message was never \def'ed. If you have
@@ -320,7 +368,7 @@ spelling (e.g., `I\hbox'). Otherwise just continue,
 and I'll forget about whatever was undefined.
 
 ! Undefined control sequence.
-l.22 \algrenewcommand
+l.26 \algrenewcommand
                      \algorithmicloop{\textbf{LOOP}}
 The control sequence at the end of the top line
 of your error message was never \def'ed. If you have
@@ -329,7 +377,7 @@ spelling (e.g., `I\hbox'). Otherwise just continue,
 and I'll forget about whatever was undefined.
 
 ! Undefined control sequence.
-l.22 \algrenewcommand\algorithmicloop
+l.26 \algrenewcommand\algorithmicloop
                                      {\textbf{LOOP}}
 The control sequence at the end of the top line
 of your error message was never \def'ed. If you have
@@ -338,7 +386,7 @@ spelling (e.g., `I\hbox'). Otherwise just continue,
 and I'll forget about whatever was undefined.
 
 ! Undefined control sequence.
-l.23 \algrenewcommand
+l.27 \algrenewcommand
                      \algorithmicrepeat{\textbf{REPEAT}}
 The control sequence at the end of the top line
 of your error message was never \def'ed. If you have
@@ -347,7 +395,7 @@ spelling (e.g., `I\hbox'). Otherwise just continue,
 and I'll forget about whatever was undefined.
 
 ! Undefined control sequence.
-l.23 \algrenewcommand\algorithmicrepeat
+l.27 \algrenewcommand\algorithmicrepeat
                                        {\textbf{REPEAT}}
 The control sequence at the end of the top line
 of your error message was never \def'ed. If you have
@@ -356,7 +404,7 @@ spelling (e.g., `I\hbox'). Otherwise just continue,
 and I'll forget about whatever was undefined.
 
 ! Undefined control sequence.
-l.24 \algrenewcommand
+l.28 \algrenewcommand
                      \algorithmicuntil{\textbf{UNTIL}}
 The control sequence at the end of the top line
 of your error message was never \def'ed. If you have
@@ -365,7 +413,7 @@ spelling (e.g., `I\hbox'). Otherwise just continue,
 and I'll forget about whatever was undefined.
 
 ! Undefined control sequence.
-l.24 \algrenewcommand\algorithmicuntil
+l.28 \algrenewcommand\algorithmicuntil
                                       {\textbf{UNTIL}}
 The control sequence at the end of the top line
 of your error message was never \def'ed. If you have
@@ -374,7 +422,7 @@ spelling (e.g., `I\hbox'). Otherwise just continue,
 and I'll forget about whatever was undefined.
 
 ! Undefined control sequence.
-l.25 \algrenewcommand
+l.29 \algrenewcommand
                      \algorithmicreturn{\textbf{RETURN}}
 The control sequence at the end of the top line
 of your error message was never \def'ed. If you have
@@ -383,7 +431,7 @@ spelling (e.g., `I\hbox'). Otherwise just continue,
 and I'll forget about whatever was undefined.
 
 ! Undefined control sequence.
-l.25 \algrenewcommand\algorithmicreturn
+l.29 \algrenewcommand\algorithmicreturn
                                        {\textbf{RETURN}}
 The control sequence at the end of the top line
 of your error message was never \def'ed. If you have
@@ -392,7 +440,7 @@ spelling (e.g., `I\hbox'). Otherwise just continue,
 and I'll forget about whatever was undefined.
 
 ! Undefined control sequence.
-l.26 \algrenewcommand
+l.30 \algrenewcommand
                      \algorithmicfunction{\textbf{SUBROUTINE}}
 The control sequence at the end of the top line
 of your error message was never \def'ed. If you have
@@ -401,7 +449,7 @@ spelling (e.g., `I\hbox'). Otherwise just continue,
 and I'll forget about whatever was undefined.
 
 ! Undefined control sequence.
-l.26 \algrenewcommand\algorithmicfunction
+l.30 \algrenewcommand\algorithmicfunction
                                          {\textbf{SUBROUTINE}}
 The control sequence at the end of the top line
 of your error message was never \def'ed. If you have
@@ -410,87 +458,87 @@ spelling (e.g., `I\hbox'). Otherwise just continue,
 and I'll forget about whatever was undefined.
 
 
-Overfull \hbox (31.59715pt too wide) in paragraph at lines 15--27
+Overfull \hbox (31.59715pt too wide) in paragraph at lines 19--31
 []\OT1/cmr/bx/n/10 IF
  []
 
 
-Overfull \hbox (33.55537pt too wide) in paragraph at lines 15--27
+Overfull \hbox (33.55537pt too wide) in paragraph at lines 19--31
 \OT1/cmr/bx/n/10 THEN
  []
 
 
-Overfull \hbox (28.4165pt too wide) in paragraph at lines 15--27
+Overfull \hbox (28.4165pt too wide) in paragraph at lines 19--31
 \OT1/cmr/bx/n/10 ELSE
  []
 
 
-Overfull \hbox (25.37486pt too wide) in paragraph at lines 15--27
+Overfull \hbox (25.37486pt too wide) in paragraph at lines 19--31
 \OT1/cmr/bx/n/10 END
  []
 
 
-Overfull \hbox (24.18042pt too wide) in paragraph at lines 15--27
+Overfull \hbox (24.18042pt too wide) in paragraph at lines 19--31
 \OT1/cmr/bx/n/10 FOR
  []
 
 
-Overfull \hbox (17.45824pt too wide) in paragraph at lines 15--27
+Overfull \hbox (17.45824pt too wide) in paragraph at lines 19--31
 \OT1/cmr/bx/n/10 DO
  []
 
 
-Overfull \hbox (39.722pt too wide) in paragraph at lines 15--27
+Overfull \hbox (39.722pt too wide) in paragraph at lines 19--31
 \OT1/cmr/bx/n/10 WHILE
  []
 
 
-Overfull \hbox (32.05537pt too wide) in paragraph at lines 15--27
+Overfull \hbox (32.05537pt too wide) in paragraph at lines 19--31
 \OT1/cmr/bx/n/10 LOOP
  []
 
 
-Overfull \hbox (20.01378pt too wide) in paragraph at lines 15--27
+Overfull \hbox (20.01378pt too wide) in paragraph at lines 19--31
 \OT1/cmr/bx/n/10 RE-
  []
 
 
-Overfull \hbox (31.1526pt too wide) in paragraph at lines 15--27
+Overfull \hbox (31.1526pt too wide) in paragraph at lines 19--31
 \OT1/cmr/bx/n/10 PEAT
  []
 
 
-Overfull \hbox (21.68044pt too wide) in paragraph at lines 15--27
+Overfull \hbox (21.68044pt too wide) in paragraph at lines 19--31
 \OT1/cmr/bx/n/10 UN-
  []
 
 
-Overfull \hbox (19.27766pt too wide) in paragraph at lines 15--27
+Overfull \hbox (19.27766pt too wide) in paragraph at lines 19--31
 \OT1/cmr/bx/n/10 TIL
  []
 
 
-Overfull \hbox (20.01378pt too wide) in paragraph at lines 15--27
+Overfull \hbox (20.01378pt too wide) in paragraph at lines 19--31
 \OT1/cmr/bx/n/10 RE-
  []
 
 
-Overfull \hbox (34.47203pt too wide) in paragraph at lines 15--27
+Overfull \hbox (34.47203pt too wide) in paragraph at lines 19--31
 \OT1/cmr/bx/n/10 TURN
  []
 
 
-Overfull \hbox (27.24985pt too wide) in paragraph at lines 15--27
+Overfull \hbox (27.24985pt too wide) in paragraph at lines 19--31
 \OT1/cmr/bx/n/10 SUB-
  []
 
 
-Overfull \hbox (29.62483pt too wide) in paragraph at lines 15--27
+Overfull \hbox (29.62483pt too wide) in paragraph at lines 19--31
 \OT1/cmr/bx/n/10 ROU-
  []
 
 
-Overfull \hbox (28.9165pt too wide) in paragraph at lines 15--27
+Overfull \hbox (28.9165pt too wide) in paragraph at lines 19--31
 \OT1/cmr/bx/n/10 TINE 
  []
 
@@ -501,13 +549,13 @@ See the LaTeX manual or LaTeX Companion for explanation.
 Type  H <return>  for immediate help.
  ...                                              
                                                   
-l.28 \usepackage{
+l.32 \usepackage{
                  tikz}
 \usepackage may only appear in the document preamble, i.e.,
 between \documentclass and \begin{document}.
 
 ! Undefined control sequence.
-l.29 \usetikzlibrary
+l.33 \usetikzlibrary
                     {shapes.geometric, arrows}
 The control sequence at the end of the top line
 of your error message was never \def'ed. If you have
@@ -522,7 +570,7 @@ See the LaTeX manual or LaTeX Companion for explanation.
 Type  H <return>  for immediate help.
  ...                                              
                                                   
-l.29 \usetikzlibrary{s
+l.33 \usetikzlibrary{s
                       hapes.geometric, arrows}
 You're in trouble here.  Try typing  <return>  to proceed.
 If that doesn't work, type  X <return>  to quit.
@@ -551,12 +599,12 @@ Missing character: There is no o in font nullfont!
 Missing character: There is no w in font nullfont!
 Missing character: There is no s in font nullfont!
 
-Overfull \hbox (20.0pt too wide) in paragraph at lines 29--30
+Overfull \hbox (20.0pt too wide) in paragraph at lines 33--34
 []
  []
 
 ! Undefined control sequence.
-l.31 \tikzstyle
+l.35 \tikzstyle
                {startstop} = [rectangle, rounded corners, minimum width=3cm,...
 The control sequence at the end of the top line
 of your error message was never \def'ed. If you have
@@ -571,7 +619,7 @@ See the LaTeX manual or LaTeX Companion for explanation.
 Type  H <return>  for immediate help.
  ...                                              
                                                   
-l.31 \tikzstyle{s
+l.35 \tikzstyle{s
                  tartstop} = [rectangle, rounded corners, minimum width=3cm,...
 
 You're in trouble here.  Try typing  <return>  to proceed.
@@ -685,7 +733,7 @@ Missing character: There is no 3 in font nullfont!
 Missing character: There is no 0 in font nullfont!
 Missing character: There is no ] in font nullfont!
 ! Undefined control sequence.
-l.32 \tikzstyle
+l.36 \tikzstyle
                {io} = [trapezium, trapezium left angle=70, trapezium right a...
 The control sequence at the end of the top line
 of your error message was never \def'ed. If you have
@@ -826,7 +874,7 @@ Missing character: There is no 3 in font nullfont!
 Missing character: There is no 0 in font nullfont!
 Missing character: There is no ] in font nullfont!
 ! Undefined control sequence.
-l.33 \tikzstyle
+l.37 \tikzstyle
                {process} = [rectangle, minimum width=3cm, minimum height=1cm...
 The control sequence at the end of the top line
 of your error message was never \def'ed. If you have
@@ -928,7 +976,7 @@ Missing character: There is no 3 in font nullfont!
 Missing character: There is no 0 in font nullfont!
 Missing character: There is no ] in font nullfont!
 ! Undefined control sequence.
-l.34 \tikzstyle
+l.38 \tikzstyle
                {decision} = [diamond, minimum width=3cm, minimum height=1cm,...
 The control sequence at the end of the top line
 of your error message was never \def'ed. If you have
@@ -1028,7 +1076,7 @@ Missing character: There is no 3 in font nullfont!
 Missing character: There is no 0 in font nullfont!
 Missing character: There is no ] in font nullfont!
 ! Undefined control sequence.
-l.35 \tikzstyle
+l.39 \tikzstyle
                {arrow} = [thick,->,>=stealth]
 The control sequence at the end of the top line
 of your error message was never \def'ed. If you have
@@ -1063,12 +1111,12 @@ Missing character: There is no t in font nullfont!
 Missing character: There is no h in font nullfont!
 Missing character: There is no ] in font nullfont!
 
-Overfull \hbox (20.0pt too wide) in paragraph at lines 31--36
+Overfull \hbox (20.0pt too wide) in paragraph at lines 35--40
 []
  []
 
 ! Undefined control sequence.
-l.37 \lstdefinestyle
+l.41 \lstdefinestyle
                     {mystyle}{
 The control sequence at the end of the top line
 of your error message was never \def'ed. If you have
@@ -1083,7 +1131,7 @@ See the LaTeX manual or LaTeX Companion for explanation.
 Type  H <return>  for immediate help.
  ...                                              
                                                   
-l.37 \lstdefinestyle{m
+l.41 \lstdefinestyle{m
                       ystyle}{
 You're in trouble here.  Try typing  <return>  to proceed.
 If that doesn't work, type  X <return>  to quit.
@@ -1112,7 +1160,7 @@ Missing character: There is no o in font nullfont!
 Missing character: There is no r in font nullfont!
 Missing character: There is no = in font nullfont!
 ! Undefined control sequence.
-l.38     backgroundcolor=\color
+l.42     backgroundcolor=\color
                                {backcolour},
 The control sequence at the end of the top line
 of your error message was never \def'ed. If you have
@@ -1145,7 +1193,7 @@ Missing character: There is no l in font nullfont!
 Missing character: There is no e in font nullfont!
 Missing character: There is no = in font nullfont!
 ! Undefined control sequence.
-l.39     commentstyle=\color
+l.43     commentstyle=\color
                             {codegreen},
 The control sequence at the end of the top line
 of your error message was never \def'ed. If you have
@@ -1177,7 +1225,7 @@ Missing character: There is no l in font nullfont!
 Missing character: There is no e in font nullfont!
 Missing character: There is no = in font nullfont!
 ! Undefined control sequence.
-l.40     keywordstyle=\color
+l.44     keywordstyle=\color
                             {magenta},
 The control sequence at the end of the top line
 of your error message was never \def'ed. If you have
@@ -1206,7 +1254,7 @@ Missing character: There is no l in font nullfont!
 Missing character: There is no e in font nullfont!
 Missing character: There is no = in font nullfont!
 ! Undefined control sequence.
-l.41     numberstyle=\tiny
+l.45     numberstyle=\tiny
                           \color{codegray},
 The control sequence at the end of the top line
 of your error message was never \def'ed. If you have
@@ -1215,7 +1263,7 @@ spelling (e.g., `I\hbox'). Otherwise just continue,
 and I'll forget about whatever was undefined.
 
 ! Undefined control sequence.
-l.41     numberstyle=\tiny\color
+l.45     numberstyle=\tiny\color
                                 {codegray},
 The control sequence at the end of the top line
 of your error message was never \def'ed. If you have
@@ -1245,7 +1293,7 @@ Missing character: There is no l in font nullfont!
 Missing character: There is no e in font nullfont!
 Missing character: There is no = in font nullfont!
 ! Undefined control sequence.
-l.42     stringstyle=\color
+l.46     stringstyle=\color
                            {codepurple},
 The control sequence at the end of the top line
 of your error message was never \def'ed. If you have
@@ -1276,67 +1324,67 @@ Missing character: There is no l in font nullfont!
 Missing character: There is no e in font nullfont!
 Missing character: There is no = in font nullfont!
 
-Overfull \hbox (20.0pt too wide) in paragraph at lines 37--55
+Overfull \hbox (20.0pt too wide) in paragraph at lines 41--59
 []
  []
 
 
-Overfull \hbox (4.25006pt too wide) in paragraph at lines 37--55
+Overfull \hbox (4.25006pt too wide) in paragraph at lines 41--59
 \OT1/cmtt/m/n/8 ,
  []
 
 
-Overfull \hbox (102.00146pt too wide) in paragraph at lines 37--55
+Overfull \hbox (102.00146pt too wide) in paragraph at lines 41--59
 \OT1/cmtt/m/n/8 breakatwhitespace=false,
  []
 
 
-Overfull \hbox (68.00098pt too wide) in paragraph at lines 37--55
+Overfull \hbox (68.00098pt too wide) in paragraph at lines 41--59
 \OT1/cmtt/m/n/8 breaklines=true,
  []
 
 
-Overfull \hbox (55.2508pt too wide) in paragraph at lines 37--55
+Overfull \hbox (55.2508pt too wide) in paragraph at lines 41--59
 \OT1/cmtt/m/n/8 captionpos=b,
  []
 
 
-Overfull \hbox (68.00098pt too wide) in paragraph at lines 37--55
+Overfull \hbox (68.00098pt too wide) in paragraph at lines 41--59
 \OT1/cmtt/m/n/8 keepspaces=true,
  []
 
 
-Overfull \hbox (55.2508pt too wide) in paragraph at lines 37--55
+Overfull \hbox (55.2508pt too wide) in paragraph at lines 41--59
 \OT1/cmtt/m/n/8 numbers=left,
  []
 
 
-Overfull \hbox (59.50085pt too wide) in paragraph at lines 37--55
+Overfull \hbox (59.50085pt too wide) in paragraph at lines 41--59
 \OT1/cmtt/m/n/8 numbersep=5pt,
  []
 
 
-Overfull \hbox (72.25104pt too wide) in paragraph at lines 37--55
+Overfull \hbox (72.25104pt too wide) in paragraph at lines 41--59
 \OT1/cmtt/m/n/8 showspaces=false,
  []
 
 
-Overfull \hbox (97.7514pt too wide) in paragraph at lines 37--55
+Overfull \hbox (97.7514pt too wide) in paragraph at lines 41--59
 \OT1/cmtt/m/n/8 showstringspaces=false,
  []
 
 
-Overfull \hbox (63.75092pt too wide) in paragraph at lines 37--55
+Overfull \hbox (63.75092pt too wide) in paragraph at lines 41--59
 \OT1/cmtt/m/n/8 showtabs=false,
  []
 
 
-Overfull \hbox (42.50061pt too wide) in paragraph at lines 37--55
+Overfull \hbox (42.50061pt too wide) in paragraph at lines 41--59
 \OT1/cmtt/m/n/8 tabsize=2,
  []
 
 ! Undefined control sequence.
-l.56 \lstset
+l.60 \lstset
             {style=mystyle}
 The control sequence at the end of the top line
 of your error message was never \def'ed. If you have
@@ -1351,7 +1399,7 @@ See the LaTeX manual or LaTeX Companion for explanation.
 Type  H <return>  for immediate help.
  ...                                              
                                                   
-l.56 \lstset{s
+l.60 \lstset{s
               tyle=mystyle}
 You're in trouble here.  Try typing  <return>  to proceed.
 If that doesn't work, type  X <return>  to quit.
@@ -1377,10 +1425,10 @@ Missing character: There is no e in font nullfont!
 
  
 Here is how much of TeX's memory you used:
- 22 strings out of 476025
- 440 string characters out of 5790016
+ 25 strings out of 476025
+ 476 string characters out of 5790016
  1850388 words of memory out of 5000000
- 20573 multiletter control sequences out of 15000+600000
+ 20576 multiletter control sequences out of 15000+600000
  512763 words of font info for 34 fonts, out of 8000000 for 9000
  1141 hyphenation exceptions out of 8191
  14i,1n,12p,175b,77s stack positions out of 10000i,1000n,20000p,200000b,200000s

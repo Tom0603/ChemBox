@@ -859,9 +859,76 @@ Using the current working system, inputting the chemical equation mentioned befo
 \subsection{Algorithm Design for ChemEditor}
 
 My initial attempt at creating the ChemEditor was a mixture of following the plan made in the analysis stage and trying out different things to see what works best.\\
-To start my work on this module, I decided to try to identify a number of structures I will have to implement. The ChemEditor can be broken down into a graphical user interface part and a logic part. The GUI section has to consist of two main classes, the "ChemEditor" class, which takes care of displaying all the buttons, the canvas and other parts of the GUI, and the "Canvas" class, which can be further broken down into two main structures, the "paintEvent", which takes care of all the drawing, and the "mousePressEvent", which defines what is supposed to happen after a users interaction with the interface. The segment taking care of the logic of this module must contain an "Atom" class and a "Bond" class which define certain actions and properties.\\
 \linebreak
-One issue I encountered early on when working on the canvas was, that the bonds between atoms would start at the center of the atoms, and it could be complicated to correctly adjust the starting end endpoints of each bond (Figure 8).
+To start my work on this module, I decided to try to identify a number of structures I will have to implement. The ChemEditor can be broken down into a graphical user interface part and a logic part. The GUI section has to consist of two main classes, the "ChemEditor" class, which takes care of displaying all the buttons, the canvas and other parts of the GUI, and the "Canvas" class, which can be further broken down into two main structures, the "paintEvent", which takes care of all the drawing, and the\\ "mousePressEvent", which defines what is supposed to happen after a users interaction with the interface. The segment taking care of the logic of this module must contain an "Atom" class and a "Bond" class which define certain actions and properties.\\
+\linebreak
+I first started my work on the logic of the module, where my initial action was to define the Atom class and the Bond class and their associated methods and variables. The Atom class is the blueprint used for every individual atom on the canvas. The Bond class is only used in the bond() method of the Atom class, where a new bond between two atoms is initiated. Each atom can have as many bonds as it has free spaces in its outer shell, while each instance of a bond has to always exist of exactly two atoms.
+
+\begin{center}
+\begin{tikzpicture}
+      \begin{class}[text width=8cm]{Atom}{0, 0}
+        \attribute{+ symbol: str}
+        \attribute{+ outer\_electrons: int}
+        \attribute{+ x: int}
+        \attribute{+ y: int}
+       	\attribute{+ full\_shell: int}
+       	\attribute{+ bonds: list}
+       	\attribute{+ extra\_electrons: int}
+       	\attribute{+ overall\_electrons: int}
+        \operation{- add\_outer\_electrons(num: int): None}
+        \operation{- remove\_outer\_electrons(num: int): None}
+        \operation{+ check\_is\_bond\_possible(bonding\_atom, order: int): bool}
+        \operation{- bond(bonding\_atom, order: int): None}
+        \operation{- break\_bond(atom, order: int): None}
+      \end{class}
+      
+      \begin{class}[text width=6cm]{Bond}{0, -12}
+        \attribute{+ atoms: list[atom1, atom2]}
+        \attribute{+ order: int}
+      \end{class}
+      
+      \composition{Atom}{}{0..*}{Bond}
+\end{tikzpicture}
+\end{center}
+
+\begin{algorithm}
+\footnotesize
+\caption{Algorithm to check whether a bond is possible}\label{alg:bond_possible}
+\begin{algorithmic}
+\Function{$check\_is\_bond\_possible$}{$bonding\_atom,\ order$}
+\If{$ (overall\_electrons + order) > full\_shell$}
+	\State $ RETURN\ False$
+\ElsIf{$ (bonding\_atom.overall\_electrons) > bonding\_atom.full\_shell$}
+	\State $ RETURN\ False$
+\Else 
+	\State $ RETURN\ True$
+\EndIf
+\EndFunction
+\end{algorithmic}
+\end{algorithm}
+
+\begin{algorithm}
+\footnotesize
+\caption{Algorithm for bonding two atoms}\label{alg:bond}
+\begin{algorithmic}
+\Function{$bond$}{$bonding\_atom,\ order$}
+\If{$ check\_is\_bond\_possible = False$}
+	\State $ RETURN$
+\EndIf
+\State $ new\_bond\gets Bond(bonding\_atom,\ order)$
+\State $ bonds.append(new\_bond)$
+\State $ bonding\_atom.bonds.append(new\_bond)$
+\State $ extra\_electrons\gets extra\_electrons + order$
+\State $ bonding\_atom.extra\_electrons\gets bonding\_atom.extra\_electrons + order$
+\State $ overall\_electrons\gets outer\_electrons + extra\_electrons$
+\State $ bonding\_atom.overall\_electrons\gets bonding\_atom.outer\_electrons + bonding\_atom.extra\_electrons$
+\EndFunction
+\end{algorithmic}
+\end{algorithm}
+
+\newpage
+
+One issue I encountered early on when working on the canvas was, that the bonds between atoms would start at the center of the atoms, and it could be complicated to correctly adjust the starting end endpoints of each bond (Figure \ref{fig:atom_bond_overlap}).
 
 \begin{figure} [h]
 	\centering
@@ -870,9 +937,7 @@ One issue I encountered early on when working on the canvas was, that the bonds 
 	\label{fig:atom_bond_overlap}
 \end{figure}
 
-To overcome this problem, I decided to create a method for drawing an invisible circle in the same colour as the background behind the symbol of each atom to hide the bonds (draw\_atom\_circle() in code). This method is called after the bonds are drawn, in order to make the overlap with the atoms invisible in the eyes of the user. After drawing the bonds and drawing the circle, the actual atom is drawn on top of it, without any visible overlap between atoms and bonds. Evidently, there is a clear hierarchy as to how the drawing of atoms, bonds and everything else is drawn. After applying the required hierarchy, this is what the bonding of atoms looks like in the current version (Figure 9).
-
-\newpage
+To overcome this problem, I decided to create a method for drawing an invisible circle in the same colour as the background behind the symbol of each atom to hide the bonds (draw\_atom\_circle() in code). This method is called after the bonds are drawn, in order to make the overlap with the atoms invisible in the eyes of the user. After drawing the bonds and drawing the circle, the actual atom is drawn on top of it, without any visible overlap between atoms and bonds. Evidently, there is a clear hierarchy as to how the drawing of atoms, bonds and everything else is drawn. After applying the required hierarchy, this is what the bonding of atoms looks like in the current version (Figure \ref{fig:bonds_no_overlap}).
 
 \begin{figure} [h]
 	\centering
@@ -997,7 +1062,7 @@ As explained in an earlier part, it is essential to follow a certain hierarchy s
 \end{algorithm}
 
 This second part of the "paintEvent" (Algorithm 7), uses the\\
-"calc\_potential\_positions()" method discussed earlier and all in all just puts the whole functionality of drawing potential atoms and bonds around the selected atom together.
+"calc\_potential\_positions()" method discussed earlier and all in all just puts the whole functionality of drawing potential atoms and bonds around the selected atom together.\\
 
 \newpage
 

@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.141592653-2.6-1.40.25 (TeX Live 2023) (preloaded format=pdflatex 2023.10.31)  18 APR 2024 17:35
+This is pdfTeX, Version 3.141592653-2.6-1.40.25 (TeX Live 2023) (preloaded format=pdflatex 2023.10.31)  18 APR 2024 21:37
 entering extended mode
  restricted \write18 enabled.
  %&-line parsing enabled.
@@ -124,54 +124,20 @@ Package: tabularx 2020/01/15 v2.11c `tabularx' package (DPC)
 \TX@cols=\count268
 \TX@ftn=\toks22
 )
-(/usr/local/texlive/2023/texmf-dist/tex/latex/algorithmicx/algpseudocode.sty
-Package: algpseudocode 
+(/usr/local/texlive/2023/texmf-dist/tex/latex/pgf-umlcd/pgf-umlcd.sty
+Package: pgf-umlcd 2022/05/22 v0.3 Some LaTeX macros for UML Class Diagrams.
 
-(/usr/local/texlive/2023/texmf-dist/tex/latex/base/ifthen.sty
-Package: ifthen 2022/04/13 v1.1d Standard LaTeX ifthen package (DPC)
-)
-(/usr/local/texlive/2023/texmf-dist/tex/latex/algorithmicx/algorithmicx.sty
-Package: algorithmicx 2005/04/27 v1.2 Algorithmicx
-
-Document Style algorithmicx 1.2 - a greatly improved `algorithmic' style
-\c@ALG@line=\count269
-\c@ALG@rem=\count270
-\c@ALG@nested=\count271
-\ALG@tlm=\skip53
-\ALG@thistlm=\skip54
-\c@ALG@Lnr=\count272
-\c@ALG@blocknr=\count273
-\c@ALG@storecount=\count274
-\c@ALG@tmpcounter=\count275
-\ALG@tmplength=\skip55
-)
-Document Style - pseudocode environments for use with the `algorithmicx' style
-) (/usr/local/texlive/2023/texmf-dist/tex/latex/algorithms/algorithm.sty
-Package: algorithm 2009/08/24 v0.1 Document Style `algorithm' - floating enviro
-nment
-
-(/usr/local/texlive/2023/texmf-dist/tex/latex/float/float.sty
-Package: float 2001/11/08 v1.3d Float enhancements (AL)
-\c@float@type=\count276
-\float@exts=\toks23
-\float@box=\box55
-\@float@everytoks=\toks24
-\@floatcapt=\box56
-)
-\@float@every@algorithm=\toks25
-\c@algorithm=\count277
-)
 (/usr/local/texlive/2023/texmf-dist/tex/latex/pgf/frontendlayer/tikz.sty
 (/usr/local/texlive/2023/texmf-dist/tex/latex/pgf/basiclayer/pgf.sty
 (/usr/local/texlive/2023/texmf-dist/tex/latex/pgf/utilities/pgfrcs.sty
 (/usr/local/texlive/2023/texmf-dist/tex/generic/pgf/utilities/pgfutil-common.te
 x
-\pgfutil@everybye=\toks26
+\pgfutil@everybye=\toks23
 \pgfutil@tempdima=\dimen154
 \pgfutil@tempdimb=\dimen155
 )
 (/usr/local/texlive/2023/texmf-dist/tex/generic/pgf/utilities/pgfutil-latex.def
-\pgfutil@abb=\box57
+\pgfutil@abb=\box55
 ) (/usr/local/texlive/2023/texmf-dist/tex/generic/pgf/utilities/pgfrcs.code.tex
 (/usr/local/texlive/2023/texmf-dist/tex/generic/pgf/pgf.revision.tex)
 Package: pgfrcs 2023-01-15 v3.1.10 (3.1.10)
@@ -183,12 +149,12 @@ Package: pgf 2023-01-15 v3.1.10 (3.1.10)
 (/usr/local/texlive/2023/texmf-dist/tex/generic/pgf/systemlayer/pgfsys.code.tex
 Package: pgfsys 2023-01-15 v3.1.10 (3.1.10)
 (/usr/local/texlive/2023/texmf-dist/tex/generic/pgf/utilities/pgfkeys.code.tex
-\pgfkeys@pathtoks=\toks27
-\pgfkeys@temptoks=\toks28
+\pgfkeys@pathtoks=\toks24
+\pgfkeys@temptoks=\toks25
 
 (/usr/local/texlive/2023/texmf-dist/tex/generic/pgf/utilities/pgfkeyslibraryfil
 tered.code.tex
-\pgfkeys@tmptoks=\toks29
+\pgfkeys@tmptoks=\toks26
 ))
 \pgf@x=\dimen156
 \pgf@y=\dimen157
@@ -202,14 +168,14 @@ tered.code.tex
 \pgf@yd=\dimen165
 \w@pgf@writea=\write3
 \r@pgf@reada=\read2
-\c@pgf@counta=\count278
-\c@pgf@countb=\count279
-\c@pgf@countc=\count280
-\c@pgf@countd=\count281
-\t@pgf@toka=\toks30
-\t@pgf@tokb=\toks31
-\t@pgf@tokc=\toks32
-\pgf@sys@id@count=\count282
+\c@pgf@counta=\count269
+\c@pgf@countb=\count270
+\c@pgf@countc=\count271
+\c@pgf@countd=\count272
+\t@pgf@toka=\toks27
+\t@pgf@tokb=\toks28
+\t@pgf@tokc=\toks29
+\pgf@sys@id@count=\count273
 
 (/usr/local/texlive/2023/texmf-dist/tex/generic/pgf/systemlayer/pgf.cfg
 File: pgf.cfg 2023-01-15 v3.1.10 (3.1.10)
@@ -227,8 +193,8 @@ File: pgfsys-common-pdf.def 2023-01-15 v3.1.10 (3.1.10)
 (/usr/local/texlive/2023/texmf-dist/tex/generic/pgf/systemlayer/pgfsyssoftpath.
 code.tex
 File: pgfsyssoftpath.code.tex 2023-01-15 v3.1.10 (3.1.10)
-\pgfsyssoftpath@smallbuffer@items=\count283
-\pgfsyssoftpath@bigbuffer@items=\count284
+\pgfsyssoftpath@smallbuffer@items=\count274
+\pgfsyssoftpath@bigbuffer@items=\count275
 )
 (/usr/local/texlive/2023/texmf-dist/tex/generic/pgf/systemlayer/pgfsysprotocol.
 code.tex
@@ -240,11 +206,11 @@ Package: pgfcore 2023-01-15 v3.1.10 (3.1.10)
 (/usr/local/texlive/2023/texmf-dist/tex/generic/pgf/math/pgfmathutil.code.tex)
 (/usr/local/texlive/2023/texmf-dist/tex/generic/pgf/math/pgfmathparser.code.tex
 \pgfmath@dimen=\dimen166
-\pgfmath@count=\count285
-\pgfmath@box=\box58
-\pgfmath@toks=\toks33
-\pgfmath@stack@operand=\toks34
-\pgfmath@stack@operation=\toks35
+\pgfmath@count=\count276
+\pgfmath@box=\box56
+\pgfmath@toks=\toks30
+\pgfmath@stack@operand=\toks31
+\pgfmath@stack@operation=\toks32
 )
 (/usr/local/texlive/2023/texmf-dist/tex/generic/pgf/math/pgfmathfunctions.code.
 tex)
@@ -266,7 +232,7 @@ code.tex)
 erarithmetics.code.tex)
 (/usr/local/texlive/2023/texmf-dist/tex/generic/pgf/math/pgfmathcalc.code.tex)
 (/usr/local/texlive/2023/texmf-dist/tex/generic/pgf/math/pgfmathfloat.code.tex
-\c@pgfmathroundto@lastzeros=\count286
+\c@pgfmathroundto@lastzeros=\count277
 )) (/usr/local/texlive/2023/texmf-dist/tex/generic/pgf/math/pgfint.code.tex)
 (/usr/local/texlive/2023/texmf-dist/tex/generic/pgf/basiclayer/pgfcorepoints.co
 de.tex
@@ -301,10 +267,10 @@ File: pgfcorepathusage.code.tex 2023-01-15 v3.1.10 (3.1.10)
 (/usr/local/texlive/2023/texmf-dist/tex/generic/pgf/basiclayer/pgfcorescopes.co
 de.tex
 File: pgfcorescopes.code.tex 2023-01-15 v3.1.10 (3.1.10)
-\pgfpic=\box59
-\pgf@hbox=\box60
-\pgf@layerbox@main=\box61
-\pgf@picture@serial@count=\count287
+\pgfpic=\box57
+\pgf@hbox=\box58
+\pgf@layerbox@main=\box59
+\pgf@picture@serial@count=\count278
 )
 (/usr/local/texlive/2023/texmf-dist/tex/generic/pgf/basiclayer/pgfcoregraphicst
 ate.code.tex
@@ -339,8 +305,8 @@ File: pgfcorearrows.code.tex 2023-01-15 v3.1.10 (3.1.10)
 e.tex
 File: pgfcoreshade.code.tex 2023-01-15 v3.1.10 (3.1.10)
 \pgf@max=\dimen190
-\pgf@sys@shading@range@num=\count288
-\pgf@shadingcount=\count289
+\pgf@sys@shading@range@num=\count279
+\pgf@shadingcount=\count280
 )
 (/usr/local/texlive/2023/texmf-dist/tex/generic/pgf/basiclayer/pgfcoreimage.cod
 e.tex
@@ -349,7 +315,7 @@ File: pgfcoreimage.code.tex 2023-01-15 v3.1.10 (3.1.10)
 (/usr/local/texlive/2023/texmf-dist/tex/generic/pgf/basiclayer/pgfcoreexternal.
 code.tex
 File: pgfcoreexternal.code.tex 2023-01-15 v3.1.10 (3.1.10)
-\pgfexternal@startupbox=\box62
+\pgfexternal@startupbox=\box60
 )
 (/usr/local/texlive/2023/texmf-dist/tex/generic/pgf/basiclayer/pgfcorelayers.co
 de.tex
@@ -370,7 +336,7 @@ File: pgfcorerdf.code.tex 2023-01-15 v3.1.10 (3.1.10)
 (/usr/local/texlive/2023/texmf-dist/tex/generic/pgf/modules/pgfmoduleshapes.cod
 e.tex
 File: pgfmoduleshapes.code.tex 2023-01-15 v3.1.10 (3.1.10)
-\pgfnodeparttextbox=\box63
+\pgfnodeparttextbox=\box61
 )
 (/usr/local/texlive/2023/texmf-dist/tex/generic/pgf/modules/pgfmoduleplot.code.
 tex
@@ -395,8 +361,8 @@ Package: pgfcomp-version-1-18 2023-01-15 v3.1.10 (3.1.10)
 Package: pgffor 2023-01-15 v3.1.10 (3.1.10)
 \pgffor@iter=\dimen193
 \pgffor@skip=\dimen194
-\pgffor@stack=\toks36
-\pgffor@toks=\toks37
+\pgffor@stack=\toks33
+\pgffor@toks=\toks34
 ))
 (/usr/local/texlive/2023/texmf-dist/tex/generic/pgf/frontendlayer/tikz/tikz.cod
 e.tex
@@ -405,7 +371,7 @@ Package: tikz 2023-01-15 v3.1.10 (3.1.10)
 (/usr/local/texlive/2023/texmf-dist/tex/generic/pgf/libraries/pgflibraryplothan
 dlers.code.tex
 File: pgflibraryplothandlers.code.tex 2023-01-15 v3.1.10 (3.1.10)
-\pgf@plot@mark@count=\count290
+\pgf@plot@mark@count=\count281
 \pgfplotmarksize=\dimen195
 )
 \tikz@lastx=\dimen196
@@ -416,36 +382,30 @@ File: pgflibraryplothandlers.code.tex 2023-01-15 v3.1.10 (3.1.10)
 \tikz@lastmovetoy=\dimen257
 \tikzleveldistance=\dimen258
 \tikzsiblingdistance=\dimen259
-\tikz@figbox=\box64
-\tikz@figbox@bg=\box65
-\tikz@tempbox=\box66
-\tikz@tempbox@bg=\box67
-\tikztreelevel=\count291
-\tikznumberofchildren=\count292
-\tikznumberofcurrentchild=\count293
-\tikz@fig@count=\count294
+\tikz@figbox=\box62
+\tikz@figbox@bg=\box63
+\tikz@tempbox=\box64
+\tikz@tempbox@bg=\box65
+\tikztreelevel=\count282
+\tikznumberofchildren=\count283
+\tikznumberofcurrentchild=\count284
+\tikz@fig@count=\count285
 
 (/usr/local/texlive/2023/texmf-dist/tex/generic/pgf/modules/pgfmodulematrix.cod
 e.tex
 File: pgfmodulematrix.code.tex 2023-01-15 v3.1.10 (3.1.10)
-\pgfmatrixcurrentrow=\count295
-\pgfmatrixcurrentcolumn=\count296
-\pgf@matrix@numberofcolumns=\count297
+\pgfmatrixcurrentrow=\count286
+\pgfmatrixcurrentcolumn=\count287
+\pgf@matrix@numberofcolumns=\count288
 )
-\tikz@expandcount=\count298
+\tikz@expandcount=\count289
 
 (/usr/local/texlive/2023/texmf-dist/tex/generic/pgf/frontendlayer/tikz/librarie
 s/tikzlibrarytopaths.code.tex
 File: tikzlibrarytopaths.code.tex 2023-01-15 v3.1.10 (3.1.10)
 )))
-(/usr/local/texlive/2023/texmf-dist/tex/generic/pgf/frontendlayer/tikz/librarie
-s/tikzlibraryshapes.geometric.code.tex
-File: tikzlibraryshapes.geometric.code.tex 2023-01-15 v3.1.10 (3.1.10)
-
-(/usr/local/texlive/2023/texmf-dist/tex/generic/pgf/libraries/shapes/pgflibrary
-shapes.geometric.code.tex
-File: pgflibraryshapes.geometric.code.tex 2023-01-15 v3.1.10 (3.1.10)
-))
+(/usr/local/texlive/2023/texmf-dist/tex/latex/pgf-umlcd/tikzlibraryumlcd.code.t
+ex
 (/usr/local/texlive/2023/texmf-dist/tex/generic/pgf/frontendlayer/tikz/librarie
 s/tikzlibraryarrows.code.tex
 File: tikzlibraryarrows.code.tex 2023-01-15 v3.1.10 (3.1.10)
@@ -454,15 +414,109 @@ File: tikzlibraryarrows.code.tex 2023-01-15 v3.1.10 (3.1.10)
 code.tex
 File: pgflibraryarrows.code.tex 2023-01-15 v3.1.10 (3.1.10)
 \arrowsize=\dimen260
+))
+(/usr/local/texlive/2023/texmf-dist/tex/generic/pgf/frontendlayer/tikz/librarie
+s/tikzlibraryshapes.multipart.code.tex
+File: tikzlibraryshapes.multipart.code.tex 2023-01-15 v3.1.10 (3.1.10)
+
+(/usr/local/texlive/2023/texmf-dist/tex/generic/pgf/libraries/shapes/pgflibrary
+shapes.multipart.code.tex
+File: pgflibraryshapes.multipart.code.tex 2023-01-15 v3.1.10 (3.1.10)
+\pgfnodepartlowerbox=\box66
+\pgfnodeparttwobox=\box67
+\pgfnodepartthreebox=\box68
+\pgfnodepartfourbox=\box69
+\pgfnodeparttwentybox=\box70
+\pgfnodepartnineteenbox=\box71
+\pgfnodeparteighteenbox=\box72
+\pgfnodepartseventeenbox=\box73
+\pgfnodepartsixteenbox=\box74
+\pgfnodepartfifteenbox=\box75
+\pgfnodepartfourteenbox=\box76
+\pgfnodepartthirteenbox=\box77
+\pgfnodeparttwelvebox=\box78
+\pgfnodepartelevenbox=\box79
+\pgfnodeparttenbox=\box80
+\pgfnodepartninebox=\box81
+\pgfnodeparteightbox=\box82
+\pgfnodepartsevenbox=\box83
+\pgfnodepartsixbox=\box84
+\pgfnodepartfivebox=\box85
+))
+(/usr/local/texlive/2023/texmf-dist/tex/generic/pgf/frontendlayer/tikz/librarie
+s/tikzlibrarybackgrounds.code.tex
+File: tikzlibrarybackgrounds.code.tex 2023-01-15 v3.1.10 (3.1.10)
+\pgf@layerbox@background=\box86
+\pgf@layerboxsaved@background=\box87
+)
+(/usr/local/texlive/2023/texmf-dist/tex/generic/pgf/frontendlayer/tikz/librarie
+s/tikzlibraryfit.code.tex
+File: tikzlibraryfit.code.tex 2023-01-15 v3.1.10 (3.1.10)
+)
+\pgf@layerbox@connectionlayers=\box88
+\pgf@layerboxsaved@connectionlayers=\box89
+\pgfumlcd@ClassAttributesNum=\count290
+\pgfumlcd@ClassOperationsNum=\count291
+\pgfumlcd@ClassAbstractClassNum=\count292
+\pgfumlcd@ClassInterfaceNum=\count293
+\pgfumlcd@ClassSplitPartNum=\count294
+))
+(/usr/local/texlive/2023/texmf-dist/tex/latex/algorithmicx/algpseudocode.sty
+Package: algpseudocode 
+
+(/usr/local/texlive/2023/texmf-dist/tex/latex/base/ifthen.sty
+Package: ifthen 2022/04/13 v1.1d Standard LaTeX ifthen package (DPC)
+)
+(/usr/local/texlive/2023/texmf-dist/tex/latex/algorithmicx/algorithmicx.sty
+Package: algorithmicx 2005/04/27 v1.2 Algorithmicx
+
+Document Style algorithmicx 1.2 - a greatly improved `algorithmic' style
+\c@ALG@line=\count295
+\c@ALG@rem=\count296
+\c@ALG@nested=\count297
+\ALG@tlm=\skip53
+\ALG@thistlm=\skip54
+\c@ALG@Lnr=\count298
+\c@ALG@blocknr=\count299
+\c@ALG@storecount=\count300
+\c@ALG@tmpcounter=\count301
+\ALG@tmplength=\skip55
+)
+Document Style - pseudocode environments for use with the `algorithmicx' style
+) (/usr/local/texlive/2023/texmf-dist/tex/latex/algorithms/algorithm.sty
+Package: algorithm 2009/08/24 v0.1 Document Style `algorithm' - floating enviro
+nment
+
+(/usr/local/texlive/2023/texmf-dist/tex/latex/float/float.sty
+Package: float 2001/11/08 v1.3d Float enhancements (AL)
+\c@float@type=\count302
+\float@exts=\toks35
+\float@box=\box90
+\@float@everytoks=\toks36
+\@floatcapt=\box91
+)
+\@float@every@algorithm=\toks37
+\c@algorithm=\count303
+)
+(/usr/local/texlive/2023/texmf-dist/tex/generic/pgf/frontendlayer/tikz/librarie
+s/tikzlibraryshapes.geometric.code.tex
+File: tikzlibraryshapes.geometric.code.tex 2023-01-15 v3.1.10 (3.1.10)
+
+(/usr/local/texlive/2023/texmf-dist/tex/generic/pgf/libraries/shapes/pgflibrary
+shapes.geometric.code.tex
+File: pgflibraryshapes.geometric.code.tex 2023-01-15 v3.1.10 (3.1.10)
 )))
 (/usr/local/texlive/2023/texmf-dist/tex/latex/l3backend/l3backend-pdftex.def
 File: l3backend-pdftex.def 2023-01-16 L3 backend support: PDF output (pdfTeX)
-\l__color_backend_stack_int=\count299
-\l__pdf_internal_box=\box68
+\l__color_backend_stack_int=\count304
+\l__pdf_internal_box=\box92
 )
 (./ChemBox_Documentation.aux
 
 LaTeX Warning: Label `fig:tabs_mockup' multiply defined.
+
+
+LaTeX Warning: Label `alg:cap' multiply defined.
 
 
 LaTeX Warning: Label `alg:cap' multiply defined.
@@ -499,19 +553,19 @@ LaTeX Font Info:    Checking defaults for OMX/cmex/m/n on input line 13.
 LaTeX Font Info:    ... okay on input line 13.
 LaTeX Font Info:    Checking defaults for U/cmr/m/n on input line 13.
 LaTeX Font Info:    ... okay on input line 13.
-\c@lstlisting=\count300
+\c@lstlisting=\count305
  (/usr/local/texlive/2023/texmf-dist/tex/context/base/mkii/supp-pdf.mkii
 [Loading MPS to PDF converter (version 2006.09.02).]
-\scratchcounter=\count301
+\scratchcounter=\count306
 \scratchdimen=\dimen261
-\scratchbox=\box69
-\nofMPsegments=\count302
-\nofMParguments=\count303
+\scratchbox=\box93
+\nofMPsegments=\count307
+\nofMParguments=\count308
 \everyMPshowfont=\toks38
-\MPscratchCnt=\count304
+\MPscratchCnt=\count309
 \MPscratchDim=\dimen262
-\MPnumerator=\count305
-\makeMPintoPDFobject=\count306
+\MPnumerator=\count310
+\makeMPintoPDFobject=\count311
 \everyMPtoPDFconversion=\toks39
 ) (/usr/local/texlive/2023/texmf-dist/tex/latex/epstopdf-pkg/epstopdf-base.sty
 Package: epstopdf-base 2020-01-24 v2.11 Base part for package epstopdf
@@ -702,114 +756,174 @@ on/Images//working_balancer.png  used on input line 852.
  [27 </Users/tom/Documents/Programmieren/ChemBox/Documentation/Images//nullspac
 e_error.png> </Users/tom/Documents/Programmieren/ChemBox/Documentation/Images//
 working_balancer.png>]
-Underfull \hbox (badness 10000) in paragraph at lines 861--865
+Underfull \hbox (badness 10000) in paragraph at lines 861--866
 
  []
 
+
+Underfull \hbox (badness 10000) in paragraph at lines 861--866
+
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 883--883
+[][]\OT1/cmr/m/n/12 + sym-bol: str 
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 883--883
+\OT1/cmr/m/n/12 + outer[]electrons: int 
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 883--883
+\OT1/cmr/m/n/12 + x: int 
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 883--883
+\OT1/cmr/m/n/12 + y: int 
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 883--883
+\OT1/cmr/m/n/12 + full[]shell: int 
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 883--883
+\OT1/cmr/m/n/12 + bonds: list 
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 883--883
+\OT1/cmr/m/n/12 + ex-tra[]electrons: int 
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 883--883
+\OT1/cmr/m/n/12 or-der: int): bool 
+ []
+
+[28]
+Underfull \hbox (badness 10000) in paragraph at lines 924--925
+[] $\OML/cmm/m/it/10 bonding[]atom:overall[]electrons \OMS/cmsy/m/n/10   \OML/c
+mm/m/it/10 bonding[]atom:outer[]electrons \OT1/cmr/m/n/10 +
+ []
+
+[29]
 </Users/tom/Documents/Programmieren/ChemBox/Documentation/Images//atom_bond_ove
-rlap.png, id=123, 215.80624pt x 155.58125pt>
+rlap.png, id=129, 215.80624pt x 155.58125pt>
 File: /Users/tom/Documents/Programmieren/ChemBox/Documentation/Images//atom_bon
 d_overlap.png Graphic file (type png)
 <use /Users/tom/Documents/Programmieren/ChemBox/Documentation/Images//atom_bond
 _overlap.png>
 Package pdftex.def Info: /Users/tom/Documents/Programmieren/ChemBox/Documentati
-on/Images//atom_bond_overlap.png  used on input line 868.
+on/Images//atom_bond_overlap.png  used on input line 935.
 (pdftex.def)             Requested size: 107.90285pt x 77.79042pt.
-[28 </Users/tom/Documents/Programmieren/ChemBox/Documentation/Images//atom_bond
-_overlap.png>]
 </Users/tom/Documents/Programmieren/ChemBox/Documentation/Images//bonds_no_over
-lap.png, id=128, 208.78pt x 171.64125pt>
+lap.png, id=130, 208.78pt x 171.64125pt>
 File: /Users/tom/Documents/Programmieren/ChemBox/Documentation/Images//bonds_no
 _overlap.png Graphic file (type png)
 <use /Users/tom/Documents/Programmieren/ChemBox/Documentation/Images//bonds_no_
 overlap.png>
 Package pdftex.def Info: /Users/tom/Documents/Programmieren/ChemBox/Documentati
-on/Images//bonds_no_overlap.png  used on input line 879.
+on/Images//bonds_no_overlap.png  used on input line 944.
 (pdftex.def)             Requested size: 104.38972pt x 85.8204pt.
 
-Overfull \hbox (1.76846pt too wide) in paragraph at lines 930--930
+
+LaTeX Warning: `h' float specifier changed to `ht'.
+
+[30 </Users/tom/Documents/Programmieren/ChemBox/Documentation/Images//atom_bond
+_overlap.png>]
+Overfull \hbox (1.76846pt too wide) in paragraph at lines 995--995
 []|\OT1/cmr/m/n/12 calc[]potential[]positions| 
  []
 
 
-Underfull \hbox (badness 1242) in paragraph at lines 930--930
+Underfull \hbox (badness 1242) in paragraph at lines 995--995
 \OT1/cmr/m/n/12 po-ten-tial atoms in a
  []
 
 
-Underfull \hbox (badness 5091) in paragraph at lines 930--930
+Underfull \hbox (badness 5091) in paragraph at lines 995--995
 []|\OT1/cmr/m/n/12 Iterates through list
  []
 
 
-Underfull \hbox (badness 1406) in paragraph at lines 930--930
+Underfull \hbox (badness 1406) in paragraph at lines 995--995
 \OT1/cmr/m/n/12 of atoms and checks
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 930--930
+Underfull \hbox (badness 10000) in paragraph at lines 995--995
 \OT1/cmr/m/n/12 int, atom2[]x: int,
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 930--930
+Underfull \hbox (badness 10000) in paragraph at lines 995--995
 \OT1/cmr/m/n/12 int, atom2[]x: int,
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 930--930
+Underfull \hbox (badness 10000) in paragraph at lines 995--995
 \OT1/cmr/m/n/12 int, atom2[]x: int,
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 930--930
+Underfull \hbox (badness 10000) in paragraph at lines 995--995
 \OT1/cmr/m/n/12 int, atom2[]x: int,
  []
 
 
-Underfull \hbox (badness 2626) in paragraph at lines 930--930
+Underfull \hbox (badness 2626) in paragraph at lines 995--995
 []|\OT1/cmr/m/n/12 Handles the draw-ing
  []
 
 
-Underfull \hbox (badness 1881) in paragraph at lines 930--930
+Underfull \hbox (badness 1881) in paragraph at lines 995--995
 \OT1/cmr/m/n/12 in dou-ble and triple
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 930--930
+Underfull \hbox (badness 10000) in paragraph at lines 995--995
 \OT1/cmr/m/n/12 int, atom2[]x: int,
  []
 
 
-Underfull \hbox (badness 5260) in paragraph at lines 930--930
+Underfull \hbox (badness 5260) in paragraph at lines 995--995
 \OT1/cmr/m/n/12 same colour as the
  []
 
 
-Underfull \hbox (badness 1005) in paragraph at lines 930--930
+Underfull \hbox (badness 1005) in paragraph at lines 995--995
 \OT1/cmr/m/n/12 back-ground colour to
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 930--930
+Underfull \hbox (badness 10000) in paragraph at lines 995--995
 \OT1/cmr/m/n/12 int, sym-bol: str,
  []
 
-[29 </Users/tom/Documents/Programmieren/ChemBox/Documentation/Images//bonds_no_
-overlap.png>] [30] [31] [32] [33] (./ChemBox_Documentation.aux)
+[31 </Users/tom/Documents/Programmieren/ChemBox/Documentation/Images//bonds_no_
+overlap.png>] [32] [33]
+Underfull \hbox (badness 10000) in paragraph at lines 1064--1066
+
+ []
+
+[34] [35] (./ChemBox_Documentation.aux)
 
 LaTeX Warning: There were multiply-defined labels.
 
  ) 
 Here is how much of TeX's memory you used:
- 15775 strings out of 476025
- 322507 string characters out of 5790016
- 2988388 words of memory out of 5000000
- 35980 multiletter control sequences out of 15000+600000
+ 16664 strings out of 476025
+ 350494 string characters out of 5790016
+ 2989388 words of memory out of 5000000
+ 36850 multiletter control sequences out of 15000+600000
  518087 words of font info for 52 fonts, out of 8000000 for 9000
  1141 hyphenation exceptions out of 8191
- 89i,12n,83p,1172b,1681s stack positions out of 10000i,1000n,20000p,200000b,200000s
+ 104i,12n,97p,1172b,1681s stack positions out of 10000i,1000n,20000p,200000b,200000s
 </usr/local/texlive/2023/texmf-dist/fonts/type1/public/amsfonts/cm/cmbx10.pfb
 ></usr/local/texlive/2023/texmf-dist/fonts/type1/public/amsfonts/cm/cmbx12.pfb>
 </usr/local/texlive/2023/texmf-dist/fonts/type1/public/amsfonts/cm/cmmi10.pfb><
@@ -824,10 +938,10 @@ live/2023/texmf-dist/fonts/type1/public/amsfonts/cm/cmr8.pfb></usr/local/texliv
 e/2023/texmf-dist/fonts/type1/public/amsfonts/cm/cmsy10.pfb></usr/local/texlive
 /2023/texmf-dist/fonts/type1/public/amsfonts/cm/cmsy8.pfb></usr/local/texlive/2
 023/texmf-dist/fonts/type1/public/amsfonts/cm/cmtt8.pfb>
-Output written on ChemBox_Documentation.pdf (34 pages, 454122 bytes).
+Output written on ChemBox_Documentation.pdf (36 pages, 458610 bytes).
 PDF statistics:
- 206 PDF objects out of 1000 (max. 8388607)
- 122 compressed objects within 2 object streams
+ 212 PDF objects out of 1000 (max. 8388607)
+ 126 compressed objects within 2 object streams
  0 named destinations out of 1000 (max. 500000)
  58 words of extra memory for PDF output out of 10000 (max. 10000000)
 
