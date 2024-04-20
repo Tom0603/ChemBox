@@ -16,4 +16,5 @@
 \contentsline {subsubsection}{\numberline {2.6.1}ChemEditor Logic}{29}{}%
 \contentsline {subsubsection}{\numberline {2.6.2}ChemEditor GUI}{32}{}%
 \contentsline {section}{\numberline {3}Testing}{39}{}%
-\contentsline {section}{\numberline {4}Evaluation}{39}{}%
+\contentsline {subsubsection}{\numberline {3.0.1}Tests for ChemCalculator}{39}{}%
+\contentsline {section}{\numberline {4}Evaluation}{40}{}%

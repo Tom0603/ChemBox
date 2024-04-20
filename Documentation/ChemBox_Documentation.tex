@@ -1151,10 +1151,39 @@ Lastly, in the second part of the subroutine (Algorithm \ref{alg:mousePressEvent
 \end{algorithmic}
 \end{algorithm}
 
-
 \newpage
 
 \section{Testing}
+
+As usual with software projects, a lot of undocumented exploratory testing is happening during the production phase. A good example for this would be the tests shown in Figure \ref{fig:initial_balance_test}, \ref{fig:second_balance_test} and \ref{fig:working_balancer}, which luckily got captured in the moment.
+
+\subsubsection{Tests for ChemCalculator}
+
+The following tables contain an overview of basic input and output tests on the ChemCalculator module to ensure that the expected outcomes align with the actual outcomes during system usage. As this module has many very similar features, I have decided to summarise those tests into fewer fields, to make this section less repetitive. The tests will of course still contain any outliers of the testing process.
+
+\begin{table}[htbp]
+\centering
+\begin{tabularx}{\textwidth}{|X|X|X|X|X|}
+\hline
+\textbf{Test No.} & \textbf{Description} & \textbf{TEX (Typical, Erroneous, Extreme} & \textbf{Expected Outcome} & \textbf{Actual Outcome} \\
+\hline
+\multirow{3}{*}{1} & Calculate value for blank input & T: Fill 2 out of 3 input options with common values & Blank field calculated correctly. & As expected.\\
+\cline{3-5}
+& & E: Fill in all 3 input options with common values & Pop up dialogue states invalid input. & -\\
+\cline{3-5}
+& & X: Use invalid characters & Pop up dialogue states invalid input. & - \\
+
+\hline
+
+\multirow{3}{*}{2} & Test unit drop down  & T: Change units & Calculated value scales accordingly. & As expected.\\
+
+\hline
+\end{tabularx}
+\caption{Universal Calculator tests}
+\label{calculator_tests}
+\end{table}
+
+\newpage
 
 \section{Evaluation}
 \newpage
