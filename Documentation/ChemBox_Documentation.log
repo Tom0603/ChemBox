@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.141592653-2.6-1.40.25 (TeX Live 2023) (preloaded format=pdflatex 2023.10.31)  20 APR 2024 16:16
+This is pdfTeX, Version 3.141592653-2.6-1.40.25 (TeX Live 2023) (preloaded format=pdflatex 2023.10.31)  20 APR 2024 16:17
 entering extended mode
  restricted \write18 enabled.
  %&-line parsing enabled.
@@ -668,9 +668,9 @@ Underfull \hbox (badness 10000) in paragraph at lines 635--637
 
  []
 
-[20] [21] [22]
+[20] [21] [22] [23]
 </Users/tom/Documents/Programmieren/ChemBox/Documentation/Images//initial_balan
-ce_test.png, id=96, 477.785pt x 307.1475pt>
+ce_test.png, id=99, 477.785pt x 307.1475pt>
 File: /Users/tom/Documents/Programmieren/ChemBox/Documentation/Images//initial_
 balance_test.png Graphic file (type png)
 <use /Users/tom/Documents/Programmieren/ChemBox/Documentation/Images//initial_b
@@ -679,7 +679,7 @@ Package pdftex.def Info: /Users/tom/Documents/Programmieren/ChemBox/Documentati
 on/Images//initial_balance_test.png  used on input line 745.
 (pdftex.def)             Requested size: 238.8919pt x 153.57336pt.
 </Users/tom/Documents/Programmieren/ChemBox/Documentation/Images//initial_balan
-ce_test2.png, id=97, 563.10374pt x 334.24875pt>
+ce_test2.png, id=100, 563.10374pt x 334.24875pt>
 File: /Users/tom/Documents/Programmieren/ChemBox/Documentation/Images//initial_
 balance_test2.png Graphic file (type png)
 <use /Users/tom/Documents/Programmieren/ChemBox/Documentation/Images//initial_b
@@ -691,14 +691,14 @@ on/Images//initial_balance_test2.png  used on input line 754.
 
 LaTeX Warning: `h' float specifier changed to `ht'.
 
-[23 </Users/tom/Documents/Programmieren/ChemBox/Documentation/Images//initial_b
-alance_test.png>] [24 </Users/tom/Documents/Programmieren/ChemBox/Documentation
+[24 </Users/tom/Documents/Programmieren/ChemBox/Documentation/Images//initial_b
+alance_test.png>] [25 </Users/tom/Documents/Programmieren/ChemBox/Documentation
 /Images//initial_balance_test2.png>]
 LaTeX Font Info:    External font `cmex10' loaded for size
 (Font)              <7> on input line 782.
 LaTeX Font Info:    External font `cmex10' loaded for size
 (Font)              <5> on input line 782.
- [25]
+ [26]
 Overfull \hbox (29.72571pt too wide) in paragraph at lines 813--814
 [] $\OML/cmm/m/it/10 element[]counts \OMS/cmsy/m/n/10   \OML/cmm/m/it/10 SPLIT 
 reagent INTO element[]counts USING REGEX PATTERN$ 
@@ -713,9 +713,9 @@ Overfull \hbox (3.60753pt too wide) in paragraph at lines 832--834
 cmm/m/it/12 SO\OT1/cmr/m/n/12 4$ 
  []
 
-[26]
+[27]
 </Users/tom/Documents/Programmieren/ChemBox/Documentation/Images//nullspace_err
-or.png, id=116, 890.32625pt x 118.4425pt>
+or.png, id=119, 890.32625pt x 118.4425pt>
 File: /Users/tom/Documents/Programmieren/ChemBox/Documentation/Images//nullspac
 e_error.png Graphic file (type png)
 <use /Users/tom/Documents/Programmieren/ChemBox/Documentation/Images//nullspace
@@ -724,7 +724,7 @@ Package pdftex.def Info: /Users/tom/Documents/Programmieren/ChemBox/Documentati
 on/Images//nullspace_error.png  used on input line 839.
 (pdftex.def)             Requested size: 356.12419pt x 47.37614pt.
 </Users/tom/Documents/Programmieren/ChemBox/Documentation/Images//working_balan
-cer.png, id=117, 1276.77pt x 741.77126pt>
+cer.png, id=120, 1276.77pt x 741.77126pt>
 File: /Users/tom/Documents/Programmieren/ChemBox/Documentation/Images//working_
 balancer.png Graphic file (type png)
 <use /Users/tom/Documents/Programmieren/ChemBox/Documentation/Images//working_b
@@ -732,7 +732,7 @@ alancer.png>
 Package pdftex.def Info: /Users/tom/Documents/Programmieren/ChemBox/Documentati
 on/Images//working_balancer.png  used on input line 852.
 (pdftex.def)             Requested size: 383.03395pt x 222.5331pt.
- [27 </Users/tom/Documents/Programmieren/ChemBox/Documentation/Images//nullspac
+ [28 </Users/tom/Documents/Programmieren/ChemBox/Documentation/Images//nullspac
 e_error.png> </Users/tom/Documents/Programmieren/ChemBox/Documentation/Images//
 working_balancer.png>]
 Underfull \hbox (badness 10000) in paragraph at lines 861--864
@@ -784,15 +784,15 @@ Underfull \hbox (badness 10000) in paragraph at lines 885--885
 \OT1/cmr/m/n/12 or-der: int): bool 
  []
 
-[28] [29]
+[29] [30]
 Underfull \hbox (badness 10000) in paragraph at lines 928--929
 [] $\OML/cmm/m/it/10 bonding[]atom:overall[]electrons \OMS/cmsy/m/n/10   \OML/c
 mm/m/it/10 bonding[]atom:outer[]electrons \OT1/cmr/m/n/10 +
  []
 
-[30]
+[31]
 </Users/tom/Documents/Programmieren/ChemBox/Documentation/Images//atom_bond_ove
-rlap.png, id=133, 215.80624pt x 155.58125pt>
+rlap.png, id=136, 215.80624pt x 155.58125pt>
 File: /Users/tom/Documents/Programmieren/ChemBox/Documentation/Images//atom_bon
 d_overlap.png Graphic file (type png)
 <use /Users/tom/Documents/Programmieren/ChemBox/Documentation/Images//atom_bond
@@ -801,7 +801,7 @@ Package pdftex.def Info: /Users/tom/Documents/Programmieren/ChemBox/Documentati
 on/Images//atom_bond_overlap.png  used on input line 943.
 (pdftex.def)             Requested size: 107.90285pt x 77.79042pt.
 </Users/tom/Documents/Programmieren/ChemBox/Documentation/Images//bonds_no_over
-lap.png, id=134, 208.78pt x 171.64125pt>
+lap.png, id=137, 208.78pt x 171.64125pt>
 File: /Users/tom/Documents/Programmieren/ChemBox/Documentation/Images//bonds_no
 _overlap.png Graphic file (type png)
 <use /Users/tom/Documents/Programmieren/ChemBox/Documentation/Images//bonds_no_
@@ -809,7 +809,7 @@ overlap.png>
 Package pdftex.def Info: /Users/tom/Documents/Programmieren/ChemBox/Documentati
 on/Images//bonds_no_overlap.png  used on input line 952.
 (pdftex.def)             Requested size: 104.38972pt x 85.8204pt.
- [31 </Users/tom/Documents/Programmieren/ChemBox/Documentation/Images//atom_bon
+ [32 </Users/tom/Documents/Programmieren/ChemBox/Documentation/Images//atom_bon
 d_overlap.png> </Users/tom/Documents/Programmieren/ChemBox/Documentation/Images
 //bonds_no_overlap.png>]
 Overfull \hbox (1.76846pt too wide) in paragraph at lines 1003--1003
@@ -881,7 +881,7 @@ Underfull \hbox (badness 10000) in paragraph at lines 1003--1003
 \OT1/cmr/m/n/12 int, sym-bol: str,
  []
 
-[32] [33] [34]
+[33] [34] [35]
 Underfull \hbox (badness 10000) in paragraph at lines 1072--1074
 
  []
@@ -891,7 +891,7 @@ Underfull \hbox (badness 10000) in paragraph at lines 1075--1076
 
  []
 
-[35] [36] [37] [38] (./ChemBox_Documentation.aux)
+[36] [37] [38] [39] (./ChemBox_Documentation.aux)
 
 LaTeX Warning: There were multiply-defined labels.
 
@@ -899,11 +899,11 @@ LaTeX Warning: There were multiply-defined labels.
 Here is how much of TeX's memory you used:
  16680 strings out of 476025
  350854 string characters out of 5790016
- 2989388 words of memory out of 5000000
+ 3365388 words of memory out of 5000000
  36866 multiletter control sequences out of 15000+600000
  518087 words of font info for 52 fonts, out of 8000000 for 9000
  1141 hyphenation exceptions out of 8191
- 104i,12n,97p,1172b,1683s stack positions out of 10000i,1000n,20000p,200000b,200000s
+ 104i,12n,97p,1172b,1697s stack positions out of 10000i,1000n,20000p,200000b,200000s
 </usr/local/texlive/2023/texmf-dist/fonts/type1/public/amsfonts/cm/cmbx10.pfb
 ></usr/local/texlive/2023/texmf-dist/fonts/type1/public/amsfonts/cm/cmbx12.pfb>
 </usr/local/texlive/2023/texmf-dist/fonts/type1/public/amsfonts/cm/cmmi10.pfb><
@@ -918,10 +918,10 @@ live/2023/texmf-dist/fonts/type1/public/amsfonts/cm/cmr8.pfb></usr/local/texliv
 e/2023/texmf-dist/fonts/type1/public/amsfonts/cm/cmsy10.pfb></usr/local/texlive
 /2023/texmf-dist/fonts/type1/public/amsfonts/cm/cmsy8.pfb></usr/local/texlive/2
 023/texmf-dist/fonts/type1/public/amsfonts/cm/cmtt8.pfb>
-Output written on ChemBox_Documentation.pdf (39 pages, 465278 bytes).
+Output written on ChemBox_Documentation.pdf (40 pages, 480997 bytes).
 PDF statistics:
- 224 PDF objects out of 1000 (max. 8388607)
- 135 compressed objects within 2 object streams
+ 227 PDF objects out of 1000 (max. 8388607)
+ 137 compressed objects within 2 object streams
  0 named destinations out of 1000 (max. 500000)
  58 words of extra memory for PDF output out of 10000 (max. 10000000)
 

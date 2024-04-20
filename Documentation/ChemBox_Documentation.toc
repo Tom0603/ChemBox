@@ -12,8 +12,8 @@
 \contentsline {subsection}{\numberline {2.3}Structure of the GUI}{9}{}%
 \contentsline {subsection}{\numberline {2.4}Algorithm Design for ChemCalculator}{12}{}%
 \contentsline {subsection}{\numberline {2.5}Algorithm Design for ChemBalancer}{13}{}%
-\contentsline {subsection}{\numberline {2.6}Algorithm Design for ChemEditor}{28}{}%
-\contentsline {subsubsection}{\numberline {2.6.1}ChemEditor Logic}{28}{}%
-\contentsline {subsubsection}{\numberline {2.6.2}ChemEditor GUI}{31}{}%
-\contentsline {section}{\numberline {3}Testing}{38}{}%
-\contentsline {section}{\numberline {4}Evaluation}{38}{}%
+\contentsline {subsection}{\numberline {2.6}Algorithm Design for ChemEditor}{29}{}%
+\contentsline {subsubsection}{\numberline {2.6.1}ChemEditor Logic}{29}{}%
+\contentsline {subsubsection}{\numberline {2.6.2}ChemEditor GUI}{32}{}%
+\contentsline {section}{\numberline {3}Testing}{39}{}%
+\contentsline {section}{\numberline {4}Evaluation}{39}{}%
