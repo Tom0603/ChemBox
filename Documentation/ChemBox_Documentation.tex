@@ -861,7 +861,9 @@ Using the current working system, inputting the chemical equation mentioned befo
 My initial attempt at creating the ChemEditor was a mixture of following the plan made in the analysis stage and trying out different things to see what works best.\\
 \linebreak
 To start my work on this module, I decided to try to identify a number of structures I will have to implement. The ChemEditor can be broken down into a graphical user interface part and a logic part. The GUI section has to consist of two main classes, the "ChemEditor" class, which takes care of displaying all the buttons, the canvas and other parts of the GUI, and the "Canvas" class, which can be further broken down into two main structures, the "paintEvent", which takes care of all the drawing, and the\\ "mousePressEvent", which defines what is supposed to happen after a users interaction with the interface. The segment taking care of the logic of this module must contain an "Atom" class and a "Bond" class which define certain actions and properties.\\
-\linebreak
+
+\subsubsection{ChemEditor Logic}
+
 I first started my work on the logic of the module, where my initial action was to define the Atom class and the Bond class and their associated methods and variables. The Atom class is the blueprint used for every individual atom on the canvas. The Bond class is only used in the bond() method of the Atom class, where a new bond between two atoms is initiated. Each atom can have as many bonds as it has free spaces in its outer shell, while each instance of a bond has to always exist of exactly two atoms.
 
 \begin{center}
@@ -907,6 +909,8 @@ I first started my work on the logic of the module, where my initial action was 
 \end{algorithmic}
 \end{algorithm}
 
+Algorithm \ref{alg:bond_possible} investigates whether or not the suggested bond is chemically possible by using selection statements. The first "if statement" tests if the overall amount of (outer shell) electrons after addition of the extra electron, or electrons dependent on the chosen bond order, it would gain after bonding is greater than the allowed full shell capacity of the atom. If this applies, the subroutine returns the boolean value "False". The subsequent "else if statement" test the exact same thing for the other bonding atom, and returns False if it applies as well. If the program flow manages to get through both of these statements, the method returns "True", as the formation of a bond between the two atoms is possible.
+
 \begin{algorithm}
 \footnotesize
 \caption{Algorithm for bonding two atoms}\label{alg:bond}
@@ -926,7 +930,11 @@ I first started my work on the logic of the module, where my initial action was 
 \end{algorithmic}
 \end{algorithm}
 
+The bonding algorithm (Algorithm \ref{alg:bond}) of the atom class is called when the user wants to bond two atoms together. The opening action of the method uses the subroutine shown in algorithm \ref{alg:bond_possible} to find out if the bond is possible, and returns back to the main program is this is not the case. If the check returned a boolean value of "True", a new instance of the class Bond with the correct bond order is created. The freshly formed bond instance is then appended to the list of bonds of each atom, and the number of extra electrons and outer electrons of both atoms is adjusted using the bond order, to correctly store the current amount of electrons each atom has in its outer shell.
+
 \newpage
+
+\subsubsection{ChemEditor GUI}
 
 One issue I encountered early on when working on the canvas was, that the bonds between atoms would start at the center of the atoms, and it could be complicated to correctly adjust the starting end endpoints of each bond (Figure \ref{fig:atom_bond_overlap}).
 
@@ -1063,6 +1071,86 @@ As explained in an earlier part, it is essential to follow a certain hierarchy s
 
 This second part of the "paintEvent" (Algorithm \ref{alg:paintevent_second}), uses the\\
 "calc\_potential\_positions()" method discussed earlier and all in all just puts the whole functionality of drawing potential atoms and bonds around the selected atom together.\\
+
+The "mousePressEvent" subroutine handles the users actions on the canvas. The pseudocode for this algorithm is divided into two separate blocks for visualisation purposes (Algorithm \ref{alg:mousePressEvent_one} and Algorithm \ref{alg:mousePressEvent_two}). The method initially uses "if statements" to find out which action type the user has currently selected (draw, bond, remove). If the selected action type is "remove", the atom at the click position and if applicable all of the atoms bonds are removed.\\
+
+\newpage
+
+\begin{algorithm}
+\footnotesize
+\caption{mousePressEvent Algorithm, first part}\label{alg:mousePressEvent_one}
+\begin{algorithmic}
+\Function{$mousePressEvent$}{$event$}
+\If{$ user\ clicked\ on\ canvas$}
+	\State $ click\_pos\gets user\ click\ position$
+	\If{$ action\_type = "remove"$}
+		\State $ remove\_bond(click\_pos.x,\ click\_pos.y)$
+		\State $ remove\_atom(click\_pos.x,\ click\_pos.y)$
+	\ElsIf{$ action\_type = "bond"$}
+		\For{$ atom in atoms\_list$}
+			\State $ atom\_x\gets atom.x\_coords$
+			\State $ atom\_y\gets atom.y\_coords$
+			\If{$ atom\ position = click\ position$}
+				\State $ selected\gets True$
+				\State $ selected\_atom\gets atom$
+				\State $ temp\_bond\_list.append(atom)$
+				\If{$ LEN(temp\_bond\_list) = 2$}
+					\If{$ temp\_bond\_list[0] = temp\_bond\_list[1]$}
+						\State $ OUTPUT\ "Trying\ to\ bond\ to\ itself"$
+						\State $ temp\_bond\_list.CLEAR()$
+						\State $ RETURN$
+					\EndIf
+					\State $ temp\_bond\_list[0].bond(temp\_bond\_list[1],\ bond\_order)$
+					\State $ temp\_bond\_list.CLEAR()$
+					\State $ selected\_atom\gets NONE$
+				\EndIf
+				\State $ RETURN$
+			\EndIf
+			\State $ selected\gets False$
+		\EndFor
+	\Else
+		\State $ SECOND\ PART\ HERE$
+	\EndIf
+\EndIf
+\EndFunction
+\end{algorithmic}
+\end{algorithm}
+
+If the user has selected "bond", the program iterates over the list of all atoms on the canvas, and compares each atoms position with the users click position. If the click position matches the coordinates of an atom, this atom is added to a temporary list, and gets bonded to the other atom in that list, as soon as the length of this list is equal to two.
+
+\newpage
+
+Lastly, in the second part of the subroutine (Algorithm \ref{alg:mousePressEvent_two}), which can be imagined to be placed in algorithm \ref{alg:mousePressEvent_one} after the last else statement where it says " SECOND PART HERE", if the user has selected the draw action, another selection is used to check whether an atom is currently selected. If this is the case, it means that the circle with potential atoms is currently displayed. This section now evaluates whether the user has clicked on one of the potential atoms and therefore allows this atom and bond to be permanently added to the canvas, and then creates those new atoms and bonds. Otherwise if the user has not clicked on an atom, this means that they have clicked on a blank area on the canvas, a new atom is created at the click position and added to the list of atoms on the canvas.
+
+\begin{algorithm}
+\footnotesize
+\caption{mousePressEvent Algorithm, second part}\label{alg:mousePressEvent_two}
+\begin{algorithmic}
+\If{$ selected = True$}
+	\If{$ selected\_atom\ IS\ NOT\ NONE$}
+		\State $ potential\_positions\gets calc\_potential\_positions(selected\_atom)$
+		\If{$ check\_atom\_overlap(pos) = False$}
+			\For{$ pos\ IN\ potential\_positions$}
+				\If{$ pos = click position$}
+					\State $ new\_atom\gets Atom(element,\ pos)$
+					\If{$ new\_atom.check\_is\_bond\_possible(selected\_atom,\ bond\_order) = True$}
+						\State $ atoms\_list.append(new\_atom)$
+						\State $ new\_atom.bond(selected\_atom,\ bond\_order)$
+					\EndIf
+				\EndIf
+			\EndFor
+			\State $ selected\gets False$
+		\EndIf
+	\EndIf
+\EndIf
+\If{$ check\_clicked\_on\_atom(pos) = True$}
+	\State $ RETURN$
+\EndIf
+\State $ new\_atom\gets Atom(element,\ pos)$
+\State $ atoms\_list.append(new\_atom)$
+\end{algorithmic}
+\end{algorithm}
+
 
 \newpage
 

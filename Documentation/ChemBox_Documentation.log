@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.141592653-2.6-1.40.25 (TeX Live 2023) (preloaded format=pdflatex 2023.10.31)  18 APR 2024 22:07
+This is pdfTeX, Version 3.141592653-2.6-1.40.25 (TeX Live 2023) (preloaded format=pdflatex 2023.10.31)  20 APR 2024 16:16
 entering extended mode
  restricted \write18 enabled.
  %&-line parsing enabled.
@@ -735,171 +735,172 @@ on/Images//working_balancer.png  used on input line 852.
  [27 </Users/tom/Documents/Programmieren/ChemBox/Documentation/Images//nullspac
 e_error.png> </Users/tom/Documents/Programmieren/ChemBox/Documentation/Images//
 working_balancer.png>]
-Underfull \hbox (badness 10000) in paragraph at lines 861--866
+Underfull \hbox (badness 10000) in paragraph at lines 861--864
 
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 861--866
+Underfull \hbox (badness 10000) in paragraph at lines 861--864
 
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 883--883
+Underfull \hbox (badness 10000) in paragraph at lines 885--885
 [][]\OT1/cmr/m/n/12 + sym-bol: str 
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 883--883
+Underfull \hbox (badness 10000) in paragraph at lines 885--885
 \OT1/cmr/m/n/12 + outer[]electrons: int 
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 883--883
+Underfull \hbox (badness 10000) in paragraph at lines 885--885
 \OT1/cmr/m/n/12 + x: int 
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 883--883
+Underfull \hbox (badness 10000) in paragraph at lines 885--885
 \OT1/cmr/m/n/12 + y: int 
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 883--883
+Underfull \hbox (badness 10000) in paragraph at lines 885--885
 \OT1/cmr/m/n/12 + full[]shell: int 
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 883--883
+Underfull \hbox (badness 10000) in paragraph at lines 885--885
 \OT1/cmr/m/n/12 + bonds: list 
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 883--883
+Underfull \hbox (badness 10000) in paragraph at lines 885--885
 \OT1/cmr/m/n/12 + ex-tra[]electrons: int 
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 883--883
+Underfull \hbox (badness 10000) in paragraph at lines 885--885
 \OT1/cmr/m/n/12 or-der: int): bool 
  []
 
-[28]
-Underfull \hbox (badness 10000) in paragraph at lines 924--925
+[28] [29]
+Underfull \hbox (badness 10000) in paragraph at lines 928--929
 [] $\OML/cmm/m/it/10 bonding[]atom:overall[]electrons \OMS/cmsy/m/n/10   \OML/c
 mm/m/it/10 bonding[]atom:outer[]electrons \OT1/cmr/m/n/10 +
  []
 
-[29]
+[30]
 </Users/tom/Documents/Programmieren/ChemBox/Documentation/Images//atom_bond_ove
-rlap.png, id=129, 215.80624pt x 155.58125pt>
+rlap.png, id=133, 215.80624pt x 155.58125pt>
 File: /Users/tom/Documents/Programmieren/ChemBox/Documentation/Images//atom_bon
 d_overlap.png Graphic file (type png)
 <use /Users/tom/Documents/Programmieren/ChemBox/Documentation/Images//atom_bond
 _overlap.png>
 Package pdftex.def Info: /Users/tom/Documents/Programmieren/ChemBox/Documentati
-on/Images//atom_bond_overlap.png  used on input line 935.
+on/Images//atom_bond_overlap.png  used on input line 943.
 (pdftex.def)             Requested size: 107.90285pt x 77.79042pt.
 </Users/tom/Documents/Programmieren/ChemBox/Documentation/Images//bonds_no_over
-lap.png, id=130, 208.78pt x 171.64125pt>
+lap.png, id=134, 208.78pt x 171.64125pt>
 File: /Users/tom/Documents/Programmieren/ChemBox/Documentation/Images//bonds_no
 _overlap.png Graphic file (type png)
 <use /Users/tom/Documents/Programmieren/ChemBox/Documentation/Images//bonds_no_
 overlap.png>
 Package pdftex.def Info: /Users/tom/Documents/Programmieren/ChemBox/Documentati
-on/Images//bonds_no_overlap.png  used on input line 944.
+on/Images//bonds_no_overlap.png  used on input line 952.
 (pdftex.def)             Requested size: 104.38972pt x 85.8204pt.
-
-
-LaTeX Warning: `h' float specifier changed to `ht'.
-
-[30 </Users/tom/Documents/Programmieren/ChemBox/Documentation/Images//atom_bond
-_overlap.png>]
-Overfull \hbox (1.76846pt too wide) in paragraph at lines 995--995
+ [31 </Users/tom/Documents/Programmieren/ChemBox/Documentation/Images//atom_bon
+d_overlap.png> </Users/tom/Documents/Programmieren/ChemBox/Documentation/Images
+//bonds_no_overlap.png>]
+Overfull \hbox (1.76846pt too wide) in paragraph at lines 1003--1003
 []|\OT1/cmr/m/n/12 calc[]potential[]positions| 
  []
 
 
-Underfull \hbox (badness 1242) in paragraph at lines 995--995
+Underfull \hbox (badness 1242) in paragraph at lines 1003--1003
 \OT1/cmr/m/n/12 po-ten-tial atoms in a
  []
 
 
-Underfull \hbox (badness 5091) in paragraph at lines 995--995
+Underfull \hbox (badness 5091) in paragraph at lines 1003--1003
 []|\OT1/cmr/m/n/12 Iterates through list
  []
 
 
-Underfull \hbox (badness 1406) in paragraph at lines 995--995
+Underfull \hbox (badness 1406) in paragraph at lines 1003--1003
 \OT1/cmr/m/n/12 of atoms and checks
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 995--995
+Underfull \hbox (badness 10000) in paragraph at lines 1003--1003
 \OT1/cmr/m/n/12 int, atom2[]x: int,
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 995--995
+Underfull \hbox (badness 10000) in paragraph at lines 1003--1003
 \OT1/cmr/m/n/12 int, atom2[]x: int,
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 995--995
+Underfull \hbox (badness 10000) in paragraph at lines 1003--1003
 \OT1/cmr/m/n/12 int, atom2[]x: int,
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 995--995
+Underfull \hbox (badness 10000) in paragraph at lines 1003--1003
 \OT1/cmr/m/n/12 int, atom2[]x: int,
  []
 
 
-Underfull \hbox (badness 2626) in paragraph at lines 995--995
+Underfull \hbox (badness 2626) in paragraph at lines 1003--1003
 []|\OT1/cmr/m/n/12 Handles the draw-ing
  []
 
 
-Underfull \hbox (badness 1881) in paragraph at lines 995--995
+Underfull \hbox (badness 1881) in paragraph at lines 1003--1003
 \OT1/cmr/m/n/12 in dou-ble and triple
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 995--995
+Underfull \hbox (badness 10000) in paragraph at lines 1003--1003
 \OT1/cmr/m/n/12 int, atom2[]x: int,
  []
 
 
-Underfull \hbox (badness 5260) in paragraph at lines 995--995
+Underfull \hbox (badness 5260) in paragraph at lines 1003--1003
 \OT1/cmr/m/n/12 same colour as the
  []
 
 
-Underfull \hbox (badness 1005) in paragraph at lines 995--995
+Underfull \hbox (badness 1005) in paragraph at lines 1003--1003
 \OT1/cmr/m/n/12 back-ground colour to
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 995--995
+Underfull \hbox (badness 10000) in paragraph at lines 1003--1003
 \OT1/cmr/m/n/12 int, sym-bol: str,
  []
 
-[31 </Users/tom/Documents/Programmieren/ChemBox/Documentation/Images//bonds_no_
-overlap.png>] [32] [33]
-Underfull \hbox (badness 10000) in paragraph at lines 1064--1066
+[32] [33] [34]
+Underfull \hbox (badness 10000) in paragraph at lines 1072--1074
 
  []
 
-[34] [35] (./ChemBox_Documentation.aux)
+
+Underfull \hbox (badness 10000) in paragraph at lines 1075--1076
+
+ []
+
+[35] [36] [37] [38] (./ChemBox_Documentation.aux)
 
 LaTeX Warning: There were multiply-defined labels.
 
  ) 
 Here is how much of TeX's memory you used:
- 16675 strings out of 476025
- 350756 string characters out of 5790016
- 2988388 words of memory out of 5000000
- 36861 multiletter control sequences out of 15000+600000
+ 16680 strings out of 476025
+ 350854 string characters out of 5790016
+ 2989388 words of memory out of 5000000
+ 36866 multiletter control sequences out of 15000+600000
  518087 words of font info for 52 fonts, out of 8000000 for 9000
  1141 hyphenation exceptions out of 8191
  104i,12n,97p,1172b,1683s stack positions out of 10000i,1000n,20000p,200000b,200000s
@@ -917,10 +918,10 @@ live/2023/texmf-dist/fonts/type1/public/amsfonts/cm/cmr8.pfb></usr/local/texliv
 e/2023/texmf-dist/fonts/type1/public/amsfonts/cm/cmsy10.pfb></usr/local/texlive
 /2023/texmf-dist/fonts/type1/public/amsfonts/cm/cmsy8.pfb></usr/local/texlive/2
 023/texmf-dist/fonts/type1/public/amsfonts/cm/cmtt8.pfb>
-Output written on ChemBox_Documentation.pdf (36 pages, 458610 bytes).
+Output written on ChemBox_Documentation.pdf (39 pages, 465278 bytes).
 PDF statistics:
- 212 PDF objects out of 1000 (max. 8388607)
- 126 compressed objects within 2 object streams
+ 224 PDF objects out of 1000 (max. 8388607)
+ 135 compressed objects within 2 object streams
  0 named destinations out of 1000 (max. 500000)
  58 words of extra memory for PDF output out of 10000 (max. 10000000)
 
