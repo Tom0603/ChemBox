@@ -1,10 +1,66 @@
 from PyQt6.QtGui import QFont
 from PyQt6.QtWidgets import QGridLayout, QWidget, QPushButton, QLineEdit, QLabel, QComboBox, QHBoxLayout, QTabWidget, \
-    QVBoxLayout
+    QVBoxLayout, QMessageBox
 
 from math import log
 
+import re
+
 from gui_comps import RateBox, RateResultBox
+
+
+def is_numeric(user_input):
+
+    if not user_input:
+        return True
+    # Regular expression to match integers or decimals
+    pattern = r'^[-+]?[0-9]*\.?[0-9]+$'
+    print(user_input)
+    print(bool(re.match(pattern, user_input)))
+    return bool(re.match(pattern, user_input))
+
+
+def find_empty_input(input_list: list[QLineEdit]) -> QLineEdit | None:
+    """
+    An algorithm for finding the empty input out of a list of inputs.
+    Only works when looking for a single empty input.
+    """
+
+    count = 0
+    empty = None
+
+    for i in range(len(input_list)):
+        if not input_list[i].text().strip():
+            count += 1
+            empty = input_list[i]
+
+    if count == 1:
+        return empty
+
+
+def check_invalid_symbol(input_list: list[QLineEdit]) -> bool:
+    """
+    An algorithm for checking for invalid symbols.
+    """
+
+    invalid = False
+
+    for i in range(len(input_list)):
+        if not is_numeric(input_list[i].text().strip()):
+            invalid = True
+
+    return invalid
+
+
+def show_dialog(message):
+    dlg = QMessageBox()
+    dlg.setWindowTitle("Invalid Input!")
+    dlg.setText(f"Invalid user input!\n {message}")
+    dlg.setIcon(QMessageBox.Icon.Critical)
+    button = dlg.exec()
+
+    if button == QMessageBox.StandardButton.Ok:
+        print("OK!")
 
 
 class ChemCalculator(QWidget):
@@ -142,24 +198,6 @@ class ChemCalculator(QWidget):
         self.page_widget.setCurrentIndex(7)
 
 
-def find_empty_input(input_list: list[QLineEdit]) -> QLineEdit | None:
-    """
-    An algorithm for finding the empty input out of a list of inputs.
-    Only works when looking for a single empty input.
-    """
-
-    count = 0
-    empty = None
-
-    for i in range(len(input_list)):
-        if not input_list[i].text().strip():
-            count += 1
-            empty = input_list[i]
-
-    if count == 1:
-        return empty
-
-
 class MolesCalculator(QWidget):
     def __init__(self):
         super(QWidget, self).__init__()
@@ -221,6 +259,13 @@ class MolesCalculator(QWidget):
         """
         This function routes to the correct calculation, which is then performed.
         """
+
+        if not find_empty_input(self.input_list.copy()):
+            show_dialog("Must leave one input line empty for it to be calculated!")
+            return
+        elif check_invalid_symbol(self.input_list.copy()):
+            show_dialog("Only numerical values in the form of integers or decimals allowed!")
+            return
 
         mass_unit = self.mass_conversions[self.mass_unit_dropdown.currentText()]
         moles_unit = self.mole_conversions[self.moles_unit_dropdown.currentText()]
@@ -343,6 +388,13 @@ class ConcCalculator(QWidget):
         """
         This function routes to the correct calculation, which is then performed.
         """
+
+        if not find_empty_input(self.input_list.copy()):
+            show_dialog("Must leave one input line empty for it to be calculated!")
+            return
+        elif check_invalid_symbol(self.input_list.copy()):
+            show_dialog("Only numerical values in the form of integers or decimals allowed!")
+            return
 
         moles_unit = self.mole_conversions[self.moles_unit_dropdown.currentText()]
         vol_unit = self.volume_conversions[self.vol_unit_drop_down.currentText()]
@@ -1298,6 +1350,13 @@ class RateCalculator(QWidget):
         This method checks which input has been left empty, and then calls the according method to calculate the
         missing value.
         """
+
+        if not find_empty_input(self.input_list.copy()):
+            show_dialog("Must leave one input line empty for it to be calculated!")
+            return
+        elif check_invalid_symbol(self.input_list.copy()):
+            show_dialog("Only numerical values in the form of integers or decimals allowed!")
+            return
 
         unimol_order = self.order_conversion[self.unimol_order_input.currentText()]
         bimol_order = self.order_conversion[self.bimol_order_input.currentText()]
