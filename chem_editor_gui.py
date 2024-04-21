@@ -140,7 +140,6 @@ class Canvas(QLabel):
         self.selected_atom = None
 
     def get_carbon(self) -> dict:
-        print("GET CARBON")
         elements = json.load(open("elements.json"))
 
         for element, data in elements.items():
@@ -235,7 +234,8 @@ class Canvas(QLabel):
                             # If atoms at position don't overlap, draw the potential bonds and atoms in different colour
                             if not self.check_atom_overlap(pos[0], pos[1]):
                                 if self.bond_order == 2:
-                                    self.draw_double_bond(self.selected_atom.x_coords, self.selected_atom.y_coords, pos[0],
+                                    self.draw_double_bond(self.selected_atom.x_coords, self.selected_atom.y_coords,
+                                                          pos[0],
                                                           pos[1], pix_painter, pen, False)
                                 elif self.bond_order == 3:
                                     self.draw_triple_bond(self.selected_atom.x_coords, self.selected_atom.y_coords,
@@ -302,15 +302,12 @@ class Canvas(QLabel):
 
     def draw_single_bond(self, atom1_x: int, atom1_y: int, atom2_x: int, atom2_y: int, painter: QPainter, pen: QPen,
                          actual_bond: bool = True) -> None:
-        print("start single bond")
         if not actual_bond:
             # Set colour red
             pen.setColor(QColor(255, 0, 0))
             painter.setPen(pen)
-            print("reddddd")
 
         painter.drawLine(QPoint(atom1_x, atom1_y), QPoint(atom2_x, atom2_y))
-        print("end single bond")
 
     def draw_double_bond(self, atom1_x: int, atom1_y: int, atom2_x: int, atom2_y: int, painter: QPainter, pen: QPen,
                          actual_bond: bool = True) -> None:

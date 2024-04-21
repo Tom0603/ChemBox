@@ -42,8 +42,8 @@ class ChemBalancer(QWidget):
         self.balanced_output.setReadOnly(True)
         self.balance_button = QPushButton("Balance")
 
-        self.equation_input.setMinimumWidth(600)
-        self.balanced_output.setMinimumWidth(600)
+        self.equation_input.setMinimumWidth(800)
+        self.balanced_output.setMinimumWidth(800)
         self.balance_button.setFixedWidth(300)
 
         self.unbalanced_frame_layout = QHBoxLayout()
@@ -104,7 +104,6 @@ class ChemBalancer(QWidget):
         try:
             self.stripped_equation = "".join(self.equation_input.text().split())
         except IndexError:
-            print("Exception 5")
             return None
         print(self.stripped_equation)
 
@@ -112,7 +111,6 @@ class ChemBalancer(QWidget):
         try:
             self.equation_split = self.stripped_equation.split("=")
         except Exception:
-            print("Exception 6")
             raise
 
         print(self.equation_split)
@@ -153,7 +151,6 @@ class ChemBalancer(QWidget):
                 try:
                     self.find_elements(inner_compound, index, bracket_subscript, side)
                 except Exception:
-                    print("Exception 7")
                     raise
             else:
                 # No brackets, directly find elements
@@ -178,7 +175,6 @@ class ChemBalancer(QWidget):
         # Use regex to separate elements and subscripts
         element_counts = re.findall("([A-Z][a-z]*)([0-9]*)", reagent)
         print("element counts", element_counts)
-        print("-------------------------------")
         try:
             for element, subscript in element_counts:
                 if not subscript:
@@ -246,7 +242,6 @@ class ChemBalancer(QWidget):
         try:
             self.split_equation()
         except Exception:
-            print("Exception 1")
             show_dialog("")
             return
 
@@ -254,14 +249,12 @@ class ChemBalancer(QWidget):
             try:
                 self.find_reagents(self.reactants[i], i, 1)
             except Exception:
-                print("Exception 2")
                 show_dialog("")
                 return
         for i in range(len(self.products)):
             try:
                 self.find_reagents(self.products[i], i + len(self.reactants), -1)
             except Exception:
-                print("Exception 3")
                 show_dialog("")
                 return
 
@@ -271,7 +264,6 @@ class ChemBalancer(QWidget):
         try:
             num = self.element_matrix.nullspace()[0]
         except IndexError:
-            print("Exception 4")
             show_dialog("Please provide a balanceable equation in the format X + Y = XY + Z")
             return
 

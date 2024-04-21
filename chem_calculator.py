@@ -14,8 +14,6 @@ def is_numeric(user_input):
         return True
     # Regular expression to match integers or decimals
     pattern = r'^[-+]?[0-9]*\.?[0-9]+$'
-    print(user_input)
-    print(bool(re.match(pattern, user_input)))
     return bool(re.match(pattern, user_input))
 
 
@@ -543,7 +541,6 @@ class AvogadroCalculator(QWidget):
         mass_unit = self.mass_unit_dropdown.currentText()
 
         if not find_empty_input(self.input_list.copy()):
-            print("ououiuouo")
             if not self.mass_input.text():
                 if self.moles_input.text() and self.molecular_weight_input.text():
                     self.update_mass(str(self.calculate_mass()))
@@ -556,9 +553,7 @@ class AvogadroCalculator(QWidget):
                 if self.mass_input.text() and self.moles_input.text():
                     self.update_mol_weight(str(self.calculate_mol_weight(mass_unit)))
             if self.num_atoms_input.text() == "":
-                print("pleaaaaassee")
                 if self.moles_input.text() != "":
-                    print("allooooo")
                     self.update_num_atoms(str(self.calculate_num_atoms()))
                 else:
                     show_dialog("Must leave one input line empty for it to be calculated!")
@@ -1482,7 +1477,7 @@ class RateCalculator(QWidget):
     def calculate_rate(self, unimol_order: int, bimol_order: int, trimol_order: int) -> None:
         """
         Calculates the rate of the reaction based on the elementary step
-        (unimolecula, bimolecular, trimolecular), and then calls the update_input() method to display the calculated
+        (unimolecular, bimolecular, trimolecular), and then calls the update_input() method to display the calculated
         result.
         """
 
@@ -1499,7 +1494,7 @@ class RateCalculator(QWidget):
     def calculate_rate_constant(self, unimol_order: int, bimol_order: int, trimol_order: int) -> None:
         """
         Calculates the rate constant based on the elementary step
-        (unimolecula, bimolecular, trimolecular), and calls the update_input method to display the calculated result.
+        (unimolecular, bimolecular, trimolecular), and calls the update_input method to display the calculated result.
         """
 
         total_conc = (float(self.unimol_conc_input) ** unimol_order)
@@ -1518,7 +1513,7 @@ class RateCalculator(QWidget):
                                 trimol_order: int) -> None:
         """
         Calculates the concentration of the given empty concentration input, based on the elementary step
-        (unimolecula, bimolecular, trimolecular), and then calls the update_input() method to display the calculated
+        (unimolecular, bimolecular, trimolecular), and then calls the update_input() method to display the calculated
         result.
         """
 
