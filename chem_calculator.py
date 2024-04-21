@@ -627,10 +627,12 @@ class IdealGasLawCalculator(QWidget):
         # Initialise Ideal Gas Law (IGL) properties
         self.ideal_gas_constant = 8.314
 
-        self.pressure_input_igl = QLineEdit()
-        self.volume_input_igl = QLineEdit()
-        self.temperature_input_igl = QLineEdit()
-        self.moles_input_igl = QLineEdit()
+        self.pressure_input = QLineEdit()
+        self.volume_input = QLineEdit()
+        self.temperature_input = QLineEdit()
+        self.moles_input = QLineEdit()
+
+        self.input_list = [self.pressure_input, self.volume_input, self.temperature_input, self.moles_input]
 
         self.pressure_label_igl = QLabel("Pressure:")
         self.volume_label_igl = QLabel("Volume:")
@@ -660,19 +662,19 @@ class IdealGasLawCalculator(QWidget):
         self.temperature_drop_down_igl = QComboBox()
 
         self.ideal_gas_layout.addWidget(self.pressure_label_igl, 0, 0)
-        self.ideal_gas_layout.addWidget(self.pressure_input_igl, 0, 1)
+        self.ideal_gas_layout.addWidget(self.pressure_input, 0, 1)
         self.ideal_gas_layout.addWidget(self.pressure_drop_down_igl, 0, 2)
 
         self.ideal_gas_layout.addWidget(self.volume_label_igl, 1, 0)
-        self.ideal_gas_layout.addWidget(self.volume_input_igl, 1, 1)
+        self.ideal_gas_layout.addWidget(self.volume_input, 1, 1)
         self.ideal_gas_layout.addWidget(self.volume_drop_down_igl, 1, 2)
 
         self.ideal_gas_layout.addWidget(self.temperature_label_igl, 2, 0)
-        self.ideal_gas_layout.addWidget(self.temperature_input_igl, 2, 1)
+        self.ideal_gas_layout.addWidget(self.temperature_input, 2, 1)
         self.ideal_gas_layout.addWidget(self.temperature_drop_down_igl, 2, 2)
 
         self.ideal_gas_layout.addWidget(self.moles_label_igl, 3, 0)
-        self.ideal_gas_layout.addWidget(self.moles_input_igl, 3, 1)
+        self.ideal_gas_layout.addWidget(self.moles_input, 3, 1)
         self.ideal_gas_layout.addWidget(self.calculate_button_igl, 4, 0)
 
         self.pressure_drop_down_igl.addItem("Pa")
@@ -698,53 +700,50 @@ class IdealGasLawCalculator(QWidget):
         temperature_unit = self.temperature_drop_down_igl.currentText()
         volume_unit = self.volume_drop_down_igl.currentText()
 
-        def _calculate_pressure():
-            try:
-                pressure = (float(self.moles_input_igl.text()) * self.ideal_gas_constant * (float(
-                    self.temperature_input_igl.text()) + self.temperature_conversions[temperature_unit])) / (
-                                   float(self.volume_input_igl.text()) * self.volume_conversions[volume_unit])
-                return pressure
-            except ValueError:
-                return "Value Error"
+        if not find_empty_input(self.input_list.copy()):
+            show_dialog("Must leave one input line empty for it to be calculated!")
+            return
+        elif check_invalid_symbol(self.input_list.copy()):
+            show_dialog("Only numerical values in the form of integers or decimals allowed!")
+            return
 
-        def _calculate_volume():
-            try:
-                volume = (float(self.moles_input_igl.text()) * self.ideal_gas_constant * (float(
-                    self.temperature_input_igl.text()) + self.temperature_conversions[temperature_unit])) / (
-                                 float(self.pressure_input_igl.text()) * self.pressure_conversions[pressure_unit])
-                return volume
-            except ValueError:
-                return "Value Error"
+        to_calc = find_empty_input(self.input_list.copy())
 
-        def _calculate_temperature():
-            try:
-                temperature = ((float(self.pressure_input_igl.text()) * self.pressure_conversions[pressure_unit]) * (
-                        float(
-                            self.volume_input_igl.text()) * self.volume_conversions[volume_unit])) / (
-                                      float(self.moles_input_igl.text()) * self.ideal_gas_constant)
-                return temperature
-            except ValueError:
-                return "Value Error"
+        if to_calc is self.pressure_input:
+            self.pressure_input.setText(str(self.calculate_pressure(temperature_unit, volume_unit)))
+        elif to_calc is self.volume_input:
+            self.volume_input.setText(str(self.calculate_volume(temperature_unit, pressure_unit)))
+        elif to_calc is self.temperature_input:
+            self.temperature_input.setText(str(self.calculate_temperature(pressure_unit, volume_unit)))
+        elif to_calc is self.moles_input:
+            self.moles_input.setText(str(self.calculate_moles(temperature_unit, volume_unit, pressure_unit)))
 
-        def _calculate_moles():
-            try:
-                moles = ((float(self.pressure_input_igl.text()) * self.pressure_conversions[pressure_unit]) * (
-                        float(self.volume_input_igl.text()) * self.volume_conversions[volume_unit])) / (
-                                self.ideal_gas_constant * (float(self.temperature_input_igl.text()) +
-                                                           self.temperature_conversions[temperature_unit]))
-                return moles
-            except ValueError:
-                return "Value Error"
+    def calculate_pressure(self, temperature_unit, volume_unit):
+        pressure = (float(self.moles_input.text()) * self.ideal_gas_constant * (float(
+            self.temperature_input.text()) + self.temperature_conversions[temperature_unit])) / (
+                           float(self.volume_input.text()) * self.volume_conversions[volume_unit])
+        return pressure
 
-        if not self.pressure_input_igl.text().strip():
-            self.pressure_input_igl.setText(str(_calculate_pressure()))
-        elif not self.volume_input_igl.text().strip():
-            self.volume_input_igl.setText(str(_calculate_volume()))
-        elif not self.temperature_input_igl.text().strip():
-            self.temperature_input_igl.setText(str(_calculate_temperature()))
-        elif not self.moles_input_igl.text().strip():
-            self.moles_input_igl.setText(str(_calculate_moles()))
+    def calculate_volume(self, temperature_unit, pressure_unit):
+        volume = (float(self.moles_input.text()) * self.ideal_gas_constant * (float(
+            self.temperature_input.text()) + self.temperature_conversions[temperature_unit])) / (
+                         float(self.pressure_input.text()) * self.pressure_conversions[pressure_unit])
+        return volume
 
+    def calculate_temperature(self, pressure_unit, volume_unit):
+        temperature = ((float(self.pressure_input.text()) * self.pressure_conversions[pressure_unit]) * (
+                float(
+                    self.volume_input.text()) * self.volume_conversions[volume_unit])) / (
+                              float(self.moles_input.text()) * self.ideal_gas_constant)
+        return temperature
+
+    def calculate_moles(self, temperature_unit, volume_unit, pressure_unit):
+        moles = ((float(self.pressure_input.text()) * self.pressure_conversions[pressure_unit]) * (
+                float(self.volume_input.text()) * self.volume_conversions[volume_unit])) / (
+                        self.ideal_gas_constant * (float(self.temperature_input.text()) +
+                                                   self.temperature_conversions[temperature_unit]))
+        return moles
+    
 
 class EquilibriumCalculator(QWidget):
     def __init__(self):
