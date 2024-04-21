@@ -1187,6 +1187,8 @@ class SpecificHeatCalculator(QWidget):
         self.heat_capacity_input = QLineEdit()
         self.temperature_change_input = QLineEdit()
 
+        self.input_list = [self.energy_input, self.mass_input, self.heat_capacity_input, self.temperature_change_input]
+
         self.energy_unit_dropdown = QComboBox()
         self.energy_unit_dropdown.addItem("J")
         self.energy_unit_dropdown.addItem("kJ")
@@ -1244,19 +1246,28 @@ class SpecificHeatCalculator(QWidget):
         mass_unit = self.mass_conversions[self.mass_unit_dropdown.currentText()]
         temp_unit = self.temperature_conversions[self.temp_unit_dropdown.currentText()]
 
-        if not self.energy_input.text().strip():
+        if not find_empty_input(self.input_list.copy()):
+            show_dialog("Must leave one input line empty for it to be calculated!")
+            return
+        elif check_invalid_symbol(self.input_list.copy()):
+            show_dialog("Only numerical values in the form of integers or decimals allowed!")
+            return
+
+        to_calc = find_empty_input(self.input_list.copy())
+
+        if to_calc is self.energy_input:
             energy = self.__calculate_energy(energy_unit, mass_unit, temp_unit)
             if energy:
                 self.update_energy(energy)
-        if not self.mass_input.text().strip():
+        if to_calc is self.mass_input:
             mass = self.__calculate_mass(energy_unit, mass_unit, temp_unit)
             if mass:
                 self.update_mass(mass)
-        if not self.heat_capacity_input.text().strip():
+        if to_calc is self.heat_capacity_input:
             heat_capacity = self.__calculate_heat_capacity(energy_unit, mass_unit, temp_unit)
             if heat_capacity:
                 self.update_heat_capacity(heat_capacity)
-        if not self.temperature_change_input.text().strip():
+        if to_calc is self.temperature_change_input:
             temp = self.__calculate_temp_change(energy_unit, mass_unit, temp_unit)
             if temp:
                 self.update_temp_change(temp)
