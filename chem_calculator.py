@@ -743,7 +743,7 @@ class IdealGasLawCalculator(QWidget):
                         self.ideal_gas_constant * (float(self.temperature_input.text()) +
                                                    self.temperature_conversions[temperature_unit]))
         return moles
-    
+
 
 class EquilibriumCalculator(QWidget):
     def __init__(self):
@@ -819,6 +819,13 @@ class EquilibriumCalculator(QWidget):
         empty_count = 0
         empty_input = None
 
+        if not find_empty_input(self.input_list.copy()):
+            show_dialog("Must leave one input line empty for it to be calculated!")
+            return
+        elif check_invalid_symbol(self.input_list.copy()):
+            show_dialog("Only numerical values in the form of integers or decimals allowed!")
+            return
+
         for item in self.input_list:
             if item.text().strip() == "":
                 empty_count += 1
@@ -831,8 +838,8 @@ class EquilibriumCalculator(QWidget):
         elif empty_input == self.equilibrium_constant and empty_count == 1 or self.calculated_value == self.equilibrium_constant:
             self.calculate_constant()
         else:
-            return "Invalid Input Error"
-
+            show_dialog("")
+            return
     def calculate_constant(self):
         try:
             k = ((float(self.conc_c.text()) ** float(self.coeff_c.text())) * (
@@ -840,92 +847,133 @@ class EquilibriumCalculator(QWidget):
                         (float(self.conc_a.text()) ** float(self.coeff_a.text())) *
                         (float(self.conc_b.text()) ** float(self.coeff_b.text())))
         except OverflowError:
-            print("Overflow Error, inputted numbers too big")
+            print("Overflow Error, inputted numbers are too large")
+            show_dialog("Overflow Error, inputted numbers are too large!")
             return
         self.calculated_value = self.equilibrium_constant
         self.update_gui(self.equilibrium_constant, k)
 
     def calculate_concentration(self, to_find):
         if to_find == self.conc_a or to_find == self.calculated_value:
-            conc = ((float(self.conc_c.text()) ** float(self.coeff_c.text())) * (
-                    float(self.conc_d.text()) ** float(self.coeff_d.text()))) / (
-                           float(self.equilibrium_constant.text()) * (
-                           float(self.conc_b.text()) ** float(self.coeff_b.text())))
-            if float(self.coeff_a.text()) > 1:
-                conc = conc ** (1 / float(self.coeff_a.text()))
+            try:
+                conc = ((float(self.conc_c.text()) ** float(self.coeff_c.text())) * (
+                        float(self.conc_d.text()) ** float(self.coeff_d.text()))) / (
+                               float(self.equilibrium_constant.text()) * (
+                               float(self.conc_b.text()) ** float(self.coeff_b.text())))
+                if float(self.coeff_a.text()) > 1:
+                    conc = conc ** (1 / float(self.coeff_a.text()))
+            except OverflowError:
+                print("Overflow Error, inputted numbers too large")
+                show_dialog("Overflow Error, inputted numbers are too large!")
+                return
             self.calculated_value = to_find
             self.update_gui(to_find, conc)
             return
 
         if to_find == self.conc_b or to_find == self.calculated_value:
-            conc = ((float(self.conc_c.text()) ** float(self.coeff_c.text())) * (
-                    float(self.conc_d.text()) ** float(self.coeff_d.text()))) / (
-                           float(self.equilibrium_constant.text()) * (
-                           float(self.conc_a.text()) ** float(self.coeff_a.text())))
-            if float(self.coeff_b.text()) > 1:
-                conc = conc ** (1 / float(self.coeff_b.text()))
+            try:
+                conc = ((float(self.conc_c.text()) ** float(self.coeff_c.text())) * (
+                        float(self.conc_d.text()) ** float(self.coeff_d.text()))) / (
+                               float(self.equilibrium_constant.text()) * (
+                               float(self.conc_a.text()) ** float(self.coeff_a.text())))
+                if float(self.coeff_b.text()) > 1:
+                    conc = conc ** (1 / float(self.coeff_b.text()))
+            except OverflowError:
+                print("Overflow Error, inputted numbers too large")
+                show_dialog("Overflow Error, inputted numbers are too large!")
+                return
             self.calculated_value = to_find
             self.update_gui(to_find, conc)
             return
 
         if to_find == self.conc_c or to_find == self.calculated_value:
-            conc = ((float(self.conc_a.text()) ** float(self.coeff_a.text())) * (
-                    float(self.conc_b.text()) ** float(self.coeff_b.text())) * (
-                        float(self.equilibrium_constant.text())) / (
-                            float(self.conc_d.text()) ** float(self.coeff_d.text())))
-            if float(self.coeff_c.text()) > 1:
-                conc = conc ** (1 / float(self.coeff_c.text()))
+            try:
+                conc = ((float(self.conc_a.text()) ** float(self.coeff_a.text())) * (
+                        float(self.conc_b.text()) ** float(self.coeff_b.text())) * (
+                            float(self.equilibrium_constant.text())) / (
+                                float(self.conc_d.text()) ** float(self.coeff_d.text())))
+                if float(self.coeff_c.text()) > 1:
+                    conc = conc ** (1 / float(self.coeff_c.text()))
+            except OverflowError:
+                print("Overflow Error, inputted numbers too large")
+                show_dialog("Overflow Error, inputted numbers are too large!")
+                return
             self.calculated_value = to_find
             self.update_gui(to_find, conc)
             return
 
         if to_find == self.conc_d or to_find == self.calculated_value:
-            conc = ((float(self.conc_a.text()) ** float(self.coeff_a.text())) * (
-                    float(self.conc_b.text()) ** float(self.coeff_b.text())) * (
-                        float(self.equilibrium_constant.text())) / (
-                            float(self.conc_c.text()) ** float(self.coeff_c.text())))
-            if float(self.coeff_d.text()) > 1:
-                conc = conc ** (1 / float(self.coeff_d.text()))
+            try:
+                conc = ((float(self.conc_a.text()) ** float(self.coeff_a.text())) * (
+                        float(self.conc_b.text()) ** float(self.coeff_b.text())) * (
+                            float(self.equilibrium_constant.text())) / (
+                                float(self.conc_c.text()) ** float(self.coeff_c.text())))
+                if float(self.coeff_d.text()) > 1:
+                    conc = conc ** (1 / float(self.coeff_d.text()))
+            except OverflowError:
+                print("Overflow Error, inputted numbers too large")
+                show_dialog("Overflow Error, inputted numbers are too large!")
+                return
             self.update_gui(to_find, conc)
             return
 
     def calculate_coefficient(self, to_find):
         if to_find == self.coeff_a or to_find == self.calculated_value:
-            coeff = ((float(self.conc_c.text()) ** float(self.coeff_c.text())) * (
-                    float(self.conc_d.text()) ** float(self.coeff_d.text()))) / (
-                            float(self.equilibrium_constant.text()) * (
-                            float(self.conc_b.text()) ** float(self.coeff_b.text())))
-            coeff = int(log(coeff, float(self.conc_a.text())))
+            try:
+                coeff = ((float(self.conc_c.text()) ** float(self.coeff_c.text())) * (
+                        float(self.conc_d.text()) ** float(self.coeff_d.text()))) / (
+                                float(self.equilibrium_constant.text()) * (
+                                float(self.conc_b.text()) ** float(self.coeff_b.text())))
+                coeff = int(log(coeff, float(self.conc_a.text())))
+            except OverflowError:
+                print("Overflow Error, inputted numbers too large")
+                show_dialog("Overflow Error, inputted numbers are too large!")
+                return
             self.calculated_value = to_find
             self.update_gui(to_find, coeff)
             return
 
         if to_find == self.coeff_b or to_find == self.calculated_value:
-            coeff = ((float(self.conc_c.text()) ** float(self.coeff_c.text())) * (
-                    float(self.conc_d.text()) ** float(self.coeff_d.text()))) / (
-                            float(self.equilibrium_constant.text()) * (
-                            float(self.conc_a.text()) ** float(self.coeff_a.text())))
-            coeff = int(log(coeff, float(self.conc_b.text())))
+            try:
+                coeff = ((float(self.conc_c.text()) ** float(self.coeff_c.text())) * (
+                        float(self.conc_d.text()) ** float(self.coeff_d.text()))) / (
+                                float(self.equilibrium_constant.text()) * (
+                                float(self.conc_a.text()) ** float(self.coeff_a.text())))
+                coeff = int(log(coeff, float(self.conc_b.text())))
+            except OverflowError:
+                print("Overflow Error, inputted numbers too large")
+                show_dialog("Overflow Error, inputted numbers are too large!")
+                return
             self.calculated_value = to_find
             self.update_gui(to_find, coeff)
             return
 
         if to_find == self.coeff_c or to_find == self.calculated_value:
-            coeff = ((float(self.conc_a.text()) ** float(self.coeff_a.text())) * (
-                    float(self.conc_b.text()) ** float(self.coeff_b.text())) * (
-                         float(self.equilibrium_constant.text())) / (
-                             float(self.conc_d.text()) ** float(self.coeff_d.text())))
-            coeff = int(log(coeff, float(self.conc_c.text())))
+            try:
+                coeff = ((float(self.conc_a.text()) ** float(self.coeff_a.text())) * (
+                        float(self.conc_b.text()) ** float(self.coeff_b.text())) * (
+                             float(self.equilibrium_constant.text())) / (
+                                 float(self.conc_d.text()) ** float(self.coeff_d.text())))
+                coeff = int(log(coeff, float(self.conc_c.text())))
+            except OverflowError:
+                print("Overflow Error, inputted numbers too large")
+                show_dialog("Overflow Error, inputted numbers are too large!")
+                return
             self.calculated_value = to_find
             self.update_gui(to_find, coeff)
             return
 
         if to_find == self.coeff_d or to_find == self.calculated_value:
-            coeff = ((float(self.conc_a.text()) ** float(self.coeff_a.text())) * (
-                    float(self.conc_b.text()) ** float(self.coeff_b.text())) * (
-                         float(self.equilibrium_constant.text())) / (
-                             float(self.conc_c.text()) ** float(self.coeff_c.text())))
-            coeff = int(log(coeff, float(self.conc_d.text())))
+            try:
+                coeff = ((float(self.conc_a.text()) ** float(self.coeff_a.text())) * (
+                        float(self.conc_b.text()) ** float(self.coeff_b.text())) * (
+                             float(self.equilibrium_constant.text())) / (
+                                 float(self.conc_c.text()) ** float(self.coeff_c.text())))
+                coeff = int(log(coeff, float(self.conc_d.text())))
+            except OverflowError:
+                print("Overflow Error, inputted numbers too large")
+                show_dialog("Overflow Error, inputted numbers are too large!")
+                return
             self.calculated_value = to_find
             self.update_gui(to_find, coeff)
             return
