@@ -104,28 +104,25 @@ class ChemBalancer(QWidget):
         try:
             self.stripped_equation = "".join(self.equation_input.text().split())
         except IndexError:
+            print("Exception 5")
             return None
         print(self.stripped_equation)
 
         # Split equation into reactants (self.equationSplit[0]) and products (self.equationSplit[1])
-        if "=" in self.stripped_equation:
+        try:
             self.equation_split = self.stripped_equation.split("=")
-        else:
-            show_dialog("Reactants and Products must be divided by an equals sign: '=' !")
-            return
+        except Exception:
+            print("Exception 6")
+            raise
+
         print(self.equation_split)
 
-        try:
-            self.reactants = self.equation_split[0].split("+")
-        except IndexError:
-            show_dialog("")
-            return
+        self.reactants = self.equation_split[0].split("+")
+
         print(self.reactants)
-        try:
-            self.products = self.equation_split[1].split("+")
-        except IndexError:
-            show_dialog("")
-            return
+
+        self.products = self.equation_split[1].split("+")
+
         print(self.products)
 
     def find_reagents(self, compound, index, side):
@@ -153,11 +150,18 @@ class ChemBalancer(QWidget):
                 else:
                     bracket_subscript = 1
                 # Recursively find elements within the inner compound
-                self.find_elements(inner_compound, index, bracket_subscript, side)
+                try:
+                    self.find_elements(inner_compound, index, bracket_subscript, side)
+                except Exception:
+                    print("Exception 7")
+                    raise
             else:
                 # No brackets, directly find elements
                 bracket_subscript = 1
-                self.find_elements(reagent, index, bracket_subscript, side)
+                try:
+                    self.find_elements(reagent, index, bracket_subscript, side)
+                except Exception:
+                    raise
 
     def find_elements(self, reagent, index, bracket_subscript, side):
         f"""
@@ -175,18 +179,19 @@ class ChemBalancer(QWidget):
         element_counts = re.findall("([A-Z][a-z]*)([0-9]*)", reagent)
         print("element counts", element_counts)
         print("-------------------------------")
-        valid = False
-        for element, subscript in element_counts:
-            if not subscript:
-                subscript = 1
-            else:
-                subscript = int(subscript)
-            # Call addToMatrix for each element
-            self.add_to_matrix(element, index, bracket_subscript * subscript, side)
-            valid = True
-        if not valid:
-            show_dialog("Please provide an equation that can be balanced in the format X + Y = XY + Z")
-            return
+        try:
+            for element, subscript in element_counts:
+                if not subscript:
+                    subscript = 1
+                else:
+                    subscript = int(subscript)
+                # Call addToMatrix for each element
+                try:
+                    self.add_to_matrix(element, index, bracket_subscript * subscript, side)
+                except Exception:
+                    raise
+        except Exception:
+            raise
 
     def add_to_matrix(self, element, index, count, side):
         """
@@ -200,8 +205,8 @@ class ChemBalancer(QWidget):
         :param side: "1" for reactants, "-1" for products.
         """
         print(element, index, count, side)
-        if index == len(self.element_matrix):
-            try:
+        try:
+            if index == len(self.element_matrix):
                 print(self.element_matrix)
                 self.element_matrix.append([])
                 print(self.element_matrix)
@@ -209,14 +214,16 @@ class ChemBalancer(QWidget):
                     print(self.element_list)
                     self.element_matrix[index].append(0)
                     print(self.element_matrix)
-            except AttributeError:
-                show_dialog("Please provide a balanceable equation in the format X + Y = XY + Z")
-                return
-        if element not in self.element_list:
-            self.element_list.append(element)
-            for i in range(len(self.element_matrix)):
-                self.element_matrix[i].append(0)
-                print(self.element_matrix)
+        except Exception:
+            raise
+        try:
+            if element not in self.element_list:
+                self.element_list.append(element)
+                for i in range(len(self.element_matrix)):
+                    self.element_matrix[i].append(0)
+                    print(self.element_matrix)
+        except Exception:
+            raise
 
         column = self.element_list.index(element)
         self.element_matrix[index][column] += count * side
@@ -236,12 +243,27 @@ class ChemBalancer(QWidget):
         # Clear variables, in case the program was run before
         self.clear_variables()
 
-        self.split_equation()
+        try:
+            self.split_equation()
+        except Exception:
+            print("Exception 1")
+            show_dialog("")
+            return
 
         for i in range(len(self.reactants)):
-            self.find_reagents(self.reactants[i], i, 1)
+            try:
+                self.find_reagents(self.reactants[i], i, 1)
+            except Exception:
+                print("Exception 2")
+                show_dialog("")
+                return
         for i in range(len(self.products)):
-            self.find_reagents(self.products[i], i + len(self.reactants), -1)
+            try:
+                self.find_reagents(self.products[i], i + len(self.reactants), -1)
+            except Exception:
+                print("Exception 3")
+                show_dialog("")
+                return
 
         self.element_matrix = Matrix(self.element_matrix)
         self.element_matrix = self.element_matrix.transpose()
@@ -249,9 +271,10 @@ class ChemBalancer(QWidget):
         try:
             num = self.element_matrix.nullspace()[0]
         except IndexError:
+            print("Exception 4")
             show_dialog("Please provide a balanceable equation in the format X + Y = XY + Z")
             return
-        
+
         print(num)
         multiple = lcm([val.q for val in num])
         num = multiple * num
@@ -276,6 +299,3 @@ class ChemBalancer(QWidget):
             if i < len(self.products) - 1:
                 self.balanced_equation += " + "
         self.balanced_output.setText(f"{self.balanced_equation}")
-
-        if not self.balanced_output:
-            show_dialog("Please provide a balanceable equation in the format X + Y = XY + Z")
