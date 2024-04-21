@@ -10,7 +10,6 @@ from gui_comps import RateBox, RateResultBox
 
 
 def is_numeric(user_input):
-
     if not user_input:
         return True
     # Regular expression to match integers or decimals
@@ -114,7 +113,7 @@ class ChemCalculator(QWidget):
         self.conc_tab.setLayout(self.concentration_calc.layout)
 
         # Initialise avogadro's calculator tab in sidebar
-        self.avogadro_tab.setLayout(self.avogadro_calc.avogadro_layout)
+        self.avogadro_tab.setLayout(self.avogadro_calc.layout)
 
         # Initialise igl tab in sidebar
         self.ideal_gas_tab.setLayout(self.ideal_gas_law_calc.ideal_gas_layout)
@@ -468,7 +467,7 @@ class ConcCalculator(QWidget):
 class AvogadroCalculator(QWidget):
     def __init__(self):
         super(QWidget, self).__init__()
-        self.avogadro_layout = QGridLayout()
+        self.layout = QGridLayout()
 
         self.avogadros_constant = 6.02214076
 
@@ -494,113 +493,130 @@ class AvogadroCalculator(QWidget):
         }
 
         # Initialise Avogadro's calculator
-        self.mass_label_avogadro = QLabel("Mass:")
-        self.moles_label_avogadro = QLabel("Moles:")
-        self.molecular_weight_label_avogadro = QLabel("Molecular weight:")
-        self.num_atoms_label_avogadro = QLabel("Number of atoms:")
+        self.mass_label = QLabel("Mass:")
+        self.moles_label = QLabel("Moles:")
+        self.molecular_weight_label = QLabel("Molecular weight:")
+        self.num_atoms_label = QLabel("Number of atoms:")
 
-        self.mass_input_avogadro = QLineEdit()
-        self.moles_input_avogadro = QLineEdit()
-        self.molecular_weight_input_avogadro = QLineEdit()
-        self.num_atoms_input_avogadro = QLineEdit()
+        self.mass_input = QLineEdit()
+        self.moles_input = QLineEdit()
+        self.molecular_weight_input = QLineEdit()
+        self.num_atoms_input = QLineEdit()
 
-        self.calculate_button_avogadro = QPushButton("Calculate")
-        self.calculate_button_avogadro.clicked.connect(self.calculate_avogadro)
+        self.input_list = [self.mass_input, self.moles_input, self.molecular_weight_input, self.num_atoms_input]
 
-        self.mass_unit_dropdown_avo = QComboBox()
-        self.mass_unit_dropdown_avo.addItem("mg")
-        self.mass_unit_dropdown_avo.addItem("g")
-        self.mass_unit_dropdown_avo.addItem("kg")
-        self.mass_unit_dropdown_avo.addItem("t")
+        self.calculate_button = QPushButton("Calculate")
+        self.calculate_button.clicked.connect(self.calculate)
 
-        self.mass_unit_dropdown_avo.setCurrentIndex(1)
+        self.mass_unit_dropdown = QComboBox()
+        self.mass_unit_dropdown.addItem("mg")
+        self.mass_unit_dropdown.addItem("g")
+        self.mass_unit_dropdown.addItem("kg")
+        self.mass_unit_dropdown.addItem("t")
+
+        self.mass_unit_dropdown.setCurrentIndex(1)
 
         # Initialise Atom Economy calculator
 
-        self.get_avogadro_layout()
+        self.get_layout()
 
-    def get_avogadro_layout(self):
+    def get_layout(self):
         f"""
-        This function adds all the essential widgets to the {self.avogadro_layout} 
+        This function adds all the essential widgets to the {self.layout} 
         """
 
-        self.avogadro_layout.addWidget(self.mass_label_avogadro, 0, 0)
-        self.avogadro_layout.addWidget(self.moles_label_avogadro, 1, 0)
-        self.avogadro_layout.addWidget(self.molecular_weight_label_avogadro, 2, 0)
-        self.avogadro_layout.addWidget(self.num_atoms_label_avogadro, 3, 0)
+        self.layout.addWidget(self.mass_label, 0, 0)
+        self.layout.addWidget(self.moles_label, 1, 0)
+        self.layout.addWidget(self.molecular_weight_label, 2, 0)
+        self.layout.addWidget(self.num_atoms_label, 3, 0)
 
-        self.avogadro_layout.addWidget(self.mass_input_avogadro, 0, 1)
-        self.avogadro_layout.addWidget(self.moles_input_avogadro, 1, 1)
-        self.avogadro_layout.addWidget(self.molecular_weight_input_avogadro, 2, 1)
-        self.avogadro_layout.addWidget(self.num_atoms_input_avogadro, 3, 1)
+        self.layout.addWidget(self.mass_input, 0, 1)
+        self.layout.addWidget(self.moles_input, 1, 1)
+        self.layout.addWidget(self.molecular_weight_input, 2, 1)
+        self.layout.addWidget(self.num_atoms_input, 3, 1)
 
-        self.avogadro_layout.addWidget(self.mass_unit_dropdown_avo, 0, 2)
+        self.layout.addWidget(self.mass_unit_dropdown, 0, 2)
 
-        self.avogadro_layout.addWidget(self.calculate_button_avogadro, 4, 1)
+        self.layout.addWidget(self.calculate_button, 4, 1)
 
-    def calculate_avogadro(self):
-        mass_unit = self.mass_unit_dropdown_avo.currentText()
+    def calculate(self):
+        mass_unit = self.mass_unit_dropdown.currentText()
 
-        def _calculate_mass():
-            mass = float(self.moles_input_avogadro.text()) * float(self.molecular_weight_input_avogadro.text())
-            return mass
+        if not find_empty_input(self.input_list.copy()):
+            print("ououiuouo")
+            if not self.mass_input.text():
+                if self.moles_input.text() and self.molecular_weight_input.text():
+                    self.update_mass(str(self.calculate_mass()))
+            if not self.moles_input.text():
+                if self.num_atoms_input.text():
+                    self.update_moles(str(self.calculate_moles(mass_unit)))
+                elif self.mass_input.text() and self.molecular_weight_input.text():
+                    self.update_moles(str(self.calculate_moles(mass_unit)))
+            if not self.molecular_weight_input.text():
+                if self.mass_input.text() and self.moles_input.text():
+                    self.update_mol_weight(str(self.calculate_mol_weight(mass_unit)))
+            if self.num_atoms_input.text() == "":
+                print("pleaaaaassee")
+                if self.moles_input.text() != "":
+                    print("allooooo")
+                    self.update_num_atoms(str(self.calculate_num_atoms()))
+                else:
+                    show_dialog("Must leave one input line empty for it to be calculated!")
+                    return
+            else:
+                show_dialog("Must leave one input line empty for it to be calculated!")
+                return
+        elif check_invalid_symbol(self.input_list.copy()):
+            show_dialog("Only numerical values in the form of integers or decimals allowed!")
+            return
 
-        def _calculate_moles():
+        to_calc = find_empty_input(self.input_list.copy())
+
+        if to_calc is self.mass_input:
+            self.update_mass(str(self.calculate_mass()))
+        if to_calc is self.moles_input:
+            self.update_moles(str(self.calculate_moles(mass_unit)))
+        if to_calc is self.molecular_weight_input:
+            self.update_mol_weight(str(self.calculate_mol_weight(mass_unit)))
+        if to_calc is self.num_atoms_input:
+            self.update_num_atoms(str(self.calculate_num_atoms()))
+
+    def calculate_mass(self):
+        mass = float(self.moles_input.text()) * float(self.molecular_weight_input.text())
+        return mass
+
+    def calculate_moles(self, mass_unit):
+        try:
+            moles = float(self.num_atoms_input.text()) / self.avogadros_constant
+        except ValueError:
             try:
-                moles = float(self.num_atoms_input_avogadro.text()) / self.avogadros_constant
+                moles = (float(self.mass_input.text()) * self.mass_conversions[mass_unit]) / float(
+                    self.molecular_weight_input.text())
+                return moles
             except ValueError:
-                try:
-                    moles = (float(self.mass_input_avogadro.text()) * self.mass_conversions[mass_unit]) / float(
-                        self.molecular_weight_input_avogadro.text())
-                    return moles
-                except ValueError:
-                    return ""
-            return moles
+                return ""
+        return moles
 
-        def _calculate_mol_weight():
-            mol_weight = (float(self.mass_input_avogadro.text()) * self.mass_conversions[mass_unit]) / float(
-                self.moles_input_avogadro.text())
-            return mol_weight
+    def calculate_mol_weight(self, mass_unit):
+        mol_weight = (float(self.mass_input.text()) * self.mass_conversions[mass_unit]) / float(
+            self.moles_input.text())
+        return mol_weight
 
-        def _calculate_num_atoms():
-            num_atoms = float(self.moles_input_avogadro.text()) * self.avogadros_constant
-            return num_atoms
+    def calculate_num_atoms(self):
+        num_atoms = float(self.moles_input.text()) * self.avogadros_constant
+        return num_atoms
 
-        def _run_calculations():
-            try:
-                if not self.mass_input_avogadro.text():
-                    self.update_mass_avogadro(str(_calculate_mass()))
-            except ValueError:
-                pass
-            try:
-                if not self.moles_input_avogadro.text():
-                    self.moles_input_avogadro.setText(str(_calculate_moles()))
-            except ValueError:
-                pass
-            try:
-                if not self.molecular_weight_input_avogadro.text():
-                    self.update_mol_weight_avogadro(str(_calculate_mol_weight()))
-            except ValueError:
-                pass
-            try:
-                if not self.num_atoms_input_avogadro.text():
-                    self.update_num_atoms_avogadro(str(_calculate_num_atoms()))
-            except ValueError:
-                pass
+    def update_mass(self, mass):
+        self.mass_input.setText(mass)
 
-        _run_calculations()
+    def update_moles(self, moles):
+        self.moles_input.setText(moles)
 
-    def update_mass_avogadro(self, mass):
-        self.mass_input_avogadro.setText(mass)
+    def update_mol_weight(self, mol_weight):
+        self.molecular_weight_input.setText(mol_weight)
 
-    def update_moles_avogadro(self, moles):
-        self.moles_input_avogadro.setText(moles)
-
-    def update_mol_weight_avogadro(self, mol_weight):
-        self.molecular_weight_input_avogadro.setText(mol_weight)
-
-    def update_num_atoms_avogadro(self, num_atoms):
-        self.num_atoms_input_avogadro.setText(num_atoms)
+    def update_num_atoms(self, num_atoms):
+        self.num_atoms_input.setText(num_atoms)
 
 
 class IdealGasLawCalculator(QWidget):
