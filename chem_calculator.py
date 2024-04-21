@@ -840,6 +840,7 @@ class EquilibriumCalculator(QWidget):
         else:
             show_dialog("")
             return
+
     def calculate_constant(self):
         try:
             k = ((float(self.conc_c.text()) ** float(self.coeff_c.text())) * (
@@ -1009,6 +1010,9 @@ class GibbsFreeEnergyCalculator(QWidget):
         self.temp_input = QLineEdit()
         self.entropy_change_input = QLineEdit()
 
+        self.input_list = [self.gibbs_free_energy_input, self.entropy_change_input, self.temp_input,
+                           self.enthalpy_change_input]
+
         self.gibbs_free_energy_unit_dropdown = QComboBox()
         self.gibbs_free_energy_unit_dropdown.addItem("kJ")
         self.gibbs_free_energy_unit_dropdown.addItem("J")
@@ -1072,19 +1076,28 @@ class GibbsFreeEnergyCalculator(QWidget):
         temp_unit = self.temp_unit_dropdown.currentText()
         entropy_unit = self.entropy_change_unit_dropdown.currentText()
 
-        if self.gibbs_free_energy_input.text().strip() == "":
+        if not find_empty_input(self.input_list.copy()):
+            show_dialog("Must leave one input line empty for it to be calculated!")
+            return
+        elif check_invalid_symbol(self.input_list.copy()):
+            show_dialog("Only numerical values in the form of integers or decimals allowed!")
+            return
+
+        to_calc = find_empty_input(self.input_list.copy())
+
+        if to_calc is self.gibbs_free_energy_input:
             free_energy = self.calculate_free_energy_change(free_energy_unit, enthalpy_unit, temp_unit, entropy_unit)
             if free_energy:
                 self.update_gibbs_free_energy(str(free_energy))
-        elif self.enthalpy_change_input.text().strip() == "":
+        elif to_calc is self.enthalpy_change_input:
             enthalpy_change = self.calculate_enthalpy_change(free_energy_unit, enthalpy_unit, temp_unit, entropy_unit)
             if enthalpy_change:
                 self.update_enthalpy_change(str(enthalpy_change))
-        elif self.temp_input.text().strip() == "":
+        elif to_calc is self.temp_input:
             temperature = self.calculate_temperature(free_energy_unit, enthalpy_unit, temp_unit, entropy_unit)
             if temperature:
                 self.update_temperature(str(temperature))
-        elif self.entropy_change_input.text().strip() == "":
+        elif to_calc is self.entropy_change_input:
             entropy_change = self.calculate_entropy_change(free_energy_unit, enthalpy_unit, temp_unit, entropy_unit)
             if entropy_change:
                 self.update_entropy_change(str(entropy_change))
@@ -1098,6 +1111,7 @@ class GibbsFreeEnergyCalculator(QWidget):
             return free_energy
         except ValueError:
             print("Value Error")
+            show_dialog("Value Error!")
             return
 
     def calculate_enthalpy_change(self, free_energy_unit, enthalpy_unit, temp_unit, entropy_unit):
@@ -1109,6 +1123,7 @@ class GibbsFreeEnergyCalculator(QWidget):
             return enthalpy_change
         except ValueError:
             print("Value Error")
+            show_dialog("Value Error!")
             return
 
     def calculate_temperature(self, free_energy_unit, enthalpy_unit, temp_unit, entropy_unit):
@@ -1122,6 +1137,7 @@ class GibbsFreeEnergyCalculator(QWidget):
             return temperature
         except ValueError:
             print("Value Error")
+            show_dialog("Value Error!")
             return
 
     def calculate_entropy_change(self, free_energy_unit, enthalpy_unit, temp_unit, entropy_unit):
@@ -1134,6 +1150,7 @@ class GibbsFreeEnergyCalculator(QWidget):
             return entropy_change
         except ValueError:
             print("Value Error")
+            show_dialog("Value Error!")
             return
 
 
