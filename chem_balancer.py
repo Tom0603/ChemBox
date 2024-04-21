@@ -1,4 +1,5 @@
-from PyQt6.QtWidgets import QWidget, QPushButton, QLineEdit, QLabel, QVBoxLayout
+from PyQt6.QtWidgets import QWidget, QPushButton, QLineEdit, QLabel, QVBoxLayout, QFrame, QHBoxLayout
+from PyQt6.QtCore import Qt
 
 import re
 from sympy import Matrix, lcm
@@ -17,14 +18,37 @@ class ChemBalancer(QWidget):
         super(QWidget, self).__init__()
         self.balancer_layout = QVBoxLayout()
 
+        self.unbalanced_frame = QFrame()
+        self.unbalanced_frame.setFrameShape(QFrame.Shape.Panel)
+
+        self.balanced_frame = QFrame()
+        self.balanced_frame.setFrameShape(QFrame.Shape.Panel)
+
+        self.unbalanced_label = QLabel("Unbalanced Equation:")
         self.equation_input = QLineEdit()
+        self.balanced_label = QLabel("Balanced Equation:")
+        self.balanced_output = QLineEdit()
+        self.balanced_output.setReadOnly(True)
         self.balance_button = QPushButton("Balance")
-        self.balanced_label = QLabel()
+
+        self.equation_input.setMinimumWidth(600)
+        self.balanced_output.setMinimumWidth(600)
+        self.balance_button.setFixedWidth(300)
+
+        self.unbalanced_frame_layout = QHBoxLayout()
+        self.unbalanced_frame.setLayout(self.unbalanced_frame_layout)
+        self.unbalanced_frame_layout.addWidget(self.unbalanced_label)
+        self.unbalanced_frame_layout.addWidget(self.equation_input)
+
+        self.balanced_frame_layout = QHBoxLayout()
+        self.balanced_frame.setLayout(self.balanced_frame_layout)
+        self.balanced_frame_layout.addWidget(self.balanced_label)
+        self.balanced_frame_layout.addWidget(self.balanced_output)
 
         # Add the widgets to the balancerLayout
-        self.balancer_layout.addWidget(self.equation_input)
-        self.balancer_layout.addWidget(self.balance_button)
-        self.balancer_layout.addWidget(self.balanced_label)
+        self.balancer_layout.addWidget(self.unbalanced_frame, alignment=Qt.AlignmentFlag.AlignCenter)
+        self.balancer_layout.addWidget(self.balanced_frame, alignment=Qt.AlignmentFlag.AlignCenter)
+        self.balancer_layout.addWidget(self.balance_button, alignment=Qt.AlignmentFlag.AlignCenter)
 
         self.balance_button.clicked.connect(self.run_balancer)
 
@@ -222,4 +246,4 @@ class ChemBalancer(QWidget):
                 self.balanced_equation += self.products[i]
             if i < len(self.products) - 1:
                 self.balanced_equation += " + "
-        self.balanced_label.setText(f"{self.balanced_equation}")
+        self.balanced_output.setText(f"{self.balanced_equation}")
