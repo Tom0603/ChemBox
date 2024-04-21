@@ -1,12 +1,23 @@
 from PyQt6.QtCore import Qt, QPointF, pyqtSignal
 from PyQt6.QtCore import QPoint
-from PyQt6.QtWidgets import QWidget, QGridLayout, QPushButton, QLabel, QFileDialog
+from PyQt6.QtWidgets import QWidget, QGridLayout, QPushButton, QLabel, QFileDialog, QMessageBox
 from PyQt6.QtGui import QPixmap, QPainter, QPen, QColor, QFont, QBrush
 
 import chem_editor_logic
 
 import math
 import json
+
+
+def show_dialog(message):
+    dlg = QMessageBox()
+    dlg.setWindowTitle("Invalid Action!")
+    dlg.setText(f"Invalid user action!\n {message}")
+    dlg.setIcon(QMessageBox.Icon.Critical)
+    button = dlg.exec()
+
+    if button == QMessageBox.StandardButton.Ok:
+        print("OK!")
 
 
 class ChemEditor(QWidget):
@@ -462,6 +473,7 @@ class Canvas(QLabel):
                         if len(self.temp_bond_list) == 2:
                             if self.temp_bond_list[0] is self.temp_bond_list[1]:
                                 print("Trying to bond to itself")
+                                show_dialog("You cannot bond an atom to itself!")
                                 self.temp_bond_list.clear()
                                 return
                             self.temp_bond_list[0].bond(self.temp_bond_list[1], self.bond_order)
@@ -493,7 +505,7 @@ class Canvas(QLabel):
 
                 # Check if there is an atom at clicked position
                 if self.check_clicked_on_atom(click_position.x(), click_position.y()):
-                    print(f"{self.selected_atom = }")
+                    print(f"{self.selected_atom=}")
                     return
 
                 print(self.action_type)

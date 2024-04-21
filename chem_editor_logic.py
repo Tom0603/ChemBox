@@ -1,3 +1,17 @@
+from PyQt6.QtWidgets import QMessageBox
+
+
+def show_dialog(message):
+    dlg = QMessageBox()
+    dlg.setWindowTitle("Invalid Action!")
+    dlg.setText(f"Invalid user action!\n {message}")
+    dlg.setIcon(QMessageBox.Icon.Critical)
+    button = dlg.exec()
+
+    if button == QMessageBox.StandardButton.Ok:
+        print("OK!")
+
+
 class Atom:
     def __init__(self, element_data: dict, coordinates: list[int, int]):
         self.symbol: str = element_data["symbol"]
@@ -30,6 +44,7 @@ class Atom:
 
     def bond(self, bonding_atom, order: int = 1) -> None:
         if not self.check_is_bond_possible(bonding_atom, order):
+            show_dialog("Bonding unavailable, shell is full.")
             return
         new_bond = Bond(self, bonding_atom, order)
         self.bonds.append(new_bond)
