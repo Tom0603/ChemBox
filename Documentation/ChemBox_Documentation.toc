@@ -17,4 +17,7 @@
 \contentsline {subsubsection}{\numberline {2.6.2}ChemEditor GUI}{32}{}%
 \contentsline {section}{\numberline {3}Testing}{39}{}%
 \contentsline {subsubsection}{\numberline {3.0.1}Tests for ChemCalculator}{39}{}%
-\contentsline {section}{\numberline {4}Evaluation}{40}{}%
+\contentsline {subsubsection}{\numberline {3.0.2}Tests for ChemBalancer}{41}{}%
+\contentsline {subsubsection}{\numberline {3.0.3}Tests for ChemEditor}{44}{}%
+\contentsline {section}{\numberline {4}Evaluation}{46}{}%
+\contentsline {subsubsection}{\numberline {4.0.1}Objective Comparison for ChemCalculator}{46}{}%

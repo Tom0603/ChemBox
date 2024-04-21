@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.141592653-2.6-1.40.25 (TeX Live 2023) (preloaded format=pdflatex 2023.10.31)  20 APR 2024 22:59
+This is pdfTeX, Version 3.141592653-2.6-1.40.25 (TeX Live 2023) (preloaded format=pdflatex 2023.10.31)  21 APR 2024 23:03
 entering extended mode
  restricted \write18 enabled.
  %&-line parsing enabled.
@@ -522,6 +522,9 @@ File: l3backend-pdftex.def 2023-01-16 L3 backend support: PDF output (pdfTeX)
 
 LaTeX Warning: Label `fig:tabs_mockup' multiply defined.
 
+
+LaTeX Warning: Label `tab:editor_tests' multiply defined.
+
 )
 \openout1 = `ChemBox_Documentation.aux'.
 
@@ -899,18 +902,28 @@ Underfull \hbox (badness 10000) in paragraph at lines 1075--1076
  []
 
 [36] [37] [38]
-Overfull \hbox (2.32584pt too wide) in paragraph at lines 1181--1181
-[]|\OT1/cmr/bx/n/12 Description| 
+Underfull \hbox (badness 10000) in paragraph at lines 1181--1181
+[]|\OT1/cmr/bx/n/12 Test
+ []
+
+
+Underfull \hbox (badness 5302) in paragraph at lines 1181--1181
+[]|\OT1/cmr/bx/n/12 TEX (Typ-
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 1181--1181
+\OT1/cmr/bx/n/12 i-cal, Er-
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 1181--1181
+\OT1/cmr/bx/n/12 ro-neous,
  []
 
 
 Underfull \hbox (badness 10000) in paragraph at lines 1181--1181
 []|\OT1/cmr/bx/n/12 Expected
- []
-
-
-Underfull \hbox (badness 10000) in paragraph at lines 1181--1181
-[]|\OT1/cmr/bx/n/12 Actual
  []
 
 
@@ -924,8 +937,18 @@ Underfull \hbox (badness 10000) in paragraph at lines 1181--1181
  []
 
 
-Underfull \hbox (badness 5533) in paragraph at lines 1181--1181
+Underfull \hbox (badness 10000) in paragraph at lines 1181--1181
 \OT1/cmr/m/n/12 of 3 in-put
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 1181--1181
+\OT1/cmr/m/n/12 op-tions with
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 1181--1181
+\OT1/cmr/m/n/12 com-mon val-
  []
 
 
@@ -939,48 +962,28 @@ Underfull \hbox (badness 10000) in paragraph at lines 1181--1181
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 1181--1181
-[]|\OT1/cmr/m/n/12 E: Fill in
+Underfull \hbox (badness 3138) in paragraph at lines 1181--1181
+\OT1/cmr/m/n/12 in-put op-tions
  []
 
 
-Underfull \hbox (badness 2865) in paragraph at lines 1181--1181
-\OT1/cmr/m/n/12 all 3 in-put
+Underfull \hbox (badness 1603) in paragraph at lines 1181--1181
+\OT1/cmr/m/n/12 with com-mon
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 1181--1181
-\OT1/cmr/m/n/12 com-mon
+Underfull \hbox (badness 1917) in paragraph at lines 1181--1181
+\OT1/cmr/m/n/12 actly one in-
  []
 
 
-Underfull \hbox (badness 2020) in paragraph at lines 1181--1181
-\OT1/cmr/m/n/12 logue states
+Underfull \hbox (badness 3240) in paragraph at lines 1181--1181
+[]|\OT1/cmr/m/n/12 Only nu-mer-i-
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 1181--1181
-\OT1/cmr/m/n/12 in-valid in-
- []
-
-
-Underfull \hbox (badness 3861) in paragraph at lines 1181--1181
-[]|\OT1/cmr/m/n/12 X: Use in-
- []
-
-
-Underfull \hbox (badness 2020) in paragraph at lines 1181--1181
-\OT1/cmr/m/n/12 logue states
- []
-
-
-Underfull \hbox (badness 10000) in paragraph at lines 1181--1181
-\OT1/cmr/m/n/12 in-valid in-
- []
-
-
-Underfull \hbox (badness 10000) in paragraph at lines 1181--1181
-[]|\OT1/cmr/m/n/12 Test unit
+Underfull \hbox (badness 2680) in paragraph at lines 1181--1181
+\OT1/cmr/m/n/12 cal val-ues in
  []
 
 
@@ -990,25 +993,311 @@ Underfull \hbox (badness 10000) in paragraph at lines 1181--1181
 
 
 Underfull \hbox (badness 10000) in paragraph at lines 1181--1181
-[]|\OT1/cmr/m/n/12 Calculated
+[]|\OT1/cmr/m/n/12 Value scales
  []
 
 
-Underfull \hbox (badness 3343) in paragraph at lines 1181--1181
-\OT1/cmr/m/n/12 value scales
+Underfull \hbox (badness 10000) in paragraph at lines 1203--1203
+[]|\OT1/cmr/bx/n/12 Test
  []
 
-[39] [40] (./ChemBox_Documentation.aux)
+
+Underfull \hbox (badness 5302) in paragraph at lines 1203--1203
+[]|\OT1/cmr/bx/n/12 TEX (Typ-
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 1203--1203
+\OT1/cmr/bx/n/12 i-cal, Er-
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 1203--1203
+\OT1/cmr/bx/n/12 ro-neous,
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 1203--1203
+[]|\OT1/cmr/bx/n/12 Expected
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 1203--1203
+[]|\OT1/cmr/m/n/12 Calculate
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 1203--1203
+\OT1/cmr/m/n/12 value for
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 1203--1203
+[]|\OT1/cmr/m/n/12 Blank field
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 1203--1203
+\OT1/cmr/m/n/12 cal-cu-lated
+ []
+
+
+Underfull \hbox (badness 3138) in paragraph at lines 1203--1203
+\OT1/cmr/m/n/12 in-put op-tions
+ []
+
+
+Underfull \hbox (badness 1603) in paragraph at lines 1203--1203
+\OT1/cmr/m/n/12 with com-mon
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 1203--1203
+[]|\OT1/cmr/m/n/12 Must leave
+ []
+
+
+Underfull \hbox (badness 3240) in paragraph at lines 1203--1203
+[]|\OT1/cmr/m/n/12 Only nu-mer-i-
+ []
+
+
+Underfull \hbox (badness 2680) in paragraph at lines 1203--1203
+\OT1/cmr/m/n/12 cal val-ues in
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 1203--1203
+[]|\OT1/cmr/m/n/12 Calculate
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 1203--1203
+\OT1/cmr/m/n/12 ti-ple blank
+ []
+
+
+Underfull \hbox (badness 3601) in paragraph at lines 1203--1203
+[]|\OT1/cmr/m/n/12 T: Leave al-
+ []
+
+
+Underfull \hbox (badness 6493) in paragraph at lines 1203--1203
+\OT1/cmr/m/n/12 lowed com-bi-
+ []
+
+
+Underfull \hbox (badness 2293) in paragraph at lines 1203--1203
+\OT1/cmr/m/n/12 na-tion of in-
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 1203--1203
+[]|\OT1/cmr/m/n/12 Blank fields
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 1203--1203
+\OT1/cmr/m/n/12 cal-cu-lated
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 1203--1203
+[]|\OT1/cmr/m/n/12 Must leave
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 1203--1203
+\OT1/cmr/m/n/12 blank (mass
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 1203--1203
+[]|\OT1/cmr/m/n/12 Must leave
+ []
+
+
+LaTeX Warning: Reference `tab: avogadros_tests' on page 39 undefined on input l
+ine 1208.
+
+[39] [40]
+Overfull \hbox (11.42644pt too wide) in paragraph at lines 1228--1229
+[]\OT1/cmr/m/n/12 Unbalanced equa-tion: K4[Fe(SCN)6] + K2Cr2O7 + H2SO4 \TS1/cmr
+/m/n/12 ^^Y \OT1/cmr/m/n/12 Fe2(SO4)3
+ []
+
+
+Overfull \hbox (8.33347pt too wide) in paragraph at lines 1228--1229
+\OT1/cmr/m/n/12 3Fe2(SO4)3 + 97Cr2(SO4)3 + 36CO2 + 355H2O + 91K2SO4 + 36KNO3 
+ []
+
+[41{/usr/local/texlive/2023/texmf-dist/fonts/enc/dvips/cm-super/cm-super-ts1.en
+c}]
+</Users/tom/Documents/Programmieren/ChemBox/Documentation/Images//balancer_cras
+h.png, id=172, 1163.34625pt x 420.57124pt>
+File: /Users/tom/Documents/Programmieren/ChemBox/Documentation/Images//balancer
+_crash.png Graphic file (type png)
+<use /Users/tom/Documents/Programmieren/ChemBox/Documentation/Images//balancer_
+crash.png>
+Package pdftex.def Info: /Users/tom/Documents/Programmieren/ChemBox/Documentati
+on/Images//balancer_crash.png  used on input line 1242.
+(pdftex.def)             Requested size: 349.00658pt x 126.17235pt.
+ [42 </Users/tom/Documents/Programmieren/ChemBox/Documentation/Images//balancer
+_crash.png>]
+</Users/tom/Documents/Programmieren/ChemBox/Documentation/Images//final_balance
+r_test.png, id=178, 998.73125pt x 298.11375pt>
+File: /Users/tom/Documents/Programmieren/ChemBox/Documentation/Images//final_ba
+lancer_test.png Graphic file (type png)
+<use /Users/tom/Documents/Programmieren/ChemBox/Documentation/Images//final_bal
+ancer_test.png>
+Package pdftex.def Info: /Users/tom/Documents/Programmieren/ChemBox/Documentati
+on/Images//final_balancer_test.png  used on input line 1273.
+(pdftex.def)             Requested size: 299.62169pt x 89.43481pt.
+ [43 </Users/tom/Documents/Programmieren/ChemBox/Documentation/Images//final_ba
+lancer_test.png>]
+Underfull \hbox (badness 10000) in paragraph at lines 1305--1305
+[]|\OT1/cmr/bx/n/12 Test
+ []
+
+
+Underfull \hbox (badness 5302) in paragraph at lines 1305--1305
+[]|\OT1/cmr/bx/n/12 TEX (Typ-
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 1305--1305
+\OT1/cmr/bx/n/12 i-cal, Er-
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 1305--1305
+\OT1/cmr/bx/n/12 ro-neous,
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 1305--1305
+[]|\OT1/cmr/bx/n/12 Expected
+ []
+
+
+Underfull \hbox (badness 1917) in paragraph at lines 1305--1305
+\OT1/cmr/m/n/12 blank are on
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 1305--1305
+[]|\OT1/cmr/m/n/12 Atom gets
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 1305--1305
+[]|\OT1/cmr/m/n/12 Bond two
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 1305--1305
+\OT1/cmr/m/n/12 atoms to-
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 1305--1305
+\OT1/cmr/m/n/12 ac-tion type
+ []
+
+
+Underfull \hbox (badness 3460) in paragraph at lines 1305--1305
+\OT1/cmr/m/n/12 and click on
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 1305--1305
+\OT1/cmr/m/n/12 two dif-fer-ent
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 1305--1305
+\OT1/cmr/m/n/12 atoms ap-
+ []
+
+
+Underfull \hbox (badness 8189) in paragraph at lines 1305--1305
+\OT1/cmr/m/n/12 with full or
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 1305--1305
+\OT1/cmr/m/n/12 bond or-der
+ []
+
+
+Underfull \hbox (badness 1546) in paragraph at lines 1305--1305
+\OT1/cmr/m/n/12 so that over-
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 1305--1305
+\OT1/cmr/m/n/12 all elec-trons
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 1305--1305
+\OT1/cmr/m/n/12 would be
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 1305--1305
+\OT1/cmr/m/n/12 greater than
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 1305--1305
+[]|\OT1/cmr/m/n/12 Invalid user
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 1305--1305
+\OT1/cmr/m/n/12 ac-tion type
+ []
+
+
+Underfull \hbox (badness 3460) in paragraph at lines 1305--1305
+\OT1/cmr/m/n/12 and click on
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 1305--1305
+[]|\OT1/cmr/m/n/12 Invalid user
+ []
+
+
+Underfull \hbox (badness 2503) in paragraph at lines 1305--1305
+[]|\OT1/cmr/m/n/12 T: Se-lect re-
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 1305--1305
+\OT1/cmr/m/n/12 move ac-tion
+ []
+
+
+Underfull \hbox (badness 4872) in paragraph at lines 1305--1305
+\OT1/cmr/m/n/12 nected bonds
+ []
+
+[44] [45] [46] (./ChemBox_Documentation.aux)
+
+LaTeX Warning: There were undefined references.
+
 
 LaTeX Warning: There were multiply-defined labels.
 
  ) 
 Here is how much of TeX's memory you used:
- 16752 strings out of 476025
- 352226 string characters out of 5790016
+ 16793 strings out of 476025
+ 353943 string characters out of 5790016
  3365388 words of memory out of 5000000
- 36934 multiletter control sequences out of 15000+600000
- 518087 words of font info for 52 fonts, out of 8000000 for 9000
+ 36973 multiletter control sequences out of 15000+600000
+ 518424 words of font info for 53 fonts, out of 8000000 for 9000
  1141 hyphenation exceptions out of 8191
  104i,12n,97p,1172b,1697s stack positions out of 10000i,1000n,20000p,200000b,200000s
 </usr/local/texlive/2023/texmf-dist/fonts/type1/public/amsfonts/cm/cmbx10.pfb
@@ -1024,11 +1313,12 @@ texlive/2023/texmf-dist/fonts/type1/public/amsfonts/cm/cmr6.pfb></usr/local/tex
 live/2023/texmf-dist/fonts/type1/public/amsfonts/cm/cmr8.pfb></usr/local/texliv
 e/2023/texmf-dist/fonts/type1/public/amsfonts/cm/cmsy10.pfb></usr/local/texlive
 /2023/texmf-dist/fonts/type1/public/amsfonts/cm/cmsy8.pfb></usr/local/texlive/2
-023/texmf-dist/fonts/type1/public/amsfonts/cm/cmtt8.pfb>
-Output written on ChemBox_Documentation.pdf (41 pages, 483775 bytes).
+023/texmf-dist/fonts/type1/public/amsfonts/cm/cmtt8.pfb></usr/local/texlive/202
+3/texmf-dist/fonts/type1/public/cm-super/sfrm1200.pfb>
+Output written on ChemBox_Documentation.pdf (47 pages, 590020 bytes).
 PDF statistics:
- 230 PDF objects out of 1000 (max. 8388607)
- 139 compressed objects within 2 object streams
+ 259 PDF objects out of 1000 (max. 8388607)
+ 156 compressed objects within 2 object streams
  0 named destinations out of 1000 (max. 500000)
- 58 words of extra memory for PDF output out of 10000 (max. 10000000)
+ 68 words of extra memory for PDF output out of 10000 (max. 10000000)
 

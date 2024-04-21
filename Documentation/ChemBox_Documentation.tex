@@ -1163,29 +1163,193 @@ The following tables contain an overview of basic input and output tests on the 
 
 \begin{table}[htbp]
 \centering
-\begin{tabularx}{\textwidth}{|X|X|X|X|X|}
+\begin{tabularx}{\textwidth}{|p{1cm}|X|X|X|X|}
 \hline
 \textbf{Test No.} & \textbf{Description} & \textbf{TEX (Typical, Erroneous, Extreme} & \textbf{Expected Outcome} & \textbf{Actual Outcome} \\
 \hline
 \multirow{3}{*}{1} & Calculate value for blank input & T: Fill 2 out of 3 input options with common values & Blank field calculated correctly. & As expected.\\
 \cline{3-5}
-& & E: Fill in all 3 input options with common values & Pop up dialogue states invalid input. & -\\
+& & E: Fill in all 3 input options with common values & Must leave exactly one input line empty for it to be calculated! & As expected.\\
 \cline{3-5}
-& & X: Use invalid characters & Pop up dialogue states invalid input. & - \\
+& & X: Use invalid characters & Only numerical values in the form of integers or decimals allowed! & As expected.\\
 
 \hline
 
-\multirow{3}{*}{2} & Test unit drop down  & T: Change units & Calculated value scales accordingly. & As expected.\\
+\multirow{3}{*}{2} & Test unit drop down  & T: Change units & Value scales accordingly. & As expected.\\
 
 \hline
 \end{tabularx}
 \caption{Universal Calculator tests}
-\label{calculator_tests}
+\label{tab:calculator_tests}
 \end{table}
+
+\begin{table}[htbp]
+\centering
+\begin{tabularx}{\textwidth}{|p{1cm}|X|X|X|X|}
+\hline
+\textbf{Test No.} & \textbf{Description} & \textbf{TEX (Typical, Erroneous, Extreme} & \textbf{Expected Outcome} & \textbf{Actual Outcome} \\
+\hline
+\multirow{3}{*}{3} & Calculate value for blank input & T: Leave one input blank & Blank field calculated correctly. & As expected.\\
+\cline{3-5}
+& & E: Fill in all input options with common values & Must leave one input line empty for it to be calculated! & As expected.\\
+\cline{3-5}
+& & X: Use invalid characters & Only numerical values in the form of integers or decimals allowed! & As expected.\\
+
+\hline
+\multirow{3}{*}{4} & Calculate value for multiple blank inputs & T: Leave allowed combination of inputs blank & Blank fields calculated correctly. & Must leave one input line empty for it to be calculated!\\
+\cline{3-5}
+& & E: Leave two critical inputs blank (mass and molecular weight) & Must leave one input line empty for it to be calculated! & As expected.\\
+\hline
+\end{tabularx}
+\caption{Avogadros constant calculator tests}
+\label{tab:avogadros_tests}
+\end{table}
+
+Table \ref{tab: avogadros_tests} shows the only outlier out of all the tests conducted on the ChemCalculator module. The Avogadro's calculator can with certain combinations of inputs also work with two blank inputs. The outlier can be found in the typical (T) row of test no. 4, where allowed combinations of empty inputs are tested. Allowed combinations in this case would be leaving the "mass" and the "number of atoms" lines blank, as the "number of atoms" input can be calculated from the combination of the moles and Avogadro's constant and calculating the mass only requires the molecular weight and the moles.\\
+To correct this, I have used "if-statements" to find out which line have been left blank and which ones have not. After applying this in a correct sequence and implementing our error dialogue, the calculator now works in the expected way and produces the desired output.
+
+\subsubsection{Tests for ChemBalancer}
+
+To test the robustness and efficiency of the balancer, I chose to pick an independent list of chemical equations to find out if my program can handle every different type of equation listed.
+The following chemical equations represent a sample of the tests for robustness and efficiency applied on the balancer. This list was published as a part of an article on "Journal of High School Science". Note that the equations are not written with proper subscript formatting, as it is shown in the format, which the balancer takes as an input and produces as an output, with the only difference, that arrows are used here compared to equals signs in the program.
+
+\begin{enumerate}
+
+\item Unbalanced equation: C4H10 + O2 → CO2 + H2O\\ Balanced equation: 2C4H10 + 13O2 → 8CO2 + 10H2O
+
+\item Unbalanced equation: (NH4)2Cr2O7 → N2 + Cr2O3 + H2O\\ Balanced equation: (NH4)2Cr2O7 → N2 + Cr2O3 + 4H2O
+
+\item Unbalanced equation: C57H110O6 + O2 → CO2 + H2O\\ Balanced equation: 2C57H110O6 + 163O2 → 114CO2 + 110H2O
+
+\item Unbalanced equation: KNO3 + C12H22O11 → N2 + CO2 + H2O + K2CO3\\ Balanced equation: 48KNO3 + 5C12H22O11 → 24N2 + 36CO2 + 55H2O + 24K2CO3
+
+\item Unbalanced equation: Cu2S + HNO3 → Cu(NO3)2 + CuSO4 + NO2 + H2O\\ Balanced equation: 1Cu2S + 12HNO3 → 1Cu(NO3)2 + 1CuSO4 + 10NO2 + 6H2O
+
+\item Unbalanced equation: K4[Fe(SCN)6] + K2Cr2O7 + H2SO4 → Fe2(SO4)3 + Cr2(SO4)3 + CO2 + H2O + K2SO4 + KNO3\\ Balanced equation: 6K4[Fe(SCN)6] + 97K2Cr2O7 + 355H2SO4 → 3Fe2(SO4)3 + 97Cr2(SO4)3 + 36CO2 + 355H2O + 91K2SO4 + 36KNO3
+
+\item Unbalanced equation: Na2S2O4 + NaOH → Na2SO3 + Na2S + H2O\\ Balanced equation: 3Na2S2O4 + 6NaOH → 5Na2SO3 + 1Na2S + 3H2O
+
+\item Unbalanced equation: C6H8O7 + NaHCO3 → Na3C6H6O7 + CO2 + H2O\\ Balanced equation: 19C6H8O7 + 54NaHCO3 → 18Na3C6H6O7 + 60CO2 + 49H2O
+
+\item Unbalanced equation: P4O10 + H2O → H3PO4\\ Balanced equation: 1P4O10 + 6H2O → 4H3PO4
+
+\end{enumerate}
+
+While conducting these tests, an unexpected issue appeared, where if an invalid equation is given, with an arrow instead of an equals sign for example (I.e.: C4H10 + O2 → CO2 + H2O instead of C4H10 + O2 = CO2 + H2O),the program has first opened a dialogue stating the issue to the user and then after the arrow has been changed to an equals sign, the application crashed upon hitting the "balance" button. Figure \ref{fig:balancer_crash} shows the crash report for this bug. 
+
+\begin{figure} [h]
+	\centering
+	\includegraphics[scale=0.3]{balancer_crash}
+	\caption{Balancer Crash Report}
+	\label{fig:balancer_crash}
+\end{figure}
+
+I have resolved this issue using pythons exception handling. As the ChemBalancer module has many methods calling other methods, I have had to nest every relevant method in a try - except statement and raise this exception to the next higher method level. A smaller example version this solution is shown in Listing \ref{lst:balancer_exceptions}.
+
+\begin{lstlisting}[language=Python, caption=Example of exception structure, label={lst:balancer_exceptions}]
+def lowest_level_function():
+	try:
+	    # Do something...
+    except Exception:
+	    raise # Raise the exception to be caught by the next higher level function
+
+def middle_level_function():
+    try:
+        lowest_level_function()
+    except Exception:
+        raise  # Re-raise the exception to be caught by the highest level function
+
+def highest_level_function():
+    try:
+        middle_level_function()
+    except Exception:
+        return  # Stop further execution of highest level function
+\end{lstlisting}
+
+After eliminating the mentioned issues, I have tested the program with the entries of the list of equations again. The balancer has successfully produced the desired balanced equation every time. An example of a chemical equation balanced by the ChemBalancer is given in Figure \ref{fig:final_balancer_test}. For this example I chose equation number 6 from the list, as this shows a very complex chemical equation that would be incredibly hard for a human to balance without any tools, which is exactly what the purpose of this project is.
+
+\begin{figure} [h]
+	\centering
+	\includegraphics[scale=0.3]{final_balancer_test}
+	\caption{Working test of balancer}
+	\label{fig:final_balancer_test}
+\end{figure}
+
+\newpage
+
+\subsubsection{Tests for ChemEditor}
+
+As with the other modules, most features were tested by exploratory test during development. I have tried to summarise the tests for the ChemEditor in the following table.
+
+\begin{table}[htbp]
+\centering
+\begin{tabularx}{\textwidth}{|p{1cm}|X|X|X|X|}
+\hline
+\textbf{Test No.} & \textbf{Description} & \textbf{TEX (Typical, Erroneous, Extreme} & \textbf{Expected Outcome} & \textbf{Actual Outcome} \\
+\hline
+\multirow{3}{*}{1} & Draw atoms & T: Click on a blank are on the canvas & Atom gets drawn at click position. & As expected.\\
+
+\hline
+
+\multirow{3}{*}{2} & Bond two atoms together & T: Select bond action type and click on two different atoms & Bond between atoms appears. & As expected\\
+\cline{3-5}
+& & E: Click on at least one atom with full or near full outer shell with high bond order so that overall electrons would be greater than the full shell & Invalid user Action! & As expected.\\
+\cline{3-5}
+& & X: Select bond action type and click on the same atom twice & Invalid user Action! & As expected.\\
+\hline
+
+\multirow{3}{*}{3} & Remove Atom & T: Select remove action type and click on atom & Atom and connected bonds disappear & As expected\\
+
+\hline
+
+\end{tabularx}
+\caption{ChemEditor tests}
+\label{tab:editor_tests}
+\end{table}
+
 
 \newpage
 
 \section{Evaluation}
+
+The following tables compare the finished system with the set objectives at the beginning of this document.
+
+\subsubsection{Objective Comparison for ChemCalculator}
+
+\begin{table}[htbp]
+\footnotesize
+\centering
+\begin{tabularx}{\textwidth}{|X|X|X|X|}
+
+\hline
+\cellcolor{red!70} Objective not met & \cellcolor{orange!70} Objective partially met & \cellcolor{cyan!70} Objective met & \cellcolor{green!70} Objective exceeded\\
+\hline
+
+\end{tabularx}
+\label{tab:color_keys}
+\end{table}
+
+\begin{table}[htbp]
+\centering
+\begin{tabularx}{\textwidth}{|X|X|}
+\hline
+\textbf{Original Objective} & \textbf{Completed System}\\
+
+\hline
+
+- & - \\
+
+\hline
+
+- & - \\
+
+\hline
+
+\end{tabularx}
+\caption{ChemCalculator objective comparison}
+\label{tab:calc_objective_comp}
+\end{table}
+
 \newpage
 
 \end{document}
