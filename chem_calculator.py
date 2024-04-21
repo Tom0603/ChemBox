@@ -260,7 +260,7 @@ class MolesCalculator(QWidget):
         """
 
         if not find_empty_input(self.input_list.copy()):
-            show_dialog("Must leave one input line empty for it to be calculated!")
+            show_dialog("Must leave exactly one input line empty for it to be calculated!")
             return
         elif check_invalid_symbol(self.input_list.copy()):
             show_dialog("Only numerical values in the form of integers or decimals allowed!")
@@ -389,7 +389,7 @@ class ConcCalculator(QWidget):
         """
 
         if not find_empty_input(self.input_list.copy()):
-            show_dialog("Must leave one input line empty for it to be calculated!")
+            show_dialog("Must leave exactly one input line empty for it to be calculated!")
             return
         elif check_invalid_symbol(self.input_list.copy()):
             show_dialog("Only numerical values in the form of integers or decimals allowed!")
@@ -701,7 +701,7 @@ class IdealGasLawCalculator(QWidget):
         volume_unit = self.volume_drop_down_igl.currentText()
 
         if not find_empty_input(self.input_list.copy()):
-            show_dialog("Must leave one input line empty for it to be calculated!")
+            show_dialog("Must leave exactly one input line empty for it to be calculated!")
             return
         elif check_invalid_symbol(self.input_list.copy()):
             show_dialog("Only numerical values in the form of integers or decimals allowed!")
@@ -820,7 +820,7 @@ class EquilibriumCalculator(QWidget):
         empty_input = None
 
         if not find_empty_input(self.input_list.copy()):
-            show_dialog("Must leave one input line empty for it to be calculated!")
+            show_dialog("Must leave exactly one input line empty for it to be calculated!")
             return
         elif check_invalid_symbol(self.input_list.copy()):
             show_dialog("Only numerical values in the form of integers or decimals allowed!")
@@ -1077,7 +1077,7 @@ class GibbsFreeEnergyCalculator(QWidget):
         entropy_unit = self.entropy_change_unit_dropdown.currentText()
 
         if not find_empty_input(self.input_list.copy()):
-            show_dialog("Must leave one input line empty for it to be calculated!")
+            show_dialog("Must leave exactly one input line empty for it to be calculated!")
             return
         elif check_invalid_symbol(self.input_list.copy()):
             show_dialog("Only numerical values in the form of integers or decimals allowed!")
@@ -1247,7 +1247,7 @@ class SpecificHeatCalculator(QWidget):
         temp_unit = self.temperature_conversions[self.temp_unit_dropdown.currentText()]
 
         if not find_empty_input(self.input_list.copy()):
-            show_dialog("Must leave one input line empty for it to be calculated!")
+            show_dialog("Must leave exactly one input line empty for it to be calculated!")
             return
         elif check_invalid_symbol(self.input_list.copy()):
             show_dialog("Only numerical values in the form of integers or decimals allowed!")
@@ -1443,7 +1443,7 @@ class RateCalculator(QWidget):
         """
 
         if not find_empty_input(self.input_list.copy()):
-            show_dialog("Must leave one input line empty for it to be calculated!")
+            show_dialog("Must leave exactly one input line empty for it to be calculated!")
             return
         elif check_invalid_symbol(self.input_list.copy()):
             show_dialog("Only numerical values in the form of integers or decimals allowed!")
