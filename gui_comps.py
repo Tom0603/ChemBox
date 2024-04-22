@@ -1,5 +1,4 @@
-from PyQt6.QtWidgets import QTabWidget, QWidget, QPushButton, QHBoxLayout, QVBoxLayout, QGridLayout, QFrame, QLabel, \
-    QLineEdit, QComboBox
+from PyQt6.QtWidgets import QTabWidget, QWidget, QHBoxLayout, QGridLayout, QFrame, QLabel, QLineEdit, QComboBox
 
 
 class TabBar(QWidget):

@@ -64,37 +64,3 @@ class Bond:
     def __init__(self, atom1: Atom, atom2: Atom, order: int):
         self.atoms: list = [atom1, atom2]
         self.order: int = order
-
-# dataclass
-# lass Carbon:
-#    SYMBOL: str = "C"
-#    OUTER_ELECTRONS: int = 4
-#    FULL_SHELL: int = 8
-
-
-# dataclass
-# lass Hydrogen:
-#    SYMBOL: str = "H"
-#    OUTER_ELECTRONS: int = 1
-#    FULL_SHELL: int = 2
-
-
-# dataclass
-# lass Oxygen:
-#    SYMBOL: str = "O"
-#    OUTER_ELECTRONS: int = 6
-#    FULL_SHELL: int = 8
-
-
-# dataclass
-# lass Chlorine:
-#    SYMBOL: str = "Cl"
-#    OUTER_ELECTRONS: int = 7
-#    FULL_SHELL: int = 8
-
-
-# dataclass
-# lass Fluorine:
-#    SYMBOL: str = "F"
-#    OUTER_ELECTRONS: int = 7
-#    FULL_SHELL: int = 8

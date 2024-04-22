@@ -227,7 +227,7 @@ class Canvas(QLabel):
             print("selected")
             if self.action_type != "bond":
                 try:
-                    # Calculate possible positions for new atoms in 360° around the selected atom
+                    # Calculate possible positions for new atoms in 360 degrees around the selected atom
                     if self.selected_atom is not None:
                         potential_positions = self.calc_potential_positions(self.selected_atom)
                         for pos in potential_positions:

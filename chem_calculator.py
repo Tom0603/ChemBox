@@ -487,7 +487,6 @@ class AvogadroCalculator(QWidget):
             "cm³": 0.001,
             "dm³": 1.0,
             "m³": 1000.0,
-
         }
 
         # Initialise Avogadro's calculator

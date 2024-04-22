@@ -200,6 +200,7 @@ class ChemBalancer(QWidget):
         :param count: Number of specific element to add to the matrix.
         :param side: "1" for reactants, "-1" for products.
         """
+
         print(element, index, count, side)
         try:
             if index == len(self.element_matrix):
