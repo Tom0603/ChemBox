@@ -1,0 +1,9 @@
+[0] Config.pm:307> INFO - This is Biber 2.19
+[0] Config.pm:310> INFO - Logfile is 'ChemBox_Documentation.blg'
+[77] biber-darwin:340> INFO - === Mon Apr 22, 2024, 20:52:22
+[94] Biber.pm:419> INFO - Reading 'ChemBox_Documentation.bcf'
+[171] Biber.pm:979> INFO - Found 0 citekeys in bib section 0
+[186] bbl.pm:660> INFO - Writing 'ChemBox_Documentation.bbl' with encoding 'UTF-8'
+[186] bbl.pm:763> INFO - Output to ChemBox_Documentation.bbl
+[186] Biber.pm:131> WARN - The file 'ChemBox_Documentation.bcf' does not contain any citations!
+[187] Biber.pm:133> INFO - WARNINGS: 1

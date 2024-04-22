@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.141592653-2.6-1.40.25 (TeX Live 2023) (preloaded format=pdflatex 2023.10.31)  22 APR 2024 19:50
+This is pdfTeX, Version 3.141592653-2.6-1.40.25 (TeX Live 2023) (preloaded format=pdflatex 2023.10.31)  22 APR 2024 20:52
 entering extended mode
  restricted \write18 enabled.
  %&-line parsing enabled.
@@ -481,26 +481,305 @@ Package upgreek Info: Using Euler Roman for upright Greek on input line 31.
 LaTeX Font Info:    Overwriting symbol font `ugrf@m' in version `bold'
 (Font)                  U/eur/m/n --> U/eur/b/n on input line 38.
 )
-(/usr/local/texlive/2023/texmf-dist/tex/latex/algorithmicx/algpseudocode.sty
-Package: algpseudocode 
+(/usr/local/texlive/2023/texmf-dist/tex/latex/biblatex/biblatex.sty
+Package: biblatex 2023/03/05 v3.19 programmable bibliographies (PK/MW)
 
+(/usr/local/texlive/2023/texmf-dist/tex/generic/pdftexcmds/pdftexcmds.sty
+Package: pdftexcmds 2020-06-27 v0.33 Utility functions of pdfTeX for LuaTeX (HO
+)
+
+(/usr/local/texlive/2023/texmf-dist/tex/generic/infwarerr/infwarerr.sty
+Package: infwarerr 2019/12/03 v1.5 Providing info/warning/error messages (HO)
+)
+(/usr/local/texlive/2023/texmf-dist/tex/generic/iftex/iftex.sty
+Package: iftex 2022/02/03 v1.0f TeX engine tests
+)
+(/usr/local/texlive/2023/texmf-dist/tex/generic/ltxcmds/ltxcmds.sty
+Package: ltxcmds 2020-05-10 v1.25 LaTeX kernel commands for general use (HO)
+)
+Package pdftexcmds Info: \pdf@primitive is available.
+Package pdftexcmds Info: \pdf@ifprimitive is available.
+Package pdftexcmds Info: \pdfdraftmode found.
+)
+(/usr/local/texlive/2023/texmf-dist/tex/latex/etoolbox/etoolbox.sty
+Package: etoolbox 2020/10/05 v2.5k e-TeX tools for LaTeX (JAW)
+\etb@tempcnta=\count299
+)
+(/usr/local/texlive/2023/texmf-dist/tex/latex/kvoptions/kvoptions.sty
+Package: kvoptions 2022-06-15 v3.15 Key value format for package options (HO)
+
+(/usr/local/texlive/2023/texmf-dist/tex/latex/kvsetkeys/kvsetkeys.sty
+Package: kvsetkeys 2022-10-05 v1.19 Key value parser (HO)
+))
+(/usr/local/texlive/2023/texmf-dist/tex/latex/logreq/logreq.sty
+Package: logreq 2010/08/04 v1.0 xml request logger
+\lrq@indent=\count300
+
+(/usr/local/texlive/2023/texmf-dist/tex/latex/logreq/logreq.def
+File: logreq.def 2010/08/04 v1.0 logreq spec v1.0
+))
 (/usr/local/texlive/2023/texmf-dist/tex/latex/base/ifthen.sty
 Package: ifthen 2022/04/13 v1.1d Standard LaTeX ifthen package (DPC)
 )
+(/usr/local/texlive/2023/texmf-dist/tex/latex/url/url.sty
+\Urlmuskip=\muskip16
+Package: url 2013/09/16  ver 3.4  Verb mode for urls, etc.
+)
+\c@tabx@nest=\count301
+\c@listtotal=\count302
+\c@listcount=\count303
+\c@liststart=\count304
+\c@liststop=\count305
+\c@citecount=\count306
+\c@citetotal=\count307
+\c@multicitecount=\count308
+\c@multicitetotal=\count309
+\c@instcount=\count310
+\c@maxnames=\count311
+\c@minnames=\count312
+\c@maxitems=\count313
+\c@minitems=\count314
+\c@citecounter=\count315
+\c@maxcitecounter=\count316
+\c@savedcitecounter=\count317
+\c@uniquelist=\count318
+\c@uniquename=\count319
+\c@refsection=\count320
+\c@refsegment=\count321
+\c@maxextratitle=\count322
+\c@maxextratitleyear=\count323
+\c@maxextraname=\count324
+\c@maxextradate=\count325
+\c@maxextraalpha=\count326
+\c@abbrvpenalty=\count327
+\c@highnamepenalty=\count328
+\c@lownamepenalty=\count329
+\c@maxparens=\count330
+\c@parenlevel=\count331
+\blx@tempcnta=\count332
+\blx@tempcntb=\count333
+\blx@tempcntc=\count334
+\c@blx@maxsection=\count335
+\blx@maxsegment@0=\count336
+\blx@notetype=\count337
+\blx@parenlevel@text=\count338
+\blx@parenlevel@foot=\count339
+\blx@sectionciteorder@0=\count340
+\blx@sectionciteorderinternal@0=\count341
+\blx@entrysetcounter=\count342
+\blx@biblioinstance=\count343
+\labelnumberwidth=\skip55
+\labelalphawidth=\skip56
+\biblabelsep=\skip57
+\bibitemsep=\skip58
+\bibnamesep=\skip59
+\bibinitsep=\skip60
+\bibparsep=\skip61
+\bibhang=\skip62
+\blx@bcfin=\read3
+\blx@bcfout=\write4
+\blx@langwohyphens=\language87
+\c@mincomprange=\count344
+\c@maxcomprange=\count345
+\c@mincompwidth=\count346
+Package biblatex Info: Trying to load biblatex default data model...
+Package biblatex Info: ... file 'blx-dm.def' found.
+
+(/usr/local/texlive/2023/texmf-dist/tex/latex/biblatex/blx-dm.def
+File: blx-dm.def 2023/03/05 v3.19 biblatex localization (PK/MW)
+)
+Package biblatex Info: Trying to load biblatex custom data model...
+Package biblatex Info: ... file 'biblatex-dm.cfg' not found.
+\c@afterword=\count347
+\c@savedafterword=\count348
+\c@annotator=\count349
+\c@savedannotator=\count350
+\c@author=\count351
+\c@savedauthor=\count352
+\c@bookauthor=\count353
+\c@savedbookauthor=\count354
+\c@commentator=\count355
+\c@savedcommentator=\count356
+\c@editor=\count357
+\c@savededitor=\count358
+\c@editora=\count359
+\c@savededitora=\count360
+\c@editorb=\count361
+\c@savededitorb=\count362
+\c@editorc=\count363
+\c@savededitorc=\count364
+\c@foreword=\count365
+\c@savedforeword=\count366
+\c@holder=\count367
+\c@savedholder=\count368
+\c@introduction=\count369
+\c@savedintroduction=\count370
+\c@namea=\count371
+\c@savednamea=\count372
+\c@nameb=\count373
+\c@savednameb=\count374
+\c@namec=\count375
+\c@savednamec=\count376
+\c@translator=\count377
+\c@savedtranslator=\count378
+\c@shortauthor=\count379
+\c@savedshortauthor=\count380
+\c@shorteditor=\count381
+\c@savedshorteditor=\count382
+\c@labelname=\count383
+\c@savedlabelname=\count384
+\c@institution=\count385
+\c@savedinstitution=\count386
+\c@lista=\count387
+\c@savedlista=\count388
+\c@listb=\count389
+\c@savedlistb=\count390
+\c@listc=\count391
+\c@savedlistc=\count392
+\c@listd=\count393
+\c@savedlistd=\count394
+\c@liste=\count395
+\c@savedliste=\count396
+\c@listf=\count397
+\c@savedlistf=\count398
+\c@location=\count399
+\c@savedlocation=\count400
+\c@organization=\count401
+\c@savedorganization=\count402
+\c@origlocation=\count403
+\c@savedoriglocation=\count404
+\c@origpublisher=\count405
+\c@savedorigpublisher=\count406
+\c@publisher=\count407
+\c@savedpublisher=\count408
+\c@language=\count409
+\c@savedlanguage=\count410
+\c@origlanguage=\count411
+\c@savedoriglanguage=\count412
+\c@pageref=\count413
+\c@savedpageref=\count414
+\shorthandwidth=\skip63
+\shortjournalwidth=\skip64
+\shortserieswidth=\skip65
+\shorttitlewidth=\skip66
+\shortauthorwidth=\skip67
+\shorteditorwidth=\skip68
+\locallabelnumberwidth=\skip69
+\locallabelalphawidth=\skip70
+\localshorthandwidth=\skip71
+\localshortjournalwidth=\skip72
+\localshortserieswidth=\skip73
+\localshorttitlewidth=\skip74
+\localshortauthorwidth=\skip75
+\localshorteditorwidth=\skip76
+Package biblatex Info: Trying to load compatibility code...
+Package biblatex Info: ... file 'blx-compat.def' found.
+
+(/usr/local/texlive/2023/texmf-dist/tex/latex/biblatex/blx-compat.def
+File: blx-compat.def 2023/03/05 v3.19 biblatex compatibility (PK/MW)
+)
+Package biblatex Info: Trying to load generic definitions...
+Package biblatex Info: ... file 'biblatex.def' found.
+
+(/usr/local/texlive/2023/texmf-dist/tex/latex/biblatex/biblatex.def
+File: biblatex.def 2023/03/05 v3.19 biblatex compatibility (PK/MW)
+\c@textcitecount=\count415
+\c@textcitetotal=\count416
+\c@textcitemaxnames=\count417
+\c@biburlbigbreakpenalty=\count418
+\c@biburlbreakpenalty=\count419
+\c@biburlnumpenalty=\count420
+\c@biburlucpenalty=\count421
+\c@biburllcpenalty=\count422
+\biburlbigskip=\muskip17
+\biburlnumskip=\muskip18
+\biburlucskip=\muskip19
+\biburllcskip=\muskip20
+\c@smartand=\count423
+)
+Package biblatex Info: Trying to load natbib compatibility...
+Package biblatex Info: ... file 'blx-natbib.def' found.
+
+(/usr/local/texlive/2023/texmf-dist/tex/latex/biblatex/blx-natbib.def
+File: blx-natbib.def 2023/03/05 v3.19 biblatex compatibility (PK/MW)
+Package biblatex Info: Delimiter 'nameyeardelim' in context '' already defined,
+ overwriting.
+)
+Package biblatex Info: Trying to load bibliography style 'numeric'...
+Package biblatex Info: ... file 'numeric.bbx' found.
+
+(/usr/local/texlive/2023/texmf-dist/tex/latex/biblatex/bbx/numeric.bbx
+File: numeric.bbx 2023/03/05 v3.19 biblatex bibliography style (PK/MW)
+Package biblatex Info: Trying to load bibliography style 'standard'...
+Package biblatex Info: ... file 'standard.bbx' found.
+
+(/usr/local/texlive/2023/texmf-dist/tex/latex/biblatex/bbx/standard.bbx
+File: standard.bbx 2023/03/05 v3.19 biblatex bibliography style (PK/MW)
+\c@bbx:relatedcount=\count424
+\c@bbx:relatedtotal=\count425
+))
+Package biblatex Info: Trying to load citation style 'numeric'...
+Package biblatex Info: ... file 'numeric.cbx' found.
+
+(/usr/local/texlive/2023/texmf-dist/tex/latex/biblatex/cbx/numeric.cbx
+File: numeric.cbx 2023/03/05 v3.19 biblatex citation style (PK/MW)
+Package biblatex Info: Redefining '\cite'.
+Package biblatex Info: Redefining '\parencite'.
+Package biblatex Info: Redefining '\footcite'.
+Package biblatex Info: Redefining '\footcitetext'.
+Package biblatex Info: Redefining '\smartcite'.
+Package biblatex Info: Redefining '\supercite'.
+Package biblatex Info: Redefining '\textcite'.
+Package biblatex Info: Redefining '\textcites'.
+Package biblatex Info: Redefining '\cites'.
+Package biblatex Info: Redefining '\parencites'.
+Package biblatex Info: Redefining '\smartcites'.
+)
+Package biblatex Info: Trying to load configuration file...
+Package biblatex Info: ... file 'biblatex.cfg' found.
+
+(/usr/local/texlive/2023/texmf-dist/tex/latex/biblatex/biblatex.cfg
+File: biblatex.cfg 
+)
+Package biblatex Info: Input encoding 'utf8' detected.
+Package biblatex Info: Document encoding is UTF8 ....
+
+(/usr/local/texlive/2023/texmf-dist/tex/latex/l3kernel/expl3.sty
+Package: expl3 2023-02-22 L3 programming layer (loader) 
+
+(/usr/local/texlive/2023/texmf-dist/tex/latex/l3backend/l3backend-pdftex.def
+File: l3backend-pdftex.def 2023-01-16 L3 backend support: PDF output (pdfTeX)
+\l__color_backend_stack_int=\count426
+\l__pdf_internal_box=\box90
+))
+Package biblatex Info: ... and expl3
+(biblatex)             2023-02-22 L3 programming layer (loader) 
+(biblatex)             is new enough (at least 2020/04/06),
+(biblatex)             setting 'casechanger=expl3'.
+
+(/usr/local/texlive/2023/texmf-dist/tex/latex/biblatex/blx-case-expl3.sty
+(/usr/local/texlive/2023/texmf-dist/tex/latex/l3packages/xparse/xparse.sty
+Package: xparse 2023-02-02 L3 Experimental document command parser
+)
+Package: blx-case-expl3 2023/03/05 v3.19 expl3 case changing code for biblatex
+))
+(/usr/local/texlive/2023/texmf-dist/tex/latex/algorithmicx/algpseudocode.sty
+Package: algpseudocode 
+
 (/usr/local/texlive/2023/texmf-dist/tex/latex/algorithmicx/algorithmicx.sty
 Package: algorithmicx 2005/04/27 v1.2 Algorithmicx
 
 Document Style algorithmicx 1.2 - a greatly improved `algorithmic' style
-\c@ALG@line=\count299
-\c@ALG@rem=\count300
-\c@ALG@nested=\count301
-\ALG@tlm=\skip55
-\ALG@thistlm=\skip56
-\c@ALG@Lnr=\count302
-\c@ALG@blocknr=\count303
-\c@ALG@storecount=\count304
-\c@ALG@tmpcounter=\count305
-\ALG@tmplength=\skip57
+\c@ALG@line=\count427
+\c@ALG@rem=\count428
+\c@ALG@nested=\count429
+\ALG@tlm=\skip77
+\ALG@thistlm=\skip78
+\c@ALG@Lnr=\count430
+\c@ALG@blocknr=\count431
+\c@ALG@storecount=\count432
+\c@ALG@tmpcounter=\count433
+\ALG@tmplength=\skip79
 )
 Document Style - pseudocode environments for use with the `algorithmicx' style
 ) (/usr/local/texlive/2023/texmf-dist/tex/latex/algorithms/algorithm.sty
@@ -509,14 +788,14 @@ nment
 
 (/usr/local/texlive/2023/texmf-dist/tex/latex/float/float.sty
 Package: float 2001/11/08 v1.3d Float enhancements (AL)
-\c@float@type=\count306
+\c@float@type=\count434
 \float@exts=\toks35
-\float@box=\box90
+\float@box=\box91
 \@float@everytoks=\toks36
-\@floatcapt=\box91
+\@floatcapt=\box92
 )
 \@float@every@algorithm=\toks37
-\c@algorithm=\count307
+\c@algorithm=\count435
 )
 (/usr/local/texlive/2023/texmf-dist/tex/generic/pgf/frontendlayer/tikz/librarie
 s/tikzlibraryshapes.geometric.code.tex
@@ -526,45 +805,42 @@ File: tikzlibraryshapes.geometric.code.tex 2023-01-15 v3.1.10 (3.1.10)
 shapes.geometric.code.tex
 File: pgflibraryshapes.geometric.code.tex 2023-01-15 v3.1.10 (3.1.10)
 )))
-(/usr/local/texlive/2023/texmf-dist/tex/latex/l3backend/l3backend-pdftex.def
-File: l3backend-pdftex.def 2023-01-16 L3 backend support: PDF output (pdfTeX)
-\l__color_backend_stack_int=\count308
-\l__pdf_internal_box=\box92
-)
-(./ChemBox_Documentation.aux
+\@quotelevel=\count436
+\@quotereset=\count437
+ (./ChemBox_Documentation.aux
 
 LaTeX Warning: Label `fig:tabs_mockup' multiply defined.
 
 )
 \openout1 = `ChemBox_Documentation.aux'.
 
-LaTeX Font Info:    Checking defaults for OML/cmm/m/it on input line 13.
-LaTeX Font Info:    ... okay on input line 13.
-LaTeX Font Info:    Checking defaults for OMS/cmsy/m/n on input line 13.
-LaTeX Font Info:    ... okay on input line 13.
-LaTeX Font Info:    Checking defaults for OT1/cmr/m/n on input line 13.
-LaTeX Font Info:    ... okay on input line 13.
-LaTeX Font Info:    Checking defaults for T1/cmr/m/n on input line 13.
-LaTeX Font Info:    ... okay on input line 13.
-LaTeX Font Info:    Checking defaults for TS1/cmr/m/n on input line 13.
-LaTeX Font Info:    ... okay on input line 13.
-LaTeX Font Info:    Checking defaults for OMX/cmex/m/n on input line 13.
-LaTeX Font Info:    ... okay on input line 13.
-LaTeX Font Info:    Checking defaults for U/cmr/m/n on input line 13.
-LaTeX Font Info:    ... okay on input line 13.
-\c@lstlisting=\count309
+LaTeX Font Info:    Checking defaults for OML/cmm/m/it on input line 14.
+LaTeX Font Info:    ... okay on input line 14.
+LaTeX Font Info:    Checking defaults for OMS/cmsy/m/n on input line 14.
+LaTeX Font Info:    ... okay on input line 14.
+LaTeX Font Info:    Checking defaults for OT1/cmr/m/n on input line 14.
+LaTeX Font Info:    ... okay on input line 14.
+LaTeX Font Info:    Checking defaults for T1/cmr/m/n on input line 14.
+LaTeX Font Info:    ... okay on input line 14.
+LaTeX Font Info:    Checking defaults for TS1/cmr/m/n on input line 14.
+LaTeX Font Info:    ... okay on input line 14.
+LaTeX Font Info:    Checking defaults for OMX/cmex/m/n on input line 14.
+LaTeX Font Info:    ... okay on input line 14.
+LaTeX Font Info:    Checking defaults for U/cmr/m/n on input line 14.
+LaTeX Font Info:    ... okay on input line 14.
+\c@lstlisting=\count438
  (/usr/local/texlive/2023/texmf-dist/tex/context/base/mkii/supp-pdf.mkii
 [Loading MPS to PDF converter (version 2006.09.02).]
-\scratchcounter=\count310
+\scratchcounter=\count439
 \scratchdimen=\dimen262
 \scratchbox=\box93
-\nofMPsegments=\count311
-\nofMParguments=\count312
+\nofMPsegments=\count440
+\nofMParguments=\count441
 \everyMPshowfont=\toks38
-\MPscratchCnt=\count313
+\MPscratchCnt=\count442
 \MPscratchDim=\dimen263
-\MPnumerator=\count314
-\makeMPintoPDFobject=\count315
+\MPnumerator=\count443
+\makeMPintoPDFobject=\count444
 \everyMPtoPDFconversion=\toks39
 ) (/usr/local/texlive/2023/texmf-dist/tex/latex/epstopdf-pkg/epstopdf-base.sty
 Package: epstopdf-base 2020-01-24 v2.11 Base part for package epstopdf
@@ -575,10 +851,27 @@ Package epstopdf-base Info: Redefining graphics rule for `.eps' on input line 4
 File: epstopdf-sys.cfg 2010/07/13 v1.3 Configuration of (r)epstopdf for TeX Liv
 e
 ))
-[1
+Package biblatex Info: Trying to load language 'english'...
+Package biblatex Info: ... file 'english.lbx' found.
 
-{/usr/local/texlive/2023/texmf-var/fonts/map/pdftex/updmap/pdftex.map}]
-(./ChemBox_Documentation.toc
+(/usr/local/texlive/2023/texmf-dist/tex/latex/biblatex/lbx/english.lbx
+File: english.lbx 2023/03/05 v3.19 biblatex localization (PK/MW)
+)
+Package biblatex Info: Input encoding 'utf8' detected.
+Package biblatex Info: Automatic encoding selection.
+(biblatex)             Assuming data encoding 'utf8'.
+\openout4 = `ChemBox_Documentation.bcf'.
+
+Package biblatex Info: Trying to load bibliographic data...
+Package biblatex Info: ... file 'ChemBox_Documentation.bbl' found.
+
+(./ChemBox_Documentation.bbl)
+Package biblatex Info: Reference section=0 on input line 14.
+Package biblatex Info: Reference segment=0 on input line 14.
+ [1
+
+{/usr/local/texlive/2023/texmf-var/fonts/map/pdftex/updmap/pdftex.map}] (./Chem
+Box_Documentation.toc
 LaTeX Font Info:    External font `cmex10' loaded for size
 (Font)              <12> on input line 2.
 LaTeX Font Info:    External font `cmex10' loaded for size
@@ -586,101 +879,101 @@ LaTeX Font Info:    External font `cmex10' loaded for size
 LaTeX Font Info:    External font `cmex10' loaded for size
 (Font)              <6> on input line 2.
  [1])
-\tf@toc=\write4
-\openout4 = `ChemBox_Documentation.toc'.
+\tf@toc=\write5
+\openout5 = `ChemBox_Documentation.toc'.
 
  [2]
-Underfull \hbox (badness 10000) in paragraph at lines 48--55
+Underfull \hbox (badness 10000) in paragraph at lines 49--56
 
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 48--55
+Underfull \hbox (badness 10000) in paragraph at lines 49--56
 
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 48--55
+Underfull \hbox (badness 10000) in paragraph at lines 49--56
 
  []
 
 [3]
-Underfull \hbox (badness 10000) in paragraph at lines 66--67
+Underfull \hbox (badness 10000) in paragraph at lines 67--68
 
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 68--70
+Underfull \hbox (badness 10000) in paragraph at lines 69--71
 
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 71--73
+Underfull \hbox (badness 10000) in paragraph at lines 72--74
 
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 71--73
+Underfull \hbox (badness 10000) in paragraph at lines 72--74
 
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 74--76
+Underfull \hbox (badness 10000) in paragraph at lines 75--77
 \OT1/cmr/m/n/12 soft-ware)?
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 74--76
+Underfull \hbox (badness 10000) in paragraph at lines 75--77
 
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 77--78
+Underfull \hbox (badness 10000) in paragraph at lines 78--79
 
  []
 
 [4]
-Underfull \hbox (badness 10000) in paragraph at lines 80--82
+Underfull \hbox (badness 10000) in paragraph at lines 81--83
 
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 80--82
+Underfull \hbox (badness 10000) in paragraph at lines 81--83
 
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 92--97
+Underfull \hbox (badness 10000) in paragraph at lines 93--98
 
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 92--97
+Underfull \hbox (badness 10000) in paragraph at lines 93--98
 
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 92--97
+Underfull \hbox (badness 10000) in paragraph at lines 93--98
 
  []
 
 [5] [6] [7]
-Underfull \hbox (badness 10000) in paragraph at lines 175--178
+Underfull \hbox (badness 10000) in paragraph at lines 176--179
 
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 184--186
+Underfull \hbox (badness 10000) in paragraph at lines 185--187
 
  []
 
 [8]
-Underfull \hbox (badness 10000) in paragraph at lines 198--201
+Underfull \hbox (badness 10000) in paragraph at lines 199--202
 
  []
 
 [9]
-Underfull \hbox (badness 10000) in paragraph at lines 208--210
+Underfull \hbox (badness 10000) in paragraph at lines 209--211
 
  []
 
@@ -691,7 +984,7 @@ rarchy.png Graphic file (type png)
 <use /Users/tom/Documents/Programmieren/ChemBox/Documentation/Images//base_hier
 archy.png>
 Package pdftex.def Info: /Users/tom/Documents/Programmieren/ChemBox/Documentati
-on/Images//base_hierarchy.png  used on input line 217.
+on/Images//base_hierarchy.png  used on input line 218.
 (pdftex.def)             Requested size: 284.65845pt x 198.73897pt.
 [10 </Users/tom/Documents/Programmieren/ChemBox/Documentation/Images//base_hier
 archy.png>] (/usr/local/texlive/2023/texmf-dist/tex/latex/listings/lstlang1.sty
@@ -704,15 +997,15 @@ kup.png Graphic file (type png)
 <use /Users/tom/Documents/Programmieren/ChemBox/Documentation/Images//tabs_mock
 up.png>
 Package pdftex.def Info: /Users/tom/Documents/Programmieren/ChemBox/Documentati
-on/Images//tabs_mockup.png  used on input line 263.
+on/Images//tabs_mockup.png  used on input line 264.
 (pdftex.def)             Requested size: 405.9093pt x 260.16739pt.
 
-Overfull \hbox (15.9093pt too wide) in paragraph at lines 263--264
+Overfull \hbox (15.9093pt too wide) in paragraph at lines 264--265
  [][] 
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 268--269
+Underfull \hbox (badness 10000) in paragraph at lines 269--270
 
  []
 
@@ -725,11 +1018,11 @@ flow.png Graphic file (type png)
 <use /Users/tom/Documents/Programmieren/ChemBox/Documentation/Images//balance_f
 low.png>
 Package pdftex.def Info: /Users/tom/Documents/Programmieren/ChemBox/Documentati
-on/Images//balance_flow.png  used on input line 356.
+on/Images//balance_flow.png  used on input line 357.
 (pdftex.def)             Requested size: 344.07939pt x 290.68085pt.
  [15 </Users/tom/Documents/Programmieren/ChemBox/Documentation/Images//balance_
 flow.png>] [16] [17] [18] [19] [20] [21]
-Underfull \hbox (badness 10000) in paragraph at lines 675--677
+Underfull \hbox (badness 10000) in paragraph at lines 676--678
 
  []
 
@@ -741,7 +1034,7 @@ balance_test.png Graphic file (type png)
 <use /Users/tom/Documents/Programmieren/ChemBox/Documentation/Images//initial_b
 alance_test.png>
 Package pdftex.def Info: /Users/tom/Documents/Programmieren/ChemBox/Documentati
-on/Images//initial_balance_test.png  used on input line 783.
+on/Images//initial_balance_test.png  used on input line 784.
 (pdftex.def)             Requested size: 238.8919pt x 153.57336pt.
 </Users/tom/Documents/Programmieren/ChemBox/Documentation/Images//initial_balan
 ce_test2.png, id=104, 563.10374pt x 334.24875pt>
@@ -750,7 +1043,7 @@ balance_test2.png Graphic file (type png)
 <use /Users/tom/Documents/Programmieren/ChemBox/Documentation/Images//initial_b
 alance_test2.png>
 Package pdftex.def Info: /Users/tom/Documents/Programmieren/ChemBox/Documentati
-on/Images//initial_balance_test2.png  used on input line 792.
+on/Images//initial_balance_test2.png  used on input line 793.
 (pdftex.def)             Requested size: 281.55118pt x 167.12396pt.
 
 
@@ -760,17 +1053,17 @@ LaTeX Warning: `h' float specifier changed to `ht'.
 alance_test.png>] [26 </Users/tom/Documents/Programmieren/ChemBox/Documentation
 /Images//initial_balance_test2.png>]
 LaTeX Font Info:    External font `cmex10' loaded for size
-(Font)              <7> on input line 820.
+(Font)              <7> on input line 821.
 LaTeX Font Info:    External font `cmex10' loaded for size
-(Font)              <5> on input line 820.
+(Font)              <5> on input line 821.
  [27]
-Overfull \hbox (29.72571pt too wide) in paragraph at lines 851--852
+Overfull \hbox (29.72571pt too wide) in paragraph at lines 852--853
 [] $\OML/cmm/m/it/10 element[]counts \OMS/cmsy/m/n/10   \OML/cmm/m/it/10 SPLIT 
 reagent INTO element[]counts USING REGEX PATTERN$ 
  []
 
 
-Overfull \hbox (3.60753pt too wide) in paragraph at lines 870--872
+Overfull \hbox (3.60753pt too wide) in paragraph at lines 871--873
 \OT1/cmr/m/n/12 Entering the un-bal-anced equa-tion $\OML/cmm/m/it/12 K\OT1/cmr
 /m/n/12 4[\OML/cmm/m/it/12 Fe\OT1/cmr/m/n/12 (\OML/cmm/m/it/12 SCN\OT1/cmr/m/n/
 12 )6] + \OML/cmm/m/it/12 K\OT1/cmr/m/n/12 2\OML/cmm/m/it/12 Cr\OT1/cmr/m/n/12 
@@ -786,7 +1079,7 @@ e_error.png Graphic file (type png)
 <use /Users/tom/Documents/Programmieren/ChemBox/Documentation/Images//nullspace
 _error.png>
 Package pdftex.def Info: /Users/tom/Documents/Programmieren/ChemBox/Documentati
-on/Images//nullspace_error.png  used on input line 877.
+on/Images//nullspace_error.png  used on input line 878.
 (pdftex.def)             Requested size: 356.12419pt x 47.37614pt.
 </Users/tom/Documents/Programmieren/ChemBox/Documentation/Images//working_balan
 cer.png, id=123, 1276.77pt x 741.77126pt>
@@ -795,62 +1088,62 @@ balancer.png Graphic file (type png)
 <use /Users/tom/Documents/Programmieren/ChemBox/Documentation/Images//working_b
 alancer.png>
 Package pdftex.def Info: /Users/tom/Documents/Programmieren/ChemBox/Documentati
-on/Images//working_balancer.png  used on input line 890.
+on/Images//working_balancer.png  used on input line 891.
 (pdftex.def)             Requested size: 383.03395pt x 222.5331pt.
  [29 </Users/tom/Documents/Programmieren/ChemBox/Documentation/Images//nullspac
 e_error.png> </Users/tom/Documents/Programmieren/ChemBox/Documentation/Images//
 working_balancer.png>]
-Underfull \hbox (badness 10000) in paragraph at lines 899--902
+Underfull \hbox (badness 10000) in paragraph at lines 900--903
 
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 899--902
+Underfull \hbox (badness 10000) in paragraph at lines 900--903
 
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 923--923
+Underfull \hbox (badness 10000) in paragraph at lines 924--924
 [][]\OT1/cmr/m/n/12 + sym-bol: str 
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 923--923
+Underfull \hbox (badness 10000) in paragraph at lines 924--924
 \OT1/cmr/m/n/12 + outer[]electrons: int 
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 923--923
+Underfull \hbox (badness 10000) in paragraph at lines 924--924
 \OT1/cmr/m/n/12 + x: int 
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 923--923
+Underfull \hbox (badness 10000) in paragraph at lines 924--924
 \OT1/cmr/m/n/12 + y: int 
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 923--923
+Underfull \hbox (badness 10000) in paragraph at lines 924--924
 \OT1/cmr/m/n/12 + full[]shell: int 
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 923--923
+Underfull \hbox (badness 10000) in paragraph at lines 924--924
 \OT1/cmr/m/n/12 + bonds: list 
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 923--923
+Underfull \hbox (badness 10000) in paragraph at lines 924--924
 \OT1/cmr/m/n/12 + ex-tra[]electrons: int 
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 923--923
+Underfull \hbox (badness 10000) in paragraph at lines 924--924
 \OT1/cmr/m/n/12 or-der: int): bool 
  []
 
 [30] [31]
-Underfull \hbox (badness 10000) in paragraph at lines 966--967
+Underfull \hbox (badness 10000) in paragraph at lines 967--968
 [] $\OML/cmm/m/it/10 bonding[]atom:overall[]electrons \OMS/cmsy/m/n/10   \OML/c
 mm/m/it/10 bonding[]atom:outer[]electrons \OT1/cmr/m/n/10 +
  []
@@ -863,7 +1156,7 @@ d_overlap.png Graphic file (type png)
 <use /Users/tom/Documents/Programmieren/ChemBox/Documentation/Images//atom_bond
 _overlap.png>
 Package pdftex.def Info: /Users/tom/Documents/Programmieren/ChemBox/Documentati
-on/Images//atom_bond_overlap.png  used on input line 981.
+on/Images//atom_bond_overlap.png  used on input line 982.
 (pdftex.def)             Requested size: 107.90285pt x 77.79042pt.
 </Users/tom/Documents/Programmieren/ChemBox/Documentation/Images//bonds_no_over
 lap.png, id=140, 208.78pt x 171.64125pt>
@@ -872,317 +1165,317 @@ _overlap.png Graphic file (type png)
 <use /Users/tom/Documents/Programmieren/ChemBox/Documentation/Images//bonds_no_
 overlap.png>
 Package pdftex.def Info: /Users/tom/Documents/Programmieren/ChemBox/Documentati
-on/Images//bonds_no_overlap.png  used on input line 990.
+on/Images//bonds_no_overlap.png  used on input line 991.
 (pdftex.def)             Requested size: 104.38972pt x 85.8204pt.
  [33 </Users/tom/Documents/Programmieren/ChemBox/Documentation/Images//atom_bon
 d_overlap.png> </Users/tom/Documents/Programmieren/ChemBox/Documentation/Images
 //bonds_no_overlap.png>]
-Overfull \hbox (1.76846pt too wide) in paragraph at lines 1041--1041
+Overfull \hbox (1.76846pt too wide) in paragraph at lines 1042--1042
 []|\OT1/cmr/m/n/12 calc[]potential[]positions| 
  []
 
 
-Underfull \hbox (badness 1242) in paragraph at lines 1041--1041
+Underfull \hbox (badness 1242) in paragraph at lines 1042--1042
 \OT1/cmr/m/n/12 po-ten-tial atoms in a
  []
 
 
-Underfull \hbox (badness 5091) in paragraph at lines 1041--1041
+Underfull \hbox (badness 5091) in paragraph at lines 1042--1042
 []|\OT1/cmr/m/n/12 Iterates through list
  []
 
 
-Underfull \hbox (badness 1406) in paragraph at lines 1041--1041
+Underfull \hbox (badness 1406) in paragraph at lines 1042--1042
 \OT1/cmr/m/n/12 of atoms and checks
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 1041--1041
+Underfull \hbox (badness 10000) in paragraph at lines 1042--1042
 \OT1/cmr/m/n/12 int, atom2[]x: int,
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 1041--1041
+Underfull \hbox (badness 10000) in paragraph at lines 1042--1042
 \OT1/cmr/m/n/12 int, atom2[]x: int,
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 1041--1041
+Underfull \hbox (badness 10000) in paragraph at lines 1042--1042
 \OT1/cmr/m/n/12 int, atom2[]x: int,
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 1041--1041
+Underfull \hbox (badness 10000) in paragraph at lines 1042--1042
 \OT1/cmr/m/n/12 int, atom2[]x: int,
  []
 
 
-Underfull \hbox (badness 2626) in paragraph at lines 1041--1041
+Underfull \hbox (badness 2626) in paragraph at lines 1042--1042
 []|\OT1/cmr/m/n/12 Handles the draw-ing
  []
 
 
-Underfull \hbox (badness 1881) in paragraph at lines 1041--1041
+Underfull \hbox (badness 1881) in paragraph at lines 1042--1042
 \OT1/cmr/m/n/12 in dou-ble and triple
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 1041--1041
+Underfull \hbox (badness 10000) in paragraph at lines 1042--1042
 \OT1/cmr/m/n/12 int, atom2[]x: int,
  []
 
 
-Underfull \hbox (badness 5260) in paragraph at lines 1041--1041
+Underfull \hbox (badness 5260) in paragraph at lines 1042--1042
 \OT1/cmr/m/n/12 same colour as the
  []
 
 
-Underfull \hbox (badness 1005) in paragraph at lines 1041--1041
+Underfull \hbox (badness 1005) in paragraph at lines 1042--1042
 \OT1/cmr/m/n/12 back-ground colour to
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 1041--1041
+Underfull \hbox (badness 10000) in paragraph at lines 1042--1042
 \OT1/cmr/m/n/12 int, sym-bol: str,
  []
 
 [34] [35] [36]
-Underfull \hbox (badness 10000) in paragraph at lines 1110--1112
+Underfull \hbox (badness 10000) in paragraph at lines 1111--1113
 
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 1113--1114
+Underfull \hbox (badness 10000) in paragraph at lines 1114--1115
 
  []
 
 [37] [38] [39]
-Underfull \hbox (badness 10000) in paragraph at lines 1219--1219
+Underfull \hbox (badness 10000) in paragraph at lines 1220--1220
 []|\OT1/cmr/bx/n/12 Test
  []
 
 
-Underfull \hbox (badness 5302) in paragraph at lines 1219--1219
+Underfull \hbox (badness 5302) in paragraph at lines 1220--1220
 []|\OT1/cmr/bx/n/12 TEX (Typ-
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 1219--1219
+Underfull \hbox (badness 10000) in paragraph at lines 1220--1220
 \OT1/cmr/bx/n/12 i-cal, Er-
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 1219--1219
+Underfull \hbox (badness 10000) in paragraph at lines 1220--1220
 \OT1/cmr/bx/n/12 ro-neous,
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 1219--1219
+Underfull \hbox (badness 10000) in paragraph at lines 1220--1220
 []|\OT1/cmr/bx/n/12 Expected
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 1219--1219
+Underfull \hbox (badness 10000) in paragraph at lines 1220--1220
 []|\OT1/cmr/m/n/12 Calculate
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 1219--1219
+Underfull \hbox (badness 10000) in paragraph at lines 1220--1220
 \OT1/cmr/m/n/12 value for
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 1219--1219
+Underfull \hbox (badness 10000) in paragraph at lines 1220--1220
 \OT1/cmr/m/n/12 of 3 in-put
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 1219--1219
+Underfull \hbox (badness 10000) in paragraph at lines 1220--1220
 \OT1/cmr/m/n/12 op-tions with
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 1219--1219
+Underfull \hbox (badness 10000) in paragraph at lines 1220--1220
 \OT1/cmr/m/n/12 com-mon val-
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 1219--1219
+Underfull \hbox (badness 10000) in paragraph at lines 1220--1220
 []|\OT1/cmr/m/n/12 Blank field
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 1219--1219
+Underfull \hbox (badness 10000) in paragraph at lines 1220--1220
 \OT1/cmr/m/n/12 cal-cu-lated
  []
 
 
-Underfull \hbox (badness 3138) in paragraph at lines 1219--1219
+Underfull \hbox (badness 3138) in paragraph at lines 1220--1220
 \OT1/cmr/m/n/12 in-put op-tions
  []
 
 
-Underfull \hbox (badness 1603) in paragraph at lines 1219--1219
+Underfull \hbox (badness 1603) in paragraph at lines 1220--1220
 \OT1/cmr/m/n/12 with com-mon
  []
 
 
-Underfull \hbox (badness 1917) in paragraph at lines 1219--1219
+Underfull \hbox (badness 1917) in paragraph at lines 1220--1220
 \OT1/cmr/m/n/12 actly one in-
  []
 
 
-Underfull \hbox (badness 3240) in paragraph at lines 1219--1219
+Underfull \hbox (badness 3240) in paragraph at lines 1220--1220
 []|\OT1/cmr/m/n/12 Only nu-mer-i-
  []
 
 
-Underfull \hbox (badness 2680) in paragraph at lines 1219--1219
+Underfull \hbox (badness 2680) in paragraph at lines 1220--1220
 \OT1/cmr/m/n/12 cal val-ues in
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 1219--1219
+Underfull \hbox (badness 10000) in paragraph at lines 1220--1220
 []|\OT1/cmr/m/n/12 T: Change
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 1219--1219
+Underfull \hbox (badness 10000) in paragraph at lines 1220--1220
 []|\OT1/cmr/m/n/12 Value scales
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 1241--1241
+Underfull \hbox (badness 10000) in paragraph at lines 1242--1242
 []|\OT1/cmr/bx/n/12 Test
  []
 
 
-Underfull \hbox (badness 5302) in paragraph at lines 1241--1241
+Underfull \hbox (badness 5302) in paragraph at lines 1242--1242
 []|\OT1/cmr/bx/n/12 TEX (Typ-
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 1241--1241
+Underfull \hbox (badness 10000) in paragraph at lines 1242--1242
 \OT1/cmr/bx/n/12 i-cal, Er-
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 1241--1241
+Underfull \hbox (badness 10000) in paragraph at lines 1242--1242
 \OT1/cmr/bx/n/12 ro-neous,
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 1241--1241
+Underfull \hbox (badness 10000) in paragraph at lines 1242--1242
 []|\OT1/cmr/bx/n/12 Expected
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 1241--1241
+Underfull \hbox (badness 10000) in paragraph at lines 1242--1242
 []|\OT1/cmr/m/n/12 Calculate
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 1241--1241
+Underfull \hbox (badness 10000) in paragraph at lines 1242--1242
 \OT1/cmr/m/n/12 value for
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 1241--1241
+Underfull \hbox (badness 10000) in paragraph at lines 1242--1242
 []|\OT1/cmr/m/n/12 Blank field
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 1241--1241
+Underfull \hbox (badness 10000) in paragraph at lines 1242--1242
 \OT1/cmr/m/n/12 cal-cu-lated
  []
 
 
-Underfull \hbox (badness 3138) in paragraph at lines 1241--1241
+Underfull \hbox (badness 3138) in paragraph at lines 1242--1242
 \OT1/cmr/m/n/12 in-put op-tions
  []
 
 
-Underfull \hbox (badness 1603) in paragraph at lines 1241--1241
+Underfull \hbox (badness 1603) in paragraph at lines 1242--1242
 \OT1/cmr/m/n/12 with com-mon
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 1241--1241
+Underfull \hbox (badness 10000) in paragraph at lines 1242--1242
 []|\OT1/cmr/m/n/12 Must leave
  []
 
 
-Underfull \hbox (badness 3240) in paragraph at lines 1241--1241
+Underfull \hbox (badness 3240) in paragraph at lines 1242--1242
 []|\OT1/cmr/m/n/12 Only nu-mer-i-
  []
 
 
-Underfull \hbox (badness 2680) in paragraph at lines 1241--1241
+Underfull \hbox (badness 2680) in paragraph at lines 1242--1242
 \OT1/cmr/m/n/12 cal val-ues in
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 1241--1241
+Underfull \hbox (badness 10000) in paragraph at lines 1242--1242
 []|\OT1/cmr/m/n/12 Calculate
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 1241--1241
+Underfull \hbox (badness 10000) in paragraph at lines 1242--1242
 \OT1/cmr/m/n/12 ti-ple blank
  []
 
 
-Underfull \hbox (badness 3601) in paragraph at lines 1241--1241
+Underfull \hbox (badness 3601) in paragraph at lines 1242--1242
 []|\OT1/cmr/m/n/12 T: Leave al-
  []
 
 
-Underfull \hbox (badness 6493) in paragraph at lines 1241--1241
+Underfull \hbox (badness 6493) in paragraph at lines 1242--1242
 \OT1/cmr/m/n/12 lowed com-bi-
  []
 
 
-Underfull \hbox (badness 2293) in paragraph at lines 1241--1241
+Underfull \hbox (badness 2293) in paragraph at lines 1242--1242
 \OT1/cmr/m/n/12 na-tion of in-
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 1241--1241
+Underfull \hbox (badness 10000) in paragraph at lines 1242--1242
 []|\OT1/cmr/m/n/12 Blank fields
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 1241--1241
+Underfull \hbox (badness 10000) in paragraph at lines 1242--1242
 \OT1/cmr/m/n/12 cal-cu-lated
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 1241--1241
+Underfull \hbox (badness 10000) in paragraph at lines 1242--1242
 []|\OT1/cmr/m/n/12 Must leave
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 1241--1241
+Underfull \hbox (badness 10000) in paragraph at lines 1242--1242
 \OT1/cmr/m/n/12 blank (mass
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 1241--1241
+Underfull \hbox (badness 10000) in paragraph at lines 1242--1242
 []|\OT1/cmr/m/n/12 Must leave
  []
 
 
 LaTeX Warning: Reference `tab: avogadros_tests' on page 40 undefined on input l
-ine 1246.
+ine 1247.
 
 [40] [41]
-Overfull \hbox (11.42644pt too wide) in paragraph at lines 1266--1267
+Overfull \hbox (11.42644pt too wide) in paragraph at lines 1267--1268
 []\OT1/cmr/m/n/12 Unbalanced equa-tion: K4[Fe(SCN)6] + K2Cr2O7 + H2SO4 \TS1/cmr
 /m/n/12 ^^Y \OT1/cmr/m/n/12 Fe2(SO4)3
  []
 
 
-Overfull \hbox (8.33347pt too wide) in paragraph at lines 1266--1267
+Overfull \hbox (8.33347pt too wide) in paragraph at lines 1267--1268
 \OT1/cmr/m/n/12 3Fe2(SO4)3 + 97Cr2(SO4)3 + 36CO2 + 355H2O + 91K2SO4 + 36KNO3 
  []
 
@@ -1195,7 +1488,7 @@ _crash.png Graphic file (type png)
 <use /Users/tom/Documents/Programmieren/ChemBox/Documentation/Images//balancer_
 crash.png>
 Package pdftex.def Info: /Users/tom/Documents/Programmieren/ChemBox/Documentati
-on/Images//balancer_crash.png  used on input line 1280.
+on/Images//balancer_crash.png  used on input line 1281.
 (pdftex.def)             Requested size: 349.00658pt x 126.17235pt.
  [43 </Users/tom/Documents/Programmieren/ChemBox/Documentation/Images//balancer
 _crash.png>]
@@ -1206,140 +1499,143 @@ lancer_test.png Graphic file (type png)
 <use /Users/tom/Documents/Programmieren/ChemBox/Documentation/Images//final_bal
 ancer_test.png>
 Package pdftex.def Info: /Users/tom/Documents/Programmieren/ChemBox/Documentati
-on/Images//final_balancer_test.png  used on input line 1311.
+on/Images//final_balancer_test.png  used on input line 1312.
 (pdftex.def)             Requested size: 299.62169pt x 89.43481pt.
 
-Underfull \hbox (badness 10000) in paragraph at lines 1341--1341
+Underfull \hbox (badness 10000) in paragraph at lines 1342--1342
 []|\OT1/cmr/bx/n/12 Test
  []
 
 
-Underfull \hbox (badness 5302) in paragraph at lines 1341--1341
+Underfull \hbox (badness 5302) in paragraph at lines 1342--1342
 []|\OT1/cmr/bx/n/12 TEX (Typ-
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 1341--1341
+Underfull \hbox (badness 10000) in paragraph at lines 1342--1342
 \OT1/cmr/bx/n/12 i-cal, Er-
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 1341--1341
+Underfull \hbox (badness 10000) in paragraph at lines 1342--1342
 \OT1/cmr/bx/n/12 ro-neous,
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 1341--1341
+Underfull \hbox (badness 10000) in paragraph at lines 1342--1342
 []|\OT1/cmr/bx/n/12 Expected
  []
 
 
-Underfull \hbox (badness 1917) in paragraph at lines 1341--1341
+Underfull \hbox (badness 1917) in paragraph at lines 1342--1342
 \OT1/cmr/m/n/12 blank are on
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 1341--1341
+Underfull \hbox (badness 10000) in paragraph at lines 1342--1342
 []|\OT1/cmr/m/n/12 Atom gets
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 1341--1341
+Underfull \hbox (badness 10000) in paragraph at lines 1342--1342
 []|\OT1/cmr/m/n/12 Bond two
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 1341--1341
+Underfull \hbox (badness 10000) in paragraph at lines 1342--1342
 \OT1/cmr/m/n/12 atoms to-
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 1341--1341
+Underfull \hbox (badness 10000) in paragraph at lines 1342--1342
 \OT1/cmr/m/n/12 ac-tion type
  []
 
 
-Underfull \hbox (badness 3460) in paragraph at lines 1341--1341
+Underfull \hbox (badness 3460) in paragraph at lines 1342--1342
 \OT1/cmr/m/n/12 and click on
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 1341--1341
+Underfull \hbox (badness 10000) in paragraph at lines 1342--1342
 \OT1/cmr/m/n/12 two dif-fer-ent
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 1341--1341
+Underfull \hbox (badness 10000) in paragraph at lines 1342--1342
 \OT1/cmr/m/n/12 atoms ap-
  []
 
 
-Underfull \hbox (badness 8189) in paragraph at lines 1341--1341
+Underfull \hbox (badness 8189) in paragraph at lines 1342--1342
 \OT1/cmr/m/n/12 with full or
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 1341--1341
+Underfull \hbox (badness 10000) in paragraph at lines 1342--1342
 \OT1/cmr/m/n/12 bond or-der
  []
 
 
-Underfull \hbox (badness 1546) in paragraph at lines 1341--1341
+Underfull \hbox (badness 1546) in paragraph at lines 1342--1342
 \OT1/cmr/m/n/12 so that over-
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 1341--1341
+Underfull \hbox (badness 10000) in paragraph at lines 1342--1342
 \OT1/cmr/m/n/12 all elec-trons
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 1341--1341
+Underfull \hbox (badness 10000) in paragraph at lines 1342--1342
 \OT1/cmr/m/n/12 would be
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 1341--1341
+Underfull \hbox (badness 10000) in paragraph at lines 1342--1342
 \OT1/cmr/m/n/12 greater than
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 1341--1341
+Underfull \hbox (badness 10000) in paragraph at lines 1342--1342
 []|\OT1/cmr/m/n/12 Invalid user
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 1341--1341
+Underfull \hbox (badness 10000) in paragraph at lines 1342--1342
 \OT1/cmr/m/n/12 ac-tion type
  []
 
 
-Underfull \hbox (badness 3460) in paragraph at lines 1341--1341
+Underfull \hbox (badness 3460) in paragraph at lines 1342--1342
 \OT1/cmr/m/n/12 and click on
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 1341--1341
+Underfull \hbox (badness 10000) in paragraph at lines 1342--1342
 []|\OT1/cmr/m/n/12 Invalid user
  []
 
 
-Underfull \hbox (badness 2503) in paragraph at lines 1341--1341
+Underfull \hbox (badness 2503) in paragraph at lines 1342--1342
 []|\OT1/cmr/m/n/12 T: Se-lect re-
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 1341--1341
+Underfull \hbox (badness 10000) in paragraph at lines 1342--1342
 \OT1/cmr/m/n/12 move ac-tion
  []
 
 
-Underfull \hbox (badness 4872) in paragraph at lines 1341--1341
+Underfull \hbox (badness 4872) in paragraph at lines 1342--1342
 \OT1/cmr/m/n/12 nected bonds
  []
 
 [44 </Users/tom/Documents/Programmieren/ChemBox/Documentation/Images//final_bal
 ancer_test.png>] [45] [46] [47] [48]
+
+LaTeX Warning: Empty bibliography on input line 1507.
+
 (/Users/tom/Documents/Programmieren/ChemBox/main.py [49])
 (/Users/tom/Documents/Programmieren/ChemBox/gui_comps.py [50]) [51]
 (./sections/CalculatorCode.tex
@@ -1364,12 +1660,15 @@ LaTeX Warning: There were undefined references.
 
 LaTeX Warning: There were multiply-defined labels.
 
+Package logreq Info: Writing requests to 'ChemBox_Documentation.run.xml'.
+\openout1 = `ChemBox_Documentation.run.xml'.
+
  ) 
 Here is how much of TeX's memory you used:
- 17745 strings out of 476025
- 370107 string characters out of 5790016
- 3391388 words of memory out of 5000000
- 37882 multiletter control sequences out of 15000+600000
+ 25604 strings out of 476025
+ 525885 string characters out of 5790016
+ 3392388 words of memory out of 5000000
+ 45653 multiletter control sequences out of 15000+600000
  520726 words of font info for 61 fonts, out of 8000000 for 9000
  1141 hyphenation exceptions out of 8191
  104i,12n,97p,1172b,1831s stack positions out of 10000i,1000n,20000p,200000b,200000s
