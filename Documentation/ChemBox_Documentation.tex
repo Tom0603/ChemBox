@@ -78,49 +78,68 @@ Required functionalities:\\
 
 \item Standard moles calculation:
 \[moles=\frac{mass}{molar\: mass}\]
+
 \item Calculation to find the concentration:
 \[concentration=\frac{moles}{volume}\]
+
 \newpage
+
 \item Avogadro's number calculations. The user should be able to give a number of different inputs, including mass, moles, molecular weight and the number of atoms. After giving two independent inputs, the program should be able to calculate the rest of the values using Avogadro's number.\\
 The equation the calculator will be based on is:
 \[number\: of\: atoms = Avogadro's\: number \times moles\]
 This should be paired with a mole calculator for the possibility use the following formula:
 \[number\: of\: atoms = Avogadro's\: number \times \frac{mass}{molar\: mass}\]
-\item Atom Economy calculation:
-\[Atom\: Economy = \frac{Mr\: of\: desired\: product}{Sum\: of\: Mr\: of\: all\: reactants}\times 100\]
-\item Percentage Yield calculation:
-\[\%Yield = \frac{Actual\: yield}{Theoretical\: yield} \times 100\]
-\item Calculation for the Specific Heat Capacity and Enthalpy changes:
-\[q = mc {\Delta} T\]
-\begin{quote}
-(q = energy change) (m = mass) (c = specific heat capacity) (${\Delta}$T = temperature change)
-\end{quote}
-\item Equilibrium Constant calculation for a reversible reaction:
-\[a[A] + b[B] \rightleftharpoons c[C] + d[D]\]
-\[K_{C} = \frac{[C]^{c}[D]^{d}}{[A]^{a}[B]^{b}}\]
-\begin{quote}
-($K_{C}$ = Equilibrium Constant) (Upper case letter = Concentration) (Lower case letter = Moles in Equation)
-\end{quote}
-\item Rate Equation and Rate constant calculation:
-\[Rate = k[A]^{m}[B]^{n}\]
 
-\end{enumerate}
-
-Non-essential objectives:
-\begin{enumerate}
 \item Gibbs Free Energy calculation:
 \[{\Delta}G = {\Delta}H - T{\Delta}S\]
 \begin{quote}
 (${\Delta}$G = Gibbs Free Energy) (${\Delta}$H = enthalpy)\\
 (T = temperature) (${\Delta}$S = entropy)
 \end{quote}
+
+\item Calculation for the Specific Heat Capacity and Enthalpy changes:
+\[q = mc {\Delta} T\]
+\begin{quote}
+(q = energy change) (m = mass) (c = specific heat capacity) (${\Delta}$T = temperature change)
+\end{quote}
+
+\item Equilibrium Constant calculation for a reversible reaction:
+\[a[A] + b[B] \rightleftharpoons c[C] + d[D]\]
+\[K_{C} = \frac{[C]^{c}[D]^{d}}{[A]^{a}[B]^{b}}\]
+\begin{quote}
+($K_{C}$ = Equilibrium Constant) (Upper case letter = Concentration) (Lower case letter = Moles in Equation)
+\end{quote}
+
+\item Rate Equation and Rate constant calculation:
+\[Rate = k[A]^{m}[B]^{n}\]
+
+\item Ideal Gas Law calculation:
+\[PV = nRT\]
+\begin{quote}
+(P = Pressure, V = Volume, n = Number of moles, R = Gas constant, T = Temperature)
+\end{quote}
+
+\end{enumerate}
+
+\newpage
+
+Non-essential objectives:
+\begin{enumerate}
 \item Acid calculations - pH and $[H^{+}]$
 \[pH = -log[H^{+}]\]
 \[[H^{+}] = 10^{-pH}\]
+
 \item Acid dissociation constants $K_{a}$ and $pK_{a}$
 \[K_{a} = \frac{[H^{+}][A^{-}]}{[HA]}\]
 \[pK_{a} = -logK_{a}\]
 \[K_{a} = 10^{-pK_{a}}\]
+
+\item Atom Economy calculation:
+\[Atom\: Economy = \frac{Mr\: of\: desired\: product}{Sum\: of\: Mr\: of\: all\: reactants}\times 100\]
+
+\item Percentage Yield calculation:
+\[\%Yield = \frac{Actual\: yield}{Theoretical\: yield} \times 100\]
+
 \end{enumerate}
 
 \newpage
@@ -139,7 +158,7 @@ The required objectives for this module are:\\
 \begin{enumerate}
 
 \item Tool bar:\\
-In the tool bar on the top end of the application, there has to be a list of buttons for choosing the element, which must include the most common elements (Carbon, Hydrogen, Sulphur, Chlorine, etc.). There also has to be the option to choose the bond order (single, double or triple bond) as well as choosing the option to form a dative bond. Another essential option in form of buttons should be removing atoms and bonds as well as being able to safe the drawn structures as a document.\\
+In the tool bar on the top end of the application, there has to be a list of buttons for choosing the element, which must include the most common elements (Carbon, Hydrogen, Sulphur, Chlorine, etc.). There also has to be the option to choose the bond order (single, double or triple bond). Another essential option in form of buttons should be removing atoms and bonds as well as being able to safe the drawn structures as a document.\\
 A possible non-essential enhancement would be getting extra information about atoms upon highlighting as well as getting information like the molar mass and the empirical formula of a molecule after highlighting.
 \item Canvas:\\
 The canvas is the area in which the user can draw their molecules. There are a number of essential features that must be included here.\\
@@ -333,7 +352,7 @@ def splitEquation(self):
 \end{lstlisting}
 
 The splitEquation method uses string manipulation to extract the individual molecules of the equation and store them in separate lists for reactants and products.\\
-After finding the individual molecules in the equation, the parseComponent method is called to get the elements used in the molecules, and the amount of them. This is done through if statements, as there is only a limited amount of different possibilities. The longest element symbol consists of three letters, where the first letter of every atom is always capitalised, and the following ones are not. The subscript number (number of atoms or element in a given molecule) can be found easily, as numbers within molecules always belong to the preceding element (H2O - the 2 belongs to the hydrogen). Individual elements are found by checking for capital letters. An element starts with a capital letter and ends at the next capital letter, which is where the next element starts. The same techniques were used to find brackets and complex ions in the equation.
+After finding the individual molecules in the equation, the parseComponent method is called to get the elements used in the molecules, and the amount of them. This is done through if statements, as there is only a limited amount of different possibilities. The longest element symbol consists of three letters, where the first letter of every atom is always capitalised, and the following ones are not. The subscript number (number of atoms or element in a given molecule) can be found easily, as numbers within molecules always belong to the preceding element (H2O - the 2 belongs to the hydrogen). Individual elements are found by checking for capital letters. An element starts with a capital letter and ends at the next capital letter, which is where the next element starts. The same techniques were used to find brackets.
 
 \begin{lstlisting}[language=Python, caption=parseComponent method for finding elements, label={lst:parsecomponent}]
 def parseComponent(self, component, countsDict, totalDict):
@@ -1275,8 +1294,6 @@ After eliminating the mentioned issues, I have tested the program with the entri
 	\label{fig:final_balancer_test}
 \end{figure}
 
-\newpage
-
 \subsubsection{Tests for ChemEditor}
 
 As with the other modules, most features were tested by exploratory test during development. I have tried to summarise the tests for the ChemEditor in the following table.
@@ -1314,7 +1331,7 @@ As with the other modules, most features were tested by exploratory test during 
 
 The following tables compare the finished system with the set objectives at the beginning of this document.
 
-\subsubsection{Objective Comparison for ChemCalculator}
+Colour keys for comparison:
 
 \begin{table}[htbp]
 \footnotesize
@@ -1329,6 +1346,8 @@ The following tables compare the finished system with the set objectives at the 
 \label{tab:color_keys}
 \end{table}
 
+\subsubsection{Objective Comparison for ChemCalculator}
+
 \begin{table}[htbp]
 \centering
 \begin{tabularx}{\textwidth}{|X|X|}
@@ -1337,11 +1356,35 @@ The following tables compare the finished system with the set objectives at the 
 
 \hline
 
-- & - \\
+Standard moles calculator & \cellcolor{cyan!70} Objective met. \\
 
 \hline
 
-- & - \\
+Concentration calculator & \cellcolor{cyan!70} Objective met. \\
+
+\hline
+
+Avogadro's number calculator with included moles calculator (mass/molar mass) & \cellcolor{cyan!70} Objective met. \\
+
+\hline
+
+Gibbs Free Energy calculator & \cellcolor{cyan!70} Objective met. \\
+
+\hline
+
+Specific heat capacity calculator & \cellcolor{cyan!70} Objective met. \\
+
+\hline
+
+Equilibrium constant calculator & \cellcolor{cyan!70} Objective met. \\
+
+\hline
+
+Rate calculator calculator & \cellcolor{cyan!70} Objective met. \\
+
+\hline
+
+Ideal Gas Law calculator & \cellcolor{cyan!70} Objective met. \\
 
 \hline
 
@@ -1350,6 +1393,148 @@ The following tables compare the finished system with the set objectives at the 
 \label{tab:calc_objective_comp}
 \end{table}
 
+\subsubsection{Objective Comparison for ChemBalancer}
+
+\begin{enumerate}
+
+\item Handling Brackets: The balancer appropriately deals with chemical equations containing brackets. It uses regular expressions to recognise and process substances enclosed within brackets and correctly identifies separate reagents and elements.
+
+\item Support for subscript numbers: Subscript numbers are identified correctly in the unbalanced equation and are handled in a way that the equation can be balanced properly.
+
+\item Support for complex ions: Although the balancer can easily deal with equations containing square brackets ([ ]), it can not yet handle ionic charges. So the balancer can deal with chemical equations in the form of complex ions as long as charges are not included.
+
+\item Handling complex unbalanced equations: The system successfully handles long and complex user inputs, and correctly identifies individual reagents, elements, brackets and subscripts.
+
+\item Conversion to balanced equations: The ChemBalancer accurately converts unbalanced chemical equations into balanced versions, providing the user has followed the allowed "syntax" and rules for the module. It applies the necessary coefficients to each compound to ensure that the number of atoms of each element is equal on each side of the equation.
+
+\end{enumerate}
+
+In summary, the ChemBalancer module successfully meets most of the set objectives, with the exception of complex ions. The system demonstrates its capability to balance most equations effectively, and it serves its purpose well.
+
+\subsubsection{Objective Comparison for ChemEditor}
+
+\begin{table}[htbp]
+\centering
+\begin{tabularx}{\textwidth}{|X|X|}
+\hline
+\textbf{Original Objective} & \textbf{Completed System}\\
+
+\hline
+
+Provide a user-friendly and easy to use interface. & \cellcolor{cyan!70} The finished system has a very easy to use interface including pop-up dialogues for invalid user actions. \\
+
+\hline
+
+Have a range of commonly used elements for the user to choose from. & \cellcolor{green!70} The ChemEditor provides the user with a near full periodic table including all the period 1, 2, 3, 4 and 5 elements. \\
+
+\hline
+
+Support ions and let the user choose different charges on atoms (ions) & \cellcolor{red!70} This module does not yet support ions. \\
+
+\hline
+
+Allow for single, double and triple bonds & \cellcolor{cyan!70} The user can choose between different bond orders. \\
+
+\hline
+
+Conduct real-time checks to ensure atoms do not exceed their valence electrons.  & \cellcolor{cyan!70} The program stores the elements valence electrons and checks if a new bond would lead to a higher number of electrons in the outer shell than allowed every time the user tries to bond two atoms together. \\
+
+\hline
+
+
+\end{tabularx}
+\caption{ChemEditor objective comparison}
+\label{tab:editor_objective_comp}
+\end{table}
+
+\begin{table}[htbp]
+\centering
+\begin{tabularx}{\textwidth}{|X|X|}
+\hline
+\textbf{Original Objective} & \textbf{Completed System}\\
+
+\hline
+
+Tool bar containing buttons for the choice of element and bond order  as well as options for choosing different action types like bond, draw or remove. & \cellcolor{green!70} The tool contains the option for opening the periodic table, choose the preferred bond order, action types like bond, draw and remove, as well as giving the option to clear the canvas or save it as an image. \\
+
+\hline
+
+Draw atoms at click position on canvas & \cellcolor{cyan!70} The system draws an atom of the chosen element at the user's click position. \\
+
+\hline
+
+Display a number of potential atoms and bonds when the user clicks on existing atom in draw mode. & \cellcolor{cyan!70} System draws up to 8 potential atoms and bonds in a circle around the selected atom. \\
+
+\hline
+
+Provide the ability to bond atoms together & \cellcolor{cyan!70} The system bonds the two latest selected atoms together \\
+
+\hline
+
+\end{tabularx}
+\caption{ChemEditor objective comparison}
+\label{tab:editor_objective_comp2}
+\end{table}
+
+\subsubsection{Potential for Future Development}
+
+Thanks to the nature of the project, there are always new tools or features one could add. If the project were to be revisited in the future, the first task might be to include the non-essential objectives in the system. Also, two great features to add would be the accepting ionic charges in the balancer and being able to draw ions (with charges) on the canvas of the ChemEditor.\\
+As the field of chemistry is very broad, and even physicists could find use in a all-in-one toolbox, there is an unlimited range of possible future additions when it comes to new calculations or new drawing methods like drawing 3D molecules. As this program was created as an A-Level project, it doesn't even come close to the features required by an undergraduate or postgraduate student, so this could be picked up again at a later stage to add required features by those kinds of users.\\ 
+A project like this would be a great open source software, where students and scientists from all over the world and every kind of level of education could add features they might require or know to be required by other people.
+
 \newpage
+
+\begin{appendices}
+
+\section{Program Code}
+
+\subsection{main.py File}
+
+\lstinputlisting[language=Python, caption=main.py File Program Code, label={lst:main_file}]{/Users/tom/Documents/Programmieren/ChemBox/main.py}
+
+
+\subsection{GUI Components File}
+
+\lstinputlisting[language=Python, caption=gui\_comps.py File Program Code, label={lst:gui_comps_file}]{/Users/tom/Documents/Programmieren/ChemBox/gui_comps.py}
+
+
+\newpage
+
+\subsection{ChemCalculator File}
+\input{sections/CalculatorCode}
+
+\newpage
+
+\subsection{ChemBalancer File}
+
+\lstinputlisting[language=Python, caption=chem\_balancer.py File Program Code, label={lst:chem_balancer_file}]{/Users/tom/Documents/Programmieren/ChemBox/chem_balancer.py}
+
+\newpage
+
+\subsection{ChemEditor GUI file}
+
+\lstinputlisting[language=Python, caption=chem\_editor\_gui.py File Program Code, label={lst:chem_editor_gui_file}]{/Users/tom/Documents/Programmieren/ChemBox/chem_editor_gui.py}
+
+\newpage
+
+\subsection{ChemEditor Logic file}
+
+\lstinputlisting[language=Python, caption=chem\_editor\_logic.py File Program Code, label={lst:chem_editor_logic_file}]{/Users/tom/Documents/Programmieren/ChemBox/chem_editor_logic.py}
+
+\newpage
+
+\subsection{Style.css file}
+
+\lstinputlisting{/Users/tom/Documents/Programmieren/ChemBox/style.css}
+
+\newpage
+
+\subsection{Elements.json file}
+
+\lstinputlisting{/Users/tom/Documents/Programmieren/ChemBox/elements.json}
+
+\end{appendices}
+
+
 
 \end{document}
