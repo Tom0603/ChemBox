@@ -16,5 +16,64 @@
   {}
 \endgroup
 
+
+\refsection{0}
+  \datalist[entry]{nty/global//global/global}
+    \entry{nullspace}{online}{}
+      \name{author}{1}{}{%
+        {{hash=ecf729634818c73508c3df05dce6ac13}{%
+           family={Amir},
+           familyi={A\bibinitperiod},
+           given={Asqua},
+           giveni={A\bibinitperiod}}}%
+      }
+      \strng{namehash}{ecf729634818c73508c3df05dce6ac13}
+      \strng{fullhash}{ecf729634818c73508c3df05dce6ac13}
+      \strng{bibnamehash}{ecf729634818c73508c3df05dce6ac13}
+      \strng{authorbibnamehash}{ecf729634818c73508c3df05dce6ac13}
+      \strng{authornamehash}{ecf729634818c73508c3df05dce6ac13}
+      \strng{authorfullhash}{ecf729634818c73508c3df05dce6ac13}
+      \field{sortinit}{A}
+      \field{sortinithash}{2f401846e2029bad6b3ecc16d50031e2}
+      \field{labelnamesource}{author}
+      \field{labeltitlesource}{title}
+      \field{title}{What is a Nullspace?}
+      \field{year}{2024}
+      \verb{urlraw}
+      \verb https://www.educative.io/answers/what-is-a-null-space
+      \endverb
+      \verb{url}
+      \verb https://www.educative.io/answers/what-is-a-null-space
+      \endverb
+    \endentry
+    \entry{balancing-algorithm}{article}{}
+      \name{author}{2}{}{%
+        {{hash=a832dddaa52c24b8911fac866711ad80}{%
+           family={Chacon},
+           familyi={C\bibinitperiod},
+           given={Diego},
+           giveni={D\bibinitperiod}}}%
+        {{hash=0c39423326235320420f576e806d281f}{%
+           family={Apte},
+           familyi={A\bibinitperiod},
+           given={Shireesh},
+           giveni={S\bibinitperiod}}}%
+      }
+      \strng{namehash}{e8ec4b0a2dcf5983d4e1888b7194193d}
+      \strng{fullhash}{e8ec4b0a2dcf5983d4e1888b7194193d}
+      \strng{bibnamehash}{e8ec4b0a2dcf5983d4e1888b7194193d}
+      \strng{authorbibnamehash}{e8ec4b0a2dcf5983d4e1888b7194193d}
+      \strng{authornamehash}{e8ec4b0a2dcf5983d4e1888b7194193d}
+      \strng{authorfullhash}{e8ec4b0a2dcf5983d4e1888b7194193d}
+      \field{sortinit}{C}
+      \field{sortinithash}{4d103a86280481745c9c897c925753c0}
+      \field{labelnamesource}{author}
+      \field{labeltitlesource}{title}
+      \field{journaltitle}{Journal of High School Science}
+      \field{title}{A python code algorithm for balancing chemical equations as a system of simultaneous linear equations using matrix algebra.}
+      \field{year}{2023}
+    \endentry
+  \enddatalist
+\endrefsection
 \endinput
 

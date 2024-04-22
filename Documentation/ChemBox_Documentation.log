@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.141592653-2.6-1.40.25 (TeX Live 2023) (preloaded format=pdflatex 2023.10.31)  22 APR 2024 20:52
+This is pdfTeX, Version 3.141592653-2.6-1.40.25 (TeX Live 2023) (preloaded format=pdflatex 2023.10.31)  22 APR 2024 21:18
 entering extended mode
  restricted \write18 enabled.
  %&-line parsing enabled.
@@ -1633,27 +1633,30 @@ Underfull \hbox (badness 4872) in paragraph at lines 1342--1342
 
 [44 </Users/tom/Documents/Programmieren/ChemBox/Documentation/Images//final_bal
 ancer_test.png>] [45] [46] [47] [48]
+Overfull \hbox (2.13707pt too wide) in paragraph at lines 1508--1508
+[]\OT1/cmr/m/n/12 Asqua Amir. \OT1/cmr/m/it/12 What is a Nullspace? \OT1/cmr/m/
+n/12 2024. \OT1/cmr/m/sc/12 url\OT1/cmr/m/n/12 : $\OT1/cmtt/m/n/12 https : / / 
+www . educative .
+ []
 
-LaTeX Warning: Empty bibliography on input line 1507.
-
-(/Users/tom/Documents/Programmieren/ChemBox/main.py [49])
-(/Users/tom/Documents/Programmieren/ChemBox/gui_comps.py [50]) [51]
+[49] (/Users/tom/Documents/Programmieren/ChemBox/main.py [50])
+(/Users/tom/Documents/Programmieren/ChemBox/gui_comps.py [51]) [52]
 (./sections/CalculatorCode.tex
 LaTeX Font Info:    Trying to load font information for TS1+cmtt on input line 
 18.
 
 (/usr/local/texlive/2023/texmf-dist/tex/latex/base/ts1cmtt.fd
 File: ts1cmtt.fd 2022/07/10 v2.5l Standard LaTeX font definitions
-) [52] [53]
-[54] [55] [56] [57] [58] [59] [60] [61] [62] [63] [64] [65] [66] [67] [68]
-[69] [70] [71] [72] [73] [74] [75] [76] [77] [78] [79] [80]) [81]
-(/Users/tom/Documents/Programmieren/ChemBox/chem_balancer.py [82] [83] [84]
-[85] [86]) [87] (/Users/tom/Documents/Programmieren/ChemBox/chem_editor_gui.py
-[88] [89] [90] [91] [92] [93] [94] [95] [96] [97]) [98]
-(/Users/tom/Documents/Programmieren/ChemBox/chem_editor_logic.py [99]) [100]
-(/Users/tom/Documents/Programmieren/ChemBox/style.css) [101]
-(/Users/tom/Documents/Programmieren/ChemBox/elements.json [102] [103] [104]
-[105] [106] [107] [108]) [109] (./ChemBox_Documentation.aux)
+) [53] [54]
+[55] [56] [57] [58] [59] [60] [61] [62] [63] [64] [65] [66] [67] [68] [69]
+[70] [71] [72] [73] [74] [75] [76] [77] [78] [79] [80] [81]) [82]
+(/Users/tom/Documents/Programmieren/ChemBox/chem_balancer.py [83] [84] [85]
+[86] [87]) [88] (/Users/tom/Documents/Programmieren/ChemBox/chem_editor_gui.py
+[89] [90] [91] [92] [93] [94] [95] [96] [97] [98]) [99]
+(/Users/tom/Documents/Programmieren/ChemBox/chem_editor_logic.py [100])
+[101] (/Users/tom/Documents/Programmieren/ChemBox/style.css) [102]
+(/Users/tom/Documents/Programmieren/ChemBox/elements.json [103] [104] [105]
+[106] [107] [108] [109]) [110] (./ChemBox_Documentation.aux)
 
 LaTeX Warning: There were undefined references.
 
@@ -1665,15 +1668,16 @@ Package logreq Info: Writing requests to 'ChemBox_Documentation.run.xml'.
 
  ) 
 Here is how much of TeX's memory you used:
- 25604 strings out of 476025
- 525885 string characters out of 5790016
+ 25821 strings out of 476025
+ 530393 string characters out of 5790016
  3392388 words of memory out of 5000000
- 45653 multiletter control sequences out of 15000+600000
- 520726 words of font info for 61 fonts, out of 8000000 for 9000
+ 45869 multiletter control sequences out of 15000+600000
+ 521073 words of font info for 62 fonts, out of 8000000 for 9000
  1141 hyphenation exceptions out of 8191
  104i,12n,97p,1172b,1831s stack positions out of 10000i,1000n,20000p,200000b,200000s
 </usr/local/texlive/2023/texmf-dist/fonts/type1/public/amsfonts/cm/cmbx10.pfb
 ></usr/local/texlive/2023/texmf-dist/fonts/type1/public/amsfonts/cm/cmbx12.pfb>
+</usr/local/texlive/2023/texmf-dist/fonts/type1/public/amsfonts/cm/cmcsc10.pfb>
 </usr/local/texlive/2023/texmf-dist/fonts/type1/public/amsfonts/cm/cmmi10.pfb><
 /usr/local/texlive/2023/texmf-dist/fonts/type1/public/amsfonts/cm/cmmi12.pfb></
 usr/local/texlive/2023/texmf-dist/fonts/type1/public/amsfonts/cm/cmmi6.pfb></us
@@ -1685,14 +1689,16 @@ texlive/2023/texmf-dist/fonts/type1/public/amsfonts/cm/cmr6.pfb></usr/local/tex
 live/2023/texmf-dist/fonts/type1/public/amsfonts/cm/cmr8.pfb></usr/local/texliv
 e/2023/texmf-dist/fonts/type1/public/amsfonts/cm/cmsy10.pfb></usr/local/texlive
 /2023/texmf-dist/fonts/type1/public/amsfonts/cm/cmsy8.pfb></usr/local/texlive/2
-023/texmf-dist/fonts/type1/public/amsfonts/cm/cmtt8.pfb></usr/local/texlive/202
-3/texmf-dist/fonts/type1/public/amsfonts/euler/eurm10.pfb></usr/local/texlive/2
-023/texmf-dist/fonts/type1/public/cm-super/sfrm1200.pfb></usr/local/texlive/202
-3/texmf-dist/fonts/type1/public/cm-super/sftt0800.pfb>
-Output written on ChemBox_Documentation.pdf (110 pages, 877491 bytes).
+023/texmf-dist/fonts/type1/public/amsfonts/cm/cmti12.pfb></usr/local/texlive/20
+23/texmf-dist/fonts/type1/public/amsfonts/cm/cmtt12.pfb></usr/local/texlive/202
+3/texmf-dist/fonts/type1/public/amsfonts/cm/cmtt8.pfb></usr/local/texlive/2023/
+texmf-dist/fonts/type1/public/amsfonts/euler/eurm10.pfb></usr/local/texlive/202
+3/texmf-dist/fonts/type1/public/cm-super/sfrm1200.pfb></usr/local/texlive/2023/
+texmf-dist/fonts/type1/public/cm-super/sftt0800.pfb>
+Output written on ChemBox_Documentation.pdf (111 pages, 904970 bytes).
 PDF statistics:
- 473 PDF objects out of 1000 (max. 8388607)
- 301 compressed objects within 4 object streams
+ 491 PDF objects out of 1000 (max. 8388607)
+ 312 compressed objects within 4 object streams
  0 named destinations out of 1000 (max. 500000)
  68 words of extra memory for PDF output out of 10000 (max. 10000000)
 
