@@ -61,6 +61,27 @@ Chembox will provide valuable tools to a diverse user base, spanning from studen
 In the early stage, the main users of this system will be pupils and staff attending Ellesmere College, but it could be a goal to make the software available open source to anyone online.\\
 Engaging with pupils at the college during the early stages allows for a valuable user feedback loop. This direct interaction with the user group will provide insights into the software's usability, identify potential improvements, and address any specific requirements that may arise within the college context.
 
+\subsubsection{Interview with Oliver Covill - Future User}
+
+To get an independent opinion on the topic when it comes to important features and future design of the system, I have interviewed Oliver Covill, a fellow A-Level chemistry student at Ellesmere College.\\
+
+Q: What are the benefits of performing the tasks manually and by hand?
+\linebreak
+
+Oliver: Learning the process of the calculation and what is required for them and why we use them. Doing every step of the task by hand, be it calculating something or balancing an equation gives you a better feeling for it and teaches you the necessary foundations you need.\\
+\linebreak
+
+Q: What are the drawbacks of using the current system (by hand/without software)?
+\linebreak
+
+Oliver: Longer questions that require multiple equations and rearranging them can be quite tedious at times. Also, checking every calculation performed by hand can be very time consuming. Balancing long equations can sometimes be near impossible or might require multiple lines of working out, to get the right balanced equation, especially if you don't instantly notice a mistake you have made.\\
+
+\newpage
+Q: What are the most common tasks in chemistry that could be computed and which features would be most important to you?\\
+\linebreak
+
+Oliver: Definitely a lot of the basic mole like calculations. Also having the ability to do PV=nRT calculations or having a Gibbs Free Energy calculator would be great. The most important Feature for me would be a chemical equation balancer, which is especially important for long and complex equations.
+
 
 \subsection{Specific Objectives}
 
@@ -707,7 +728,6 @@ def balance(self):
                             totalLeft[key] = tempLeft[index][key]
                         else:
                             totalLeft[key] += tempLeft[index][key]
-
                 for index in range(0, len(rightCoefficients)):
                     for key in tempRight[index]:
                         tempRight[index][key] *= rightCoefficients[index]
@@ -715,7 +735,6 @@ def balance(self):
                             totalRight[key] = tempRight[index][key]
                         else:
                             totalRight[key] += tempRight[index][key]
-
                 self.balanced = True
                 for key in totalLeft:
                     if totalLeft[key] != totalRight[key]:
@@ -1490,12 +1509,12 @@ A project like this would be a great open source software, where students and sc
 
 \subsection{main.py File}
 
-\lstinputlisting[language=Python, caption=main.py File Program Code, label={lst:main_file}]{/Users/tom/Documents/Programmieren/ChemBox/main.py}
+\lstinputlisting[language=Python, caption=main.py File Program Code, label={lst:main_file}]{main.py}
 
 
 \subsection{GUI Components File}
 
-\lstinputlisting[language=Python, caption=gui\_comps.py File Program Code, label={lst:gui_comps_file}]{/Users/tom/Documents/Programmieren/ChemBox/gui_comps.py}
+\lstinputlisting[language=Python, caption=gui\_comps.py File Program Code, label={lst:gui_comps_file}]{gui_comps.py}
 
 
 \newpage
@@ -1507,31 +1526,31 @@ A project like this would be a great open source software, where students and sc
 
 \subsection{ChemBalancer File}
 
-\lstinputlisting[language=Python, caption=chem\_balancer.py File Program Code, label={lst:chem_balancer_file}]{/Users/tom/Documents/Programmieren/ChemBox/chem_balancer.py}
+\lstinputlisting[language=Python, caption=chem\_balancer.py File Program Code, label={lst:chem_balancer_file}]{chem_balancer.py}
 
 \newpage
 
 \subsection{ChemEditor GUI file}
 
-\lstinputlisting[language=Python, caption=chem\_editor\_gui.py File Program Code, label={lst:chem_editor_gui_file}]{/Users/tom/Documents/Programmieren/ChemBox/chem_editor_gui.py}
+\lstinputlisting[language=Python, caption=chem\_editor\_gui.py File Program Code, label={lst:chem_editor_gui_file}]{chem_editor_gui.py}
 
 \newpage
 
 \subsection{ChemEditor Logic file}
 
-\lstinputlisting[language=Python, caption=chem\_editor\_logic.py File Program Code, label={lst:chem_editor_logic_file}]{/Users/tom/Documents/Programmieren/ChemBox/chem_editor_logic.py}
+\lstinputlisting[language=Python, caption=chem\_editor\_logic.py File Program Code, label={lst:chem_editor_logic_file}]{chem_editor_logic.py}
 
 \newpage
 
 \subsection{Style.css file}
 
-\lstinputlisting{/Users/tom/Documents/Programmieren/ChemBox/style.css}
+\lstinputlisting{style.css}
 
 \newpage
 
 \subsection{Elements.json file}
 
-\lstinputlisting{/Users/tom/Documents/Programmieren/ChemBox/elements.json}
+\lstinputlisting{elements.json}
 
 \end{appendices}
 

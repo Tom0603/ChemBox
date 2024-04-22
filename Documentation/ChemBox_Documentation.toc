@@ -1,17 +1,18 @@
 \contentsline {section}{\numberline {1}Analysis}{3}{}%
 \contentsline {subsection}{\numberline {1.1}Introduction}{3}{}%
 \contentsline {subsection}{\numberline {1.2}Prospective Users}{4}{}%
-\contentsline {subsection}{\numberline {1.3}Specific Objectives}{4}{}%
-\contentsline {subsubsection}{\numberline {1.3.1}Chemical Equations and Calculations - ChemCalculator}{4}{}%
-\contentsline {subsubsection}{\numberline {1.3.2}Chemical Equation Balancer - ChemBalancer}{7}{}%
-\contentsline {subsubsection}{\numberline {1.3.3}Visualisation of Chemical Molecules - ChemEditor}{7}{}%
-\contentsline {subsection}{\numberline {1.4}Current and Proposed Systems}{8}{}%
-\contentsline {section}{\numberline {2}Documented Design}{9}{}%
-\contentsline {subsection}{\numberline {2.1}Introduction to the Documented Design}{9}{}%
-\contentsline {subsection}{\numberline {2.2}Project Hierarchy}{9}{}%
-\contentsline {subsection}{\numberline {2.3}Structure of the GUI}{10}{}%
-\contentsline {subsection}{\numberline {2.4}Algorithm Design for ChemCalculator}{13}{}%
-\contentsline {subsection}{\numberline {2.5}Algorithm Design for ChemBalancer}{14}{}%
+\contentsline {subsubsection}{\numberline {1.2.1}Interview with Oliver Covill - Future User}{4}{}%
+\contentsline {subsection}{\numberline {1.3}Specific Objectives}{5}{}%
+\contentsline {subsubsection}{\numberline {1.3.1}Chemical Equations and Calculations - ChemCalculator}{5}{}%
+\contentsline {subsubsection}{\numberline {1.3.2}Chemical Equation Balancer - ChemBalancer}{8}{}%
+\contentsline {subsubsection}{\numberline {1.3.3}Visualisation of Chemical Molecules - ChemEditor}{8}{}%
+\contentsline {subsection}{\numberline {1.4}Current and Proposed Systems}{9}{}%
+\contentsline {section}{\numberline {2}Documented Design}{10}{}%
+\contentsline {subsection}{\numberline {2.1}Introduction to the Documented Design}{10}{}%
+\contentsline {subsection}{\numberline {2.2}Project Hierarchy}{10}{}%
+\contentsline {subsection}{\numberline {2.3}Structure of the GUI}{11}{}%
+\contentsline {subsection}{\numberline {2.4}Algorithm Design for ChemCalculator}{14}{}%
+\contentsline {subsection}{\numberline {2.5}Algorithm Design for ChemBalancer}{15}{}%
 \contentsline {subsection}{\numberline {2.6}Algorithm Design for ChemEditor}{30}{}%
 \contentsline {subsubsection}{\numberline {2.6.1}ChemEditor Logic}{30}{}%
 \contentsline {subsubsection}{\numberline {2.6.2}ChemEditor GUI}{33}{}%
