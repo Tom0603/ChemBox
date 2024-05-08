@@ -25,6 +25,7 @@
 \contentsline {subsubsection}{\numberline {4.0.2}Objective Comparison for ChemBalancer}{46}{}%
 \contentsline {subsubsection}{\numberline {4.0.3}Objective Comparison for ChemEditor}{47}{}%
 \contentsline {subsubsection}{\numberline {4.0.4}Potential for Future Development}{48}{}%
+\contentsline {section}{References}{49}{}%
 \contentsline {section}{Appendices}{50}{}%
 \contentsline {section}{\numberline {A}Program Code}{50}{}%
 \contentsline {subsection}{\numberline {A.1}main.py File}{50}{}%
