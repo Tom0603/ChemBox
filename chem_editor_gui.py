@@ -140,7 +140,9 @@ class Canvas(QLabel):
         self.selected_atom = None
 
     def get_carbon(self) -> dict:
-        elements = json.load(open("elements.json"))
+        from main import resource_path
+
+        elements = json.load(open(resource_path("elements.json")))
 
         for element, data in elements.items():
             if element == "Carbon":
@@ -527,7 +529,9 @@ class PeriodicTable(QWidget):
         self.load_elements()
 
     def load_elements(self) -> None:
-        self.elements = json.load(open("elements.json"))
+        from main import resource_path
+
+        self.elements = json.load(open(resource_path("elements.json")))
 
         for element, data in self.elements.items():
             # TODO: add colour for element groups

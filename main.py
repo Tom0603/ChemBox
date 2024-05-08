@@ -1,3 +1,4 @@
+import os
 import sys
 
 from PyQt6.QtWidgets import QApplication, QMainWindow
@@ -8,6 +9,18 @@ from chem_calculator import ChemCalculator
 
 from chem_balancer import ChemBalancer
 from gui_comps import TabBar
+
+
+# https://stackoverflow.com/questions/31836104/pyinstaller-and-onefile-how-to-include-an-image-in-the-exe-file
+def resource_path(relative_path):
+    """ Get absolute path to resource, works for dev and for PyInstaller """
+    try:
+        # PyInstaller creates a temp folder and stores path in _MEIPASS
+        base_path = sys._MEIPASS2
+    except Exception:
+        base_path = os.path.abspath(os.path.dirname("/Users/tom/Documents/Programmieren/ChemBox/"))
+
+    return os.path.join(base_path, relative_path)
 
 
 class ChemBox(QMainWindow):
@@ -42,7 +55,7 @@ def main():
     app = QApplication(sys.argv)
 
     # Load CSS file
-    app.setStyleSheet(open('style.css').read())
+    app.setStyleSheet(open(resource_path("style.css")).read())
 
     main_win = ChemBox()
     main_win.show()
