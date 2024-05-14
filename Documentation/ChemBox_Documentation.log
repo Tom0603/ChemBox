@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.141592653-2.6-1.40.25 (TeX Live 2023) (preloaded format=pdflatex 2023.10.31)  23 APR 2024 10:56
+This is pdfTeX, Version 3.141592653-2.6-1.40.25 (TeX Live 2023) (preloaded format=pdflatex 2023.10.31)  14 MAY 2024 09:28
 entering extended mode
  restricted \write18 enabled.
  %&-line parsing enabled.
@@ -1632,31 +1632,51 @@ Underfull \hbox (badness 4872) in paragraph at lines 1342--1342
  []
 
 [44 </Users/tom/Documents/Programmieren/ChemBox/Documentation/Images//final_bal
-ancer_test.png>] [45] [46] [47] [48]
-Overfull \hbox (2.13707pt too wide) in paragraph at lines 1507--1507
+ancer_test.png>] [45] [46] [47]
+</Users/tom/Documents/Programmieren/ChemBox/Documentation/Images//UserFeedback.
+png, id=195, 504.88625pt x 724.7075pt>
+File: /Users/tom/Documents/Programmieren/ChemBox/Documentation/Images//UserFeed
+back.png Graphic file (type png)
+<use /Users/tom/Documents/Programmieren/ChemBox/Documentation/Images//UserFeedb
+ack.png>
+Package pdftex.def Info: /Users/tom/Documents/Programmieren/ChemBox/Documentati
+on/Images//UserFeedback.png  used on input line 1509.
+(pdftex.def)             Requested size: 403.90953pt x 579.76678pt.
+
+Overfull \hbox (13.90953pt too wide) in paragraph at lines 1509--1511
+ [][] 
+ []
+
+[48]
+Overfull \vbox (33.01678pt too high) has occurred while \output is active []
+
+
+[49 </Users/tom/Documents/Programmieren/ChemBox/Documentation/Images//UserFeedb
+ack.png>]
+Overfull \hbox (2.13707pt too wide) in paragraph at lines 1515--1515
 []\OT1/cmr/m/n/12 Asqua Amir. \OT1/cmr/m/it/12 What is a Nullspace? \OT1/cmr/m/
 n/12 2024. \OT1/cmr/m/sc/12 url\OT1/cmr/m/n/12 : $\OT1/cmtt/m/n/12 https : / / 
 www . educative .
  []
 
-[49] (/Users/tom/Documents/Programmieren/ChemBox/main.py [50])
-(/Users/tom/Documents/Programmieren/ChemBox/gui_comps.py [51]) [52]
+[50] (/Users/tom/Documents/Programmieren/ChemBox/main.py [51])
+(/Users/tom/Documents/Programmieren/ChemBox/gui_comps.py [52] [53]) [54]
 (./sections/CalculatorCode.tex
 LaTeX Font Info:    Trying to load font information for TS1+cmtt on input line 
 18.
 
 (/usr/local/texlive/2023/texmf-dist/tex/latex/base/ts1cmtt.fd
 File: ts1cmtt.fd 2022/07/10 v2.5l Standard LaTeX font definitions
-) [53] [54]
-[55] [56] [57] [58] [59] [60] [61] [62] [63] [64] [65] [66] [67] [68] [69]
-[70] [71] [72] [73] [74] [75] [76] [77] [78] [79] [80] [81]) [82]
-(/Users/tom/Documents/Programmieren/ChemBox/chem_balancer.py [83] [84] [85]
-[86] [87]) [88] (/Users/tom/Documents/Programmieren/ChemBox/chem_editor_gui.py
-[89] [90] [91] [92] [93] [94] [95] [96] [97] [98]) [99]
-(/Users/tom/Documents/Programmieren/ChemBox/chem_editor_logic.py [100])
-[101] (/Users/tom/Documents/Programmieren/ChemBox/style.css) [102]
-(/Users/tom/Documents/Programmieren/ChemBox/elements.json [103] [104] [105]
-[106] [107] [108] [109]) [110] (./ChemBox_Documentation.aux)
+) [55] [56]
+[57] [58] [59] [60] [61] [62] [63] [64] [65] [66] [67] [68] [69] [70] [71]
+[72] [73] [74] [75] [76] [77] [78] [79] [80] [81] [82] [83]) [84]
+(/Users/tom/Documents/Programmieren/ChemBox/chem_balancer.py [85] [86] [87]
+[88] [89]) [90] (/Users/tom/Documents/Programmieren/ChemBox/chem_editor_gui.py
+[91] [92] [93] [94] [95] [96] [97] [98] [99] [100]) [101]
+(/Users/tom/Documents/Programmieren/ChemBox/chem_editor_logic.py [102])
+[103] (/Users/tom/Documents/Programmieren/ChemBox/style.css) [104]
+(/Users/tom/Documents/Programmieren/ChemBox/elements.json [105] [106] [107]
+[108] [109] [110] [111]) [112] (./ChemBox_Documentation.aux)
 
 LaTeX Warning: There were undefined references.
 
@@ -1668,10 +1688,10 @@ Package logreq Info: Writing requests to 'ChemBox_Documentation.run.xml'.
 
  ) 
 Here is how much of TeX's memory you used:
- 25821 strings out of 476025
- 530393 string characters out of 5790016
+ 25842 strings out of 476025
+ 531155 string characters out of 5790016
  3392388 words of memory out of 5000000
- 45869 multiletter control sequences out of 15000+600000
+ 45890 multiletter control sequences out of 15000+600000
  521073 words of font info for 62 fonts, out of 8000000 for 9000
  1141 hyphenation exceptions out of 8191
  104i,12n,97p,1172b,1831s stack positions out of 10000i,1000n,20000p,200000b,200000s
@@ -1695,10 +1715,10 @@ e/2023/texmf-dist/fonts/type1/public/amsfonts/cm/cmsy10.pfb></usr/local/texlive
 texmf-dist/fonts/type1/public/amsfonts/euler/eurm10.pfb></usr/local/texlive/202
 3/texmf-dist/fonts/type1/public/cm-super/sfrm1200.pfb></usr/local/texlive/2023/
 texmf-dist/fonts/type1/public/cm-super/sftt0800.pfb>
-Output written on ChemBox_Documentation.pdf (111 pages, 905002 bytes).
+Output written on ChemBox_Documentation.pdf (113 pages, 1189314 bytes).
 PDF statistics:
- 491 PDF objects out of 1000 (max. 8388607)
- 312 compressed objects within 4 object streams
+ 499 PDF objects out of 1000 (max. 8388607)
+ 316 compressed objects within 4 object streams
  0 named destinations out of 1000 (max. 500000)
- 68 words of extra memory for PDF output out of 10000 (max. 10000000)
+ 73 words of extra memory for PDF output out of 10000 (max. 10000000)
 

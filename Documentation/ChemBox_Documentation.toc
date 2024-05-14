@@ -25,14 +25,15 @@
 \contentsline {subsubsection}{\numberline {4.0.2}Objective Comparison for ChemBalancer}{46}{}%
 \contentsline {subsubsection}{\numberline {4.0.3}Objective Comparison for ChemEditor}{47}{}%
 \contentsline {subsubsection}{\numberline {4.0.4}Potential for Future Development}{48}{}%
-\contentsline {section}{References}{49}{}%
-\contentsline {section}{Appendices}{50}{}%
-\contentsline {section}{\numberline {A}Program Code}{50}{}%
-\contentsline {subsection}{\numberline {A.1}main.py File}{50}{}%
-\contentsline {subsection}{\numberline {A.2}GUI Components File}{51}{}%
-\contentsline {subsection}{\numberline {A.3}ChemCalculator File}{53}{}%
-\contentsline {subsection}{\numberline {A.4}ChemBalancer File}{83}{}%
-\contentsline {subsection}{\numberline {A.5}ChemEditor GUI file}{89}{}%
-\contentsline {subsection}{\numberline {A.6}ChemEditor Logic file}{100}{}%
-\contentsline {subsection}{\numberline {A.7}Style.css file}{102}{}%
-\contentsline {subsection}{\numberline {A.8}Elements.json file}{103}{}%
+\contentsline {subsubsection}{\numberline {4.0.5}User Feedback}{49}{}%
+\contentsline {section}{References}{50}{}%
+\contentsline {section}{Appendices}{51}{}%
+\contentsline {section}{\numberline {A}Program Code}{51}{}%
+\contentsline {subsection}{\numberline {A.1}main.py File}{51}{}%
+\contentsline {subsection}{\numberline {A.2}GUI Components File}{52}{}%
+\contentsline {subsection}{\numberline {A.3}ChemCalculator File}{55}{}%
+\contentsline {subsection}{\numberline {A.4}ChemBalancer File}{85}{}%
+\contentsline {subsection}{\numberline {A.5}ChemEditor GUI file}{91}{}%
+\contentsline {subsection}{\numberline {A.6}ChemEditor Logic file}{102}{}%
+\contentsline {subsection}{\numberline {A.7}Style.css file}{104}{}%
+\contentsline {subsection}{\numberline {A.8}Elements.json file}{105}{}%
