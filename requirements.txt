@@ -1,4 +1,4 @@
-PyQt6~=6.0.2
+PyQt6==6.0.2
 sympy~=1.12
 pyinstaller~=6.6.0
 pillow~=10.3.0
