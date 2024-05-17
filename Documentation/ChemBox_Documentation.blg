@@ -1,15 +1,15 @@
 [0] Config.pm:307> INFO - This is Biber 2.19
 [0] Config.pm:310> INFO - Logfile is 'ChemBox_Documentation.blg'
-[88] biber-darwin:340> INFO - === Tue May 14, 2024, 09:28:38
-[107] Biber.pm:419> INFO - Reading 'ChemBox_Documentation.bcf'
-[194] Biber.pm:979> INFO - Found 2 citekeys in bib section 0
-[232] Biber.pm:4419> INFO - Processing section 0
-[267] Biber.pm:4610> INFO - Looking for bibtex file 'bib/refs.bib' for section 0
-[270] bibtex.pm:1713> INFO - LaTeX decoding ...
-[277] bibtex.pm:1519> INFO - Found BibTeX data source 'bib/refs.bib'
-[323] UCollate.pm:68> INFO - Overriding locale 'en-US' defaults 'normalization = NFD' with 'normalization = prenormalized'
-[323] UCollate.pm:68> INFO - Overriding locale 'en-US' defaults 'variable = shifted' with 'variable = non-ignorable'
-[323] Biber.pm:4239> INFO - Sorting list 'nty/global//global/global' of type 'entry' with template 'nty' and locale 'en-US'
-[323] Biber.pm:4245> INFO - No sort tailoring available for locale 'en-US'
-[335] bbl.pm:660> INFO - Writing 'ChemBox_Documentation.bbl' with encoding 'UTF-8'
-[336] bbl.pm:763> INFO - Output to ChemBox_Documentation.bbl
+[143] biber-darwin:340> INFO - === Tue May 14, 2024, 11:53:16
+[168] Biber.pm:419> INFO - Reading 'ChemBox_Documentation.bcf'
+[257] Biber.pm:979> INFO - Found 2 citekeys in bib section 0
+[278] Biber.pm:4419> INFO - Processing section 0
+[290] Biber.pm:4610> INFO - Looking for bibtex file 'bib/refs.bib' for section 0
+[292] bibtex.pm:1713> INFO - LaTeX decoding ...
+[295] bibtex.pm:1519> INFO - Found BibTeX data source 'bib/refs.bib'
+[340] UCollate.pm:68> INFO - Overriding locale 'en-US' defaults 'variable = shifted' with 'variable = non-ignorable'
+[340] UCollate.pm:68> INFO - Overriding locale 'en-US' defaults 'normalization = NFD' with 'normalization = prenormalized'
+[340] Biber.pm:4239> INFO - Sorting list 'nty/global//global/global' of type 'entry' with template 'nty' and locale 'en-US'
+[340] Biber.pm:4245> INFO - No sort tailoring available for locale 'en-US'
+[349] bbl.pm:660> INFO - Writing 'ChemBox_Documentation.bbl' with encoding 'UTF-8'
+[350] bbl.pm:763> INFO - Output to ChemBox_Documentation.bbl
