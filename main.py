@@ -11,16 +11,24 @@ from chem_balancer import ChemBalancer
 from gui_comps import TabBar
 
 
+# Get the directory of the current script
+main_dir = os.path.dirname(__file__)
+print(main_dir)
+
+
 # https://stackoverflow.com/questions/31836104/pyinstaller-and-onefile-how-to-include-an-image-in-the-exe-file
 def resource_path(relative_path):
     """ Get absolute path to resource, works for dev and for PyInstaller """
     try:
-        # PyInstaller creates a temp folder and stores path in _MEIPASS
+        # PyInstaller creates a temp folder and stores path in _MEIPASS2
         base_path = sys._MEIPASS2
     except Exception:
-        base_path = os.path.abspath(os.path.dirname("/Users/tom/Documents/Programmieren/ChemBox/"))
-
+        try:
+            base_path = os.path.abspath(os.path.dirname("/Users/tom/Documents/Programmieren/ChemBox/"))
+        except Exception:
+            base_path = main_dir
     return os.path.join(base_path, relative_path)
+    # return os.path.join(main_dir, relative_path)
 
 
 class ChemBox(QMainWindow):

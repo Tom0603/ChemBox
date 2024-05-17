@@ -747,7 +747,7 @@ class EquilibriumCalculator(QWidget):
 
         # Set up line edits and labels
         self.equation_label = QLabel("a[A] + b[B] ⇌ c[C] + d[D]")
-        self.equation_label.setFont(QFont("SansSerif", 22))
+        self.equation_label.setFont(QFont("Arial", 22))
         self.equation_label.setStyleSheet("color: darkGray;")
 
         self.calc_button = QPushButton("Calculate")
