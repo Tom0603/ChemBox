@@ -1,3 +1,4 @@
 PyQt6~=6.6.0
 sympy~=1.12
 pyinstaller~=6.6.0
+pillow~=10.3.0
